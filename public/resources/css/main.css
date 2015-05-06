@@ -1,0 +1,23 @@
+body {
+	color: #ddd;
+	background-color: #222;
+	text-align: center;
+	font-family: "Tahoma", sans-serif;
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 4em;
+}
+
+#item {
+	margin: 0 auto;
+	background-color: #c00;
+	width: 640px;
+	height: 480px;
+	border-radius: 5px;
+	line-height: 480px;
+	font-size: 5em;
+	color: #400;
+	box-shadow: 0 0 50px #000;
+}

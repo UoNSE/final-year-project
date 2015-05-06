@@ -1,0 +1,17 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "homepage": "http://uonse.org",
+  "authors": [
+    "Brendan Annable <brendan.annable@uon.edu.au>"
+  ],
+  "main": "app.js",
+  "license": "GPL",
+  "private": false,
+  "ignore": [],
+  "dependencies": {
+    "jquery": "*",
+    "requirejs": "*",
+    "bluebird": "*"
+  }
+}
