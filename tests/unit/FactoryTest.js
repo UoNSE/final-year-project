@@ -6,17 +6,13 @@ define(function (require) {
 	var should = require('intern/chai!should')();
 	var Factory = require('src/app/Factory');
 
-	bdd.describe('The Factory module', function () {
+	bdd.describe('the Factory module', function () {
 
 		var TestObject;
 
 		bdd.before(function () {
 
-			TestObject = function () {
-
-				this.field = 0;
-
-			};
+			TestObject = function () {};
 
 		});
 
@@ -26,7 +22,7 @@ define(function (require) {
 
 		});
 
-		bdd.describe('The getInstance method', function () {
+		bdd.describe('the getInstance method', function () {
 
 			var factory;
 
@@ -38,28 +34,24 @@ define(function (require) {
 
 			bdd.it('should be able to create a singleton using the factory', function () {
 
-				var factory = Factory.createFactory(TestObject);
 				factory.getInstance().should.equal(factory.getInstance());
 
 			});
 
 			bdd.it('should be create separate instances when passing false to getInstance', function () {
 
-				var factory = Factory.createFactory(TestObject);
 				factory.getInstance(false).should.not.equal(factory.getInstance(false));
 
 			});
 
 			bdd.it('should return the singleton when calling getInstance with no arguments', function () {
 
-				var factory = Factory.createFactory(TestObject);
 				factory.getInstance().should.equal(factory.getInstance(true));
 
 			});
 
 			bdd.it('should be create separate instances when using isSingleton = true and isSingleton = false', function () {
 
-				var factory = Factory.createFactory(TestObject);
 				factory.getInstance(true).should.not.equal(factory.getInstance(false));
 
 			});
