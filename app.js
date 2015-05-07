@@ -7,9 +7,9 @@ var app = express();
 var server = http.Server(app);
 
 app.set('port', 7575);
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/src/favicon.ico'));
 app.use(compression());
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/src'));
 
 server.listen(app.get('port'), function () {
 
