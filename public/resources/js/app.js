@@ -1,6 +1,9 @@
-require(['multitouch'], function (multitouch) {
+define(['behaviour/MultiTouch'], function (MultiTouch) {
+
 	'use strict';
 
-	multitouch.addItem(jQuery('#item'));
+	var multitouch = MultiTouch.getInstance();
+
+	multitouch.addItem(document.getElementById('item'));
 
 });

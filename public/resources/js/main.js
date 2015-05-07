@@ -3,10 +3,10 @@ define(function (require) {
 
 	requirejs.config({
 		paths: {
-			jquery: '/lib/jquery/dist/jquery'
+			'jquery': '/lib/jquery/dist/jquery'
 		}
 	});
 
-	require('app');
+	require(['app']);
 
 });
