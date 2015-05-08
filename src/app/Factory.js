@@ -2,25 +2,32 @@ define(function () {
 
 	'use strict';
 
-	return {
-		createFactory: function (ObjectType) {
+	function Factory (ObjectType) {
 
-			var instance = null;
-			return {
-				getInstance: function (isSingleton) {
+		this.instance = null;
+		this.ObjectType = ObjectType;
 
-					if (isSingleton || isSingleton === undefined) {
-						if (instance === null) {
-							instance = new ObjectType();
-						}
-						return instance;
-					} else {
-						return new ObjectType();
-					}
-
-				}
-			}
-
-		}
 	}
+
+	Factory.prototype.getInstance = function (isSingleton) {
+
+		if (isSingleton || isSingleton === undefined) {
+			if (this.instance === null) {
+				this.instance = new this.ObjectType();
+			}
+			return this.instance;
+		} else {
+			return new this.ObjectType();
+		}
+
+	};
+
+	Factory.createFactory = function (ObjectType) {
+
+		return new Factory(ObjectType);
+
+	};
+
+	return Factory;
+
 });
