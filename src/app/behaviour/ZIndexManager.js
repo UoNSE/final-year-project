@@ -1,4 +1,4 @@
-define(['jquery'], function ($) {
+define(function (require) {
 
 	'use strict';
 
@@ -10,9 +10,10 @@ define(['jquery'], function ($) {
 
 	}
 
-	ZIndexManager.prototype.registerElement = function (element) {
+	ZIndexManager.prototype.registerElement = function (multiTouchElement) {
 
-		this.elements[this.nextIndex] = element;
+		this.elements[this.nextIndex] = multiTouchElement;
+		multiTouchElement.element.css('zIndex', this.nextIndex);
 		this.nextIndex++;
 
 	};
