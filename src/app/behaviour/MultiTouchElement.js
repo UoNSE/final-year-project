@@ -22,7 +22,7 @@ define(['jquery'], function ($) {
 
 		for (var i = 0, len = this.behaviours.length; i < len; i++) {
 			if (this.behaviours[i][eventCallbackName]) {
-				this.behaviours[i][eventCallbackName](event);
+				this.behaviours[i][eventCallbackName](this.element, event);
 			}
 		}
 
@@ -53,7 +53,6 @@ define(['jquery'], function ($) {
 
 	MultiTouchElement.prototype.addBehaviour = function (behaviour) {
 
-		behaviour.element = this.element;
 		this.behaviours.push(behaviour);
 
 	};
