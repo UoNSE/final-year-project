@@ -10,14 +10,25 @@ h1 {
 	font-size: 4em;
 }
 
-#item {
+.item {
+	position: absolute;
 	margin: 0 auto;
 	background-color: #c00;
-	width: 640px;
-	height: 480px;
+	width: 320px;
+	height: 240px;
 	border-radius: 5px;
-	line-height: 480px;
-	font-size: 5em;
+	line-height: 240px;
+	font-size: 2.5em;
 	color: #400;
 	box-shadow: 0 0 50px #000;
+}
+
+#add-item {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 2em;
+	border-radius: 50px;
+	background-color: #f00;
 }

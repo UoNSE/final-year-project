@@ -26,7 +26,7 @@ define(function (require) {
 
 			var factory;
 
-			bdd.before(function () {
+			bdd.beforeEach(function () {
 
 				factory = Factory.createFactory(TestObject);
 
