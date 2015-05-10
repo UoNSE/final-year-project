@@ -8,6 +8,10 @@ define(function (require) {
 		}
 	});
 
-	require(['app']);
+	require(['Application'], function (Application) {
+
+		new Application();
+
+	});
 
 });

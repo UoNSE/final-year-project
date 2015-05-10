@@ -1,4 +1,5 @@
 define(['jquery'], function ($) {
+
 	'use strict';
 
 	function ZIndexManager () {
@@ -23,12 +24,16 @@ define(['jquery'], function ($) {
 	};
 
 	ZIndexManager.prototype.bringToFront = function (element) {
+
 		element.css('zIndex', this.nextIndex);
 		this.nextIndex++;
+
 	};
 
 	ZIndexManager.prototype.sendToBack = function (element) {
+
 		element.css('zIndex', 0);
+
 	};
 
 	return ZIndexManager;
