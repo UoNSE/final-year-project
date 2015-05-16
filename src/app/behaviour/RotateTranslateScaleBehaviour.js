@@ -18,6 +18,33 @@ define(function (require) {
 
 	}
 
+	RotateTranslateScaleBehaviour.prototype.onMouseDown = function (element, event) {
+
+		this.touches[-1] = {
+			startPoint: glm.vec3.fromValues(event.pageX, event.pageY, 0),
+			lastPoint: glm.vec3.fromValues(event.pageX, event.pageY, 0)
+		};
+
+	};
+
+	RotateTranslateScaleBehaviour.prototype.onMouseMove = function (element, event) {
+
+		if (event.which === 1) {
+			var touchInfo = this.touches[-1];
+			var touchPoint = glm.vec3.fromValues(event.pageX, event.pageY, 0);
+			var translation = glm.vec3.sub(glm.vec3.create(), touchPoint, touchInfo.lastPoint);
+			glm.vec3.add(this.translate, this.translate, translation);
+			glm.vec3.copy(touchInfo.lastPoint, touchPoint);
+		}
+
+	};
+
+	RotateTranslateScaleBehaviour.prototype.onMouseUp = function (element, event) {
+
+		delete this.touches[-1];
+
+	};
+
 	RotateTranslateScaleBehaviour.prototype.onTouchStart = function (element, event) {
 
 		var changedTouches = event.originalEvent.changedTouches;
@@ -25,8 +52,7 @@ define(function (require) {
 			var touch = changedTouches[i];
 			this.touches[touch.identifier] = {
 				startPoint: glm.vec3.fromValues(touch.pageX, touch.pageY, 0),
-				lastPoint: glm.vec3.fromValues(touch.pageX, touch.pageY, 0),
-				startMatrix: glm.mat4.clone(this.matrix)
+				lastPoint: glm.vec3.fromValues(touch.pageX, touch.pageY, 0)
 			};
 		}
 

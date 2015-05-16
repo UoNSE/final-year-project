@@ -14,6 +14,9 @@ define(function (require) {
 
 	MultiTouchElement.prototype.bindEvents = function () {
 
+		this.element.on('mousedown', this.onMouseDown.bind(this));
+		this.element.on('mousemove', this.onMouseMove.bind(this));
+		this.element.on('mouseup', this.onMouseUp.bind(this));
 		this.element.on('touchstart', this.onTouchStart.bind(this));
 		this.element.on('touchmove', this.onTouchMove.bind(this));
 		this.element.on('touchend', this.onTouchEnd.bind(this));
@@ -27,6 +30,24 @@ define(function (require) {
 				this.behaviours[i][eventCallbackName](this.element, event);
 			}
 		}
+
+	};
+
+	MultiTouchElement.prototype.onMouseDown = function (event) {
+
+		this.dispatchEvent('onMouseDown', event);
+
+	};
+
+	MultiTouchElement.prototype.onMouseMove = function (event) {
+
+		this.dispatchEvent('onMouseMove', event);
+
+	};
+
+	MultiTouchElement.prototype.onMouseUp = function (event) {
+
+		this.dispatchEvent('onMouseUp', event);
 
 	};
 
