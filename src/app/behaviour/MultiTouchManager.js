@@ -25,7 +25,7 @@ define(function (require) {
 	MultiTouchManager.prototype.addElementRTS = function (element) {
 
 		var multiTouchElement = this.addElement(element);
-		var behaviour = new RotateTranslateScaleBehaviour();
+		var behaviour = new RotateTranslateScaleBehaviour(multiTouchElement);
 		multiTouchElement.addBehaviour(behaviour);
 		return multiTouchElement;
 

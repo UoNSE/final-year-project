@@ -4,7 +4,8 @@ define(function (require) {
 
 	requirejs.config({
 		paths: {
-			'jquery': '/lib/jquery/dist/jquery'
+			'jquery': '../lib/jquery/dist/jquery',
+			'glmatrix': '../lib/gl-matrix/dist/gl-matrix'
 		}
 	});
 

@@ -12,6 +12,7 @@
   "dependencies": {
     "jquery": "^2.1.4",
     "requirejs": "^2.1.17",
-    "bluebird": "^2.9.25"
+    "bluebird": "^2.9.25",
+    "gl-matrix": "^2.2.1"
   }
 }

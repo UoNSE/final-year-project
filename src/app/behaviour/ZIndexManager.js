@@ -4,17 +4,17 @@ define(function (require) {
 
 	function ZIndexManager () {
 
-		this.firstIndex = 1;
-		this.nextIndex = this.firstIndex;
+		this.backIndex = 0;
+		this.frontIndex = 0;
 		this.elements = {};
 
 	}
 
 	ZIndexManager.prototype.registerElement = function (multiTouchElement) {
 
-		this.elements[this.nextIndex] = multiTouchElement;
-		multiTouchElement.element.css('zIndex', this.nextIndex);
-		this.nextIndex++;
+		this.elements[this.frontIndex] = multiTouchElement;
+		multiTouchElement.element.css('zIndex', this.frontIndex);
+		this.frontIndex++;
 
 	};
 
@@ -26,14 +26,15 @@ define(function (require) {
 
 	ZIndexManager.prototype.bringToFront = function (element) {
 
-		element.css('zIndex', this.nextIndex);
-		this.nextIndex++;
+		element.css('zIndex', this.frontIndex);
+		this.frontIndex++;
 
 	};
 
 	ZIndexManager.prototype.sendToBack = function (element) {
 
-		element.css('zIndex', 0);
+		element.css('zIndex', this.backIndex);
+		this.backIndex--;
 
 	};
 

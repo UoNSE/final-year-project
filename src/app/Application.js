@@ -6,11 +6,11 @@ define( function (require) {
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
 
-	var multitouch = MultiTouchManager.getInstance();
 
 	function Application () {
 
-		this.elements = [];
+		this.elements = $();
+		this.multitouch = MultiTouchManager.getInstance();
 		this.bindEvents();
 
 	}
@@ -32,24 +32,36 @@ define( function (require) {
 	Application.prototype.onKeyUp = function (event) {
 
 		if (event.which === 27) { // ESC key
-			for (var i = 0, len = this.elements.length; i < len; i++) {
-				this.elements[i].remove();
-			}
-			this.elements.length = 0;
+			// stop all videos from playing/leaking
+			this.elements.filter("video").trigger("pause").attr("src", "");
+			this.elements.remove();
+			this.elements = $();
 		}
 
 	};
 
 	Application.prototype.onAddItem = function () {
 
-		var element = $('<div class="item">Hello World</div>');
+		var urls = ['box.gif', 'spiral.gif', 'torus.gif', 'triangle.gif'];
+		var url = urls[Math.floor(Math.random() * urls.length)];
+		var elements = [
+			'<img src="resources/images/' + url + '" class="item">',
+			'<video src="resources/video/hifi.mp4" type="video/mp4" class="item" autoplay loop muted>',
+			'<video src="resources/video/hifi2.mp4" type="video/mp4" class="item" autoplay loop muted>',
+			'<video src="resources/video/animation.mp4" type="video/mp4" class="item" autoplay loop muted>',
+			'<div class="item">Hello World</div>'
+			//'<iframe src="https://www.youtube.com/embed/SLaYPmhse30?rel=0&autoplay=1" frameborder="0" class="item"></iframe>'
+		];
+		var element = $(elements[Math.floor(Math.random() * elements.length)]);
 		element.appendTo(document.body);
 		element.offset({
 			left: ($(window).width() - element.outerWidth()) / 2,
 			top: ($(window).height() - element.outerHeight()) / 2
 		});
-		multitouch.addElementRTS(element);
-		this.elements.push(element);
+		var colors = ['#ff0000', '#ffffff', '#d4ee9f'];
+		element.css('backgroundColor', colors[Math.floor(Math.random() * colors.length)]);
+		this.multitouch.addElementRTS(element);
+		this.elements = this.elements.add(element);
 
 	};
 

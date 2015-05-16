@@ -1,6 +1,8 @@
-define(['jquery'], function ($) {
+define(function (require) {
 
 	'use strict';
+
+	var $ = require('jquery');
 
 	function MultiTouchElement (element) {
 
@@ -10,7 +12,7 @@ define(['jquery'], function ($) {
 
 	}
 
-	MultiTouchElement.prototype.bindEvents = function (behaviour) {
+	MultiTouchElement.prototype.bindEvents = function () {
 
 		this.element.on('touchstart', this.onTouchStart.bind(this));
 		this.element.on('touchmove', this.onTouchMove.bind(this));
