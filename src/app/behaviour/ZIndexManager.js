@@ -18,6 +18,12 @@ define(function (require) {
 
 	};
 
+	ZIndexManager.prototype.onMouseDown = function (element, event) {
+
+		this.bringToFront(element);
+
+	};
+
 	ZIndexManager.prototype.onTouchStart = function (element, event) {
 
 		this.bringToFront(element);
