@@ -15,8 +15,6 @@ define(function (require) {
 	MultiTouchElement.prototype.bindEvents = function () {
 
 		this.element.on('mousedown', this.onMouseDown.bind(this));
-		this.element.on('mousemove', this.onMouseMove.bind(this));
-		this.element.on('mouseup', this.onMouseUp.bind(this));
 		this.element.on('touchstart', this.onTouchStart.bind(this));
 		this.element.on('touchmove', this.onTouchMove.bind(this));
 		this.element.on('touchend', this.onTouchEnd.bind(this));
@@ -36,6 +34,20 @@ define(function (require) {
 	MultiTouchElement.prototype.onMouseDown = function (event) {
 
 		this.dispatchEvent('onMouseDown', event);
+
+		// Attach events to the window.
+		// This improves robustness when the cursor leaves the window or element during drag.
+		// Also only listen for the mousemove event when dragging (after mousedown).
+		// Unbind after drag (mouseup).
+		var $window = $(window);
+		var onMouseMove = this.onMouseMove.bind(this);
+		$window.on('mousemove', onMouseMove);
+		$window.on('mouseup', function () {
+
+			$window.off('mousemove', onMouseMove);
+			this.onMouseUp.apply(this, arguments)
+
+		}.bind(this));
 
 	};
 

@@ -29,13 +29,11 @@ define(function (require) {
 
 	RotateTranslateScaleBehaviour.prototype.onMouseMove = function (element, event) {
 
-		if (event.which === 1) {
-			var touchInfo = this.touches[-1];
-			var touchPoint = glm.vec3.fromValues(event.pageX, event.pageY, 0);
-			var translation = glm.vec3.sub(glm.vec3.create(), touchPoint, touchInfo.lastPoint);
-			glm.vec3.add(this.translate, this.translate, translation);
-			glm.vec3.copy(touchInfo.lastPoint, touchPoint);
-		}
+		var touchInfo = this.touches[-1];
+		var touchPoint = glm.vec3.fromValues(event.pageX, event.pageY, 0);
+		var translation = glm.vec3.sub(glm.vec3.create(), touchPoint, touchInfo.lastPoint);
+		glm.vec3.add(this.translate, this.translate, translation);
+		glm.vec3.copy(touchInfo.lastPoint, touchPoint);
 
 	};
 
