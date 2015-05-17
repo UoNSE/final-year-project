@@ -13,10 +13,20 @@ define(function (require) {
 		this.rotation = 0;
 		this.scale = glm.vec3.fromValues(1, 1, 1);
 		this.minScale = glm.vec3.fromValues(0.5, 0.5, 1);
+		this.maxScale = glm.vec3.fromValues(5, 5, 1);
+		this.updateRequested = false;
 
-		requestAnimationFrame(this.onAnimationFrame.bind(this));
 
 	}
+
+	RotateTranslateScaleBehaviour.prototype.needsUpdate = function () {
+
+		if (!this.updateRequested) {
+			requestAnimationFrame(this.onAnimationFrame.bind(this));
+			this.updateRequested = true;
+		}
+
+	};
 
 	RotateTranslateScaleBehaviour.prototype.onMouseDown = function (element, event) {
 
@@ -34,6 +44,7 @@ define(function (require) {
 		var translation = glm.vec3.sub(glm.vec3.create(), touchPoint, touchInfo.lastPoint);
 		glm.vec3.add(this.translate, this.translate, translation);
 		glm.vec3.copy(touchInfo.lastPoint, touchPoint);
+		this.needsUpdate();
 
 	};
 
@@ -86,6 +97,7 @@ define(function (require) {
 			glm.vec3.multiply(this.scale, this.scale, scaleVector);
 
 			glm.vec3.max(this.scale, this.scale, this.minScale);
+			glm.vec3.min(this.scale, this.scale, this.maxScale);
 
 			var translation1 = glm.vec3.subtract(glm.vec3.create(), touchPoint1, touchInfo1.lastPoint);
 			var translation2 = glm.vec3.subtract(glm.vec3.create(), touchPoint2, touchInfo2.lastPoint);
@@ -101,13 +113,13 @@ define(function (require) {
 			glm.vec3.copy(touchInfo1.lastPoint, touchPoint1);
 			glm.vec3.copy(touchInfo2.lastPoint, touchPoint2);
 		}
+		this.needsUpdate();
 
 	};
 
 	RotateTranslateScaleBehaviour.prototype.onAnimationFrame = function () {
 
-		requestAnimationFrame(this.onAnimationFrame.bind(this));
-
+		this.updateRequested = false;
 		this.updateTransform(this.element.element);
 
 	};
