@@ -19,6 +19,8 @@
     "ember-data": "^0.0.14",
     "handlebars": "^3.0.3",
     "backbone": "~1.2.0",
-    "text": "requirejs/text#~2.0.14"
+    "text": "requirejs/text#~2.0.14",
+    "bootstrap-material-design": "~0.3.0",
+    "bootstrap": "~3.3.4"
   }
 }

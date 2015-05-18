@@ -19,9 +19,10 @@ define(function (require) {
 
 	Application.prototype.bindEvents = function () {
 
-		$(document.body).mousedown(this.onBodyMouseDown.bind(this));
+		$(document.body).on('mousedown', this.onBodyMouseDown.bind(this));
 		$(window).on('keyup', this.onKeyUp.bind(this));
-		$('#add-item').click(this.onAddItem.bind(this));
+		$('#add-item').on('click', this.onAddItem.bind(this));
+		$('#toggle-navigation').on('click', this.onToggleNavigation.bind(this));
 
 	};
 
@@ -69,6 +70,11 @@ define(function (require) {
 		this.multitouch.addElementRTS(element);
 		this.elements = this.elements.add(element);
 
+	};
+
+	Application.prototype.onToggleNavigation = function (e) {
+		e.preventDefault();
+		$('#wrapper').toggleClass('toggled');
 	};
 
 	return Application;

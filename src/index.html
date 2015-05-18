@@ -3,14 +3,30 @@
 <head lang="en">
 	<meta charset="UTF-8">
 	<title>The Project</title>
-	<style>
-	</style>
+	<link rel="stylesheet" type="text/css" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/lib/bootstrap-material-design/dist/css/material.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/sidebar.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <body>
-<h1>The Project</h1>
-<div id="add-item">+</div>
+	<div id="wrapper">
+		<nav class="sidebar" role="navigation">
+			<ul class="nav sidebar-nav">
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Portfolio</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Blog</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</nav>
+		<main>
+			<i id="toggle-navigation" class="text-primary mdi-navigation-menu"></i>
+			<div id="add-item">
+				<a href="javascript:void(0)" class="btn btn-default btn-fab btn-raised btn-material-red mdi-content-add"></a>
+			</div>
+		</main>
+	</div>
 <script data-main="/app/main.js" src="/lib/requirejs/require.js"></script>
 </body>
 </html>
