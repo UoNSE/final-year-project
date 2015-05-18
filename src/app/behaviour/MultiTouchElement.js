@@ -14,10 +14,12 @@ define(function (require) {
 
 	MultiTouchElement.prototype.bindEvents = function () {
 
-		this.element.on('mousedown', this.onMouseDown.bind(this));
-		this.element.on('touchstart', this.onTouchStart.bind(this));
-		this.element.on('touchmove', this.onTouchMove.bind(this));
-		this.element.on('touchend', this.onTouchEnd.bind(this));
+		this.element.on({
+			mousedown: this.onMouseDown.bind(this),
+			touchstart: this.onTouchStart.bind(this),
+			touchmove: this.onTouchMove.bind(this),
+			touchend: this.onTouchEnd.bind(this)
+		});
 
 	};
 

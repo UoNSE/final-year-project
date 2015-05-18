@@ -16,7 +16,6 @@ define(function (require) {
 		this.maxScale = glm.vec3.fromValues(5, 5, 1);
 		this.updateRequested = false;
 
-
 	}
 
 	RotateTranslateScaleBehaviour.prototype.needsUpdate = function () {
@@ -78,7 +77,6 @@ define(function (require) {
 			var translation = glm.vec3.sub(glm.vec3.create(), touchPoint, touchInfo.lastPoint);
 
 			glm.vec3.add(this.translate, this.translate, translation);
-
 			glm.vec3.copy(touchInfo.lastPoint, touchPoint);
 		} else {
 			var touch1 = targetTouches[0];
@@ -126,16 +124,15 @@ define(function (require) {
 
 	RotateTranslateScaleBehaviour.prototype.updateTransform = function (element) {
 
-		element.css('transform',
-			   'translate3d(' + this.translate[0] + 'px, ' + this.translate[1] + 'px, 0)'
-			+ ' scale3d(' + this.scale[0] + ', ' + this.scale[1] + ', 1)'
-		    + ' rotateZ(' + this.rotation + 'rad)'
-		);
+		element.css({
+			transform: 'translate3d(' + this.translate[0] + 'px, ' + this.translate[1] + 'px, 0)'
+					+ ' scale3d(' + this.scale[0] + ', ' + this.scale[1] + ', 1)'
+					+ ' rotateZ(' + this.rotation + 'rad)'
+		});
 
 	};
 
 	RotateTranslateScaleBehaviour.prototype.onTouchEnd = function (element, event) {
-
 
 		var changedTouches = event.originalEvent.changedTouches;
 		for (var i = 0, len = changedTouches.length; i < len; i++) {
