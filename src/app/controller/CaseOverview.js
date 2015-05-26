@@ -12,12 +12,11 @@ define(function (require) {
 		styles: styles,
 		render: function () {
 			// Get all the buttons from the view.
-			var buttons = $('.case-overview button');
-			// Iterate through every button except for the last.
-			for (var i = 0, len = buttons.length - 1; i < len; i++) {
-				// Get the current button.
-				var button = $(buttons[i]);
-			}
+			$('.case-overview').css({
+				transform: 'scale(0)'
+			}).animate({
+				transform: 'scale(1)'
+			}, 300);
 		}
 	});
 

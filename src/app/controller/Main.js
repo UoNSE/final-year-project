@@ -17,7 +17,7 @@ define(function (require) {
 	return Backbone.View.extend({
 		template: Handlebars.compile(template),
 		styles: styles,
-		initialize: function () {
+		render: function () {
 
 			$('#btn-start').click(this.onStart.bind(this));
 
@@ -46,8 +46,6 @@ define(function (require) {
 
 				var angle = 2 * Math.PI * (i / numItems);
 				var distance = 400;
-				//var hue = i / numItems;
-				//var color = Color.HSVtoRGB(hue, 1, 1);
 				btn.addClass('btn-material-' + colorClasses[Math.round(i * colorClasses.length / numItems)]);
 				btn.css({
 					transform: 'scale(0)',
