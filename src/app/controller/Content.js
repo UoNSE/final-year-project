@@ -8,9 +8,6 @@ define(function (require) {
 	return Backbone.View.extend({
 		template: Handlebars.compile(template),
 		selector: '#content',
-		initialize: function () {
-			this.render();
-		},
 		/**
 		 * The render function that is called upon initialisation and when a new partial is being loaded.
 		 */
