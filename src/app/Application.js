@@ -5,6 +5,7 @@ define(function (require) {
 	var $ = require('jquery');
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
+	var Content = require('view/Content');
 	var Box = require('view/Box');
 	var Template = require('view/Template');
 	var Video = require('view/Video');
@@ -13,6 +14,8 @@ define(function (require) {
 
 		this.elements = $();
 		this.multitouch = MultiTouchManager.getInstance();
+		this.content = new Content();
+		this.content.load('view/CaseOverview.html');
 		this.bindEvents();
 
 	}
@@ -22,7 +25,6 @@ define(function (require) {
 		$(document.body).on('mousedown', this.onBodyMouseDown.bind(this));
 		$(window).on('keyup', this.onKeyUp.bind(this));
 		$('#add-item').on('click', this.onAddItem.bind(this));
-		$('#toggle-navigation').on('click', this.onToggleNavigation.bind(this));
 
 	};
 
@@ -69,13 +71,6 @@ define(function (require) {
 		element.css('backgroundColor', colors[Math.floor(Math.random() * colors.length)]);
 		this.multitouch.addElementRTS(element);
 		this.elements = this.elements.add(element);
-
-	};
-
-	Application.prototype.onToggleNavigation = function (e) {
-
-		e.preventDefault();
-		$('#wrapper').toggleClass('toggled');
 
 	};
 
