@@ -1,6 +1,6 @@
 @import "theme.less";
 
-@button-size: 5em;
+@button-size: 150px;
 @button-margin: 0.5em;
 
 .case-overview {
@@ -8,11 +8,21 @@
 	height: calc(@button-size * 2);
 	text-align: center;
 
+	.line {
+		display: inline-block;
+		width: 50px;
+		height: 0.25em;
+		background-color: #888;
+		border-radius: 0.1em;
+		margin-left: -0.5em;
+	}
+
 	button {
 		width: @button-size !important;
 		height: @button-size !important;
 		color: #fff !important;
-		margin-right: @button-margin !important;
+		font-size: 1.1em !important;
+		margin-left: -@button-margin !important;
 	}
 
 	button.complete {
@@ -23,7 +33,7 @@
 		background-color: @primary !important;
 	}
 
-	button.disabled {
+	button.inactive {
 		background-color: @disabled !important;
 	}
 

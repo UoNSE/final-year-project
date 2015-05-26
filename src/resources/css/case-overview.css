@@ -1,12 +1,21 @@
 .case-overview {
-  height: calc(10em);
+  height: calc(300px);
   text-align: center;
 }
+.case-overview .line {
+  display: inline-block;
+  width: 50px;
+  height: 0.25em;
+  background-color: #888;
+  border-radius: 0.1em;
+  margin-left: -0.5em;
+}
 .case-overview button {
-  width: 5em !important;
-  height: 5em !important;
+  width: 150px !important;
+  height: 150px !important;
   color: #fff !important;
-  margin-right: 0.5em !important;
+  font-size: 1.1em !important;
+  margin-left: -0.5em !important;
 }
 .case-overview button.complete {
   background-color: #4caf50 !important;
@@ -14,6 +23,6 @@
 .case-overview button.active {
   background-color: #00bcd4 !important;
 }
-.case-overview button.disabled {
-  background-color: #111111 !important;
+.case-overview button.inactive {
+  background-color: #555555 !important;
 }
