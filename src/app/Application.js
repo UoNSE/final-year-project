@@ -5,10 +5,10 @@ define(function (require) {
 	var $ = require('jquery');
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
-	var Content = require('view/Content');
-	var Box = require('view/Box');
-	var Template = require('view/Template');
-	var Video = require('view/Video');
+	var Content = require('controller/Content');
+	var Box = require('controller/Box');
+	var Template = require('controller/Template');
+	var Video = require('controller/Video');
 
 	function Application () {
 
