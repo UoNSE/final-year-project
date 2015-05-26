@@ -2,6 +2,7 @@ define(function (require) {
 
 	var Backbone = require('backbone');
 	var Handlebars = require('handlebars');
+	var $ = require('jquery');
 	var template = require('text!view/Main.html');
 
 	return Backbone.View.extend({
@@ -18,16 +19,24 @@ define(function (require) {
 			$(this.selector).html(html);
 		},
 		/**
+		 * Loads a controller that contains the template, styles and scripts to load.
 		 *
-		 * @param path
+		 * @param path The path to the Backbone controller.
 		 */
 		load: function (path) {
-			// Prepend text! to the path so the HTML file can be required.
-			path = 'text!' + path;
-			// Load the file at the specified path.
-			require([path], function (partial) {
+			// Load the controller at the specified path.
+			require([path], function (controller) {
 				// Switch out and compile the new template.
-				this.template = Handlebars.compile(partial);
+				this.template = Handlebars.compile(controller.template);
+				// Get the head from the HTML page.
+				var head = $('head');
+				// Get the styles from the controller.
+				var styles = controller.styles;
+				// Load necessary CSS files.
+				for (var i = 0, len = styles.length; i < len; i++) {
+					var css = $('<link rel="stylesheet" type="text/css" href="' + styles[i] + '">');
+					head.append(css);
+				}
 				// Render the partial.
 				this.render();
 			}.bind(this));

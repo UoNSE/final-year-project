@@ -15,7 +15,7 @@ define(function (require) {
 		this.elements = $();
 		this.multitouch = MultiTouchManager.getInstance();
 		this.content = new Content();
-		this.content.load('view/CaseOverview.html');
+		this.content.load('controller/CaseOverview');
 		this.bindEvents();
 
 	}
