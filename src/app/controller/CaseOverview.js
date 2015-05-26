@@ -1,13 +1,13 @@
 define(function (require) {
 
-	var Backbone = require('backbone');
+	var Controller = require('controller/Controller');
 	var Handlebars = require('handlebars');
 	var template = require('text!view/CaseOverview.html');
 	var styles = [
 		'../resources/css/case-overview.css'
 	];
 
-	return Backbone.View.extend({
+	return Controller.extend({
 		template: Handlebars.compile(template),
 		styles: styles,
 		render: function () {

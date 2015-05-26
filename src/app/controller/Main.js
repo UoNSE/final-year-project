@@ -6,16 +6,15 @@ define(function (require) {
 	require('jquery.transform2d');
 	require('jquery.transform3d');
 	require('jquery-ui');
-	var Backbone = require('backbone');
 	var Handlebars = require('handlebars');
+	var Controller = require('controller/Controller');
 	var template = require('text!view/Main.html');
-	var Content = require('controller/Content');
 	var Color = require('util/Color');
 	var styles = [
 		//'../resources/css/main.css'
 	];
 
-	return Backbone.View.extend({
+	return Controller.extend({
 		template: Handlebars.compile(template),
 		styles: styles,
 		render: function () {
@@ -72,9 +71,9 @@ define(function (require) {
 					container.animate({
 						transform: 'scale(0)'
 					}, 300, function () {
-						new Content().load('controller/CaseOverview');
-					});
-				});
+						this.load('controller/CaseOverview');
+					}.bind(this));
+				}.bind(this));
 			}
 
 		}
