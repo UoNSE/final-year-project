@@ -9,19 +9,20 @@ define(function (require) {
 		this.element = element;
 		this.touches = {};
 		this.moving = false;
-		this.translate = glm.vec3.create();
+		this.translation = glm.vec3.create();
 		this.rotation = 0;
 		this.scale = glm.vec3.fromValues(1, 1, 1);
 		this.minScale = glm.vec3.fromValues(0.5, 0.5, 1);
 		this.maxScale = glm.vec3.fromValues(5, 5, 1);
 		this.updateRequested = false;
+		this.onAnimationFrameCallback = this.onAnimationFrame.bind(this);
 
 	}
 
 	RotateTranslateScaleBehaviour.prototype.needsUpdate = function () {
 
 		if (!this.updateRequested) {
-			requestAnimationFrame(this.onAnimationFrame.bind(this));
+			requestAnimationFrame(this.onAnimationFrameCallback);
 			this.updateRequested = true;
 		}
 
@@ -41,7 +42,7 @@ define(function (require) {
 		var touchInfo = this.touches[-1];
 		var touchPoint = glm.vec3.fromValues(event.pageX, event.pageY, 0);
 		var translation = glm.vec3.sub(glm.vec3.create(), touchPoint, touchInfo.lastPoint);
-		glm.vec3.add(this.translate, this.translate, translation);
+		glm.vec3.add(this.translation, this.translation, translation);
 		glm.vec3.copy(touchInfo.lastPoint, touchPoint);
 		this.needsUpdate();
 
@@ -76,7 +77,7 @@ define(function (require) {
 			var touchPoint = glm.vec3.fromValues(touch.pageX, touch.pageY, 0);
 			var translation = glm.vec3.sub(glm.vec3.create(), touchPoint, touchInfo.lastPoint);
 
-			glm.vec3.add(this.translate, this.translate, translation);
+			glm.vec3.add(this.translation, this.translation, translation);
 			glm.vec3.copy(touchInfo.lastPoint, touchPoint);
 		} else {
 			var touch1 = targetTouches[0];
@@ -101,7 +102,7 @@ define(function (require) {
 			var translation2 = glm.vec3.subtract(glm.vec3.create(), touchPoint2, touchInfo2.lastPoint);
 			var finalTranslation = glm.vec3.add(glm.vec3.create(), translation1, translation2);
 			glm.vec3.scale(finalTranslation, finalTranslation, 0.5);
-			glm.vec3.add(this.translate, this.translate, finalTranslation);
+			glm.vec3.add(this.translation, this.translation, finalTranslation);
 
 			var startAngle = Math.atan2(touchInfo1.lastPoint[1] - touchInfo2.lastPoint[1], touchInfo1.lastPoint[0] - touchInfo2.lastPoint[0]);
 			var angle = Math.atan2(touchPoint1[1] - touchPoint2[1], touchPoint1[0] - touchPoint2[0]);
@@ -125,7 +126,7 @@ define(function (require) {
 	RotateTranslateScaleBehaviour.prototype.updateTransform = function (element) {
 
 		element.css({
-			transform: 'translate3d(' + this.translate[0] + 'px, ' + this.translate[1] + 'px, 0)'
+			transform: 'translate3d(' + this.translation[0] + 'px, ' + this.translation[1] + 'px, 0)'
 					+ ' scale3d(' + this.scale[0] + ', ' + this.scale[1] + ', 1)'
 					+ ' rotateZ(' + this.rotation + 'rad)'
 		});

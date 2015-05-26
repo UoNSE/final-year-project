@@ -22,5 +22,9 @@
     "text": "requirejs/text#~2.0.14",
     "bootstrap-material-design": "~0.3.0",
     "bootstrap": "~3.3.4"
+  },
+  "resolutions": {
+    "handlebars": "^3.0.3",
+    "ember": "^1.12"
   }
 }

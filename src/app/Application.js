@@ -73,8 +73,10 @@ define(function (require) {
 	};
 
 	Application.prototype.onToggleNavigation = function (e) {
+
 		e.preventDefault();
 		$('#wrapper').toggleClass('toggled');
+
 	};
 
 	return Application;

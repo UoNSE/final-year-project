@@ -44,10 +44,10 @@ define(function (require) {
 		var $window = $(window);
 		var onMouseMove = this.onMouseMove.bind(this);
 		$window.on('mousemove', onMouseMove);
-		$window.on('mouseup', function () {
+		$window.one('mouseup', function () {
 
 			$window.off('mousemove', onMouseMove);
-			this.onMouseUp.apply(this, arguments)
+			this.onMouseUp.apply(this, arguments);
 
 		}.bind(this));
 
