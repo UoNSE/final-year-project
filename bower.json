@@ -18,10 +18,12 @@
     "gl-matrix": "^2.2.1",
     "ember-data": "^0.0.14",
     "handlebars": "^3.0.3",
-    "backbone": "~1.2.0",
+    "backbone": "^1.2.0",
     "text": "requirejs/text#~2.0.14",
-    "bootstrap-material-design": "~0.3.0",
-    "bootstrap": "~3.3.4"
+    "bootstrap-material-design": "^0.3.0",
+    "bootstrap": "^3.3.4",
+    "jquery-ui": "^1.11.4",
+    "jquery.transform.js": "louisremi/jquery.transform.js"
   },
   "resolutions": {
     "handlebars": "^3.0.3",

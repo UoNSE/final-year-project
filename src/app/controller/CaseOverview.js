@@ -10,7 +10,7 @@ define(function (require) {
 	return Backbone.View.extend({
 		template: Handlebars.compile(template),
 		styles: styles,
-		render: function () {
+		initialize: function () {
 			var buttons = $('.case-overview button');
 			for (var i = 0, len = buttons.length; i < len; i++) {
 				var button = $(buttons[i]);

@@ -11,7 +11,9 @@ define(function (require) {
 			'ember': '../lib/ember/ember.debug',
 			'handlebars': '../lib/handlebars/handlebars',
 			'jquery': '../lib/jquery/dist/jquery',
-			'glmatrix': '../lib/gl-matrix/dist/gl-matrix'
+			'glmatrix': '../lib/gl-matrix/dist/gl-matrix',
+			'jquery.transform3d': '../lib/jquery.transform.js/jquery.transform3d',
+			'jquery.transform2d': '../lib/jquery.transform.js/jquery.transform2d'
 		},
 		shim: {
 			'backbone': {
@@ -21,7 +23,8 @@ define(function (require) {
 			'ember': {
 				deps: ['jquery', 'handlebars'],
 				exports: 'Ember'
-			}
+			},
+			'jquery.transform3d': ['jquery']
 		}
 	});
 

@@ -41,7 +41,9 @@ define(function (require) {
 				}
 				// Render the partial and the controller.
 				this.render();
-				controller.render();
+				if (controller.initialize) {
+					controller.initialize($(this.selector));
+				}
 			}.bind(this));
 		}
 	});
