@@ -26,11 +26,11 @@ define(function (require) {
 				// Instantiate the controller.
 				var controller = new Controller();
 				// Switch out and compile the new template.
-				this.template = controller.template;
+				this.template = controller.template || '';
 				// Get the head from the HTML page.
 				var head = $('head');
 				// Get the styles from the controller.
-				var styles = controller.styles || {};
+				var styles = controller.styles || [];
 				// Load necessary CSS files.
 				for (var i = 0, len = styles.length; i < len; i++) {
 					var css = $('<link rel="stylesheet" type="text/css" href="' + styles[i] + '">');

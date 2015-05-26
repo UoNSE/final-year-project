@@ -4,12 +4,10 @@ define(function (require) {
 
 	var $ = require('jquery');
 	require('jquery.transform2d');
-	require('jquery.transform3d');
 	require('jquery-ui');
 	var Handlebars = require('handlebars');
 	var Controller = require('controller/Controller');
 	var template = require('text!view/Main.html');
-	var Color = require('util/Color');
 	var styles = [
 		//'../resources/css/main.css'
 	];
@@ -41,40 +39,61 @@ define(function (require) {
 
 			var container = $('<div class="abs-center"></div>');
 			$(document.body).append(container);
+
 			for (var i = 0; i < numItems; i++) {
 				var btn = $('<button class="btn btn-default btn-fab btn-raised btn-material-red abs-center">' + texts[i] + '</button>');
 
 				var angle = 2 * Math.PI * (i / numItems);
-				var distance = 400;
-				btn.addClass('btn-material-' + colorClasses[Math.round(i * colorClasses.length / numItems)]);
-				btn.css({
+				var distance = 200;
+				var cls = 'btn-material-' + colorClasses[Math.round(i * colorClasses.length / numItems)];
+				btn.addClass(cls).css({
 					transform: 'scale(0)',
 					width: 100,
 					height: 100,
 					fontSize: 12,
 					textAlign: 'center'
-				});
-				btn.delay(i * 50).animate({
-					top: -distance * Math.sin(angle),
-					left: distance * Math.cos(angle),
-					transform: 'scale(1)'
+				}).delay(i * 50).animate({
+					transform: 'translate(' + distance * Math.cos(angle) + 'px, ' + distance * -Math.sin(angle) + 'px) scale(1)'
 				}, {
 					duration: 1500,
 					easing: 'easeOutElastic'
-				});
+				}).click(function (event) {
+					$(event.target).addClass('disabled');
+					container.animate({
+						transform: 'scale(0)'
+					}, {
+						duration: 500,
+						easing: 'easeInBack',
+						complete: function () {
+							this.load('controller/CaseOverview');
+						}.bind(this)
+					});
+				}.bind(this));
+
 				container.append(btn);
+
 				$('#btn-start').addClass('disabled').animate({
 					opacity: 0,
 					transform: 'scale(0)'
-				}, 500);
-				btn.click(function () {
-					container.animate({
-						transform: 'scale(0)'
-					}, 300, function () {
-						this.load('controller/CaseOverview');
-					}.bind(this));
-				}.bind(this));
+				}, {
+					duration: 600,
+					easing: 'easeInBack'
+				});
 			}
+
+			var info = $('<button class="btn btn-default disabled abs-center">Pick a<br>Case</button>');
+			info.css({
+				height: 100,
+				width: 150,
+				fontSize: 20,
+				transform: 'scale(0)'
+			}).delay(500).animate({
+				transform: 'scale(1)'
+			}, {
+				duration: 1000,
+				easing: 'easeOutElastic'
+			});
+			container.append(info);
 
 		}
 	});
