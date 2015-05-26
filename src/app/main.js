@@ -8,23 +8,20 @@ define(function (require) {
 			'text': '../lib/text/text',
 			'backbone': '../lib/backbone/backbone',
 			'underscore': '../lib/underscore/underscore',
-			'ember': '../lib/ember/ember.debug',
 			'handlebars': '../lib/handlebars/handlebars',
 			'jquery': '../lib/jquery/dist/jquery',
 			'glmatrix': '../lib/gl-matrix/dist/gl-matrix',
 			'jquery.transform3d': '../lib/jquery.transform.js/jquery.transform3d',
-			'jquery.transform2d': '../lib/jquery.transform.js/jquery.transform2d'
+			'jquery.transform2d': '../lib/jquery.transform.js/jquery.transform2d',
+			'jquery-ui': '../lib/jquery-ui/jquery-ui'
 		},
 		shim: {
 			'backbone': {
 				deps: ['jquery', 'underscore'],
 				exports: 'Backbone'
 			},
-			'ember': {
-				deps: ['jquery', 'handlebars'],
-				exports: 'Ember'
-			},
-			'jquery.transform3d': ['jquery']
+			'jquery.transform3d': ['jquery'],
+			'jquery-ui': ['jquery']
 		}
 	});
 

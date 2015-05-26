@@ -5,6 +5,7 @@ define(function (require) {
 	var $ = require('jquery');
 	require('jquery.transform2d');
 	require('jquery.transform3d');
+	require('jquery-ui');
 	var Backbone = require('backbone');
 	var Handlebars = require('handlebars');
 	var template = require('text!view/Main.html');
@@ -58,7 +59,10 @@ define(function (require) {
 					top: -distance * Math.sin(angle),
 					left: distance * Math.cos(angle),
 					transform: 'scale(1)'
-				}, 200);
+				}, {
+					duration: 1500,
+					easing: 'easeOutElastic'
+				});
 				container.append(btn);
 				$('#btn-start').addClass('disabled').animate({
 					opacity: 0,
