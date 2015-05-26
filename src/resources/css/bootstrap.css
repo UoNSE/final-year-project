@@ -7840,3 +7840,15 @@ hr.on-light {
 .shadow-z-5 {
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
 }
+.btn-disabled {
+  background: #555 !important;
+  color: #fff;
+}
+.btn-disabled:hover,
+.btn-disabled:focus,
+.btn-disabled:active,
+.btn-disabled.active,
+.open > .dropdown-toggle.btn-disabled {
+  background: #454545 !important;
+  cursor: auto !important;
+}

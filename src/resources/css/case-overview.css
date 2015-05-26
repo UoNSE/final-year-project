@@ -17,12 +17,3 @@
   font-size: 1.1em !important;
   margin-left: -0.5em !important;
 }
-.case-overview button.complete {
-  background-color: #4caf50 !important;
-}
-.case-overview button.active {
-  background-color: #00bcd4 !important;
-}
-.case-overview button.inactive {
-  background-color: #555555 !important;
-}
