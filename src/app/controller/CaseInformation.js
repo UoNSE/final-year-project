@@ -15,6 +15,7 @@ define(function (require) {
 		template: Handlebars.compile(template),
 		styles: styles,
 		render: function () {
+			this.bindEvents();
 			var menuItems = $('.case-information .menu .menu-item');
 			var distance = 375;
 			var min = 3 * Math.PI / 4;
@@ -44,6 +45,20 @@ define(function (require) {
 					easing: 'easeOutElastic'
 				});
 			}
+		},
+		bindEvents: function () {
+			$('#patient-background').on('click', this.onPatientBackground.bind(this));
+			$('#context').on('click', this.onContext.bind(this));
+			$('#background').on('click', this.onBackground.bind(this));
+		},
+		onPatientBackground: function () {
+			// TODO
+		},
+		onContext: function () {
+			// TODO
+		},
+		onBackground: function () {
+			this.load('controller/Background');
 		}
 	});
 

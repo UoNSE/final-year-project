@@ -12,7 +12,7 @@ define(function (require) {
 		 * The render function that is called upon initialisation and when a new partial is being loaded.
 		 */
 		render: function () {
-			var html = this.template();
+			var html = this.template ? this.template() : '';
 			$(this.selector).html(html);
 		},
 		/**
