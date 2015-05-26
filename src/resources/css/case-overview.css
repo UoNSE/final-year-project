@@ -1,4 +1,19 @@
+.case-overview {
+  height: calc(10em);
+  text-align: center;
+}
+.case-overview button {
+  width: 5em !important;
+  height: 5em !important;
+  color: #fff !important;
+  margin-right: 0.5em !important;
+}
+.case-overview button.complete {
+  background-color: #4caf50 !important;
+}
 .case-overview button.active {
-  width: inherit;
-  height: inherit;
+  background-color: #00bcd4 !important;
+}
+.case-overview button.disabled {
+  background-color: #111111 !important;
 }

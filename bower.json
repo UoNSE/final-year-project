@@ -27,6 +27,7 @@
   },
   "resolutions": {
     "handlebars": "^3.0.3",
-    "ember": "^1.12"
+    "ember": "^1.12",
+    "jquery": "^2.1.4"
   }
 }

@@ -1,4 +1,30 @@
-.case-overview button.active {
-	width: inherit;
-	height: inherit;
+@import "theme.less";
+
+@button-size: 5em;
+@button-margin: 0.5em;
+
+.case-overview {
+
+	height: calc(@button-size * 2);
+	text-align: center;
+
+	button {
+		width: @button-size !important;
+		height: @button-size !important;
+		color: #fff !important;
+		margin-right: @button-margin !important;
+	}
+
+	button.complete {
+		background-color: @success !important;
+	}
+
+	button.active {
+		background-color: @primary !important;
+	}
+
+	button.disabled {
+		background-color: @disabled !important;
+	}
+
 }

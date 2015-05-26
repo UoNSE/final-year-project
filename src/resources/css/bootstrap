@@ -1,0 +1,5 @@
+@import "../../lib/bootstrap-material-design/less/material.less";
+@import "theme.less";
+
+@primary: @cyan-500;
+@success: @green-500;

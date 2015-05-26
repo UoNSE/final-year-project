@@ -10,13 +10,20 @@ define(function (require) {
 	return Backbone.View.extend({
 		template: Handlebars.compile(template),
 		styles: styles,
-		initialize: function () {
+		render: function () {
+			/*// Get all the buttons from the view.
 			var buttons = $('.case-overview button');
+			// Iterate through every button.
 			for (var i = 0, len = buttons.length; i < len; i++) {
+				// Get the current button.
 				var button = $(buttons[i]);
-				button.height(button.width());
-			}
-			debugger;
+				// Get the html of the button.
+				var html = button.html();
+				// To get the textwidth of a button, a span must be inserted and the width can then be obtained.
+				var size = (button.html('<span>' + html + '</span>')).find('span:first').width();
+				// Revert the html and adjust the width and height accordingly.
+				button.html(html).width(size).height(size);
+			}*/
 		}
 	});
 
