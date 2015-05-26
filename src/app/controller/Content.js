@@ -25,9 +25,11 @@ define(function (require) {
 		 */
 		load: function (path) {
 			// Load the controller at the specified path.
-			require([path], function (controller) {
+			require([path], function (Controller) {
+				// Instantiate the controller.
+				var controller = new Controller();
 				// Switch out and compile the new template.
-				this.template = Handlebars.compile(controller.template);
+				this.template = controller.template;
 				// Get the head from the HTML page.
 				var head = $('head');
 				// Get the styles from the controller.
@@ -37,8 +39,9 @@ define(function (require) {
 					var css = $('<link rel="stylesheet" type="text/css" href="' + styles[i] + '">');
 					head.append(css);
 				}
-				// Render the partial.
+				// Render the partial and the controller.
 				this.render();
+				controller.render();
 			}.bind(this));
 		}
 	});
