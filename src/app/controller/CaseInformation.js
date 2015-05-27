@@ -62,7 +62,7 @@ define(function (require) {
 			// TODO
 		},
 		onBackground: function () {
-			$('.case-information .title, .case-information .menu .menu-item').animate({
+			$('.case-information').animate({
 				transform: 'scale(0)'
 			}, {
 				duration: 500,
