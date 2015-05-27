@@ -23,10 +23,14 @@ define(function (require) {
 			});
 		},
 		bindEvents: function () {
+			$('#back').on('click', this.onBack.bind(this));
 			$('#case-information').on('click', this.onCaseInformation.bind(this));
 			$('#identify-issues').on('click', this.onIdentifyIssues.bind(this));
 			$('#goals-and-actions').on('click', this.onGoalsAndActions.bind(this));
 			$('#reflection').on('click', this.onReflection.bind(this));
+		},
+		onBack: function () {
+			this.loadPrevious();
 		},
 		onCaseInformation: function () {
 			this.load('controller/CaseInformation');

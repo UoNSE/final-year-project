@@ -16,7 +16,8 @@ define(function (require) {
 		template: Handlebars.compile(template),
 		styles: styles,
 		render: function () {
-
+			// TODO fix hack
+			this.content.previous.push('controller/Main');
 			$('#btn-start').click(this.onStart.bind(this));
 
 		},

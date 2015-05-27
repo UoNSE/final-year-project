@@ -6,7 +6,13 @@ define(function (require) {
 	return Backbone.View.extend({
 		content: new Content(),
 		/**
-		 * Load the specified controller with the content.
+		 * Loads the previously displayed controller from the content.
+		 */
+		loadPrevious: function () {
+			this.content.loadPrevious();
+		},
+		/**
+		 * Load the specified controller from the content.
 		 *
 		 * @param path The path to the controller.
 		 */

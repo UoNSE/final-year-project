@@ -7,6 +7,7 @@ define(function (require) {
 
 	return Backbone.View.extend({
 		template: Handlebars.compile(template),
+		previous: [],
 		selector: '#content',
 		/**
 		 * The render function that is called upon initialisation and when a new partial is being loaded.
@@ -16,13 +17,25 @@ define(function (require) {
 			$(this.selector).html(html);
 		},
 		/**
+		 * Loads the previous controller.
+		 */
+		loadPrevious: function () {
+			this.load(this.previous[this.previous.length - 1], false);
+			this.previous.pop();
+		},
+		/**
 		 * Loads a controller that contains the template, styles and scripts to load.
 		 *
 		 * @param path The path to the Backbone controller.
 		 */
-		load: function (path) {
+		load: function (path, isPrevious) {
 			// Load the controller at the specified path.
 			require([path], function (Controller) {
+				// Add the previous path if the current path exists.
+				if (this.path && isPrevious !== false) {
+					this.previous.push(this.path);
+				}
+				this.path = path;
 				// Instantiate the controller.
 				var controller = new Controller();
 				// Switch out and compile the new template.

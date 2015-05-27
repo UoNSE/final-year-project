@@ -1,7 +1,9 @@
 define(function (require) {
 
 	var $ = require('jquery');
+	var Handlebars = require('handlebars');
 	var Controller = require('controller/Controller');
+	var template = require('text!view/Background.html');
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
 	var Box = require('controller/Box');
@@ -12,15 +14,20 @@ define(function (require) {
 
 	return Controller.extend({
 		//styles: styles,
+		template: Handlebars.compile(template),
 		elements: $(),
 		multitouch: MultiTouchManager.getInstance(),
 		urls: ['box.gif', 'spiral.gif', 'torus.gif', 'triangle.gif'],
 		render: function () {
+			this.bindEvents();
 			this.addItems(5);
+		},
+		bindEvents: function () {
+			$('#back').on('click', this.onBack.bind(this));
 		},
 		addItems: function (items) {
 			for (var i = 0; i < items; i++) {
-				var url = this.urls[Math.floor(Math.random() * urls.length)];
+				var url = this.urls[Math.floor(Math.random() * this.urls.length)];
 				var resources = [
 					/*Box,
 					 Video*/
@@ -35,7 +42,7 @@ define(function (require) {
 				var element = $(resources[Math.floor(Math.random() * resources.length)]);
 				element.offset({
 					left: ($(window).width() - element.outerWidth()) / 2,
-					top: ($(window).height() - element.outerHeight()) / 2W
+					top: ($(window).height() - element.outerHeight()) / 2
 				});
 				element.appendTo($('#content'));
 				var colors = ['#ff0000', '#ffffff', '#d4ee9f'];
@@ -43,6 +50,9 @@ define(function (require) {
 				this.multitouch.addElementRTS(element);
 				this.elements = this.elements.add(element);
 			}
+		},
+		onBack: function () {
+			this.loadPrevious();
 		}
 	});
 
