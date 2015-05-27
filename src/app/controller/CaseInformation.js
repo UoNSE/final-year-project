@@ -47,7 +47,7 @@ define(function (require) {
 			}
 		},
 		bindEvents: function () {
-			$('.title').on('click', this.onTitle.bind(this));
+			$('.title, #back').on('click', this.onTitle.bind(this));
 			$('#patient-background').on('click', this.onPatientBackground.bind(this));
 			$('#context').on('click', this.onContext.bind(this));
 			$('#background').on('click', this.onBackground.bind(this));

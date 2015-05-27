@@ -35,11 +35,11 @@ define(function (require) {
 				'<video src="resources/video/hifi2.mp4" type="video/mp4" class="item" autoplay loop muted>'
 			];
 			var transforms = [
-				[glm.vec3.fromValues(500, 200, 0), glm.vec3.fromValues(1, 1, 1), 0],
-				[glm.vec3.fromValues(-500, 0, 0), glm.vec3.fromValues(1, 1, 1), 0],
-				[glm.vec3.fromValues(0, 200, 0), glm.vec3.fromValues(1, 1, 1), 0],
-				[glm.vec3.fromValues(500, -150, 0), glm.vec3.fromValues(1, 1, 1), 0],
-				[glm.vec3.fromValues(0, -150, 0), glm.vec3.fromValues(2, 2, 1), 0]
+				[glm.vec3.fromValues(300, 100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+				[glm.vec3.fromValues(-300, 0, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+				[glm.vec3.fromValues(0, 100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+				[glm.vec3.fromValues(300, -100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+				[glm.vec3.fromValues(0, -100, 0), glm.vec3.fromValues(1, 1, 1), 0]
 			];
 			var numItems = resources.length;
 			var container = $('<div class="abs-center"></div>');
