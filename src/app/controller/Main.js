@@ -66,7 +66,9 @@ define(function (require) {
 						duration: 500,
 						easing: 'easeInBack',
 						complete: function () {
+
 							this.load('controller/CaseOverview');
+
 						}.bind(this)
 					});
 				}.bind(this));

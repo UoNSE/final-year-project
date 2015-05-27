@@ -62,7 +62,17 @@ define(function (require) {
 			// TODO
 		},
 		onBackground: function () {
-			this.load('controller/Background');
+			$('.case-information .title, .case-information .menu .menu-item').animate({
+				transform: 'scale(0)'
+			}, {
+				duration: 500,
+				easing: 'easeInBack',
+				complete: function () {
+
+					this.load('controller/Background');
+
+				}.bind(this)
+			});
 		}
 	});
 
