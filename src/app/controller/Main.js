@@ -39,7 +39,7 @@ define(function (require) {
 						     	'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
 
 			var container = $('<div class="abs-center"></div>');
-			$(document.body).append(container);
+			$('#content').append(container);
 
 			for (var i = 0; i < numItems; i++) {
 				var btn = $('<button class="btn btn-default btn-fab btn-raised btn-material-red abs-center">' + texts[i] + '</button>');
