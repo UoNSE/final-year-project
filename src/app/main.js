@@ -25,7 +25,7 @@ define(function (require) {
 		}
 	});
 
-	require(['Application'], function (Application) {
+	require(['controller/Application'], function (Application) {
 
 		new Application();
 

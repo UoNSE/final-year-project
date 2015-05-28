@@ -1,32 +1,27 @@
 define(function (require) {
 
 	var $ = require('jquery');
-	var Handlebars = require('handlebars');
 	var glm = require('glmatrix');
 	var Controller = require('controller/Controller');
-	var template = require('text!view/Background.html');
+	var Animate = require('behaviour/Animate');
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
-	var Box = require('controller/Box');
-	var Video = require('controller/Video');
+
+	var template = require('text!component/case_information/background/BackgroundView.html');
 
 	return Controller.extend({
+
 		//styles: styles,
-		template: Handlebars.compile(template),
+		template: template,
 		elements: $(),
 		multitouch: MultiTouchManager.getInstance(),
 		urls: ['box.gif', 'spiral.gif', 'torus.gif', 'triangle.gif'],
+
 		render: function () {
-			this.bindEvents();
-			this.addItems();
+			this._addItems();
 		},
-		bindEvents: function () {
-			$('#back').on('click', this.onBack.bind(this));
-		},
-		onBack: function () {
-			this.loadPrevious();
-		},
-		addItems: function () {
+
+		_addItems: function () {
 			var resources = [
 				'<video src="resources/video/animation.mp4" type="video/mp4" class="item" autoplay loop muted>',
 				'<img src="resources/images/human.jpg" class="item" />',
@@ -59,15 +54,9 @@ define(function (require) {
 				behaviour.needsUpdate();
 				this.elements = this.elements.add(element);
 			}
-			container.css({
-				transform: 'scale(0)'
-			}).animate({
-				transform: 'scale(1)'
-			}, {
-				duration: 1500,
-				easing: 'easeOutElastic'
-			});
+			Animate.scale(container);
 		}
+
 	});
 
 });

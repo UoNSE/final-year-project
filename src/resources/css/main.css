@@ -39,3 +39,8 @@ main {
   right: 0;
   bottom: 0;
 }
+button.back {
+  position: relative;
+  margin: 0.5em !important;
+  z-index: 100 !important;
+}

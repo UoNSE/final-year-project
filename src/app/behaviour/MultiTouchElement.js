@@ -68,7 +68,6 @@ define(function (require) {
 	MultiTouchElement.prototype.onTouchStart = function (event) {
 
 		event.preventDefault();
-
 		this.dispatchEvent('onTouchStart', event);
 
 	};
@@ -76,14 +75,12 @@ define(function (require) {
 	MultiTouchElement.prototype.onTouchMove = function (event) {
 
 		event.preventDefault();
-
 		this.dispatchEvent('onTouchMove', event);
 
 	};
 	MultiTouchElement.prototype.onTouchEnd = function (event) {
 
 		event.preventDefault();
-
 		this.dispatchEvent('onTouchEnd', event);
 
 	};
