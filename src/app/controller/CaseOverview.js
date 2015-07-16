@@ -6,7 +6,7 @@ define(function (require) {
 	var Handlebars = require('handlebars');
 	var template = require('text!view/CaseOverview.html');
 	var styles = [
-		'../resources/css/case-overview.css'
+		'../css/case-overview.css'
 	];
 
 	return Controller.extend({

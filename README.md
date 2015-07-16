@@ -8,6 +8,9 @@ The Project
 
 ### Install ###
 
-* Open a terminal/commandline to project directory.
-* npm install
-* npm start (OR run in IntellJ as a NodeJS app, using app.js as main JavaScript file)
+1. Open a terminal/commandline to project directory.
+1. npm install
+1. gulp
+
+### Testing ###
+In order to execute the test suite run ```npm test``` in the command line

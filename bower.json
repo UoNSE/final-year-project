@@ -4,7 +4,8 @@
   "homepage": "http://uonse.org",
   "authors": [
     "Brendan Annable <brendan.annable@uon.edu.au>",
-    "Monica Olejniczak <monica.j.olejniczak@gmail.com>"
+    "Monica Olejniczak <monica.j.olejniczak@gmail.com>",
+    "Michael Hudson <michael.andrew.hudson@gmail.com>"
   ],
   "main": "app.js",
   "license": "GPL",

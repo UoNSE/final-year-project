@@ -8,7 +8,7 @@ define(function (require) {
 	var Controller = require('controller/Controller');
 	var template = require('text!view/CaseInformation.html');
 	var styles = [
-		'../resources/css/case-information.css'
+		'../css/case-information.css'
 	];
 
 	return Controller.extend({
