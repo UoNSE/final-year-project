@@ -5,9 +5,9 @@ define(function (require) {
 	var Controller = require('controller/Controller');
 	var Animate = require('behaviour/Animate');
 
-	var template = require('text!component/case_information/CaseInformationView.html');
+	var template = require('text!component/information/CaseInformationView.html');
 	var styles = [
-		'../resources/css/case-information.css'
+		'case-information.css'
 	];
 
 	return Controller.extend({
@@ -55,7 +55,7 @@ define(function (require) {
 				duration: 500,
 				easing: 'easeInBack',
 				complete: function () {
-					this.load('component/case_information/background/BackgroundController');
+					this.load('case/information/background');
 				}.bind(this)
 			});
 		}

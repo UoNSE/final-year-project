@@ -5,15 +5,15 @@ define(function (require) {
 	var Backbone = require('backbone');
 	var $ = require('jquery');
 
-	var Router = require('controller/Router');
+	var Loader = require('controller/Loader');
 
 	return Backbone.View.extend({
 
-		_router: new Router(),
+		_loader: new Loader(),
 
 		initialize: function () {
 
-			this._router.load('component/main/MainController');
+			this._loader.load('/');
 			this._bindEvents();
 
 		},

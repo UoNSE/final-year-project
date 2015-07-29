@@ -7,7 +7,7 @@ define(function (require) {
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
 
-	var template = require('text!component/case_information/background/BackgroundView.html');
+	var template = require('text!component/information/background/BackgroundView.html');
 
 	return Controller.extend({
 

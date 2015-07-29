@@ -8,14 +8,14 @@ define(function (require) {
 	return Controller.extend({
 
 		template: template,
-		_selector: '#back',
+		selector: '#back',
 
 		render: function () {
 			this._bindEvents();
 		},
 
 		_bindEvents: function () {
-			$(this._selector).on('click', this._onBack.bind(this));
+			$(this.selector).on('click', this._onBack.bind(this));
 		},
 
 		_onBack: function () {

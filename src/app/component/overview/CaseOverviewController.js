@@ -5,9 +5,9 @@ define(function (require) {
 	var Controller = require('controller/Controller');
 	var Animate = require('behaviour/Animate');
 
-	var template = require('text!component/case_overview/CaseOverviewView.html');
+	var template = require('text!component/overview/CaseOverviewView.html');
 	var styles = [
-		'../resources/css/case-overview.css'
+		'case-overview.css'
 	];
 
 	return Controller.extend({
@@ -15,9 +15,11 @@ define(function (require) {
 		template: template,
 		styles: styles,
 
+		selector: '.case-overview',
+
 		render: function () {
 			this._bindEvents();
-			Animate.scale($('.case-overview'), {duration: 1000});
+			Animate.scale($(this.selector), {duration: 1000});
 		},
 
 		_bindEvents: function () {
@@ -28,11 +30,11 @@ define(function (require) {
 		},
 
 		_onCaseInformation: function () {
-			Animate.scale($('.case-overview'), {
+			Animate.scaleOut($(this.selector), {
 				duration: 500,
 				easing: 'easeInBack',
 				complete: function () {
-					this.load('component/case_information/CaseInformationController');
+					this.load('case/information');
 				}.bind(this)
 			});
 		},

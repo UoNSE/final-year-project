@@ -3,15 +3,13 @@ define(function (require) {
 	'use strict';
 
 	var $ = require('jquery');
-	require('jquery.transform2d');
-	require('jquery-ui');
 
 	var Controller = require('controller/Controller');
 	var Animate = require('behaviour/Animate');
 
 	var template = require('text!component/main/MainView.html');
 	var styles = [
-		//'../resources/css/main.css'
+		//'main.css'
 	];
 
 	return Controller.extend({
@@ -91,7 +89,7 @@ define(function (require) {
 				duration: 500,
 				easing: 'easeInBack',
 				complete: function () {
-					this.load('component/case_overview/CaseOverviewController');
+					this.load('case/overview');
 				}.bind(this)
 			});
 		}
