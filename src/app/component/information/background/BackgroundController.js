@@ -7,12 +7,8 @@ define(function (require) {
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
 
-	var template = require('text!component/information/background/BackgroundView.html');
-
 	return Controller.extend({
 
-		//styles: styles,
-		template: template,
 		elements: $(),
 		multitouch: MultiTouchManager.getInstance(),
 		urls: ['box.gif', 'spiral.gif', 'torus.gif', 'triangle.gif'],

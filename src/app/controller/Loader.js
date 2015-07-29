@@ -1,6 +1,7 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
+	var Handlebars = require('handlebars');
 	var $ = require('jquery');
 
 	var Router = require('controller/Router');
@@ -55,11 +56,12 @@ define(function (require) {
 		/**
 		 * Loads a controller that contains the template, styles and scripts to load.
 		 *
-		 * @param url The url that maps to the Backbone controller.
+		 * @param url The url that maps to the Backbone view and controller.
 		 * @param [isPrevious]
 		 */
 		load: function (url, isPrevious) {
-			var path = this._resolveRoute(url);
+			var route = this._resolveRoute(url);
+			var path = route + 'Controller';
 			// Load the controller at the specified path.
 			require([path], function (Controller) {
 				// Add the previous path if the current path exists.
@@ -69,22 +71,11 @@ define(function (require) {
 				this._url = url;
 				// Instantiate the controller.
 				var controller = new Controller();
-				// Switch out the template.
-				this.template = controller.template || '';
 				// Bind the events of the controller and load the styles.
 				this._bindEvents(controller);
+				this._configureBack(controller.back);
 				this._loadStyles(controller.styles);
-				var back = $(this._back.selector);
-				if (controller.back) {
-					back.show();
-				} else {
-					back.hide();
-				}
-				// Render the partial and the controller.
-				this.render();
-				if (controller.render) {
-					controller.render($(this.selector));
-				}
+				this._loadTemplate(route, controller);
 			}.bind(this));
 		},
 
@@ -97,6 +88,39 @@ define(function (require) {
 		_bindEvents: function (controller) {
 			controller.on('add', this._onAdd.bind(this));
 			controller.on('load', this.load.bind(this));
+		},
+
+		/**
+		 * Loads the template associated with a route.
+		 *
+		 * @param route The base path to the view and controller.
+		 * @param controller The controller that contains the template and render information.
+		 * @private
+		 */
+		_loadTemplate: function (route, controller) {
+			if (controller.template !== false) {
+				var path = 'text!' + route + 'View.html';
+				require([path], function (template) {
+					this.template = Handlebars.compile(template);
+					this._renderView(controller);
+				}.bind(this));
+			} else {
+				this.template = '';
+				this._renderView(controller);
+			}
+		},
+
+		/**
+		 * Renders a view by calling the render function of both the loader and the controller.
+		 *
+		 * @param controller The controller associated with the view.
+		 * @private
+		 */
+		_renderView: function (controller) {
+			this.render();
+			if (controller.render) {
+				controller.render($(this.selector));
+			}
 		},
 
 		/**
@@ -114,6 +138,21 @@ define(function (require) {
 				var path = this._baseStylePath + styles[i];
 				var css = $('<link rel="stylesheet" type="text/css" href="' + path + '">');
 				head.append(css);
+			}
+		},
+
+		/**
+		 * Changes the visibility of the back button depending on the back configuration.
+		 *
+		 * @param back The back configuration.
+		 * @private
+		 */
+		_configureBack: function (back) {
+			var button = $(this._back.selector);
+			if (back) {
+				button.show();
+			} else {
+				button.hide();
 			}
 		},
 

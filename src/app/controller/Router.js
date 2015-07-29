@@ -5,10 +5,10 @@ define(function (require) {
 	return Backbone.Router.extend({
 
 		routes: {
-			'/': 'component/main/MainController',
-			'case/overview': 'component/overview/CaseOverviewController',
-			'case/information': 'component/information/CaseInformationController',
-			'case/information/background': 'component/information/background/BackgroundController'
+			'/': 'component/main/Main',
+			'case/overview': 'component/overview/CaseOverview',
+			'case/information': 'component/information/CaseInformation',
+			'case/information/background': 'component/information/background/Background'
 		}
 
 	});

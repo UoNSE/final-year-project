@@ -7,14 +7,12 @@ define(function (require) {
 	var Controller = require('controller/Controller');
 	var Animate = require('behaviour/Animate');
 
-	var template = require('text!component/main/MainView.html');
 	var styles = [
 		//'main.css'
 	];
 
 	return Controller.extend({
 
-		template: template,
 		styles: styles,
 		back: false,
 

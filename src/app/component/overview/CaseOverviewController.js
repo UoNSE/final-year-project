@@ -5,16 +5,13 @@ define(function (require) {
 	var Controller = require('controller/Controller');
 	var Animate = require('behaviour/Animate');
 
-	var template = require('text!component/overview/CaseOverviewView.html');
 	var styles = [
 		'case-overview.css'
 	];
 
 	return Controller.extend({
 
-		template: template,
 		styles: styles,
-
 		selector: '.case-overview',
 
 		render: function () {
