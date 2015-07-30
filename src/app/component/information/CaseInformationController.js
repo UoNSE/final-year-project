@@ -51,10 +51,7 @@ define(function (require) {
 		_onBackground: function () {
 			Animate.scaleOut($('.case-information'), {
 				duration: 500,
-				easing: 'easeInBack',
-				complete: function () {
-					this.load('case/information/background');
-				}.bind(this)
+				easing: 'easeInBack'
 			});
 		}
 

@@ -29,10 +29,7 @@ define(function (require) {
 		_onCaseInformation: function () {
 			Animate.scaleOut($(this.selector), {
 				duration: 500,
-				easing: 'easeInBack',
-				complete: function () {
-					this.load('case/information');
-				}.bind(this)
+				easing: 'easeInBack'
 			});
 		},
 

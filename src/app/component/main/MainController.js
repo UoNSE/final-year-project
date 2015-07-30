@@ -17,8 +17,6 @@ define(function (require) {
 		back: false,
 
 		render: function () {
-			// TODO fix hack
-			//this.content.previous.push('controller/Main');
 			$('#btn-start').click(this._onStart.bind(this));
 		},
 
@@ -43,7 +41,9 @@ define(function (require) {
 			$('#content').append(container);
 
 			for (var i = 0; i < numItems; i++) {
+				var link = $('<a href="#case/overview"></a>');
 				var btn = $('<button class="btn btn-default btn-fab btn-raised btn-material-red abs-center">' + texts[i] + '</button>');
+				link.append(btn);
 
 				var angle = 2 * Math.PI * (i / numItems);
 				var distance = 200;
@@ -60,7 +60,7 @@ define(function (require) {
 					animate: {transform: 'translate(' + distance * Math.cos(angle) + 'px, ' + distance * -Math.sin(angle) + 'px) scale(1)'}
 				});
 
-				container.append(btn);
+				container.append(link);
 
 				var startButton = $('#btn-start');
 				startButton.addClass('disabled');
@@ -85,10 +85,7 @@ define(function (require) {
 			$(event.target).addClass('disabled');
 			Animate.scaleOut(container, {
 				duration: 500,
-				easing: 'easeInBack',
-				complete: function () {
-					this.load('case/overview');
-				}.bind(this)
+				easing: 'easeInBack'
 			});
 		}
 

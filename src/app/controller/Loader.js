@@ -4,76 +4,34 @@ define(function (require) {
 	var Handlebars = require('handlebars');
 	var $ = require('jquery');
 
-	var Router = require('controller/Router');
-	var Back = require('shared/navigation/back/BackController');
-
 	return Backbone.View.extend({
 
-		_url: null,
-		_previous: [],
-		_selector: '#content',
+		selector: '#content',
 		_baseStylePath: '../resources/css/',
-
-		_router: new Router(),
-		_back: new Back(),
-
-		initialize: function () {
-			this._back.on('back', this._onBack.bind(this));
-			this.insertController(this._back, $('body'), 0);
-		},
 
 		/**
 		 * The render function that is called upon initialisation and when a new partial is being loaded.
 		 */
 		render: function () {
 			var html = this.template ? this.template() : '';
-			$(this._selector).html(html);
-		},
-
-		/**
-		 * Loads the previous controller.
-		 *
-		 * @private
-		 */
-		_onBack: function () {
-			if (this._previous.length > 0) {
-				this.load(this._previous[this._previous.length - 1], false);
-				this._previous.pop();
-			}
-		},
-
-		/**
-		 * Resolves a url by accessing the routes in the router.
-		 *
-		 * @param url The url to resolve.
-		 * @returns {*}
-		 * @private
-		 */
-		_resolveRoute: function (url) {
-			return this._router.routes[url];
+			$(this.selector).html(html);
 		},
 
 		/**
 		 * Loads a controller that contains the template, styles and scripts to load.
 		 *
-		 * @param url The url that maps to the Backbone view and controller.
-		 * @param [isPrevious]
+		 * @param route The route that maps to the Backbone view and controller.
 		 */
-		load: function (url, isPrevious) {
-			var route = this._resolveRoute(url);
+		load: function (route) {
 			var path = route + 'Controller';
 			// Load the controller at the specified path.
 			require([path], function (Controller) {
-				// Add the previous path if the current path exists.
-				if (this._url && isPrevious !== false) {
-					this._previous.push(this._url);
-				}
-				this._url = url;
 				// Instantiate the controller.
 				var controller = new Controller();
-				// Bind the events of the controller and load the styles.
+				// Trigger the back event for any listeners.
+				this.trigger('back', controller.back);
+				// Bind the events of the controller and load the styles and template.
 				this._bindEvents(controller);
-				this._configureBack(controller.back);
 				this._loadStyles(controller.styles);
 				this._loadTemplate(route, controller);
 			}.bind(this));
@@ -138,21 +96,6 @@ define(function (require) {
 				var path = this._baseStylePath + styles[i];
 				var css = $('<link rel="stylesheet" type="text/css" href="' + path + '">');
 				head.append(css);
-			}
-		},
-
-		/**
-		 * Changes the visibility of the back button depending on the back configuration.
-		 *
-		 * @param back The back configuration.
-		 * @private
-		 */
-		_configureBack: function (back) {
-			var button = $(this._back.selector);
-			if (back) {
-				button.show();
-			} else {
-				button.hide();
 			}
 		},
 
