@@ -13,10 +13,8 @@
   "dependencies": {
     "jquery": "^2.1.4",
     "requirejs": "^2.1.17",
-    "ember": "^1.12",
     "bluebird": "^2.9.25",
     "gl-matrix": "^2.2.1",
-    "ember-data": "^0.0.14",
     "handlebars": "^3.0.3",
     "backbone": "^1.2.0",
     "text": "requirejs/text#~2.0.14",
@@ -27,7 +25,6 @@
   },
   "resolutions": {
     "handlebars": "^3.0.3",
-    "ember": "^1.12",
     "jquery": "^2.1.4"
   }
 }

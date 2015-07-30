@@ -42,6 +42,7 @@ define(function (require) {
 		 */
 		_onConfigureBack: function (back) {
 			var button = $(this._back.selector);
+			// TODO add transitions
 			if (back) {
 				button.show();
 			} else {
