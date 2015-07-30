@@ -35,9 +35,14 @@ define(function (require) {
 		},
 
 		_bindEvents: function () {
+			$('.case-information .title').on('click', this._onTitle.bind(this));
 			$('#patient-background').on('click', this._onPatientBackground.bind(this));
 			$('#context').on('click', this._onContext.bind(this));
 			$('#background').on('click', this._onBackground.bind(this));
+		},
+
+		_onTitle: function () {
+			this.back();
 		},
 
 		_onPatientBackground: function () {

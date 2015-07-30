@@ -29,7 +29,7 @@ define(function (require) {
 				// Instantiate the controller.
 				var controller = new Controller();
 				// Trigger the back event for any listeners.
-				this.trigger('back', controller.back);
+				this.trigger('configureBack', controller.back);
 				// Bind the events of the controller and load the styles and template.
 				this._bindEvents(controller);
 				this._loadStyles(controller.styles);
@@ -44,8 +44,19 @@ define(function (require) {
 		 * @private
 		 */
 		_bindEvents: function (controller) {
-			controller.on('add', this._onAdd.bind(this));
-			controller.on('load', this.load.bind(this));
+			controller.on({
+				back: this._onBack.bind(this)
+			});
+		},
+
+		/**
+		 * An event triggered when a controller requests to go back a page. This method bubbles the event up.
+		 *
+		 * @private
+		 */
+		_onBack: function (event) {
+			debugger;
+			this.trigger('back');
 		},
 
 		/**
@@ -118,18 +129,6 @@ define(function (require) {
 			require([path], function (Controller) {
 				this.insertController(new Controller(), element, index);
 			}.bind(this));
-		},
-
-		/**
-		 * Adds the template loaded from the path to the specified element.
-		 *
-		 * @param path The path to the controller.
-		 * @param element The element having a template added to.
-		 * @private
-		 */
-		_onAdd: function (path, element) {
-			// TODO test
-			this.insert(path, element, element.children().length);
 		}
 
 	});

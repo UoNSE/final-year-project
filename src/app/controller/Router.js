@@ -17,9 +17,12 @@ define(function (require) {
 		},
 
 		initialize: function () {
-			this._back.on('back', this._onBack.bind(this));
+			this._back.on('back', this._onBack, this);
 			this._loader.insertController(this._back, $('body'), 0);
-			this._loader.on('back', this._configureBack.bind(this));
+			this._loader.on({
+				configureBack: this._onConfigureBack.bind(this),
+				back: this._onBack.bind(this)
+			});
 		},
 
 		/**
@@ -37,7 +40,7 @@ define(function (require) {
 		 * @param back The back configuration.
 		 * @private
 		 */
-		_configureBack: function (back) {
+		_onConfigureBack: function (back) {
 			var button = $(this._back.selector);
 			if (back) {
 				button.show();

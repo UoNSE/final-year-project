@@ -14,23 +14,8 @@ define(function (require) {
 			}
 		},
 
-		/**
-		 * Triggers the add event so a template within the controller can be added to the element.
-		 *
-		 * @param path The path to the controller.
-		 * @param element The HTML element.
-		 */
-		add: function (path, element) {
-			this.trigger('add', path, element);
-		},
-
-		/**
-		 * Load the specified controller from the content.
-		 *
-		 * @param path The path to the controller.
-		 */
-		load: function (path) {
-			this.trigger('load', path);
+		back: function () {
+			this.trigger('back');
 		}
 
 	});
