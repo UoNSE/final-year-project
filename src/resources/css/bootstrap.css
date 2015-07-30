@@ -7848,7 +7848,7 @@ hr.on-light {
 .btn-disabled:focus,
 .btn-disabled:active,
 .btn-disabled.active,
-.open > .dropdown-toggle.btn-disabled {
+.btn-disabled .open > .dropdown-toggle.btn-disabled {
   background: #454545 !important;
   cursor: auto !important;
 }

@@ -1,5 +1,5 @@
 .case-overview {
-  height: 150px;
+  height: 10em;
   text-align: center;
 }
 .case-overview .line {
@@ -11,8 +11,8 @@
   margin-left: -0.5em;
 }
 .case-overview button {
-  width: 150px !important;
-  height: 150px !important;
+  width: 10em !important;
+  height: 10em !important;
   color: #fff !important;
   font-size: 1.1em !important;
   margin-left: -0.5em !important;

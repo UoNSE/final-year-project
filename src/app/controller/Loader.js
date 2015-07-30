@@ -54,8 +54,7 @@ define(function (require) {
 		 *
 		 * @private
 		 */
-		_onBack: function (event) {
-			debugger;
+		_onBack: function () {
 			this.trigger('back');
 		},
 
