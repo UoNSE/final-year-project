@@ -7,6 +7,7 @@ define(function (require) {
 	return Backbone.View.extend({
 
 		selector: '#content',
+		_el: '',
 		_baseStylePath: '../resources/css/',
 
 		/**
@@ -14,7 +15,10 @@ define(function (require) {
 		 */
 		render: function () {
 			var html = this.template ? this.template() : '';
-			$(this.selector).html(html);
+			if (this._el) {
+				this._el.html(html);
+			}
+			$(this.selector).html(this._el || html);
 		},
 
 		/**
@@ -85,9 +89,10 @@ define(function (require) {
 		 * @private
 		 */
 		_renderView: function (controller) {
+			this._el = controller.$el;
 			this.render();
 			if (controller.render) {
-				controller.render($(this.selector));
+				controller.render();
 			}
 		},
 

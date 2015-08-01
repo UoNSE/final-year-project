@@ -13,6 +13,13 @@ define(function (require) {
 
 		styles: styles,
 
+		events: {
+			'click .case-information .title': '_onTitle',
+			'click #patient-background': '_onPatientBackground',
+			'click #context': '_onContext',
+			'click #background': '_onBackground'
+		},
+
 		render: function () {
 			var menuItems = $('.case-information .menu .menu-item');
 			var distance = 375;
@@ -31,13 +38,6 @@ define(function (require) {
 					}
 				});
 			}
-		},
-
-		events: {
-			'click .case-information .title': '_onTitle',
-			'click #patient-background': '_onPatientBackground',
-			'click #context': '_onContext',
-			'click #background': '_onBackground'
 		},
 
 		_onTitle: function () {

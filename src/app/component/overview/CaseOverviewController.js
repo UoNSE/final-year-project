@@ -2,6 +2,7 @@ define(function (require) {
 
 	'use strict';
 
+	var $ = require('jquery');
 	var Controller = require('controller/Controller');
 	var Animate = require('behaviour/Animate');
 
@@ -14,15 +15,15 @@ define(function (require) {
 		styles: styles,
 		selector: '.case-overview',
 
-		render: function () {
-			Animate.scale($(this.selector), {duration: 1000});
-		},
-
 		events: {
 			'click #case-information': '_onCaseInformation',
 			'click #identify-issues': '_onIdentifyIssues',
 			'click #goals-and-actions': '_onGoalsAndActions',
 			'click #reflection': '_onReflection'
+		},
+
+		render: function () {
+			Animate.scale($(this.selector), {duration: 1000});
 		},
 
 		_onCaseInformation: function () {
