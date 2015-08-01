@@ -14,7 +14,6 @@ define(function (require) {
 		styles: styles,
 
 		render: function () {
-			this._bindEvents();
 			var menuItems = $('.case-information .menu .menu-item');
 			var distance = 375;
 			var min = 3 * Math.PI / 4;
@@ -34,11 +33,11 @@ define(function (require) {
 			}
 		},
 
-		_bindEvents: function () {
-			$('.case-information .title').on('click', this._onTitle.bind(this));
-			$('#patient-background').on('click', this._onPatientBackground.bind(this));
-			$('#context').on('click', this._onContext.bind(this));
-			$('#background').on('click', this._onBackground.bind(this));
+		events: {
+			'click .case-information .title': '_onTitle',
+			'click #patient-background': '_onPatientBackground',
+			'click #context': '_onContext',
+			'click #background': '_onBackground'
 		},
 
 		_onTitle: function () {

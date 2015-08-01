@@ -15,15 +15,14 @@ define(function (require) {
 		selector: '.case-overview',
 
 		render: function () {
-			this._bindEvents();
 			Animate.scale($(this.selector), {duration: 1000});
 		},
 
-		_bindEvents: function () {
-			$('#case-information').on('click', this._onCaseInformation.bind(this));
-			$('#identify-issues').on('click', this._onIdentifyIssues.bind(this));
-			$('#goals-and-actions').on('click', this._onGoalsAndActions.bind(this));
-			$('#reflection').on('click', this._onReflection.bind(this));
+		events: {
+			'click #case-information': '_onCaseInformation',
+			'click #identify-issues': '_onIdentifyIssues',
+			'click #goals-and-actions': '_onGoalsAndActions',
+			'click #reflection': '_onReflection'
 		},
 
 		_onCaseInformation: function () {
