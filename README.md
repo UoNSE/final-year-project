@@ -9,6 +9,7 @@ The Project
 ### Install ###
 
 * Open a terminal/commandline to project directory.
+
     npm install
     bower install
     npm start 
