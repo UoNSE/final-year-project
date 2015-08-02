@@ -10,9 +10,9 @@ The Project
 
 * Open a terminal/commandline to project directory.
 
-    npm install
-    bower install
-    npm start 
+> npm install
+> bower install
+> npm start 
 
 * (OR run in IntellJ as a NodeJS app, using app.js as main JavaScript file)
 
