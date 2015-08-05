@@ -12,11 +12,11 @@ define(function (require) {
 		/**
 		 * The render function that is called when a new partial is being loaded.
 		 *
-		 * @param resolve The resolve promise.
 		 * @param controller The controller that contains the template and model information.
+		 * @param resolve The resolve promise.
 		 * @param options The configuration options.
 		 */
-		render: function (resolve, controller, options) {
+		render: function (controller, resolve, options) {
 			options = options || {};
 			var element = options.element || $(this.selector);
 			var index = options.index;
@@ -37,13 +37,20 @@ define(function (require) {
 			}
 			// Set the html of the controller.
 			controller.$el.html(html);
+
 			// Either replace the html inside the element or insert the content at the specified index.
 			if (index === undefined) {
 				element.html(controller.$el);
 			} else {
 				element.insertAt(index, controller.$el);
 			}
-			resolve(controller);
+
+			controller.trigger('afterRender');
+			controller.delegateEvents();
+
+			if (resolve) {
+				resolve(controller);
+			}
 		},
 
 		/**
@@ -207,24 +214,23 @@ define(function (require) {
 				var path = 'text!' + route + 'View.html';
 				require([path], function (template) {
 					controller.template = Handlebars.compile(template);
-					this._renderView(resolve, controller, options);
+					this._renderView(controller, resolve, options);
 				}.bind(this));
 			} else {
-				this._renderView(resolve, controller, options);
+				this._renderView(controller, resolve, options);
 			}
 		},
 
 		/**
 		 * Renders a view by calling the render function of both the loader and the controller.
 		 *
-		 * @param resolve The resolve promise.
 		 * @param controller The controller associated with the view.
+		 * @param resolve The resolve promise.
 		 * @param options The configuration options.
 		 * @private
 		 */
-		_renderView: function (resolve, controller, options) {
-			this.render(resolve, controller, options);
-			controller.trigger('afterRender');
+		_renderView: function (controller, resolve, options) {
+			this.render(controller, resolve, options);
 			controller.trigger('ready');
 		}
 

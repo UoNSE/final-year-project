@@ -20,7 +20,6 @@ define(function (require) {
 			this._loader.insert('shared/navigation/back/Back', $('body'), 0).then(function (controller) {
 				this._back = controller;
 				$(this._back.selector).hide();
-				this._back.on('back', this._onBack, this);
 				this.trigger('ready');
 			}.bind(this));
 

@@ -19,18 +19,18 @@ define(function (require) {
 
 		_onAfterRender: function () {
 			this._container = $('#cases-container');
-			this._container.hide();
 		},
 
 		_onReady: function () {
-			console.log(this.collection);
+			this.listenTo(this.collection, 'add', this.render);
+			this.collection.add({name: 'New'});
 		},
 
 		_onStart: function (event) {
 			var colorClasses = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
 				'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
 
-			this._container.show();
+			this._container.removeClass('hidden');
 			var cases = this._container.find('#cases').children();
 			for (var i = 0, len = cases.length; i < len; i++) {
 				var button = $(cases[i]).find('button');
