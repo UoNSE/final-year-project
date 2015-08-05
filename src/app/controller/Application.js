@@ -5,6 +5,18 @@ define(function (require) {
 	var Backbone = require('backbone');
 	var $ = require('jquery');
 
+	$.fn.insertAt = function (index, element) {
+		var lastIndex = this.children().size();
+		if (index < 0) {
+			index = Math.max(0, lastIndex + 1 + index)
+		}
+		this.append(element);
+		if (index < lastIndex) {
+			this.children().eq(index).before(this.children().last())
+		}
+		return this;
+	};
+
 	var Router = require('controller/Router');
 
 	return Backbone.View.extend({
@@ -12,7 +24,9 @@ define(function (require) {
 		_router: new Router(),
 
 		initialize: function () {
-			Backbone.history.start();
+			this._router.on('ready', function () {
+				Backbone.history.start();
+			});
 			this._bindEvents();
 		},
 

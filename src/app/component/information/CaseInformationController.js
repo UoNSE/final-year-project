@@ -20,7 +20,7 @@ define(function (require) {
 			'click #background': '_onBackground'
 		},
 
-		render: function () {
+		_onAfterRender: function () {
 			var menuItems = $('.case-information .menu .menu-item');
 			var distance = 375;
 			var min = 3 * Math.PI / 4;

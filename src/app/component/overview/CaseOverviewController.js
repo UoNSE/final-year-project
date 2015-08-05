@@ -22,7 +22,7 @@ define(function (require) {
 			'click #reflection': '_onReflection'
 		},
 
-		render: function () {
+		_onAfterRender: function () {
 			Animate.scale($(this.selector), {duration: 1000});
 		},
 

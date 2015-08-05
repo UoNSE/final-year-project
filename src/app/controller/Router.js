@@ -7,7 +7,7 @@ define(function (require) {
 	return Backbone.Router.extend({
 
 		_loader: new Loader(),
-		_back: new Back(),
+		_back: null,
 
 		routes: {
 			'': 'main',
@@ -17,8 +17,13 @@ define(function (require) {
 		},
 
 		initialize: function () {
-			this._back.on('back', this._onBack, this);
-			this._loader.insertController(this._back, $('body'), 0);
+			this._loader.insert('shared/navigation/back/Back', $('body'), 0).then(function (controller) {
+				this._back = controller;
+				$(this._back.selector).hide();
+				this._back.on('back', this._onBack, this);
+				this.trigger('ready');
+			}.bind(this));
+
 			this._loader.on({
 				configureBack: this._onConfigureBack.bind(this),
 				back: this._onBack.bind(this)
@@ -41,12 +46,14 @@ define(function (require) {
 		 * @private
 		 */
 		_onConfigureBack: function (back) {
-			var button = $(this._back.selector);
-			// TODO add transitions
-			if (back) {
-				button.show();
-			} else {
-				button.hide();
+			if (this._back) {
+				var button = $(this._back.selector);
+				// TODO add transitions
+				if (back === false || Backbone.history.getHash() === '') {
+					button.hide();
+				} else {
+					button.show();
+				}
 			}
 		},
 
@@ -61,8 +68,6 @@ define(function (require) {
 		},
 
 		main: function () {
-			// Always hide the back button on the home page.
-			$(this._back.selector).hide();
 			this._load('component/main/Main');
 		},
 
