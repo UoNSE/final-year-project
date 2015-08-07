@@ -13,7 +13,8 @@ define(function (require) {
 			'': 'main',
 			'case/overview': 'caseOverview',
 			'case/information': 'caseInformation',
-			'case/information/background': 'caseBackground'
+			'case/information/background': 'caseBackground',
+			'case/information/virtualpatient': 'virtualPatient',
 		},
 
 		initialize: function () {
@@ -76,6 +77,10 @@ define(function (require) {
 
 		caseInformation: function () {
 			this._load('component/information/CaseInformation');
+		},
+
+		virtualPatient: function () {
+			this._load('component/virtualpatient/VirtualPatient');
 		},
 
 		caseBackground: function () {

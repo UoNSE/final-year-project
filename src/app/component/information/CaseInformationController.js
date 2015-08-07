@@ -17,7 +17,9 @@ define(function (require) {
 			'click .case-information .title': '_onTitle',
 			'click #patient-background': '_onPatientBackground',
 			'click #context': '_onContext',
-			'click #background': '_onBackground'
+			'click #background': '_onBackground',
+			'click #virtual-patient': '_onVirtualPatient'
+
 		},
 
 		_onAfterRender: function () {
@@ -46,6 +48,12 @@ define(function (require) {
 
 		_onPatientBackground: function () {
 			// TODO
+		},
+
+		_onVirtualPatient: function () {
+			// TODO
+
+
 		},
 
 		_onContext: function () {
