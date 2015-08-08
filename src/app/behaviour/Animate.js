@@ -5,10 +5,11 @@ define(function (require) {
 	require('jquery.transform2d');
 	require('jquery.transform3d');
 	require('jquery-ui');
+    var Factory = require('Factory');
 
 	function Animate () {}
 
-	Animate._animate = function (element, options) {
+	Animate.prototype._animate = function (element, options) {
 		element
 			.css(options.css)
 			.delay(options.delay || 0)
@@ -20,7 +21,7 @@ define(function (require) {
 		);
 	};
 
-	Animate.scaleOut = function (element, options) {
+	Animate.prototype.scaleOut = function (element, options) {
 		// Define the options if they do not exist.
 		options = options || {};
 		// Add the CSS options.
@@ -28,7 +29,7 @@ define(function (require) {
 		options.css['transform'] = 'scale(0)';
 		// Define the animate options.
 		options.animate = options.animate || {};
-		Animate._animate(element, options);
+		this._animate(element, options);
 	};
 
 	/**
@@ -37,7 +38,7 @@ define(function (require) {
 	 * @param element
 	 * @param [options]
 	 */
-	Animate.scale = function (element, options) {
+	Animate.prototype.scale = function (element, options) {
 		// Define the options if they do not exist.
 		options = options || {};
 		// Add the CSS options.
@@ -46,9 +47,9 @@ define(function (require) {
 		// Add the animate options.
 		options.animate = options.animate || {};
 		options.animate['transform'] = 'scale(1)';
-		Animate._animate(element, options);
+		this._animate(element, options);
 	};
 
-	return Animate;
+	return Factory.createFactory(Animate);
 
 });

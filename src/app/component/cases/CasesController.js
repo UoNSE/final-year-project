@@ -5,7 +5,7 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var ViewController = require('controller/ViewController');
-	var Animate = require('behaviour/Animate');
+	var animate = require('behaviour/Animate').getInstance();
 
 	return ViewController.extend({
 
@@ -27,7 +27,7 @@ define(function (require) {
 				var distance = 200;
 				var cls = 'btn-material-' + colorClasses[Math.round(i * colorClasses.length / len)];
 				button.addClass(cls);
-				Animate.scaleOut(button, {
+				animate.scaleOut(button, {
 					css: {
 						width: 100,
 						height: 100,
@@ -39,7 +39,7 @@ define(function (require) {
 				});
 			}
 
-			Animate.scale($('#btn-select-case'), {
+			animate.scale($('#btn-select-case'), {
 				css: {width: 150, height: 100, fontSize: 20},
 				delay: 500,
 				duration: 1000
@@ -53,7 +53,7 @@ define(function (require) {
 
 		_onCase: function (event) {
 			$(event.target).addClass('disabled');
-			Animate.scaleOut(this._container, {
+			animate.scaleOut(this._container, {
 				duration: 500,
 				easing: 'easeInBack'
 			});

@@ -5,7 +5,7 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var ViewController = require('controller/ViewController');
-	var Animate = require('behaviour/Animate');
+	var animate = require('behaviour/Animate').getInstance();
 
 	return ViewController.extend({
 
@@ -17,7 +17,7 @@ define(function (require) {
 
 		_onStart: function (event) {
 			var button = $(event.target).addClass('disabled');
-			Animate.scaleOut(button, {
+			animate.scaleOut(button, {
 				css: {opacity: 0},
 				duration: 600,
 				easing: 'easeInBack'
