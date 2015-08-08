@@ -23,7 +23,7 @@ define(function (require) {
 
 		_onReady: function () {
 			this.listenTo(this.collection, 'add', this.render);
-			this.collection.add({name: 'New'});
+			//this.collection.add({name: 'New'});
 		},
 
 		_onStart: function (event) {

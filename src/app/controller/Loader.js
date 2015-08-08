@@ -23,14 +23,11 @@ define(function (require) {
 			var html = '';
 			//  Check if the controller contains a template.
 			if (controller.template) {
-				// Get the collection and model from the controller.
-				var collection = controller.collection;
-				var model = controller.model;
-				// Set the html based on whether the controller contains a collection or model.
-				if (collection) {
-					html = controller.template(collection.toJSON());
-				} else if (model) {
-					html = controller.template(model.toJSON());
+				// Get the collection or model from the controller.
+				var dataModel = controller.collection || controller.model;
+				// Set the html based on whether the controller contains a data model.
+				if (dataModel) {
+					html = controller.template(dataModel.toJSON());
 				} else {
 					html = controller.template();
 				}
@@ -187,14 +184,19 @@ define(function (require) {
 		 */
 		_loadDataModel: function (controller, key) {
 			return new Promise(function (resolve) {
-				var dataModel = controller[key];
-				if (dataModel) {
-					dataModel = key + '/' + dataModel;
-					require([dataModel], function (DataModel) {
-						controller[key] = DataModel;
+				var route = controller[key];
+				if (route) {
+					var path = key + '/' + route;
+					require([path], function (DataModel) {
+						// Instantiate the data model and fetch its data.
+						var dataModel = new DataModel();
+						dataModel.fetch();
+						// Replace the key of the controller with the actual data model and resolve the promise.
+						controller[key] = dataModel;
 						resolve();
 					});
 				} else {
+					// Nothing to load, resolve the promise.
 					resolve();
 				}
 			}.bind(this));
