@@ -13,7 +13,7 @@ define(function (require) {
 	return ViewController.extend({
 
 		styles: styles,
-		selector: '.case-overview',
+		selector: '#case-overview',
 
 		events: {
 			'click #case-information': '_onCaseInformation',
