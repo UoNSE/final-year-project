@@ -6,7 +6,7 @@ define(function (require) {
 
 	return Backbone.Router.extend({
 
-		_loader: new Loader(),
+		_loader: null,
 		_back: null,
 
 		routes: {
@@ -17,6 +17,7 @@ define(function (require) {
 		},
 
 		initialize: function () {
+            this._loader = new Loader(this);
 			this._loader.insert('shared/navigation/back/Back', $('body'), 0).then(function (controller) {
 				this._back = controller;
 				$(this._back.selector).hide();

@@ -9,16 +9,17 @@ define(function (require) {
 	return Backbone.View.extend({
 
 		selector: '#content',
-		_baseStylePath: '../resources/css/',
-		_cases: new Cases(),
+		_baseStylePath: 'resources/css/',
 
-		initialize: function () {
+		initialize: function (router) {
+            this._cases = new Cases();
 			//// Wait for the cases to load.
 			//this.listenTo(this._cases, 'sync', function (cases) {
 			//	console.log('sync');
 			//});
 			// Fetch the cases data.
 			this._cases.fetch();
+            this._router = router;
 		},
 
 		/**
@@ -47,6 +48,8 @@ define(function (require) {
 			// Set the html of the controller.
 			controller.$el.html(html);
 
+            this.linkify(controller.$el);
+
 			// Either replace the html inside the element or insert the content at the specified index.
 			if (index === undefined) {
 				element.html(controller.$el);
@@ -61,6 +64,21 @@ define(function (require) {
 				resolve(controller);
 			}
 		},
+
+        linkify: function (element) {
+
+            var anchors = element.find('a');
+            anchors.each(function (index, anchor) {
+
+                var $anchor = $(anchor);
+                var href = $anchor.attr('href');
+                $anchor.on('click', function (e) {
+                    e.preventDefault();
+                    this._router.navigate(href, {trigger: true});
+                }.bind(this));
+            }.bind(this));
+
+        },
 
 		/**
 		 * Loads a partial given the route.

@@ -25,7 +25,7 @@ define(function (require) {
 
 		initialize: function () {
 			this._router.on('ready', function () {
-				Backbone.history.start();
+				Backbone.history.start({pushState: true});
 			});
 			this._bindEvents();
 		},
