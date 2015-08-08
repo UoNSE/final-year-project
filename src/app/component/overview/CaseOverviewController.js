@@ -3,14 +3,14 @@ define(function (require) {
 	'use strict';
 
 	var $ = require('jquery');
-	var Controller = require('controller/Controller');
+	var ViewController = require('controller/ViewController');
 	var Animate = require('behaviour/Animate');
 
 	var styles = [
 		'case-overview.css'
 	];
 
-	return Controller.extend({
+	return ViewController.extend({
 
 		styles: styles,
 		selector: '.case-overview',

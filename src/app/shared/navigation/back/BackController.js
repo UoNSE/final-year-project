@@ -2,9 +2,9 @@ define(function (require) {
 
 	'use strict';
 
-	var Controller = require('controller/Controller');
+	var ViewController = require('controller/ViewController');
 
-	return Controller.extend({
+	return ViewController.extend({
 
 		selector: '#back',
 

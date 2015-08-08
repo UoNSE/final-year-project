@@ -4,10 +4,10 @@ define(function (require) {
 
 	var $ = require('jquery');
 
-	var Controller = require('controller/Controller');
+	var ViewController = require('controller/ViewController');
 	var Animate = require('behaviour/Animate');
 
-	return Controller.extend({
+	return ViewController.extend({
 
 		displayBack: false,
 		collection: 'Cases',
