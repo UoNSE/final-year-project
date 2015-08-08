@@ -10,7 +10,8 @@ define(function (require) {
 		_back: null,
 
 		routes: {
-			'': 'main',
+			'': 'start',
+			'cases': 'cases',
 			'case/:id/overview': 'caseOverview',
 			'case/:id/information': 'caseInformation',
 			'case/:id/information/background': 'caseBackground'
@@ -71,8 +72,12 @@ define(function (require) {
 			this._loader.load(route, id);
 		},
 
-		main: function () {
-			this._load('component/main/Main');
+		start: function () {
+			this._load('component/start/Start');
+		},
+
+		cases: function () {
+			this._load('component/cases/Cases');
 		},
 
 		caseOverview: function (id) {

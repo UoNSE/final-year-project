@@ -9,28 +9,17 @@ define(function (require) {
 
 	return ViewController.extend({
 
-		displayBack: false,
 		collection: 'Cases',
 
 		events: {
-			'click #btn-start': '_onStart',
 			'click #cases .case': '_onCase'
 		},
 
 		_onAfterRender: function () {
 			this._container = $('#cases-container');
-		},
-
-		_onReady: function () {
-			this.listenTo(this.collection, 'add', this.render);
-			//this.collection.add({name: 'New'});
-		},
-
-		_onStart: function (event) {
 			var colorClasses = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
 				'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
 
-			this._container.removeClass('hidden');
 			var cases = this._container.find('#cases').children();
 			for (var i = 0, len = cases.length; i < len; i++) {
 				var button = $(cases[i]).find('button');
@@ -50,19 +39,16 @@ define(function (require) {
 				});
 			}
 
-			var startButton = $(event.target).addClass('disabled');
-			Animate.scaleOut(startButton, {
-				css: {opacity: 0},
-				duration: 600,
-				easing: 'easeInBack'
-			});
-
 			Animate.scale($('#btn-select-case'), {
 				css: {width: 150, height: 100, fontSize: 20},
 				delay: 500,
 				duration: 1000
 			});
+		},
 
+		_onReady: function () {
+			this.listenTo(this.collection, 'add', this.render);
+			//this.collection.add({name: 'New'});
 		},
 
 		_onCase: function (event) {
