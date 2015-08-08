@@ -69,10 +69,13 @@ define(function (require) {
 
             var anchors = element.find('a');
             anchors.each(function (index, anchor) {
-
                 var $anchor = $(anchor);
                 var href = $anchor.attr('href');
                 $anchor.on('click', function (e) {
+                    if (e.altKey || e.ctrlKey || e.shiftKey) {
+                        e.stopPropagation();
+                        return;
+                    }
                     e.preventDefault();
                     this._router.navigate(href, {trigger: true});
                 }.bind(this));
