@@ -1,3 +1,19 @@
-<div class="virtual-patient abs-center">
-  <img id ="human" src ="resources/images/human.jpg">
+<div class="virtual-patient-component-container">
+  <div class= "virtual-patient-img-container">
+    <img id ="virtual-patient-img" src = "resources/images/androg.front.jpg">
+    <!-- <img id ="human" src = "{{virtual_patient_img_url}}"> -->
+    <button id="hotspot-button" class="btn btn-fab"></button>
+    <button id="flip-patient-button" class="btn btn-primary btn-fab btn-raised">Flip</button>
+  </div>
+  <div id="card-container">
+    <button id="speech-card" class="btn">"I'm cold"</button>
+    <button id="observation-card" class="btn">Patient is expectant mother.</button>
+    <button id="observation-card" class="btn">Patient is itchy all over.</button>
+    <button id="observation-card" class="btn">Patient appears anxious.</button>
+  </div>
+  <div id="button-container">
+    <button id="question-patient-button" class="btn btn-primary btn-fab btn-raised">Question<br>Patient</button><br><br>
+    <button id="test-request-button" class="btn btn-primary btn-fab btn-raised">Test<br>Req</button><br><br>
+    <button id="test-results-button" class="btn btn-primary btn-fab btn-raised">Test<br>Res</button>
+  </div>
 </div>
