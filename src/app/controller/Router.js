@@ -49,7 +49,7 @@ define(function (require) {
 			if (this._back) {
 				var button = $(this._back.selector);
 				// TODO add transitions
-				if (back === false || Backbone.history.getHash() === '') {
+				if (back === false || Backbone.history.getPath() === '') {
 					button.hide();
 				} else {
 					button.show();
