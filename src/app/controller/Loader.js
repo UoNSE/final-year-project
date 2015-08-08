@@ -48,14 +48,14 @@ define(function (require) {
 			// Set the html of the controller.
 			controller.$el.html(html);
 
-            this.linkify(controller.$el);
-
 			// Either replace the html inside the element or insert the content at the specified index.
 			if (index === undefined) {
 				element.html(controller.$el);
 			} else {
 				element.insertAt(index, controller.$el);
 			}
+
+            this.linkify(controller.$el);
 
 			controller.trigger('afterRender');
 			controller.delegateEvents();
@@ -65,19 +65,27 @@ define(function (require) {
 			}
 		},
 
+        /**
+         * Convert all child anchor tags in the given element to use the backbone's router navigate method.
+         * This means links load partial content dynamically rather than loading entire new pages.
+         *
+         * @param element The element to replace anchor tags within.
+         */
         linkify: function (element) {
 
             var anchors = element.find('a');
             anchors.each(function (index, anchor) {
                 var $anchor = $(anchor);
-                var href = $anchor.attr('href');
                 $anchor.on('click', function (e) {
                     if (e.altKey || e.ctrlKey || e.shiftKey) {
+                        // Allow special browser functions, open in new tab/window etc.
                         e.stopPropagation();
                         return;
                     }
+                    // Prevent page from actually loading a new URL.
                     e.preventDefault();
-                    this._router.navigate(href, {trigger: true});
+                    // Use the router navigation method instead, using the History API to simulate updating the URL.
+                    this._router.navigate($anchor.attr('href'), {trigger: true});
                 }.bind(this));
             }.bind(this));
 
