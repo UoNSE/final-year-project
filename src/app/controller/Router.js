@@ -11,9 +11,9 @@ define(function (require) {
 
 		routes: {
 			'': 'main',
-			'case/overview': 'caseOverview',
-			'case/information': 'caseInformation',
-			'case/information/background': 'caseBackground'
+			'case/:id/overview': 'caseOverview',
+			'case/:id/information': 'caseInformation',
+			'case/:id/information/background': 'caseBackground'
 		},
 
 		initialize: function () {
@@ -60,26 +60,30 @@ define(function (require) {
 		 * Loads the page given the route.
 		 *
 		 * @param route The path to the base route.
+		 * @param id The id of the current case.
 		 * @private
 		 */
-		_load: function (route) {
-			this._loader.load(route);
+		_load: function (route, id) {
+			if (id) {
+				id = parseInt(id, 10);
+			}
+			this._loader.load(route, id);
 		},
 
 		main: function () {
 			this._load('component/main/Main');
 		},
 
-		caseOverview: function () {
-			this._load('component/overview/CaseOverview');
+		caseOverview: function (id) {
+			this._load('component/overview/CaseOverview', id);
 		},
 
-		caseInformation: function () {
-			this._load('component/information/CaseInformation');
+		caseInformation: function (id) {
+			this._load('component/information/CaseInformation', id);
 		},
 
-		caseBackground: function () {
-			this._load('component/information/background/Background');
+		caseBackground: function (id) {
+			this._load('component/information/background/Background', id);
 		}
 
 	});

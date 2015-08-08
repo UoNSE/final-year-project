@@ -4,10 +4,22 @@ define(function (require) {
 	var Handlebars = require('handlebars');
 	var $ = require('jquery');
 
+	var Cases = require('collection/Cases');
+
 	return Backbone.View.extend({
 
 		selector: '#content',
 		_baseStylePath: '../resources/css/',
+		_cases: new Cases(),
+
+		initialize: function () {
+			//// Wait for the cases to load.
+			//this.listenTo(this._cases, 'sync', function (cases) {
+			//	console.log('sync');
+			//});
+			// Fetch the cases data.
+			this._cases.fetch();
+		},
 
 		/**
 		 * The render function that is called when a new partial is being loaded.
@@ -54,12 +66,14 @@ define(function (require) {
 		 * Loads a partial given the route.
 		 *
 		 * @param route The route that maps to the Backbone view and controller.
+		 * @param [id] The current id of the route.
 		 * @param [element] An element to replace the HTML of.
 		 * @returns {Promise}
 		 */
-		load: function (route, element) {
+		load: function (route, id, element) {
 			return new Promise(function (resolve) {
 				this._loadController(resolve, route, {
+					id: id,
 					element: element
 				});
 			}.bind(this));
@@ -102,7 +116,7 @@ define(function (require) {
 				this._bindEvents(route, controller);
 				this._loadStyles(controller.styles);
 				// Load the data models and template.
-				this._loadDataModels(controller).then(function () {
+				this._loadDataModels(controller, options.id).then(function () {
 					this._loadTemplate(resolve, route, controller, options);
 				}.bind(this));
 			}.bind(this));
@@ -165,38 +179,81 @@ define(function (require) {
 		 * Loads the collections and model bound to a controller.
 		 *
 		 * @param controller The controller that contains the collection and model.
+		 * @param id The id of the current case.
 		 * @private
 		 */
-		_loadDataModels: function (controller) {
+		_loadDataModels: function (controller, id) {
 			return Promise.all([
-				this._loadDataModel(controller, 'collection'),
-				this._loadDataModel(controller, 'model')
+				this._loadCollection(controller),
+				this._loadModel(controller, id)
 			]);
 		},
 
 		/**
-		 * Loads a data model to the specified controller. A data model is either a collection or model.
+		 * Loads a collection to the specified controller.
 		 *
 		 * @param controller The controller that contains the data model.
-		 * @param key The key to use when querying the controller.
 		 * @returns {Promise}
 		 * @private
 		 */
-		_loadDataModel: function (controller, key) {
+		_loadCollection: function (controller) {
+			var key = 'collection';
+			var route = controller[key];
 			return new Promise(function (resolve) {
-				var route = controller[key];
 				if (route) {
 					var path = key + '/' + route;
-					require([path], function (DataModel) {
-						// Instantiate the data model and fetch its data.
-						var dataModel = new DataModel();
-						dataModel.fetch();
-						// Replace the key of the controller with the actual data model and resolve the promise.
-						controller[key] = dataModel;
+					require([path], function (Collection) {
+						// Instantiate the collection and fetch its data if it contains a url.
+						var collection = new Collection();
+						if (collection.url) {
+							collection.fetch();
+						}
+						// Replace the collection of the controller with the actual collection and resolve the promise.
+						controller.collection = collection;
 						resolve();
 					});
 				} else {
 					// Nothing to load, resolve the promise.
+					resolve();
+				}
+			}.bind(this));
+		},
+
+		/**
+		 * Loads a model to the specified controller.
+		 *
+		 * @param controller The controller that contains the model.
+		 * @param id The id of the route.
+		 * @returns {Promise}
+		 * @private
+		 */
+		_loadModel: function (controller, id) {
+			var key = 'model';
+			var route = controller[key];
+			// Set the model of the controller.
+			controller.model = new Backbone.Model();
+			// Check if an id exists and set the case of the model.
+			if (id) {
+				controller.model.set('case', this._cases.get(id));
+			}
+			// Resolve loading the model.
+			return new Promise(function (resolve) {
+				if (route) {
+					var path = key + '/' + route;
+					require([path], function (Model) {
+						// Get the name of the model.
+						var name = route.split('/').pop().toLowerCase();
+						// Instantiate the model and fetch its data if it contains a url.
+						var model = new Model();
+						if (model.has('url')) {
+							model.fetch();
+						}
+						// Set the model using its name.
+						controller.model.set(name, model);
+						// Resolve the promise.
+						resolve();
+					});
+				} else {
 					resolve();
 				}
 			}.bind(this));
