@@ -8,5 +8,61 @@
       "id": 2,
       "name": "Case 2"
     }
+  ],
+  "goals": [
+    {
+      "id": 1,
+      "content": "Immediately stabilise patient"
+    },
+    {
+      "id": 2,
+      "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours."
+    },
+    {
+      "id": 3,
+      "content": "Final recovery."
+    }
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "content": "Notify Mr Smith's doctor of his condition",
+      "goalId": 1
+    },
+    {
+      "id": 2,
+      "content": "Reassure patient.",
+      "goalId": 1
+    },
+    {
+      "id": 3,
+      "content": "Check that the IV cannula is not kinked or blocked.",
+      "goalId": 1
+    },
+    {
+      "id": 4,
+      "content": "Administer a fluid challenge and increase Mr Smith‟s IV fluid rate as ordered.",
+      "goalId": 1
+    },
+    {
+      "id": 5,
+      "content": "Check that the urinary catheter is not kinked or blocked.",
+      "goalId": 2
+    },
+    {
+      "id": 6,
+      "content": "Raise the foot of MrSmith‟s bed.",
+      "goalId": 2
+    },
+    {
+      "id": 7,
+      "content": "Strictly monitor MrSmith‟s input and maintain hourly urine measures",
+      "goalId": 2
+    },
+    {
+      "id": 8,
+      "content": "Monitor MrSmith‟s level of consciousness.",
+      "goalId": 2
+    }
   ]
 }
