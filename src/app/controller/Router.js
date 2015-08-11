@@ -11,6 +11,7 @@ define(function (require) {
 
 		routes: {
 			'': 'start',
+			'wells': 'wells',
 			'cases': 'cases',
 			'case/:id/overview': 'caseOverview',
 			'case/:id/information': 'caseInformation',
@@ -74,6 +75,10 @@ define(function (require) {
 
 		start: function () {
 			this._load('component/start/Start');
+		},
+
+		wells: function () {
+			this._load('component/wells/Wells');
 		},
 
 		cases: function () {
