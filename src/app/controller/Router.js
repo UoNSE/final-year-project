@@ -27,7 +27,7 @@ define(function (require) {
 
 			this._loader.on({
 				configureBack: this.onConfigureBack.bind(this),
-				back: this._onBack.bind(this)
+				back: this.onBack.bind(this)
 			});
 		},
 
