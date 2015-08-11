@@ -26,17 +26,15 @@ define(function (require) {
 			}.bind(this));
 
 			this._loader.on({
-				configureBack: this._onConfigureBack.bind(this),
+				configureBack: this.onConfigureBack.bind(this),
 				back: this._onBack.bind(this)
 			});
 		},
 
 		/**
 		 * Loads the previous page in the history.
-		 *
-		 * @private
 		 */
-		_onBack: function () {
+		onBack: function () {
 			Backbone.history.history.back();
 		},
 
@@ -44,9 +42,8 @@ define(function (require) {
 		 * Changes the visibility of the back button depending on the back configuration.
 		 *
 		 * @param back The back configuration.
-		 * @private
 		 */
-		_onConfigureBack: function (back) {
+		onConfigureBack: function (back) {
 			if (this._back) {
 				var button = $(this._back.selector);
 				// TODO add transitions

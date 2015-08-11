@@ -160,10 +160,10 @@ define(function (require) {
 		 */
 		_bindEvents: function (route, controller) {
 			controller.on({
-				render: this._onRender.bind(this, controller),
-				afterRender: controller._onAfterRender,
-				ready: controller._onReady,
-				back: this._onBack.bind(this)
+				render: this.onRender.bind(this, controller),
+				afterRender: controller.onAfterRender,
+				ready: controller.onReady,
+				back: this.onBack.bind(this)
 			});
 		},
 
@@ -189,18 +189,15 @@ define(function (require) {
 		 * A render event triggered by a controller.
 		 *
 		 * @param controller The controller that triggered the render event.
-		 * @private
 		 */
-		_onRender: function (controller) {
+		onRender: function (controller) {
 			this.render(controller);
 		},
 
 		/**
 		 * An event triggered when a controller requests to go back a page. This method bubbles the event up.
-		 *
-		 * @private
 		 */
-		_onBack: function () {
+		onBack: function () {
 			this.trigger('back');
 		},
 
