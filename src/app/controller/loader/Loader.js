@@ -91,6 +91,21 @@ define(function (require) {
 		},
 
 		/**
+		 * Sets up and resolves a require function promise.
+		 *
+		 * @param path The path to require.
+		 * @returns {Promise} The require promise.
+		 * @private
+		 */
+		_requirePromise: function (path) {
+			return new Promise(function (resolve) {
+				require([path], function (module) {
+					resolve(module);
+				});
+			});
+		},
+
+		/**
 		 * Loads the collections and model bound to a controller.
 		 *
 		 * @param controller The controller that contains the collection and model.
@@ -106,19 +121,20 @@ define(function (require) {
 		/**
 		 * Fetches the data model if a url exists and resolves the underlying promise.
 		 *
-		 * @param resolve The resolve function.
 		 * @param url The url on the data model.
 		 * @param dataModel The data model that may contain information to fetch.
 		 * @private
 		 */
-		_fetchDataModel: function (resolve, url, dataModel) {
+		_fetchDataModel: function (url, dataModel) {
 			if (url) {
-				this.listenTo(dataModel, 'sync', function () {
-					resolve();
-				});
-				dataModel.fetch();
+				return new Promise(function (resolve) {
+					this.listenTo(dataModel, 'sync', function () {
+						resolve();
+					});
+					dataModel.fetch();
+				}.bind(this));
 			} else {
-				resolve();
+				return Promise.resolve();
 			}
 		},
 
@@ -132,21 +148,19 @@ define(function (require) {
 		_loadCollection: function (controller) {
 			var key = 'collection';
 			var route = controller[key];
-			return new Promise(function (resolve) {
-				if (route) {
-					var path = key + '/' + route;
-					require([path], function (Collection) {
-						// Instantiate the collection and fetch its data if it contains a url.
-						var collection = new Collection();
-						controller.collection = collection;
-						// Fetch the data model.
-						this._fetchDataModel(resolve, collection.url, collection);
-					}.bind(this));
-				} else {
-					// Nothing to load, resolve the promise.
-					resolve();
-				}
-			}.bind(this));
+			if (route) {
+				var path = key + '/' + route;
+				return this._requirePromise(path).then(function (Collection) {
+					// Instantiate the collection and fetch its data if it contains a url.
+					var collection = new Collection();
+					controller.collection = collection;
+					// Fetch the data model.
+					return this._fetchDataModel(collection.url, collection);
+				}.bind(this));
+			} else {
+				// Nothing to load, resolve the promise.
+				return Promise.resolve();
+			}
 		},
 
 		/**
@@ -163,24 +177,21 @@ define(function (require) {
 			// Set the model of the controller.
 			controller.model = new Backbone.Model();
 			this.trigger('loadModel', controller.model, options);
-			// Resolve loading the model.
-			return new Promise(function (resolve) {
-				if (route) {
-					var path = key + '/' + route;
-					require([path], function (Model) {
-						// Get the name of the model.
-						var name = route.split('/').pop().toLowerCase();
-						// Instantiate the model and fetch its data if it contains a url.
-						var model = new Model();
-						// Set the model using its name.
-						controller.model.set(name, model);
-						// Fetch the data model.
-						this._fetchDataModel(resolve, model.has('url'), model);
-					});
-				} else {
-					resolve();
-				}
-			}.bind(this));
+			if (route) {
+				var path = key + '/' + route;
+				this._requirePromise(path).then(function (Model) {
+					// Get the name of the model.
+					var name = route.split('/').pop().toLowerCase();
+					// Instantiate the model and fetch its data if it contains a url.
+					var model = new Model();
+					// Set the model using its name.
+					controller.model.set(name, model);
+					// Fetch the data model.
+					return this._fetchDataModel(resolve, model.has('url'), model);
+				}.bind(this));
+			} else {
+				return Promise.resolve();
+			}
 		},
 
 		/**
