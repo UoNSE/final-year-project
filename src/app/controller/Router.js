@@ -6,18 +6,20 @@ define(function (require) {
 
 	return Backbone.Router.extend({
 
-		_loader: new Loader(),
+		_loader: null,
 		_back: null,
 
 		routes: {
-			'': 'main',
-			'case/overview': 'caseOverview',
-			'case/information': 'caseInformation',
-			'case/information/background': 'caseBackground',
-			'case/information/virtualpatient': 'virtualPatient',
+			'': 'start',
+			'cases': 'cases',
+			'case/:id/overview': 'caseOverview',
+			'case/:id/information': 'caseInformation',
+			'case/:id/information/background': 'caseBackground',
+			'case/:id/information/virtualpatient': 'virtualPatient'
 		},
 
 		initialize: function () {
+            this._loader = new Loader(this);
 			this._loader.insert('shared/navigation/back/Back', $('body'), 0).then(function (controller) {
 				this._back = controller;
 				$(this._back.selector).hide();
@@ -49,7 +51,7 @@ define(function (require) {
 			if (this._back) {
 				var button = $(this._back.selector);
 				// TODO add transitions
-				if (back === false || Backbone.history.getHash() === '') {
+				if (back === false || Backbone.history.getPath() === '') {
 					button.hide();
 				} else {
 					button.show();
@@ -61,31 +63,39 @@ define(function (require) {
 		 * Loads the page given the route.
 		 *
 		 * @param route The path to the base route.
+		 * @param id The id of the current case.
 		 * @private
 		 */
-		_load: function (route) {
-			this._loader.load(route);
+		_load: function (route, id) {
+			if (id) {
+				id = parseInt(id, 10);
+			}
+			this._loader.load(route, id);
 		},
 
-		main: function () {
-			this._load('component/main/Main');
+		start: function () {
+			this._load('component/start/Start');
 		},
 
-		caseOverview: function () {
-			this._load('component/overview/CaseOverview');
+		cases: function () {
+			this._load('component/cases/Cases');
 		},
 
-		caseInformation: function () {
-			this._load('component/information/CaseInformation');
+		caseOverview: function (id) {
+			this._load('component/overview/CaseOverview', id);
+		},
+
+		caseInformation: function (id) {
+			this._load('component/information/CaseInformation', id);
+		},
+
+		caseBackground: function (id) {
+			this._load('component/information/background/Background', id);
 		},
 
 		virtualPatient: function () {
-			this._load('component/virtualpatient/VirtualPatient');
+			this._load('component/virtualpatient/VirtualPatient', id);
 		},
-
-		caseBackground: function () {
-			this._load('component/information/background/Background');
-		}
 
 	});
 

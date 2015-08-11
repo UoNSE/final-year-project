@@ -2,12 +2,12 @@ define(function (require) {
 
 	var $ = require('jquery');
 	var glm = require('glmatrix');
-	var Controller = require('controller/Controller');
+	var ViewController = require('controller/ViewController');
 	var Animate = require('behaviour/Animate');
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
 
-	return Controller.extend({
+	return ViewController.extend({
 
 		elements: $(),
 		multitouch: MultiTouchManager.getInstance(),
