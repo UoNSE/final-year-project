@@ -1,0 +1,34 @@
+@import "theme.less";
+
+@button-size: 10em;
+@button-margin: 0.5em;
+
+#case-overview-container {
+
+	height: @button-size + 5em;
+	text-align: center;
+
+	#case-overview {
+
+		height: @button-size;
+
+		.line {
+			display: inline-block;
+			width: 50px;
+			height: 0.25em;
+			background-color: #888;
+			border-radius: 0.1em;
+			margin-left: -0.5em;
+		}
+
+		button {
+			width: @button-size !important;
+			height: @button-size !important;
+			color: #fff !important;
+			font-size: 1.1em !important;
+			margin-left: -@button-margin !important;
+		}
+
+	}
+
+}
