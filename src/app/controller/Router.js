@@ -93,9 +93,9 @@ define(function (require) {
 			this._load('component/information/background/Background', id);
 		},
 
-		virtualPatient: function () {
+		virtualPatient: function (id) {
 			this._load('component/virtualpatient/VirtualPatient', id);
-		},
+		}
 
 	});
 

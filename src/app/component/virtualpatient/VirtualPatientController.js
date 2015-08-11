@@ -1,6 +1,6 @@
 define(function(require){
   var $ = require('jquery');
-  var Controller = require('controller/Controller');
+  var ViewController = require('controller/ViewController');
   var Animate = require('behaviour/Animate');
 
   var styles = [
@@ -10,7 +10,7 @@ define(function(require){
   var virtual_patient_img_url =  'resources/images/androg.front.jpg';
 
 
-  return Controller.extend({
+  return ViewController.extend({
     styles: styles,
     // virtual_patient_img_url: virtual_patient_img_url,
     virtual_patient_img_url:  'resources/images/androg.front.jpg',
