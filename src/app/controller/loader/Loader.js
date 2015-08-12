@@ -17,16 +17,32 @@ define(function (require) {
 		render: function (controller, options) {},
 
 		/**
+		 * Sets up and resolves a require function promise.
+		 *
+		 * @param path The path to require.
+		 * @returns {Promise} The require promise.
+		 * @private
+		 */
+		_requirePromise: function (path) {
+			return new Promise(function (resolve) {
+				require([path], function (module) {
+					resolve(module);
+				});
+			});
+		},
+
+		/**
 		 * Loads the configurations of a controller.
 		 *
 		 * @param route The current route.
 		 * @param [options] The configuration options.
+		 * @returns {Promise}
 		 * @private
 		 */
 		_loadController: function (route, options) {
 			var path = route + 'Controller';
 			// Load the controller at the specified path.
-			require([path], function (Controller) {
+			return this._requirePromise(path).then(function (Controller) {
 				// Instantiate the controller.
 				var controller = new Controller();
 				// Trigger the back event for any listeners.
@@ -35,8 +51,8 @@ define(function (require) {
 				this._bindEvents(controller, options);
 				this._loadStyles(controller.styles);
 				// Load the data models and template.
-				this._loadDataModels(controller).then(function () {
-					this._loadTemplate(route, controller);
+				return this._loadDataModels(controller).then(function () {
+					return this._loadTemplate(route, controller);
 				}.bind(this));
 			}.bind(this));
 		},
@@ -50,6 +66,7 @@ define(function (require) {
 		 */
 		_bindEvents: function (controller, options) {
 			controller.on({
+				addChildView: this.onAddChildView.bind(this, controller),
 				afterRender: this.onAfterRender.bind(this, controller, options),
 				back: this.onBack.bind(this)
 			});
@@ -74,6 +91,21 @@ define(function (require) {
 		},
 
 		/**
+		 *
+		 * @param controller
+		 * @param selector
+		 * @param route
+		 * @returns {Promise}
+		 */
+		onAddChildView: function (controller, selector, route) {
+			return this._loadController(route, {selector: selector}).then(function (childView) {
+				childView.parent = controller;
+				controller.childViews.push(childView);
+
+			}.bind(this));
+		},
+
+		/**
 		 * A render event triggered by a controller.
 		 *
 		 * @param controller The controller that triggered the render event.
@@ -91,24 +123,10 @@ define(function (require) {
 		},
 
 		/**
-		 * Sets up and resolves a require function promise.
-		 *
-		 * @param path The path to require.
-		 * @returns {Promise} The require promise.
-		 * @private
-		 */
-		_requirePromise: function (path) {
-			return new Promise(function (resolve) {
-				require([path], function (module) {
-					resolve(module);
-				});
-			});
-		},
-
-		/**
 		 * Loads the collections and model bound to a controller.
 		 *
 		 * @param controller The controller that contains the collection and model.
+		 * @returns {Promise}
 		 * @private
 		 */
 		_loadDataModels: function (controller) {
@@ -123,6 +141,7 @@ define(function (require) {
 		 *
 		 * @param url The url on the data model.
 		 * @param dataModel The data model that may contain information to fetch.
+		 * @returns {Promise}
 		 * @private
 		 */
 		_fetchDataModel: function (url, dataModel) {
@@ -199,17 +218,18 @@ define(function (require) {
 		 *
 		 * @param route The base path to the view and controller.
 		 * @param controller The controller that contains the template and render information.
+		 * @returns {Promise}
 		 * @private
 		 */
 		_loadTemplate: function (route, controller) {
 			if (controller.template !== false) {
 				var path = 'text!' + route + 'View.html';
-				require([path], function (template) {
+				return this._requirePromise(path).then(function (template) {
 					controller.template = Handlebars.compile(template);
-					this._renderView(controller);
+					return this._renderView(controller);
 				}.bind(this));
 			} else {
-				this._renderView(controller);
+				return this._renderView(controller);
 			}
 		},
 
@@ -217,13 +237,18 @@ define(function (require) {
 		 * Renders a view by calling the render function of both the loader and the controller.
 		 *
 		 * @param controller The controller associated with the view.
+		 * @returns {Promise}
 		 * @private
 		 */
 		_renderView: function (controller) {
-			this.listenToOnce(controller, 'afterRender', function () {
-				controller.trigger('ready');
-			});
-			controller.render();
+			controller.trigger('beforeRender');
+			return new Promise(function (resolve) {
+				this.listenToOnce(controller, 'afterRender', function () {
+					controller.trigger('ready');
+					resolve(controller);
+				});
+				controller.render();
+			}.bind(this));
 		}
 
 	});

@@ -25,9 +25,17 @@ define(function (require) {
 		 * @param options
 		 */
 		render: function (controller, options) {
-			$(this.selector).html(controller.$el);
 
-			this.linkify(controller.$el);
+			options = options || {};
+
+			var parent = controller.parent;
+			var selector = options.selector;
+			var $element = parent ? $(parent.$el.find(selector)) : selector ? $(selector) : $(this.selector);
+			$element.html(controller.$el);
+
+			if (!parent) {
+				this.linkify(controller.$el);
+			}
 
 			if (controller.onAfterRender) {
 				controller.onAfterRender();

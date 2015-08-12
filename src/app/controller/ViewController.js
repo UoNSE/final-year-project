@@ -4,10 +4,11 @@ define(function (require) {
 
 	return Backbone.View.extend({
 
-		_childViews: null,
+		childViews: null,
 
 		initialize: function () {
-			this._childViews = [];
+			this.childViews = [];
+			this.on('beforeRender', this.onBeforeRender, this);
 			this.on('ready', this.onReady, this);
 		},
 
@@ -24,6 +25,12 @@ define(function (require) {
 					html = this.template();
 				}
 			}
+
+			// Iterate through each child view and render them.
+			for (var i = 0, len = this.childViews.length; i < len; i++) {
+				this.childViews[i].render();
+			}
+
 			// Set the html of the controller and trigger and after render event.
 			this.$el.html(html);
 			this.trigger('afterRender');
@@ -34,8 +41,8 @@ define(function (require) {
 			this.trigger('back');
 		},
 
-		addChildView: function (element, view) {
-			this.trigger('addChildView', view);
+		addChildView: function (selector, route) {
+			this.trigger('addChildView', selector, route);
 		}
 
 	});

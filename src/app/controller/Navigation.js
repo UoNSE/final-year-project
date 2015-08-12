@@ -18,16 +18,7 @@ define(function (require) {
 		},
 
 		insertComponent: function (route, index, element) {
-			return new Promise(function (resolve) {
-
-				// TODO change to promises with require yeah
-				this.listenToOnce(this._navigationLoader, 'afterRender', function (controller) {
-					resolve(controller);
-				}.bind(this));
-
-				this._navigationLoader.insert(route, index, element);
-
-			}.bind(this));
+			return this._navigationLoader.insert(route, index, element);
 		}
 
 	});

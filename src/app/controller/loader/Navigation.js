@@ -16,14 +16,17 @@ define(function (require) {
 		 * @param options
 		 */
 		render: function (controller, options) {
-			var element = options.element || $(this.selector);
+			options = options || {};
+
+			var selector = options.selector;
+			var $element = selector ? $(selector) : $(this.selector);
 			var index = options.index;
 
 			// Either replace the html inside the element or insert the content at the specified index.
 			if (index === undefined) {
-				element.append(controller.$el);
+				$element.append(controller.$el);
 			} else {
-				element.insertAt(index, controller.$el);
+				$element.insertAt(index, controller.$el);
 			}
 
 			if (controller.onAfterRender) {
@@ -31,7 +34,6 @@ define(function (require) {
 			}
 
 			this.trigger('afterRender', controller);
-			//controller.trigger('ready');
 
 		},
 
@@ -42,7 +44,7 @@ define(function (require) {
 		 * @param [element] An element to replace the HTML of.
 		 */
 		add: function (route, element) {
-			this._loadController(route, {
+			return this._loadController(route, {
 				element: element
 			});
 		},
@@ -53,9 +55,10 @@ define(function (require) {
 		 * @param route The current route.
 		 * @param index The index to insert the view into the element.
 		 * @param [element] The element that will have a view inserted.
+		 * @returns {Promise}
 		 */
 		insert: function (route, index, element) {
-			this._loadController(route, {
+			return this._loadController(route, {
 				element: element,
 				index: index
 			});
