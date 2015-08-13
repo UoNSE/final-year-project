@@ -12,10 +12,14 @@ define(function (require) {
 		displayBack: false,
 
 		events: {
-			'click #btn-start': '_onStart'
+			'click #btn-start': 'onStart'
 		},
 
-		_onStart: function (event) {
+		onBeforeRender: function () {
+			//this.addChildView('#mychild', 'component/cases/Cases');
+		},
+
+		onStart: function (event) {
 			var button = $(event.target).addClass('disabled');
 			Animate.scaleOut(button, {
 				css: {opacity: 0},

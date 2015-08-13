@@ -12,10 +12,10 @@ define(function (require) {
 		collection: 'Cases',
 
 		events: {
-			'click #cases .case': '_onCase'
+			'click #cases .case': 'onCase'
 		},
 
-		_onAfterRender: function () {
+		onAfterRender: function () {
 			this._container = $('#cases-container');
 			var colorClasses = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
 				'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
@@ -46,12 +46,12 @@ define(function (require) {
 			});
 		},
 
-		_onReady: function () {
+		onReady: function () {
 			this.listenTo(this.collection, 'add', this.render);
-			//this.collection.add({name: 'New'});
+			this.collection.add({name: 'New'});
 		},
 
-		_onCase: function (event) {
+		onCase: function (event) {
 			$(event.target).addClass('disabled');
 			Animate.scaleOut(this._container, {
 				duration: 500,
