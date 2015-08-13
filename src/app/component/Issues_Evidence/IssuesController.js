@@ -6,25 +6,41 @@ define(function (require) {
 
     var ViewController = require('controller/ViewController');
     var Animate = require('behaviour/Animate');
-
+    var MultiTouchManager = require('behaviour/MultiTouchManager');
+    var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
     return ViewController.extend({
+
+
 
         onAfterRender: function () {
 
             var Issues = $('#issues').children();
-            var Evidencelist = $('#evidece').children();
+            var Evidencelist = $('#evidences').children();
             var distance = 375;
             var min = 3 * Math.PI / 4;
             var max = 5 * Math.PI / 4;
             Animate.scale($('.title'));
-            debugger;
-            console.log(Issues.length);
-            for (var i = 0, len = Issues.length; i < len; i++) {
-                debugger;
-                var Issue = $(Issues[i]);
+            var len = Issues.length + Evidencelist.length;
+            var i = 0;
+            for (; i < Issues.length; i++) {
+                var card = $(Issues[i]);
+                MultiTouchManager.getInstance().addElementRTS(card);
                 var angle = min + ((i / len) * (max - min));
-                var width = Math.abs($(Issue.children(0)).width() * 0.5 - $(Issue.children(1)).width() * 0.5);
-                Animate.scale(Issue, {
+                var width = Math.abs($(card.children(0)).width() * 0.5 - $(card.children(1)).width() * 0.5);
+                Animate.scale(card, {
+                    delay: i * 50,
+                    animate: {
+                        top: -distance * Math.sin(angle),
+                        left: distance * Math.cos(angle) - width
+                    }
+                });
+            }
+            for (var l=0; i < len; i++, l++) {
+                var card = $(Evidencelist[l]);
+                MultiTouchManager.getInstance().addElementRTS(card);
+                var angle = min + ((i / len) * (max - min));
+                var width = Math.abs($(card.children(0)).width() * 0.5 - $(card.children(1)).width() * 0.5);
+                Animate.scale(card, {
                     delay: i * 50,
                     animate: {
                         top: -distance * Math.sin(angle),
