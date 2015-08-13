@@ -13,7 +13,7 @@ define(function (require) {
 		multitouch: MultiTouchManager.getInstance(),
 		urls: ['box.gif', 'spiral.gif', 'torus.gif', 'triangle.gif'],
 
-		_onAfterRender: function () {
+		onAfterRender: function () {
 			this._addItems();
 		},
 
