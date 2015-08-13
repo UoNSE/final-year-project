@@ -3,9 +3,6 @@
   <div class= "virtual-patient-img-container">
     <img id ="virtual-patient-img" src = "resources/images/androg.front.jpg">
 
-    <!-- TODO: change image to backside when flip button clicked-->
-    <!-- <img id ="human" src = "{{virtual_patient_img_url}}"> -->
-
     <!-- TODO: for each hotspot-->
     <button id="hotspot-button" class="btn btn-fab"></button></img>
   </div>
@@ -24,8 +21,9 @@
       Patient appears anxious.</button>
   </div>
   <div id="button-container">
-    <button id="question-patient-button" class="btn btn-primary btn-fab btn-raised">Question<br>Patient</button><br><br>
+    <button id="question-patient-button" class="btn btn-primary btn-fab btn-raised">Question<br>Patient {{this.firstname}}</button><br><br>
     <button id="test-request-button" class="btn btn-primary btn-fab btn-raised">Test<br>Request</button><br><br>
     <button id="test-results-button" class="btn btn-primary btn-fab btn-raised">Test<br>Results</button>
   </div>
+
 </div>

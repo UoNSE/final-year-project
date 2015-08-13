@@ -11,9 +11,9 @@ define(function(require){
 
 
   return ViewController.extend({
+
+    collection: 'Patients',
     styles: styles,
-    // virtual_patient_img_url: virtual_patient_img_url,
-    virtual_patient_img_url:  'resources/images/androg.front.jpg',
     selector: '#virtual-patient-img',
 
 
@@ -28,7 +28,6 @@ define(function(require){
 
     },
     _onAfterRender: function () {
-
 
     },
 
