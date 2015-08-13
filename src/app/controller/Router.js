@@ -14,7 +14,8 @@ define(function (require) {
 			'cases': 'cases',
 			'case/:id/overview': 'caseOverview',
 			'case/:id/information': 'caseInformation',
-			'case/:id/information/background': 'caseBackground'
+			'case/:id/information/background': 'caseBackground',
+			'case/:id/issues': 'caseIssues'
 		},
 
 		initialize: function () {
@@ -90,6 +91,10 @@ define(function (require) {
 
 		caseBackground: function (id) {
 			this._load('component/information/background/Background', id);
+		},
+
+		caseIssues: function (id) {
+			this._load('component/Issues_Evidence/Issues',id);
 		}
 
 	});

@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<div id="issues-container" class="abs-center">
+    <button class="btn btn-primary btn-fab btn-raised title abs-center">Identify<br>Issues</button>
+    <div id="issues">
 
-</body>
-</html>
+        {{#each cases.[].issues.[]}}
+        <p>data {{this}}</p>
+
+
+
+        <div class="issue">
+            <button class="btn btn-default btn-fab btn-raised btn-material-red abs-center issue">{{this.content}}</button>
+        </div>
+        {{/each}}
+    </div>
+</div>

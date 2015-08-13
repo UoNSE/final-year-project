@@ -2,7 +2,39 @@
   "cases": [
     {
       "id": 1,
-      "name": "Case 1"
+      "name": "Case 1",
+      "issues": [
+        {
+          "id": 1,
+          "content": "Dehydration"
+        },
+        {
+          "id": 2,
+          "content": "Hypovolaemia"
+        }
+      ],
+      "evidence": [
+        {
+          "id": 1,
+          "content": "Condition of oral mucosa",
+          "issueId": 1
+        },
+        {
+          "id": 2,
+          "content": "Level of thirst",
+          "issueId": 1
+        },
+        {
+          "id": 3,
+          "content": "Pale colour",
+          "issueId": 2
+        },
+        {
+          "id": 4,
+          "content": "Pulse rate very high (120 bpm)",
+          "issueId": 2
+        }
+      ]
     },
     {
       "id": 2,
