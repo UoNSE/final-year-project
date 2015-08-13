@@ -1,13 +1,12 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
-	var Loader = require('controller/Loader');
-	var Back = require('shared/navigation/back/BackController');
+	var ViewControllerLoader = require('controller/loader/ViewController');
 
 	return Backbone.Router.extend({
 
-		_loader: null,
-		_back: null,
+		_navigation: null,
+		_viewControllerLoader: null,
 
 		routes: {
 			'': 'start',
@@ -17,18 +16,12 @@ define(function (require) {
 			'case/:id/information/background': 'caseBackground'
 		},
 
-		initialize: function () {
-            this._loader = new Loader(this);
-			this._loader.insert('shared/navigation/back/Back', $('body'), 0).then(function (controller) {
-				this._back = controller;
-				$(this._back.selector).hide();
-				this.trigger('ready');
-			}.bind(this));
+		initialize: function (navigation) {
+			this._navigation = navigation;
+            this._viewControllerLoader = new ViewControllerLoader(this);
 
-			this._loader.on({
-				configureBack: this.onConfigureBack.bind(this),
-				back: this.onBack.bind(this)
-			});
+			this._viewControllerLoader.on('configureBack', this.onConfigureBack, this);
+			this._navigation.back.on('back', this.onBack, this);
 		},
 
 		/**
@@ -44,8 +37,9 @@ define(function (require) {
 		 * @param back The back configuration.
 		 */
 		onConfigureBack: function (back) {
-			if (this._back) {
-				var button = $(this._back.selector);
+			var backNavigation = this._navigation.back;
+			if (backNavigation) {
+				var button = $(backNavigation.selector);
 				// TODO add transitions
 				if (back === false || Backbone.history.getPath() === '') {
 					button.hide();
@@ -66,7 +60,7 @@ define(function (require) {
 			if (id) {
 				id = parseInt(id, 10);
 			}
-			this._loader.load(route, id);
+			this._viewControllerLoader.load(route, id);
 		},
 
 		start: function () {

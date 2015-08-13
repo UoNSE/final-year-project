@@ -18,15 +18,19 @@ define(function (require) {
 	};
 
 	var Router = require('controller/Router');
+	var Navigation = require('controller/Navigation');
 
 	return Backbone.View.extend({
 
-		_router: new Router(),
+		_router: null,
 
 		initialize: function () {
-			this._router.on('ready', function () {
+			var navigation = new Navigation();
+			navigation.on('ready', function () {
+				this._router = new Router(navigation);
 				Backbone.history.start({pushState: true});
 			});
+
 			this._bindEvents();
 		},
 
