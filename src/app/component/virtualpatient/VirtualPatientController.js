@@ -34,8 +34,14 @@ define(function(require){
 
     _flipPatient: function () {
 
-      virtual_patient_img_url:'resources/images/androg.back.jpg';
-      // $('virtual_patient_img_url'):'resources/images/androg.back.jpg';
+      var virtual_patient_img = $('#virtual-patient-img');
+      if(virtual_patient_img.attr("src") ==="resources/images/androg.front.jpg"){
+        virtual_patient_img.attr("src", "resources/images/androg.back.jpg");
+      }
+      else{
+        virtual_patient_img.attr("src", "resources/images/androg.front.jpg");
+      }
+
 
     },
     _questionPatient: function () {
