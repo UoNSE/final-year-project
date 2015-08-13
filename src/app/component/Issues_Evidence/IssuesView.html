@@ -1,15 +1,19 @@
 <div id="issues-container" class="abs-center">
-    <button class="btn btn-primary btn-fab btn-raised title abs-center">Identify<br>Issues</button>
     <div id="issues">
 
-        {{#each cases.[].issues.[]}}
-        <p>data {{this}}</p>
-
-
+        {{#each []}}
+        {{#each issues}}
 
         <div class="issue">
-            <button class="btn btn-default btn-fab btn-raised btn-material-red abs-center issue">{{this.content}}</button>
+            <button class="btn btn-default btn-fab btn-raised btn-material-red abs-center issue">{{content}}</button>
         </div>
+
+        {{/each}}
+        {{#each evidence}}
+        <div class="evidences">
+            <button class="btn btn-default btn-fab btn-raised btn-material-green abs-center evidence">{{content}}</button>
+        </div>
+        {{/each}}
         {{/each}}
     </div>
 </div>

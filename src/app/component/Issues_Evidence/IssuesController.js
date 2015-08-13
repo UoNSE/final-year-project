@@ -9,12 +9,15 @@ define(function (require) {
 
     return ViewController.extend({
 
+        collection: 'Cases',
+
         events: {
             'click .title': '_onTitle'
         },
 
         _onAfterRender: function () {
             var Issues = $('.identify-issues .issues .issue');
+            var Evidencelist = $('.identify-issues .evidences .evidence');
             var distance = 375;
             var min = 3 * Math.PI / 4;
             var max = 5 * Math.PI / 4;
