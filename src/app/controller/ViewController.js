@@ -1,6 +1,7 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
+	var Handlebars = require('handlebars');
 
 	return Backbone.View.extend({
 
@@ -16,13 +17,20 @@ define(function (require) {
 			var html = '';
 			//  Check if the controller contains a template.
 			if (this.template) {
+				var template = Handlebars.compile(this.template);
 				// Get the collection or model from the controller.
-				var dataModel = this.collection || this.model;
-				// Set the html based on whether the controller contains a data model.
-				if (dataModel) {
-					html = this.template(dataModel.toJSON());
+				// TODO make collections and models available
+				if (this.collection) {
+					html = template(this.collection.toJSON());
+				} else if (this.model) {
+					var model  = this.model;
+					var object = {};
+					model.keys().forEach(function (key, index) {
+						object[key] = model.get(key).toJSON();
+					});
+					html = template(object);
 				} else {
-					html = this.template();
+					html = template();
 				}
 			}
 
