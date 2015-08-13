@@ -1,7 +1,6 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
-	var Handlebars = require('handlebars');
 	var $ = require('jquery');
 
 	var Cases = require('collection/Cases');
@@ -225,7 +224,7 @@ define(function (require) {
 			if (controller.template !== false) {
 				var path = 'text!' + route + 'View.html';
 				return this._requirePromise(path).then(function (template) {
-					controller.template = Handlebars.compile(template);
+					controller.template = template;
 					return this._renderView(controller);
 				}.bind(this));
 			} else {

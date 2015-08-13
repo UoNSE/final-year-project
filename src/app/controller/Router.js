@@ -23,7 +23,6 @@ define(function (require) {
 
 			this._viewControllerLoader.on('configureBack', this.onConfigureBack, this);
 			this._navigation.back.on('back', this.onBack, this);
-
 		},
 
 		/**
