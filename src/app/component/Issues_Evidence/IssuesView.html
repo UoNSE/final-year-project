@@ -1,19 +1,29 @@
 <div id="issues-container" class="abs-center">
+
+    {{#with case}}
     <div id="issues">
 
-        {{#each []}}
-        {{#each issues}}
+		{{#each issues}}
 
-        <div class="issue">
-            <button class="btn btn-default btn-fab btn-raised btn-material-red abs-center issue">{{content}}</button>
-        </div>
+			<div class="issue">
+				<button class="btn btn-default btn-fab btn-raised btn-material-red abs-center issue">{{content}}</button>
+			</div>
 
-        {{/each}}
-        {{#each evidence}}
-        <div class="evidences">
-            <button class="btn btn-default btn-fab btn-raised btn-material-green abs-center evidence">{{content}}</button>
-        </div>
-        {{/each}}
-        {{/each}}
+		{{/each}}
+
     </div>
+
+    <div id="evidence">
+
+        {{#each evidence}}
+
+            <div class="evidences">
+                <button class="btn btn-default btn-fab btn-raised btn-material-green abs-center evidence">{{content}}</button>
+            </div>
+
+        {{/each}}
+
+    </div>
+    {{/with}}
+
 </div>

@@ -86,7 +86,7 @@ define(function (require) {
 		},
 
 		caseIssues: function (id) {
-			this._load('component/Issues_Evidence/Issues',id);
+			this._load('component/Issues_Evidence/Issues', id);
 		}
 
 	});

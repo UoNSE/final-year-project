@@ -9,20 +9,18 @@ define(function (require) {
 
     return ViewController.extend({
 
-        collection: 'Cases',
+        onAfterRender: function () {
 
-        events: {
-            'click .title': '_onTitle'
-        },
-
-        _onAfterRender: function () {
-            var Issues = $('.identify-issues .issues .issue');
-            var Evidencelist = $('.identify-issues .evidences .evidence');
+            var Issues = $('#issues').children();
+            var Evidencelist = $('#evidece').children();
             var distance = 375;
             var min = 3 * Math.PI / 4;
             var max = 5 * Math.PI / 4;
             Animate.scale($('.title'));
+            debugger;
+            console.log(Issues.length);
             for (var i = 0, len = Issues.length; i < len; i++) {
+                debugger;
                 var Issue = $(Issues[i]);
                 var angle = min + ((i / len) * (max - min));
                 var width = Math.abs($(Issue.children(0)).width() * 0.5 - $(Issue.children(1)).width() * 0.5);
@@ -34,12 +32,7 @@ define(function (require) {
                     }
                 });
             }
-        },
-
-        _onTitle: function(){
-            this.back();
         }
-
 
     });
 
