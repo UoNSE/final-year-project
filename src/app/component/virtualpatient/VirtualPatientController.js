@@ -12,12 +12,19 @@ define(function(require){
   ];
 
   var virtual_patient_img_url =  'resources/images/androg.front.jpg';
+  var context = {
+    author: {firstName: "Alan", lastName: "Johnson"},
+    body: "I Love Handlebars",
+    comments: [{
+      author: {firstName: "Yehuda", lastName: "Katz"},
+      body: "Me too!"
+    }]
+  };
 
 
   return ViewController.extend({
 
     collection: 'Patients',
-    patient: 'Patients.0',
     styles: styles,
     selector: '#virtual-patient-img',
 
