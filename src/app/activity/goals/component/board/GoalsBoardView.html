@@ -1,0 +1,27 @@
+<div id="goals-activity-container" class="abs-centre">
+    <button id="btn-case-overview" class="btn btn-default disabled">Create Goals and Actions</button>
+    <div>
+        <input type="text" class="form-control goal-content-search" placeholder="Search">
+    </div>
+    <ul class="media-list row goals-container">
+        {{#each []}}
+        <li>
+            <div class="col-lg-6">
+                <button class="btn btn-default disabled">{{content}}</button>
+            </div>
+            <div class="col-lg-6">
+            <a href="goals/{{id}}/actions">
+                <button class="btn btn-default btn-fab btn-raised btn-material-red case mdi-content-add"></button>
+            </a>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+    <div class="empty-goals-placeholder"></div>
+    <div class="empty-search-goals-placeholder"></div>
+    <div id="create-btn-wrapper">
+        <a href="activity/goals/create">
+            <button id="goals-and-actions" class="btn btn-primary btn-fab btn-raised mdi-content-add"></button>
+        </a>
+    </div>
+</div>

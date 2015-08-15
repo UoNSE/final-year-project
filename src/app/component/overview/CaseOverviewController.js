@@ -38,15 +38,15 @@ define(function (require) {
 			});
 		},
 
-		onIdentifyIssues: function () {
+		_onIdentifyIssues: function () {
 			// TODO
 		},
 
-		onGoalsAndActions: function () {
-			// TODO
+		_onGoalsAndActions: function () {
+
 		},
 
-		onReflection: function () {
+		_onReflection: function () {
 			// TODO
 		}
 
