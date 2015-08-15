@@ -26,6 +26,7 @@ define(function(require){
       'click #test-request-button': '_testRequests',
       'click #test-results-button': '_testResults',
       'click #patients-chart-button': '_showPatientsChart',
+      'click #hide-chart-button': '_hidePatientsChart',
 
     },
     _onAfterRender: function () {
@@ -35,7 +36,10 @@ define(function(require){
     _onReady: function () {
       this.listenTo(this.collection, 'add', this.render);
       //this.collection.add({name: 'New'});
+
+      $('#patients-chart-table').draggable();
       $('#patients-chart-table').hide();
+      $('#hide-chart-button').hide();
 
     },
 
@@ -53,6 +57,16 @@ define(function(require){
     _showPatientsChart: function() {
 
       $('#patients-chart-table').show();
+      $('#hide-chart-button').show();
+      $('#patients-chart-button').hide();
+
+    },
+
+    _hidePatientsChart: function() {
+
+      $('#patients-chart-table').hide();
+      $('#hide-chart-button').hide();
+      $('#patients-chart-button').show();
 
     },
 
