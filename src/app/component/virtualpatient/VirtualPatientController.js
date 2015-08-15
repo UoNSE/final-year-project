@@ -1,4 +1,8 @@
 define(function(require){
+
+  //TODO: make cards draggable
+  //TODO: make hotspot from data
+
   var $ = require('jquery');
   var ViewController = require('controller/ViewController');
   var Animate = require('behaviour/Animate');
@@ -13,12 +17,12 @@ define(function(require){
   return ViewController.extend({
 
     collection: 'Patients',
+    patient: 'Patients.0',
     styles: styles,
     selector: '#virtual-patient-img',
 
 
     events: {
-      'click .case-information .title': '_onTitle',
       'click #context': '_onContext',
       'click #background': '_onBackground',
       'click #flip-patient-button': '_flipPatient',
@@ -37,7 +41,12 @@ define(function(require){
       this.listenTo(this.collection, 'add', this.render);
       //this.collection.add({name: 'New'});
 
+      // draggables
       $('#patients-chart-table').draggable();
+      $('#virtual-patient-img-container').draggable();
+      // $(".btn").draggable();
+
+
       $('#patients-chart-table').hide();
       $('#hide-chart-button').hide();
 

@@ -36,21 +36,20 @@
         "id":1,
         "codename": "NOF",
         "description": "neck of femur fracture",
-        "hotspot": ""
-      ],
-      "hotspots": [
-        {
-          "id": 1,
-          "side": "front",
-          "top": "53",
-          "left": "34"
-        },
-        {
-          "id": 2,
-          "side": "back",
-          "top": "34",
-          "left": "10"
-        }
+        "hotspots": [
+          {
+            "id": 1,
+            "side": "front",
+            "top": "53",
+            "left": "34"
+          },
+          {
+            "id": 2,
+            "side": "back",
+            "top": "34",
+            "left": "10"
+          }
+        ],
       ],
       "observations": [
         {

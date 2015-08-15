@@ -2,9 +2,8 @@
   <button id="flip-patient-button" class="btn btn-primary btn-fab btn-raised">Flip</button>
   <button id="patients-chart-button" class="btn btn-primary btn-fab btn-raised">Chart</button>
 
-  <div class= "virtual-patient-img-container">
+  <div id= "virtual-patient-img-container">
     <img id ="virtual-patient-img" src = "resources/images/androg.front.jpg">
-
     <!-- TODO: for each hotspot-->
     <button id="hotspot-button" class="btn btn-fab"></button></img>
   </div>
@@ -23,7 +22,8 @@
       Patient appears anxious.</button>
   </div>
   <div id="button-container">
-    <button id="question-patient-button" class="btn btn-primary btn-fab btn-raised">Question<br>Patient {{this.firstname}}</button><br><br>
+    <button id="question-patient-button" class="btn btn-primary btn-fab btn-raised">Question<br>Patient {{patient.id}}</button><br><br>
+    <button id="question-patient-button" class="btn ">Patients name: {{patients.0.firstname}}</button><br><br>
 
     <button id="test-request-button" class="btn btn-primary btn-fab btn-raised">Test<br>Request</button><br><br>
     <button id="test-results-button" class="btn btn-primary btn-fab btn-raised">Test<br>Results</button>
