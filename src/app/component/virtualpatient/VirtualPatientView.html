@@ -1,5 +1,7 @@
 <div class="virtual-patient-component-container">
   <button id="flip-patient-button" class="btn btn-primary btn-fab btn-raised">Flip</button>
+  <button id="patients-chart-button" class="btn btn-primary btn-fab btn-raised">Chart</button>
+
   <div class= "virtual-patient-img-container">
     <img id ="virtual-patient-img" src = "resources/images/androg.front.jpg">
 
@@ -22,8 +24,40 @@
   </div>
   <div id="button-container">
     <button id="question-patient-button" class="btn btn-primary btn-fab btn-raised">Question<br>Patient {{this.firstname}}</button><br><br>
+
     <button id="test-request-button" class="btn btn-primary btn-fab btn-raised">Test<br>Request</button><br><br>
     <button id="test-results-button" class="btn btn-primary btn-fab btn-raised">Test<br>Results</button>
+  </div>
+
+  <div id="patients-chart-table">
+    {{#each []}}
+      <table >
+          <tr>
+            <td>First Name</td>
+            <td>{{this.firstname}}</td>
+          </tr>
+          <tr>
+          <td>Last Name</td>
+          <td>{{this.lastname}}</td>
+          </tr>
+          <tr>
+          <td>Gender</td>
+          <td>{{this.sex}}</td>
+          </tr>
+        <tr>
+        <td>Age</td>
+        <td>{{this.age}}</td>
+        </tr>
+        <tr>
+          <tr>
+          <td>DOB</td>
+          <td>{{this.dob}}</td>
+          </tr>
+        <td>Profession</td>
+        <td>{{this.profession}}</td>
+        </tr>
+      </table>
+    {{/each}}
   </div>
 
 </div>

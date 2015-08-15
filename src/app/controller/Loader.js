@@ -5,8 +5,7 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var Cases = require('collection/Cases');
-	var Patients = require('collection/Patients');
-
+	
 
 	return Backbone.View.extend({
 

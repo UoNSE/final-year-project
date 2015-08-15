@@ -25,9 +25,17 @@ define(function(require){
       'click #question-patient-button': '_questionPatient',
       'click #test-request-button': '_testRequests',
       'click #test-results-button': '_testResults',
+      'click #patients-chart-button': '_showPatientsChart',
 
     },
     _onAfterRender: function () {
+
+    },
+
+    _onReady: function () {
+      this.listenTo(this.collection, 'add', this.render);
+      //this.collection.add({name: 'New'});
+      $('#patients-chart-table').hide();
 
     },
 
@@ -41,8 +49,13 @@ define(function(require){
         virtual_patient_img.attr("src", "resources/images/androg.front.jpg");
       }
 
+    },
+    _showPatientsChart: function() {
+
+      $('#patients-chart-table').show();
 
     },
+
     _questionPatient: function () {
 
     // TODO: explode options

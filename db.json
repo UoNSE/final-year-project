@@ -15,6 +15,7 @@
       "firstname": "Cyril",
       "lastname": "Smith",
       "age": "99",
+      "dob": "12.05.1916",
       "sex": "female",
       "profession": "receptionist",
       "metrics": [
@@ -32,8 +33,10 @@
         }
       ],
       "problems": [
-        "whole body",
-        "colon"
+        "id":1,
+        "codename": "NOF",
+        "description": "neck of femur fracture",
+        "hotspot": ""
       ],
       "hotspots": [
         {

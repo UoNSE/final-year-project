@@ -50,7 +50,7 @@
   margin-left: auto;
   margin-right: auto;
 }
-.virtual-patient-buttons{
+.vp-button{
 background-color: red !important;
 padding: 1em;
 width: @button-size !important;
@@ -58,26 +58,48 @@ height: @button-size !important;
 text-align: center;
 font-size: 12pt;
 }
+.smaller-vp-button{
+  width: 5em !important;
+  height: 5em !important;
+}
 
 #flip-patient-button {
-  .virtual-patient-buttons;
+  .vp-button;
+  .smaller-vp-button;
   position: absolute;
   top:40%;
   left:20%;
-  width: 5em !important;
-  height: 5em !important;
-
+}
+#patients-chart-button {
+  .vp-button;
+  .smaller-vp-button;
+  position: absolute;
+  top:20%;
+  left:20%;
 }
 
 #question-patient-button {
-  .virtual-patient-buttons;
+  .vp-button;
 }
 
 #test-request-button {
-  .virtual-patient-buttons;
+  .vp-button;
 }
 #test-results-button {
-  .virtual-patient-buttons;
+  .vp-button;
+}
+
+
+#patients-chart-table {
+  position:absolute;
+  top:60%;
+  left:10%;
+  border: solid black 1px;
+  border-spacing: 10px;
+  background-color: lighten(yellow,40%);
+  td {
+    padding: 10px;
+  }
 }
 
 #hotspot-button {
