@@ -6,7 +6,6 @@ define(function (require) {
 
     var Animate = require('behaviour/Animate');
     var ViewController = require('controller/ViewController');
-    var GoalView = require('../goal/GoalController');
 
     var styles = [
         'goals-actions-activity.css'
@@ -22,15 +21,15 @@ define(function (require) {
         styles: styles,
 
         events: {
-            'keyup .goal-content-search': 'searchGoals',
-            'form:close': 'createFormClose'
+            'keyup .goal-content-search': 'searchGoals'
         },
 
         _onAfterRender: function () {
-            this.goalsContainer = $('.goals-container');
-            this.emptyGoalsPlaceholder = this.$('.empty-goals-placeholder');
-            this.emptySearchPlaceholder = $('empty-search-goals-placeholder');
-            this.goalsContainer.empty();
+            Animate.scale($(''), {
+                css: {width: 150, height: 200, fontSize: 20},
+                delay: 500,
+                duration: 1000
+            });
         },
 
         onBeforeRender: function () {
@@ -39,29 +38,7 @@ define(function (require) {
 
         _onReady: function () {
             this.listenTo(this.collection, 'add', this.render);
-        },
-
-        searchGoals: function (event) {
-            var searchTerm = $.trim(this.$('.goal-content-search').val());
-            if (searchTerm) {
-                var filtered = this.collection.search(searchTerm);
-                if (filtered.length) {
-                    this.goalsContainer.empty();
-                    this.emptySearchPlaceholder.empty();
-                    _.each(filtered, this.renderOne, this);
-                } else {
-                    this.goalsContainer.empty();
-                    var html = [
-                        '<div class="well text-center">',
-                        '<h3>There are no Goals matching search</h3>',
-                        '</div>'
-                    ].join('');
-                    this.emptySearchPlaceholder.html(html);
-                }
-            } else {
-                this.render();
-            }
-        },  
+        }
 
     });
 

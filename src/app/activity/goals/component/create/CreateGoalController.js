@@ -19,12 +19,31 @@ define(function (require) {
         collection: 'Goals',
         styles: styles,
 
-        _onAfterRender: function () {
+        events: {
+            'submit .goal-form': '_addGoal'
+        },
 
+        _onAfterRender: function () {
+            console.log('el: ' + this.$el);
         },
 
         _onReady: function () {
-            this.listenTo(this.collection, 'add', this.render);
+            $('#content').trigger('focus');
+        },
+
+        _addGoal: function (event) {
+            console.log('el: ' + this.$el);
+            event.preventDefault();
+
+            var attr = {
+                content: this.$('#content').val()
+            };
+
+            var goal = new Goal(attr);
+
+            this.collection.add(goal);
+            goal.save();
+            $('#back').click();
         }
 
     });

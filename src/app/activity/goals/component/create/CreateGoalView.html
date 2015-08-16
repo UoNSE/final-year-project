@@ -1,22 +1,19 @@
 <div id="goals-activity-container" class="abs-centre">
-    <button id="btn-case-overview" class="btn btn-default disabled">Goals and Actions</button>
+    <button id="btn-case-overview" class="btn btn-default disabled">Create a Goal</button>
     <form role="form" class="form-horizontal goal-form">
         <div class="form-group has-feedback form-group-name">
-            <label for="goal-content" class="col-sm-4 control-label">Goal:</label>
-
-            <div class="col-sm-6">
-                <input id="goal-content" type="text" class="form-control goal-content-input" value="{{content}}">
-                <small class="help-block"></small>
-            </div>
+            <label for="content" class="col-sm-4 control-label">Goal:</label>
+            <input id="content" type="text" class="form-control goal-content-input" name="content" value="{{content}}">
         </div>
         <div class="form-group">
             <div class="col-sm-offset-4 col-sm-3">
-                <button type="submit" class="btn btn-outline btn-lg btn-block">Submit</button>
+                <button id="submit-button" type="submit" class="btn btn-outline btn-lg btn-block">Submit</button>
             </div>
             <div class="col-sm-3">
-                <a href="activity/goals"><button class="btn-close-form btn btn-outline btn-lg btn-block">Cancel</button></a>
+                <a href="activity/goals">
+                    <button class="btn-close-form btn btn-outline btn-lg btn-block">Cancel</button>
+                </a>
             </div>
         </div>
     </form>
-
 </div>

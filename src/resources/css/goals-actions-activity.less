@@ -1,5 +1,3 @@
-@import "theme";
-
 @button-size: 5em;
 @button-margin: 0.5em;
 
@@ -8,9 +6,13 @@
   height: @button-size + 10em;
   text-align: center;
 
-  .goal-content-search {
+  .prompt {
+    padding: 1em;
+    color: #000000;
+  }
+
+  .goal-content-input {
     width: 50%;
-    margin: 0 auto;
   }
 
   #create-btn-wrapper {
@@ -20,7 +22,7 @@
     button {
       width: @button-size !important;
       height: @button-size !important;
-      color: #fff !important;
+      color: #fff;
       font-size: 1.1em !important;
       margin-left: -@button-margin !important;
     }
