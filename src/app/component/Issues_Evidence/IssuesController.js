@@ -10,7 +10,11 @@ define(function (require) {
     var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
     return ViewController.extend({
 
+        events: {
+            'mousedown .card': 'onDragStart',
+            'mouseup .card': 'onDragEnd'
 
+        },
 
         onAfterRender: function () {
 
@@ -25,6 +29,11 @@ define(function (require) {
             for (; i < Issues.length; i++) {
                 var card = $(Issues[i]);
                 MultiTouchManager.getInstance().addElementRTS(card);
+
+                //handler to toggle menu visibility
+                //card.addEventListener("click", function(){ $( "#menu" ).toggle("fast"); });
+                //card.addEventListener("dragend", function(){ $( "#menu" ).toggle("fast"); });
+
                 var angle = min + ((i / len) * (max - min));
                 var width = Math.abs($(card.children(0)).width() * 0.5 - $(card.children(1)).width() * 0.5);
                 Animate.scale(card, {
@@ -48,6 +57,17 @@ define(function (require) {
                     }
                 });
             }
+        },
+
+        onDragStart: function(){
+            //show menu
+            $( "#menu" ).show();
+        },
+
+        onDragEnd: function(){
+            //hide menu
+            $( "#menu" ).hide();
+            //check collisions
         }
 
     });
