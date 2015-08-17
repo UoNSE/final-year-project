@@ -11,6 +11,7 @@ define(function (require) {
     return ViewController.extend({
 
         events: {
+            //register drag events by mouseup and mousedown (check with touch input)
             'mousedown .card': 'onDragStart',
             'mouseup .card': 'onDragEnd'
 
@@ -20,40 +21,35 @@ define(function (require) {
 
             var Issues = $('#issues').children();
             var Evidencelist = $('#evidences').children();
-            var distance = 375;
-            var min = 3 * Math.PI / 4;
-            var max = 5 * Math.PI / 4;
-            Animate.scale($('.title'));
+            var distance = 150;
+            var width = window.innerWidth/2;
+            var height = window.innerHeight/3;
             var len = Issues.length + Evidencelist.length;
             var i = 0;
+
             for (; i < Issues.length; i++) {
                 var card = $(Issues[i]);
                 MultiTouchManager.getInstance().addElementRTS(card);
 
-                //handler to toggle menu visibility
-                //card.addEventListener("click", function(){ $( "#menu" ).toggle("fast"); });
-                //card.addEventListener("dragend", function(){ $( "#menu" ).toggle("fast"); });
-
-                var angle = min + ((i / len) * (max - min));
-                var width = Math.abs($(card.children(0)).width() * 0.5 - $(card.children(1)).width() * 0.5);
+                var angle =  2 * Math.PI * (i / len);
                 Animate.scale(card, {
                     delay: i * 50,
                     animate: {
-                        top: -distance * Math.sin(angle),
-                        left: distance * Math.cos(angle) - width
+                        top: (distance * Math.cos(angle)) + height,
+                        left: (distance * Math.sin(angle)) + width
                     }
                 });
             }
             for (var l=0; i < len; i++, l++) {
                 var card = $(Evidencelist[l]);
                 MultiTouchManager.getInstance().addElementRTS(card);
-                var angle = min + ((i / len) * (max - min));
-                var width = Math.abs($(card.children(0)).width() * 0.5 - $(card.children(1)).width() * 0.5);
+                var angle = 2 * Math.PI * (i / len);
+
                 Animate.scale(card, {
                     delay: i * 50,
                     animate: {
-                        top: -distance * Math.sin(angle),
-                        left: distance * Math.cos(angle) - width
+                        top: (distance * Math.cos(angle)) + height,
+                        left: (distance * Math.sin(angle)) + width
                     }
                 });
             }
@@ -68,6 +64,10 @@ define(function (require) {
             //hide menu
             $( "#menu" ).hide();
             //check collisions
+            //get btn pos
+            var pos=jQuery(event.target).offset();
+            //debug pos
+            //console.log("x: " + pos.left + " y: " + pos.top);
         }
 
     });
