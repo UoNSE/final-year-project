@@ -53,7 +53,7 @@
 
 <div id="results-container">
 
-<button id="results-card" class="btn card results-card">Urine Analysis</button><br><br>
+<button id="results-card1" class="btn card results-card">Urine Analysis</button><br><br>
 </div>
 
 
@@ -100,10 +100,45 @@
 
   </div>
 
+<div id="urine-analysis-results">
+    <table >
+        <th>Urine Analysis Results</th>
+        <tr>
+          <td>Glucose</td>
+          <td>100</td>
+        </tr>
+        <tr>
+        <td>Bilirubin</td>
+        <td>30<td>
+        </tr>
+        <tr>
+        <td>Ketones</td>
+        <td>120</td>
+        </tr>
+      <tr>
+      <td>S.G</td>
+      <td>20</td>
+      </tr>
+      <tr>
+        <tr>
+        <td>Eryth</td>
+        <td>30</td>
+        </tr>
+      <td>pH</td>
+      <td>40</td>
+      </tr>
+      <td>T.S(g/dL)</td>
+      <td>50</td>
+      </tr>
+    </table>
+    <button id ="hide-chart-button2" class="btn btn-primary btn-raised hide-chart-button">Hide</button>
+</div>
+
 
   <div id="patients-chart-table">
     {{#each []}}
       <table >
+          <th>Patients Chart</th>
           <tr>
             <td>First Name</td>
             <td>{{this.firstname}}</td>
@@ -130,7 +165,7 @@
         </tr>
       </table>
     {{/each}}
-    <button id ="hide-chart-button" class="btn btn-primary btn-raised">Hide</button>
+    <button id ="hide-chart-button" class="btn btn-primary btn-raised hide-chart-button">Hide</button>
   </div>
 
 

@@ -29,6 +29,8 @@ define(function(require){
       'click #patients-chart-button': '_showPatientsChart',
       'click #hide-chart-button': '_hidePatientsChart',
       'click #question-card': '_questionCard',
+      'click #results-card1': '_showUrineAnalysisChart',
+      'click #hide-chart-button2': '_hideUrineAnalysisChart'
 
     //   'hover #save-issue-button': '_saveIssue',
     },
@@ -50,6 +52,8 @@ define(function(require){
       $('#observation-card2').draggable();
       $('#observation-card3').draggable();
 
+      $('#urine-analysis-results').draggable();
+
       $('#patients-chart-table').hide();
       $('#hide-chart-button').hide();
       $('.test-card').hide();
@@ -57,6 +61,7 @@ define(function(require){
       $('.question-card').hide();
       $('.question-card').hide();
       $('#speech-card2').hide();
+      $('#urine-analysis-results').hide();
 
 
 
@@ -81,6 +86,7 @@ define(function(require){
 
     },
 
+
     _hidePatientsChart: function() {
 
       $('#patients-chart-table').hide();
@@ -88,6 +94,22 @@ define(function(require){
       $('#patients-chart-button').show();
 
     },
+
+    _showUrineAnalysisChart: function() {
+
+      $('#urine-analysis-results').show();
+      $('#hide-chart-button').show();
+
+    },
+
+    _hideUrineAnalysisChart: function() {
+
+      $('#urine-analysis-results').hide();
+      $('#hide-chart-button2').hide();
+
+    },
+
+
 
     _questionPatient: function () {
 

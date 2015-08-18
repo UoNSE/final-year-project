@@ -131,23 +131,35 @@ font-size: 12pt;
 
 }
 
-#patients-chart-table {
-  position:absolute;
-  top:0%;
-  left:-20%;
+.chart {
   border: solid black 1px;
   border-spacing: 10px;
   background-color: lighten(yellow,40%);
   td {
     padding: 10px;
   }
-  #hide-chart-button {
+  width: 20em;
+  .hide-chart-button {
     position: relative;
     display: block;
     margin-left: auto;
     margin-right: auto;
     background-color: red !important;
   }
+}
+
+#patients-chart-table {
+  .chart;
+  position:absolute;
+  top:0%;
+  left:-20%;
+}
+
+#urine-analysis-results {
+  .chart;
+  position:absolute;
+  top:50%;
+  left:-20%;
 }
 
 #hotspot-button {
@@ -203,7 +215,7 @@ font-size: 12pt;
     width: 15em !important;
 }
 
-#results-card{
+.results-card{
     .observation-card;
     display: float;
     width: 15em !important;
