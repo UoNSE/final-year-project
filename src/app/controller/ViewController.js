@@ -26,9 +26,12 @@ define(function (require) {
 					var model  = this.model;
 					var object = {};
 					model.keys().forEach(function (key, index) {
-						object[key] = model.get(key).toJSON();
+						var child = model.get(key);
+						if (child instanceof Backbone.Model) {
+							object[key] = child.toJSON();
+						}
 					});
-					html = template(object);
+					html = template(Object.keys(object).length > 0 ? object : model.toJSON());
 				} else {
 					html = template();
 				}
@@ -49,8 +52,9 @@ define(function (require) {
 			this.trigger('back');
 		},
 
-		addChildView: function (selector, route) {
-			this.trigger('addChildView', selector, route);
+		addChildView: function (selector, route, options) {
+			options['selector'] = selector;
+			this.trigger('addChildView', route, options);
 		}
 
 	});
