@@ -83,9 +83,7 @@ define(function (require) {
             }
 
             //check for card deletion
-            //console.log(deldist);
             if( touchOverElement(delbtn,event) ){
-                console.log("delete");
                 target.remove();
             }
             else if ( touchOverElement(splitbtn,event) ){
@@ -94,13 +92,19 @@ define(function (require) {
                     return;
                 }
 
-                console.log("split");
-
                 var children = target.children(".panel-body");
 
+                //check for blank lines
+                var resultstring = "";
+                for (var n=0;n<children.text().split("\n").length;n++){
+                    if(!children.text().split("\n")[n].trim()==" "){
+                        resultstring += children.text().split("\n")[n].trim()+"\n"
+                    }
+                }
+
                 //create the respective issue & evidence
-                $("#issues").html()( $("#issues").html() + createCard( "Issue", children[0].text ) );
-                $("#evidences").html()( $("#evidences").html() + createCard( "Evidence", children[1].text ) );
+                $("#issues").append( createCard( "Issue", resultstring.split("\n")[0] ) );
+                $("#evidences").append(createCard("Evidence", resultstring.split("\n")[1]));
 
                 //delete the pair
                 target.remove();
@@ -142,8 +146,7 @@ define(function (require) {
                     if (!card.hasClass("merged")) {
 
                         if ( touchOverElement(card,event) ){
-                            console.log("merged");
-                            //add "merged" class to div
+
 
                             var issue;
                             var evidence;
@@ -159,12 +162,12 @@ define(function (require) {
                             }
 
                             evidence.children().each( function() {
-                                console.log( this );
                                 issue.append( this );
                             });
 
                             issue.removeClass("panel-info");
                             issue.addClass("panel-success");
+                            //add "merged" class to div
                             issue.addClass("merged");
 
                             //This is dirty, I know
@@ -203,12 +206,10 @@ define(function (require) {
         var touchY = event.pageY;
 
         var x1 = $element.offset().left;
-        var x2 = x1 + $element.width();
+        var x2 = x1 + $element.width(); //button size is 56px as defined in bootstrap.css
 
         var y1 = $element.offset().top;
         var y2 = y1 + $element.height();
-
-        console.log( x1 + "<" + touchX + "<" + x2 + " && " + y1 + "<" + touchY + "<" + y2);
 
         if ( touchX > x1 && touchX < x2 && touchY > y1 && touchY < y2 ){
             return true;
@@ -220,7 +221,7 @@ define(function (require) {
 
     function createCard( cardType, content ){
         var panelType =  ( cardType === "Issue" ) ? "info" : "danger";
-        return "<div class='panel panel-" + panelType + " abs-center issue IEcard' style='width: 300px; height: 100px'><div class='panel-heading'><h3 class='panel-title'>" + cardType + "</h3></div><div class='panel-body'>" + content + "</div></div>";
+        return "<div class='panel panel-" + panelType + " abs-center "+cardType.toLowerCase()+" IEcard' style='width: 300px; height: 100px'><div class='panel-heading'><h3 class='panel-title'>" + cardType + "</h3></div><div class='panel-body'>" + content +"\n"+ "</div></div>";
     }
 
 });
