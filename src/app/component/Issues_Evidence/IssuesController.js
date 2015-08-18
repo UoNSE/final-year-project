@@ -28,7 +28,7 @@ define(function (require) {
             for (; i < Issues.length; i++) {
                 var card = $(Issues[i]);
                 MultiTouchManager.getInstance().addElementRTS(card);
-
+                //card.css({"color": "black"/*, "width": (card.text().length * 19) + "px", "height":64 + "px", "word-wrap":"break-word"*/});
                 var angle =  2 * Math.PI * (i / len);
                 Animate.scale(card, {
                     delay: i * 50,
@@ -42,7 +42,7 @@ define(function (require) {
                 var card = $(Evidencelist[l]);
                 MultiTouchManager.getInstance().addElementRTS(card);
                 var angle = 2 * Math.PI * (i / len);
-
+                //card.css({"color": "black"/*, "width": (card.text().length * 19) + "px", "height":64 + "px", "word-wrap":"break-word"*/});
                 Animate.scale(card, {
                     delay: i * 50,
                     animate: {
@@ -53,10 +53,22 @@ define(function (require) {
             }
         },
 
-        onDragStart: function(){
-            //show menu
-            $( "#menu" ).show();
+        onDragStart: function() {
+
+            $("#menu").show();
+            /*var menu = $( "#menu" );
+            menu.show();
+            Animate.scale( menu, {
+                delay: 1,
+                animate: {
+                    duration:10,
+                    top:300,
+                    left:0
+                }
+            });*/
         },
+
+
 
         onDragEnd: function(){
 
@@ -89,14 +101,14 @@ define(function (require) {
                     //delete base card
                     (event.target).remove();
                     //create new cards
-                    $("#issues").html($("#issues").html()+ "<button class='btn btn-default btn-fab btn-raised btn-material-red abs-center issue card' style='position: absolute'>" + issue + "</button>");
+                    $("#issues").html($("#issues").html()+ "<button class='btn btn-default btn-fab btn-raised btn-material-red abs-center issue card' style='position: absolute; color: black'>" + issue + "</button>");
                     //add RTS
                     var list = $("#issues").children();
                     for(var i=0; i<list.length;i++){
                         var card = list[i];
                         MultiTouchManager.getInstance().addElementRTS(card);
                     }
-                    $("#evidences").html($("#evidences").html()+ "<button class='btn btn-default btn-fab btn-raised btn-material-green abs-center evidence card' style='position: absolute'>" + evidence + "</button>");
+                    $("#evidences").html($("#evidences").html()+ "<button class='btn btn-default btn-fab btn-raised btn-material-green abs-center evidence card' style='position: absolute; color: black'>" + evidence + "</button>");
                     //add RTS
                     var list = $("#evidences").children();
                     for(var i=0; i<list.length;i++){
@@ -137,13 +149,27 @@ define(function (require) {
                             }
                             //remove old card
                             (event.target).remove();
+                            break;
                         }
                     }
                 }
             }
 
             //hide menu
-            $( "#menu" ).hide();
+            $( "#menu").hide();
+            /*var menu = $( "#menu" );
+            Animate.scaleOut( menu, {
+                delay: 10,
+                animate: {
+                    duration:5,
+                    top:-400,
+                    left:0,
+                    complete:function(){
+                        //menu.hide();
+                    }
+                },
+            }, "fast");*/
+
         }
 
     });
