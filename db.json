@@ -80,7 +80,9 @@
       "title": "Video Example",
       "type": "mp4",
       "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
-      "text": "A placeholder video card"
+      "text": [
+        "A placeholder video card"
+      ]
     },
     {
       "id": 5,
