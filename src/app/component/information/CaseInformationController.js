@@ -5,13 +5,9 @@ define(function (require) {
 	var ViewController = require('controller/ViewController');
 	var animate = require('behaviour/Animate').getInstance();
 
-	var styles = [
-		'case-information.css'
-	];
-
 	return ViewController.extend({
 
-		styles: styles,
+		styles: 'case-information.css',
 
 		events: {
 			'click .case-information .title': '_onTitle',

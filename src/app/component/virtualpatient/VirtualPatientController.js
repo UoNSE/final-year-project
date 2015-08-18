@@ -7,15 +7,10 @@ define(function(require){
   var ViewController = require('controller/ViewController');
   var Animate = require('behaviour/Animate');
 
-  var styles = [
-    'virtual-patient.css'
-  ];
-
-
   return ViewController.extend({
 
     collection: 'Patients',
-    styles: styles,
+    styles: 'virtual-patient.css',
     selector: '#virtual-patient-img',
 
 

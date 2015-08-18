@@ -78,7 +78,7 @@ define(function (require) {
 		 * @private
 		 */
 		_loadStyles: function (styles) {
-			styles = styles || [];
+			styles = styles ? Array.isArray(styles) ? styles : [styles] : [];
 			// Get the head from the HTML page.
 			var head = $('head');
 			// Load necessary CSS files.

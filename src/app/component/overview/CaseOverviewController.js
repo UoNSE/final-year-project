@@ -6,13 +6,9 @@ define(function (require) {
 	var ViewController = require('controller/ViewController');
 	var animate = require('behaviour/Animate').getInstance();
 
-	var styles = [
-		'case-overview.css'
-	];
-
 	return ViewController.extend({
 
-		styles: styles,
+		styles: 'case-overview.css',
 		selector: '#case-overview',
 
 		events: {
