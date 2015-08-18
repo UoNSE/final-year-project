@@ -1,6 +1,7 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
+	var animate = require('behaviour/Animate').getInstance();
 	var Handlebars = require('handlebars');
 
 	return Backbone.View.extend({
@@ -37,6 +38,8 @@ define(function (require) {
 				}
 			}
 
+			animate.reset();
+
 			// Iterate through each child view and render them.
 			for (var i = 0, len = this.childViews.length; i < len; i++) {
 				this.childViews[i].render();
@@ -53,6 +56,7 @@ define(function (require) {
 		},
 
 		addChildView: function (selector, route, options) {
+			options = options || {};
 			options['selector'] = selector;
 			this.trigger('addChildView', route, options);
 		}

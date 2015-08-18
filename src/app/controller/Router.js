@@ -9,7 +9,7 @@ define(function (require) {
 		_viewControllerLoader: null,
 
 		routes: {
-			'': 'start',
+			'': 'menu',
 			'cases': 'cases',
 			'case/:id/overview': 'caseOverview',
 			'case/:id/information': 'caseInformation',
@@ -61,6 +61,10 @@ define(function (require) {
 				id = parseInt(id, 10);
 			}
 			this._viewControllerLoader.load(route, id);
+		},
+
+		menu: function () {
+			this._load('component/menu/Menu');
 		},
 
 		start: function () {

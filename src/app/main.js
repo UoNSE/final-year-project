@@ -10,7 +10,7 @@ define(function (require) {
 			'underscore': '../lib/underscore/underscore',
 			'handlebars': '../lib/handlebars/handlebars',
 			'jquery': '../lib/jquery/dist/jquery',
-			'glmatrix': '../lib/gl-matrix/dist/gl-matrix',
+			'glmatrix': '../lib/gl-matrix/dist/gl-matrix-min',
 			'jquery.transform3d': '../lib/jquery.transform.js/jquery.transform3d',
 			'jquery.transform2d': '../lib/jquery.transform.js/jquery.transform2d',
 			'jquery-ui': '../lib/jquery-ui/jquery-ui'

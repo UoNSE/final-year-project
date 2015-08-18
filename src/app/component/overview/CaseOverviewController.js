@@ -4,7 +4,7 @@ define(function (require) {
 
 	var $ = require('jquery');
 	var ViewController = require('controller/ViewController');
-	var Animate = require('behaviour/Animate');
+	var animate = require('behaviour/Animate').getInstance();
 
 	var styles = [
 		'case-overview.css'
@@ -23,8 +23,8 @@ define(function (require) {
 		},
 
 		onAfterRender: function () {
-			Animate.scale($(this.selector), {duration: 1000});
-			Animate.scale($('#btn-case-overview'), {
+			animate.scale($(this.selector), {duration: 1000});
+			animate.scale($('#btn-case-overview'), {
 				css: {fontSize: 20},
 				delay: 500,
 				duration: 1000
@@ -32,7 +32,7 @@ define(function (require) {
 		},
 
 		onCaseInformation: function () {
-			Animate.scaleOut($(this.selector), {
+			animate.scaleOut($(this.selector), {
 				duration: 500,
 				easing: 'easeInBack'
 			});
