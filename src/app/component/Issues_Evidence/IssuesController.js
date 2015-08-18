@@ -12,8 +12,8 @@ define(function (require) {
 
         events: {
             //register drag events by mouseup and mousedown (check with touch input)
-            'mousedown .card': 'onDragStart',
-            'mouseup .card': 'onDragEnd'
+            'mousedown .IEcard': 'onDragStart',
+            'mouseup .IEcard': 'onDragEnd'
 
         },
 
@@ -21,7 +21,7 @@ define(function (require) {
 
             var Issues = $('#issues').children();
             var Evidencelist = $('#evidences').children();
-            var distance = 150;
+            var distance = 250;
             var len = Issues.length + Evidencelist.length;
             var i = 0;
 
@@ -57,73 +57,80 @@ define(function (require) {
 
             $("#menu").show();
             /*var menu = $( "#menu" );
-            menu.show();
-            Animate.scale( menu, {
-                delay: 1,
-                animate: {
-                    duration:10,
-                    top:300,
-                    left:0
-                }
-            });*/
+             menu.show();
+             Animate.scale( menu, {
+             delay: 1,
+             animate: {
+             duration:10,
+             top:300,
+             left:0
+             }
+             });*/
         },
-
-
 
         onDragEnd: function(){
 
             //check collisions
             //get btn pos
             var pos=jQuery(event.target).offset();
+            var target = $(event.target);
+            var delbtn = $( "#delbtn");
+            var splitbtn = $( "#splitbtn");
 
-
-            //check for card deletion
-            var delbtn = $( "#delbtn").offset();
-            var deldist = Math.sqrt(Math.abs(Math.pow((delbtn.left - pos.left),2) + Math.pow((delbtn.top - pos.top),2)));
-            //console.log(deldist);
-            if(deldist<32){
-                (event.target).remove();
+            //HACK:ascend until the 'true' parent is found
+            while ( !target.hasClass("IEcard")){
+                target = target.parent();
             }
 
+            //check for card deletion
+            //console.log(deldist);
+            if( touchOverElement(delbtn,event) ){
+                console.log("delete");
+                target.remove();
+            }
+            else if ( touchOverElement(splitbtn,event) ){
 
-            if ($(event.target).hasClass("merged")){
-                //check card splitting
+                if ( !target.hasClass("merged") ){
+                    return;
+                }
 
-                var splitbtn = $( "#splitbtn").offset();
-                var splitdist = Math.sqrt(Math.abs(Math.pow((splitbtn.left - pos.left),2) + Math.pow((splitbtn.top - pos.top),2)));
-                //console.log(splitdist);
-                if(splitdist<32){
-                    //split cards
-                    //get each card data
-                    var textmain = $(event.target).text();
-                    var issue = textmain.split("|")[0];
-                    var evidence = textmain.split("|")[1];
-                    //delete base card
-                    (event.target).remove();
-                    //create new cards
-                    $("#issues").html($("#issues").html()+ "<button class='btn btn-default btn-fab btn-raised btn-material-red abs-center issue card' style='position: absolute; color: black'>" + issue + "</button>");
-                    //add RTS
-                    var list = $("#issues").children();
-                    for(var i=0; i<list.length;i++){
-                        var card = list[i];
-                        MultiTouchManager.getInstance().addElementRTS(card);
-                    }
-                    $("#evidences").html($("#evidences").html()+ "<button class='btn btn-default btn-fab btn-raised btn-material-green abs-center evidence card' style='position: absolute; color: black'>" + evidence + "</button>");
-                    //add RTS
-                    var list = $("#evidences").children();
-                    for(var i=0; i<list.length;i++){
-                        var card = list[i];
-                        MultiTouchManager.getInstance().addElementRTS(card);
-                    }
+                console.log("split");
+
+                var children = target.children(".panel-body");
+
+                //create the respective issue & evidence
+                $("#issues").html()( $("#issues").html() + createCard( "Issue", children[0].text ) );
+                $("#evidences").html()( $("#evidences").html() + createCard( "Evidence", children[1].text ) );
+
+                //delete the pair
+                target.remove();
+
+                //add RTS
+                var list = $("#issues").children();
+                for(var i=0; i<list.length;i++){
+                    var card = list[i];
+                    MultiTouchManager.getInstance().addElementRTS(card);
+                }
+
+                //add RTS
+                var list = $("#evidences").children();
+                for(var i=0; i<list.length;i++){
+                    var card = list[i];
+                    MultiTouchManager.getInstance().addElementRTS(card);
                 }
             }
             else {
                 //check for card merging
 
                 var list;
-                if ($(event.target).hasClass("issue")) {
-                    //check all evidence cards
-                    list = $('#evidences').children();
+                if (target.hasClass("issue")) {
+                    if ( target.hasClass("merged")){
+                        return;
+                    }
+                    else {
+                        //check all evidence cards
+                        list = $('#evidences').children();
+                    }
                 }
                 else {
                     //check all issue cards
@@ -133,22 +140,39 @@ define(function (require) {
                     //div
                     var card = $(list[i]);
                     if (!card.hasClass("merged")) {
-                        var cardpos = card.offset();
-                        var mergeDist = Math.sqrt(Math.abs(Math.pow((cardpos.left - pos.left), 2) + Math.pow((cardpos.top - pos.top), 2)));
-                        if (mergeDist < 32) {
+
+                        if ( touchOverElement(card,event) ){
+                            console.log("merged");
                             //add "merged" class to div
-                            card.addClass("merged");
-                            //update colour
-                            card.addClass("btn-material-orange");
+
+                            var issue;
+                            var evidence;
+
                             //update card text
-                            if ($(event.target).hasClass("issue")) {
-                                card.html($(event.target).text() + " | " + card.text());
+                            if (target.hasClass("issue")) {
+                                issue = target;
+                                evidence = card;
                             }
                             else {
-                                card.html(card.text() + " | " + $(event.target).text());
+                                issue = card;
+                                evidence = target;
                             }
+
+                            evidence.children().each( function() {
+                                console.log( this );
+                                issue.append( this );
+                            });
+
+                            issue.removeClass("panel-info");
+                            issue.addClass("panel-success");
+                            issue.addClass("merged");
+
+                            //This is dirty, I know
+                            issue.height( 200 );
+
                             //remove old card
-                            (event.target).remove();
+                            evidence.remove();
+
                             break;
                         }
                     }
@@ -158,20 +182,45 @@ define(function (require) {
             //hide menu
             $( "#menu").hide();
             /*var menu = $( "#menu" );
-            Animate.scaleOut( menu, {
-                delay: 10,
-                animate: {
-                    duration:5,
-                    top:-400,
-                    left:0,
-                    complete:function(){
-                        //menu.hide();
-                    }
-                },
-            }, "fast");*/
+             Animate.scaleOut( menu, {
+             delay: 10,
+             animate: {
+             duration:5,
+             top:-400,
+             left:0,
+             complete:function(){
+             //menu.hide();
+             }
+             },
+             }, "fast");*/
 
         }
 
     });
+
+    function touchOverElement( $element, event ) {
+        var touchX = event.pageX;
+        var touchY = event.pageY;
+
+        var x1 = $element.offset().left;
+        var x2 = x1 + $element.width();
+
+        var y1 = $element.offset().top;
+        var y2 = y1 + $element.height();
+
+        console.log( x1 + "<" + touchX + "<" + x2 + " && " + y1 + "<" + touchY + "<" + y2);
+
+        if ( touchX > x1 && touchX < x2 && touchY > y1 && touchY < y2 ){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function createCard( cardType, content ){
+        var panelType =  ( cardType === "Issue" ) ? "info" : "danger";
+        return "<div class='panel panel-" + panelType + " abs-center issue IEcard' style='width: 300px; height: 100px'><div class='panel-heading'><h3 class='panel-title'>" + cardType + "</h3></div><div class='panel-body'>" + content + "</div></div>";
+    }
 
 });
