@@ -6,6 +6,11 @@
 	@{property}: @value;
 }
 
+.user-select (@value) {
+	.vendor(user-select, @value);
+	-webkit-touch-callout: @value;
+}
+
 .border-radius (@radius: 1em) {
 	.vendor(border-radius, @radius);
 }
