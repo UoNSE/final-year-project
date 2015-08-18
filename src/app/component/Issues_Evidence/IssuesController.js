@@ -54,7 +54,11 @@ define(function (require) {
         },
 
         onDragStart: function() {
-
+            var par = $(event.target).parent();
+            while ( !par.hasClass("IEcard")){
+                par = par.parent();
+            }
+            par.fadeTo("fast",0.65);
             $("#menu").show();
             /*var menu = $( "#menu" );
              menu.show();
@@ -69,7 +73,11 @@ define(function (require) {
         },
 
         onDragEnd: function(){
-
+            var par = $(event.target).parent();
+            while ( !par.hasClass("IEcard")){
+                par = par.parent();
+            }
+            par.fadeTo("fast",1);
             //check collisions
             //get btn pos
             var pos=jQuery(event.target).offset();
