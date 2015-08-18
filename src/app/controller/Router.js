@@ -15,7 +15,7 @@ define(function (require) {
 			'case/:id/overview':                'caseOverview',
 			'case/:id/information':             'caseInformation',
 			'case/:id/information/background':  'caseBackground',
-
+			'case/:id/information/virtualpatient': 'virtualPatient',
 			'case/:id/issues': 'caseIssues',
 
 			'activity/goals':                   'goalsActionActivity',
@@ -112,7 +112,11 @@ define(function (require) {
 
         goalsActionActivityCreateActions: function(id) {
             this._load('activity/goals/component/goal/actions/Actions', id);
-        }
+        },
+
+		virtualPatient: function (id) {
+			this._load('component/virtualpatient/VirtualPatient', id);
+		}
 
 	});
 

@@ -14,10 +14,11 @@ define(function (require) {
 		styles: styles,
 
 		events: {
-			'click .case-information .title': 'onTitle',
-			'click #patient-background': 'onPatientBackground',
-			'click #context': 'onContext',
-			'click #background': 'onBackground'
+			'click .case-information .title': '_onTitle',
+			'click #patient-background': '_onPatientBackground',
+			'click #context': '_onContext',
+			'click #background': '_onBackground',
+			'click #virtual-patient': '_onVirtualPatient'
 		},
 
 		onAfterRender: function () {
@@ -40,19 +41,23 @@ define(function (require) {
 			}
 		},
 
-		onTitle: function () {
+		_onTitle: function () {
 			this.back();
 		},
 
-		onPatientBackground: function () {
+		_onPatientBackground: function () {
 			// TODO
 		},
 
-		onContext: function () {
+		_onVirtualPatient: function () {
 			// TODO
 		},
 
-		onBackground: function () {
+		_onContext: function () {
+			// TODO
+		},
+
+		_onBackground: function () {
 			animate.scaleOut($('.case-information'), {
 				duration: 500,
 				easing: 'easeInBack'

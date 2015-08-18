@@ -53,5 +53,175 @@
       "goalId": 1,
       "content": "A step towards parent goal"
     }
+  ],
+  "patients": [
+    {
+      "id": 1,
+      "firstname": "Cyril",
+      "lastname": "Smith",
+      "age": "99",
+      "dob": "12.05.1916",
+      "sex": "female",
+      "profession": "receptionist",
+      "metrics": [
+        {
+          "id": 1,
+          "temperature": "37°C",
+          "pulse": "112 bpm",
+          "respiratory rate": "22 breaths per minute",
+          "blood pressure": "90/50",
+          "pain": "3-4 using VAS scale",
+          "oxygen saturation level": "97%",
+          "hourly urine output (average)": "26mL/hr",
+          "bgl": "4mmol/L",
+          "patientId": 1
+        }
+      ],
+      "problems": [
+        {
+          "id": 1,
+          "codename": "NOF",
+          "description": "neck of femur fracture",
+          "hotspots": [
+            {
+              "id": 1,
+              "side": "front",
+              "top": "53",
+              "left": "34"
+            },
+            {
+              "id": 2,
+              "side": "back",
+              "top": "34",
+              "left": "10"
+            }
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "id": 1,
+          "observation": "mouth",
+          "result": "Condition of oral mucosa; mouth dry tongue furrowed",
+          "patientId": 1
+        },
+        {
+          "id": 2,
+          "observation": "Drinking",
+          "result": "Oral intake–sips only",
+          "patientId": 1
+        },
+        {
+          "id": 3,
+          "observation": "cognitive state",
+          "result": "appears restless and anxious",
+          "patientId": 1
+        },
+        {
+          "id": 4,
+          "observation": "skin",
+          "result": "pale, clammy",
+          "patientId": 1
+        }
+      ],
+      "responses": [
+        {
+          "id": 1,
+          "question": "appetite",
+          "answer": "not very",
+          "patientId": 1
+        },
+        {
+          "id": 2,
+          "question": "thirst",
+          "answer": "very",
+          "patientId": 1
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "firstname": "Gerard",
+      "lastname": "Smith",
+      "age": "101",
+      "dob": "12.05.1914",
+      "sex": "male",
+      "profession": "balloonist",
+      "metrics": [
+        {
+          "id": 1,
+          "temperature": "37°C",
+          "pulse": "112 bpm",
+          "respiratory rate": "22 breaths per minute",
+          "blood pressure": "90/50",
+          "pain": "3-4 using VAS scale",
+          "oxygen saturation level": "97%",
+          "hourly urine output (average)": "26mL/hr",
+          "bgl": "4mmol/L",
+          "patientId": 1
+        }
+      ],
+      "problems": [
+        {
+          "id": 1,
+          "codename": "NOF",
+          "description": "neck of femur fracture",
+          "hotspots": [
+            {
+              "id": 1,
+              "side": "front",
+              "top": "53",
+              "left": "34"
+            },
+            {
+              "id": 2,
+              "side": "back",
+              "top": "34",
+              "left": "10"
+            }
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "id": 1,
+          "observation": "mouth",
+          "result": "Condition of oral mucosa; mouth dry tongue furrowed",
+          "patientId": 1
+        },
+        {
+          "id": 2,
+          "observation": "Drinking",
+          "result": "Oral intake–sips only",
+          "patientId": 1
+        },
+        {
+          "id": 3,
+          "observation": "cognitive state",
+          "result": "appears restless and anxious",
+          "patientId": 1
+        },
+        {
+          "id": 4,
+          "observation": "skin",
+          "result": "pale, clammy",
+          "patientId": 1
+        }
+      ],
+      "responses": [
+        {
+          "id": 1,
+          "question": "appetite",
+          "answer": "not very",
+          "patientId": 1
+        },
+        {
+          "id": 2,
+          "question": "thirst",
+          "answer": "very",
+          "patientId": 1
+        }
+      ]
+    }
   ]
 }
