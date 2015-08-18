@@ -16,6 +16,8 @@ define(function (require) {
 
     return ViewController.extend({
 
+        elements: $(),
+        multitouch: MultiTouchManager.getInstance(),
         collection: 'Patients',
         styles: styles,
         selector: '#virtual-patient-img',
@@ -39,15 +41,38 @@ define(function (require) {
         _addItems: function () {
             //---------------------------------------------
             var transformableResources = [
-                '<div style="background-color:red;width:100px;height:100px"></div>'
+                //'<div style="background-color:#00f;width:100px;height:100px"></div>',
+                $('#patients-chart-table').get(), // //jquery fetch things
+                $('#speech-card').get(),
+                $('#observation-card2').get(),
+                $('#observation-card3').get(),
+                $('#observation-card4').get()
             ]; // [a,b,c...
 
             var transforms = [
-                [glm.vec3.fromValues(300, 100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0]
+                //[glm.vec3.fromValues(-300, 0, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0], //(translate,,) (scale,,)
+                [glm.vec3.fromValues(300, 0, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+
+                [glm.vec3.fromValues(0, 300, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(100, 300, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(500, 300, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(-100, 300, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0]
             ];
             var numItems  = transformableResources.length;
-            //var container = $('<div class')
+            for (var i =0; i<numItems; i++) {
+                var element = $(transformableResources[i]);
+                element.addClass("abs-center").appendTo(this.$el);
+                element.css('transform', transforms[i]);
 
+                var multiTouchElement = this.multitouch.addElement(element);
+                var behaviour = new RotateTranslateScaleBehaviour(multiTouchElement);
+                multiTouchElement.addBehaviour(behaviour);
+                glm.vec3.copy(behaviour.translation, transforms[i][0]);
+                glm.vec3.copy(behaviour.scale, transforms[i][1]);
+                glm.vec3.copy(behaviour.rotation, transforms[i][2]);
+                behaviour.needsUpdate();
+                this.elements = this.elements.add(element);
+            }
 
 
         },
@@ -58,7 +83,7 @@ define(function (require) {
 
             // draggables
             $('#patients-chart-table').draggable();
-            $('#virtual-patient-img-container').draggable();
+            //$('#virtual-patient-img-container').draggable();  //sample jquery method
             // $(".btn").draggable();
 
 
@@ -79,7 +104,6 @@ define(function (require) {
 
         },
         _showPatientsChart: function () {
-
             $('#patients-chart-table').show();
             $('#hide-chart-button').show();
             $('#patients-chart-button').hide();
