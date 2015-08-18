@@ -28,7 +28,6 @@ define(function (require) {
         },
 
         _onReady: function () {
-            $('#content').trigger('focus');
         },
 
         _addGoal: function (event) {

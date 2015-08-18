@@ -11,9 +11,15 @@
   ],
   "goals": [
     {
-      "content": "Manage Patient Pain",
+      "content": "A new goal",
       "id": 1
     }
   ],
-  "actions": []
+  "actions": [
+    {
+      "id": 1,
+      "goalId": 1,
+      "content": "A step towards parent goal"
+    }
+  ]
 }
