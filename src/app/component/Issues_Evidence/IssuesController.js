@@ -111,8 +111,13 @@ define(function (require) {
                 }
 
                 //create the respective issue & evidence
-                $("#issues").append( createCard( "Issue", resultstring.split("\n")[0] ) );
-                $("#evidences").append(createCard("Evidence", resultstring.split("\n")[1]));
+                $("#issues").append( createCard( "Issue", resultstring.split("\n")[0] ) );4
+                //create evidence cards
+                var n = 1;
+                while (resultstring.split("\n")[n]!= ""){
+                    $("#evidences").append(createCard("Evidence", resultstring.split("\n")[n]));
+                    n++;
+                }
 
                 //delete the pair
                 target.remove();
@@ -136,13 +141,7 @@ define(function (require) {
 
                 var list;
                 if (target.hasClass("issue")) {
-                    if ( target.hasClass("merged")){
-                        return;
-                    }
-                    else {
-                        //check all evidence cards
-                        list = $('#evidences').children();
-                    }
+                    list = $('#evidences').children();
                 }
                 else {
                     //check all issue cards
@@ -151,7 +150,7 @@ define(function (require) {
                 for (var i = 0; i < list.length; i++) {
                     //div
                     var card = $(list[i]);
-                    if (!card.hasClass("merged")) {
+                   // if (!card.hasClass("merged")) {
 
                         if ( touchOverElement(card,event) ){
 
@@ -179,14 +178,14 @@ define(function (require) {
                             issue.addClass("merged");
 
                             //This is dirty, I know
-                            issue.height( 200 );
+                            issue.height( (issue.text().split("\n").length) * 22 - 75);
 
                             //remove old card
                             evidence.remove();
 
                             break;
                         }
-                    }
+                    //}
                 }
             }
 
@@ -229,7 +228,7 @@ define(function (require) {
 
     function createCard( cardType, content ){
         var panelType =  ( cardType === "Issue" ) ? "info" : "danger";
-        return "<div class='panel panel-" + panelType + " abs-center "+cardType.toLowerCase()+" IEcard' style='width: 300px; height: 100px'><div class='panel-heading'><h3 class='panel-title'>" + cardType + "</h3></div><div class='panel-body'>" + content +"\n"+ "</div></div>";
+        return "<div class='panel panel-" + panelType + " abs-center "+cardType.toLowerCase()+" IEcard' style='width: 300px; height: 100px'>"+"\n"+"<div class='panel-heading'>"+"\n"+"<h3 class='panel-title'>" + cardType + "</h3>"+"\n"+"</div>"+"\n"+"<div class='panel-body'>" +"\n"+ content +"\n"+ "</div>"+"\n"+"</div>";
     }
 
 });
