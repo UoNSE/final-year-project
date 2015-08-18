@@ -22,8 +22,6 @@ define(function (require) {
             var Issues = $('#issues').children();
             var Evidencelist = $('#evidences').children();
             var distance = 150;
-            var width = window.innerWidth/2;
-            var height = window.innerHeight/3;
             var len = Issues.length + Evidencelist.length;
             var i = 0;
 
@@ -35,8 +33,8 @@ define(function (require) {
                 Animate.scale(card, {
                     delay: i * 50,
                     animate: {
-                        top: (distance * Math.cos(angle)) + height,
-                        left: (distance * Math.sin(angle)) + width
+                        top: (distance * Math.cos(angle)) - 150,
+                        left: (distance * Math.sin(angle))
                     }
                 });
             }
@@ -48,8 +46,8 @@ define(function (require) {
                 Animate.scale(card, {
                     delay: i * 50,
                     animate: {
-                        top: (distance * Math.cos(angle)) + height,
-                        left: (distance * Math.sin(angle)) + width
+                        top: (distance * Math.cos(angle)) -150,
+                        left: (distance * Math.sin(angle))
                     }
                 });
             }
