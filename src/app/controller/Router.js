@@ -9,13 +9,20 @@ define(function (require) {
 		_viewControllerLoader: null,
 
 		routes: {
-			'': 'menu',
-			'cases': 'cases',
-			'case/:id/overview': 'caseOverview',
-			'case/:id/information': 'caseInformation',
-			'case/:id/information/background': 'caseBackground',
-			'case/:id/issues': 'caseIssues'
-		},
+			'':                                 'menu',
+
+			'cases':                            'cases',
+			'case/:id/overview':                'caseOverview',
+			'case/:id/information':             'caseInformation',
+			'case/:id/information/background':  'caseBackground',
+
+			'case/:id/issues': 'caseIssues',
+
+			'activity/goals':                   'goalsActionActivity',
+            'activity/goals/create':            'goalsActionActivityCreateGoal',
+            'activity/goals/:id/actions':       'goalsActionActivityCreateActions'
+
+        },
 
 		initialize: function (navigation) {
 			this._navigation = navigation;
@@ -90,7 +97,22 @@ define(function (require) {
 
 		caseIssues: function (id) {
 			this._load('component/Issues_Evidence/Issues', id);
-		}
+		},
+
+        /**
+         * Goals and Actions Activity Board.
+         */
+		goalsActionActivity: function () {
+			this._load('activity/goals/component/board/GoalsBoard');
+		},
+
+        goalsActionActivityCreateGoal: function () {
+            this._load('activity/goals/component/create/CreateGoal');
+        },
+
+        goalsActionActivityCreateActions: function(id) {
+            this._load('activity/goals/component/goal/actions/Actions', id);
+        }
 
 	});
 

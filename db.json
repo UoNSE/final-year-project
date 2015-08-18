@@ -40,5 +40,18 @@
       "id": 2,
       "name": "Case 2"
     }
+  ],
+  "goals": [
+    {
+      "content": "A new goal",
+      "id": 1
+    }
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "goalId": 1,
+      "content": "A step towards parent goal"
+    }
   ]
 }
