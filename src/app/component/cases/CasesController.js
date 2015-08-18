@@ -12,12 +12,10 @@ define(function (require) {
 		collection: 'Cases',
 
 		events: {
-			'click #cases .case': 'onCase'
+			'click #cases .case': 'onCaseClick'
 		},
 
 		onAfterRender: function () {
-			// I get called twice D:
-			console.log('after-render');
 			this._container = $('#cases-container');
 			var colorClasses = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
 				'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
@@ -54,7 +52,7 @@ define(function (require) {
 			this.collection.add({name: 'New'});
 		},
 
-		onCase: function (event) {
+		onCaseClick: function (event) {
 			$(event.target).addClass('disabled');
 			animate.scaleOut(this._container, {
 				duration: 500,

@@ -27,7 +27,6 @@ define(function (require) {
 
 	Animate.prototype._animate = function (element, options) {
 		this.numRunning++;
-		console.log('new', this.numRunning, options);
 		element
 			.css(options.css)
 			.delay(options.delay || 0)
@@ -37,7 +36,6 @@ define(function (require) {
 				complete: options.complete || function () {},
 				always: function () {
 					this.numRunning = Math.max(0, this.numRunning - 1);
-					console.log('complete', this.numRunning);
 					if (this.numRunning === 0) {
 						this.finishedCallbacks.forEach(function (callback) {
 							callback();

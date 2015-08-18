@@ -56,6 +56,7 @@ define(function (require) {
 		},
 
 		addChildView: function (selector, route, options) {
+			options = options || {};
 			options['selector'] = selector;
 			this.trigger('addChildView', route, options);
 		}

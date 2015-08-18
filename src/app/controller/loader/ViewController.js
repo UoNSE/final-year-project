@@ -38,6 +38,8 @@ define(function (require) {
 				$element.html(controller.$el);
 			}
 
+			controller.delegateEvents();
+
 			if (!parent) {
 				this.linkify(controller.$el);
 			}
