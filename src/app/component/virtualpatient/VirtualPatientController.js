@@ -92,7 +92,14 @@ define(function(require){
     _questionPatient: function () {
 
     // TODO: explode options
-    $('.question-card').show();
+    // $('.question-card').show();
+    if($('.question-card').is(":visible")){
+        $('.question-card').hide();
+
+    }else{
+        $('.question-card').show();
+
+    }
 
 
     },
