@@ -7,6 +7,10 @@ define(function (require) {
         defaults: {
             content: "This is an action",
             goalId: 1
+        },
+
+        isValid: function (content) {
+            return $.trim(content);
         }
 
     });

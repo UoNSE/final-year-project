@@ -21,21 +21,17 @@ define(function (require) {
         styles: styles,
 
         events: {
-            'keyup .goal-content-search': 'searchGoals'
+
         },
 
         onAfterRender: function () {
-            Animate.scale($(''), {
-                css: {width: 150, height: 200, fontSize: 20},
-                delay: 500,
-                duration: 1000
-            });
+
         },
 
         onBeforeRender: function () {
             var selector = '.media-list.row.goals-container';
             this.collection.each(function (model) {
-                this.addChildView(selector, 'activity/goals/component/actions/action/Action', {
+                this.addChildView(selector, 'activity/goals/component/goal/Goal', {
 					model: model
 				});
             }.bind(this));

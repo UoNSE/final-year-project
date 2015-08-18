@@ -101,7 +101,7 @@ define(function (require) {
         },
 
         goalsActionActivityCreateActions: function(id) {
-            this._load('activity/goals/component/actions/Actions', id);
+            this._load('activity/goals/component/goal/actions/Actions', id);
         }
 
 	});

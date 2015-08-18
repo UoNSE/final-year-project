@@ -5,7 +5,7 @@ define(function (require) {
     var $ = require('jquery');
 
     var ViewController = require('controller/ViewController');
-    var Goal = require('model/Goal');
+    var Action = require('model/Action');
     var Animate = require('behaviour/Animate');
     var styles = [
         'goals-actions-activity.css'
@@ -16,25 +16,26 @@ define(function (require) {
      */
     return ViewController.extend({
 
-        collection: 'Goals',
+        collection: 'Actions',
         styles: styles,
 
         events: {
-            'submit .goal-form': '_addGoal'
+            'submit .action-form': '_addAction'
         },
 
         _onAfterRender: function () {
-
+            console.log('el: ' + this.$el);
         },
 
         _onReady: function () {
             $('#content').trigger('focus');
         },
 
-        _addGoal: function (event) {
+        _addAction: function (event) {
             event.preventDefault();
+            var id = 1;
             var content = this.$('#content').val();
-            var goal = new Goal({content: content});
+            var goal = new Action({content: content, goalId: id});
             if (goal.isValid(content)) {
                 this.collection.add(goal);
                 goal.save();
