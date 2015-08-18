@@ -11,16 +11,6 @@ define(function(require){
     'virtual-patient.css'
   ];
 
-  var virtual_patient_img_url =  'resources/images/androg.front.jpg';
-  var context = {
-    author: {firstName: "Alan", lastName: "Johnson"},
-    body: "I Love Handlebars",
-    comments: [{
-      author: {firstName: "Yehuda", lastName: "Katz"},
-      body: "Me too!"
-    }]
-  };
-
 
   return ViewController.extend({
 
@@ -51,11 +41,14 @@ define(function(require){
       // draggables
       $('#patients-chart-table').draggable();
       $('#virtual-patient-img-container').draggable();
-      // $(".btn").draggable();
+      $(".card").draggable();
 
 
       $('#patients-chart-table').hide();
       $('#hide-chart-button').hide();
+      $('.test-card').hide();
+      $('.results-card').hide();
+
 
     },
 
@@ -95,12 +88,49 @@ define(function(require){
 
     // TODO: explode options
 
+    // var menuItems = $('.virtual-patient-component-container .menu .menu-item');
+    // var distance = 100;
+    // var min = 3 * Math.PI / 4 ;
+    // var max = 5 * Math.PI / 4;
+    // Animate.scale($('.virtual-patient-component-container .title'));
+    // for (var i = 0, len = menuItems.length; i < len; i++) {
+    //     var menuItem = $(menuItems[i]);
+    //     var angle = min + ((i / len) * (max - min));
+    //     var width = Math.abs($(menuItem.children(0)).width() * 0.5 - $(menuItem.children(1)).width() * 0.5);
+    //     Animate.scale(menuItem, {
+    //         delay: i * 50,
+    //         animate: {
+    //             top: -distance * Math.sin(angle),
+    //             left: distance * Math.cos(angle) - width
+    //         }
+    //     });
+    // }
+
+    if($('.test-card').is(":visible")){
+        $('.test-card').hide();
+
+    }else{
+        $('.test-card').show();
+
+    }
+
+
+
+
     },
     _testResults: function () {
 
     // TODO: explode options
+    if($('.results-card').is(":visible")){
+        $('.results-card').hide();
+
+    }else{
+        $('.results-card').show();
 
     }
+
+    }
+
 
   });
 });

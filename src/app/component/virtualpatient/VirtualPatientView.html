@@ -2,6 +2,54 @@
   <button id="flip-patient-button" class="btn btn-primary btn-fab btn-raised">Flip</button>
   <button id="patients-chart-button" class="btn btn-primary btn-fab btn-raised">Chart</button>
 
+  <!-- <button id="test-request-button" class="btn btn-primary btn-fab btn-raised title">Tests</button><br><br> -->
+  <button id="test-request-button" class="btn btn-primary btn-fab btn-raised">Tests</button><br><br>
+  <button id="test-results-button" class="btn btn-primary btn-fab btn-raised">Results</button>
+
+  <button id="question-patient-button" class="btn btn-primary btn-fab btn-raised">Query<br>Patient</button>
+  <button id="save-issue-button" class="btn btn-primary btn-fab btn-raised">Save<br>Issue</button>
+
+
+  <!-- <div class="menu">
+      <div class="menu-item abs-center">
+          <button class="btn btn-default btn-raised">Urine Analysis</button>
+          <button id="patient-background" class="btn btn-material-light-blue btn-fab btn-raised mdi-content-add"></button>
+      </div>
+      <div class="menu-item abs-center">
+          <button class="btn btn-default btn-raised">Blood Cell Count</button>
+          <button id="context" class="btn btn-material-light-blue btn-fab btn-raised mdi-content-add"></button>
+      </div>
+      <div class="menu-item abs-center">
+          <a href="case/{{case.id}}/information/background">
+              <button class="btn btn-default btn-raised">Xray</button>
+              <button id="background" class="btn btn-material-light-blue btn-fab btn-raised mdi-content-add"></button>
+          </a>
+      </div>
+      <div class="menu-item abs-center">
+          <a href="case/{{case.id}}/information/virtualpatient">
+              <button class="btn btn-default btn-raised">Virtual Patient</button>
+              <button id="virtual-patient" class="btn btn-material-light-blue btn-fab btn-raised mdi-content-add"></button>
+          </a>
+      </div>
+  </div> -->
+
+  <div id="button-container">
+
+  <button id="test-card" class="btn card test-card">Urine Analysis</button><br><br>
+  <button id="test-card" class="btn card test-card">Blood Test</button><br><br>
+    <button id="test-card" class="btn card test-card">Blood Test</button><br><br>
+
+  <button id="test-card" class="btn card test-card">XRAY</button><br><br>
+  <button id="test-card" class="btn card test-card">CTSCAN</button><br><br>
+</div>
+
+<div id="results-container">
+
+<button id="results-card" class="btn card results-card">Urine Analysis</button><br><br>
+</div>
+
+
+
   <div id= "virtual-patient-img-container">
     <img id ="virtual-patient-img" src = "resources/images/androg.front.jpg">
     <!-- TODO: for each hotspot-->
@@ -11,25 +59,17 @@
     <button id="speech-card" class="btn">
       <img class ="speech-icon" src = "resources/images/speech.png"/>
       "I'm cold"</button>
-    <button id="observation-card" class="btn">
+    <button id="observation-card" class="btn card">
       <img class ="observe-icon" src = "resources/images/observe.png"/>
       Patient is expectant mother.</button>
-    <button id="observation-card" class="btn">
+    <button id="observation-card" class="btn card">
       <img class ="observe-icon" src = "resources/images/observe.png"/>
       Patient is itchy all over.</button>
-    <button id="observation-card" class="btn">
+    <button id="observation-card" class="btn card">
       <img class ="observe-icon" src = "resources/images/observe.png"/>
       Patient appears anxious.</button>
   </div>
-  <div id="button-container">
-    <button id="question-patient-button" class="btn btn-primary btn-fab btn-raised">Question<br>Patient {{patient.id}}</button><br><br>
-    <button id="question-patient-button" class="btn ">Patients name: {{this.patients.0.firstname}}</button><br><br>
-    <button id="question-patient-button" class="btn ">Patients name: {{this.firstname}}</button><br><br>
-    <button id="question-patient-button" class="btn ">Patients name: {{patients.0.firstname}}</button><br><br>
 
-    <button id="test-request-button" class="btn btn-primary btn-fab btn-raised">Test<br>Request</button><br><br>
-    <button id="test-results-button" class="btn btn-primary btn-fab btn-raised">Test<br>Results</button>
-  </div>
 
   <div id="patients-chart-table">
     {{#each []}}

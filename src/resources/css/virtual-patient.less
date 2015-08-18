@@ -1,6 +1,7 @@
 @import "theme.less";
 @import "main.less";
 @import "mixins.less";
+@import "case-information.less";
 
 //TODO: make responsive
 
@@ -8,6 +9,7 @@
 
 .virtual-patient-component-container{
   position:relative;
+  left: 30%;
   // height: 800px;
   // height: 100%;
   height: 60em;
@@ -37,8 +39,17 @@
   position: absolute;
   display: block;
   height: 100%;
-  left: 80%;
-  top: 50%;
+  left: -20%;
+  top: 40%;
+
+}
+
+#results-container{
+  position: absolute;
+  display: block;
+  height: 100%;
+  left: -20%;
+  top: 90%;
 
 }
 
@@ -59,41 +70,62 @@ text-align: center;
 font-size: 12pt;
 }
 .smaller-vp-button{
-  width: 5em !important;
-  height: 5em !important;
+  width: 5em+1em !important;
+  height: 5em+1em !important;
 }
 
 #flip-patient-button {
   .vp-button;
   .smaller-vp-button;
   position: absolute;
-  top:40%;
+  top:90%;
   left:20%;
 }
 #patients-chart-button {
   .vp-button;
   .smaller-vp-button;
   position: absolute;
-  top:20%;
+  top:10%;
   left:20%;
 }
 
 #question-patient-button {
   .vp-button;
+  .smaller-vp-button;
+  position: absolute;
+  top:30%;
+  left:20%;
 }
 
 #test-request-button {
   .vp-button;
+  .smaller-vp-button;
+  position: absolute;
+  top:50%;
+  left:20%;
 }
 #test-results-button {
   .vp-button;
+  .smaller-vp-button;
+  position: absolute;
+  top:70%;
+  left:20%;
 }
 
+#save-issue-button {
+  .vp-button;
+  .smaller-vp-button;
+  position: absolute;
+  top:80%;
+  left:85%;
+  background-color: darken(lightGreen,20%) !important ;
+
+}
 
 #patients-chart-table {
   position:absolute;
-  top:60%;
-  left:10%;
+  top:0%;
+  left:-20%;
   border: solid black 1px;
   border-spacing: 10px;
   background-color: lighten(yellow,40%);
@@ -147,4 +179,18 @@ font-size: 12pt;
 #observation-card {
   .card;
   background-color: lightGray;
+}
+
+#test-card{
+    #observation-card;
+    display: float;
+    width: 15em !important;
+}
+
+#results-card{
+    #observation-card;
+    display: float;
+    width: 15em !important;
+    background-color: lightPink;
+
 }
