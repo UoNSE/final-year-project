@@ -14,13 +14,13 @@ define(function (require) {
 		styles: styles,
 
 		events: {
-			'click .case-information .title': '_onTitle',
-			'click #patient-background': '_onPatientBackground',
-			'click #context': '_onContext',
-			'click #background': '_onBackground'
+			'click .case-information .title': 'onTitle',
+			'click #patient-background': 'onPatientBackground',
+			'click #context': 'onContext',
+			'click #background': 'onBackground'
 		},
 
-		_onAfterRender: function () {
+		onAfterRender: function () {
 			var menuItems = $('.case-information .menu .menu-item');
 			var distance = 375;
 			var min = 3 * Math.PI / 4;
@@ -40,19 +40,19 @@ define(function (require) {
 			}
 		},
 
-		_onTitle: function () {
+		onTitle: function () {
 			this.back();
 		},
 
-		_onPatientBackground: function () {
+		onPatientBackground: function () {
 			// TODO
 		},
 
-		_onContext: function () {
+		onContext: function () {
 			// TODO
 		},
 
-		_onBackground: function () {
+		onBackground: function () {
 			animate.scaleOut($('.case-information'), {
 				duration: 500,
 				easing: 'easeInBack'

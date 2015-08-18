@@ -16,13 +16,13 @@ define(function (require) {
 		selector: '#case-overview',
 
 		events: {
-			'click #case-information': '_onCaseInformation',
-			'click #identify-issues': '_onIdentifyIssues',
-			'click #goals-and-actions': '_onGoalsAndActions',
-			'click #reflection': '_onReflection'
+			'click #case-information': 'onCaseInformation',
+			'click #identify-issues': 'onIdentifyIssues',
+			'click #goals-and-actions': 'onGoalsAndActions',
+			'click #reflection': 'onReflection'
 		},
 
-		_onAfterRender: function () {
+		onAfterRender: function () {
 			animate.scale($(this.selector), {duration: 1000});
 			animate.scale($('#btn-case-overview'), {
 				css: {fontSize: 20},
@@ -31,22 +31,22 @@ define(function (require) {
 			});
 		},
 
-		_onCaseInformation: function () {
+		onCaseInformation: function () {
 			animate.scaleOut($(this.selector), {
 				duration: 500,
 				easing: 'easeInBack'
 			});
 		},
 
-		_onIdentifyIssues: function () {
+		onIdentifyIssues: function () {
 			// TODO
 		},
 
-		_onGoalsAndActions: function () {
+		onGoalsAndActions: function () {
 			// TODO
 		},
 
-		_onReflection: function () {
+		onReflection: function () {
 			// TODO
 		}
 
