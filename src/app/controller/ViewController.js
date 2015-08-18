@@ -2,6 +2,7 @@ define(function (require) {
 
 	var Backbone = require('backbone');
 	var animate = require('behaviour/Animate').getInstance();
+	var Handlebars = require('handlebars');
 
 	return Backbone.View.extend({
 
@@ -17,13 +18,23 @@ define(function (require) {
 			var html = '';
 			//  Check if the controller contains a template.
 			if (this.template) {
+				var template = Handlebars.compile(this.template);
 				// Get the collection or model from the controller.
-				var dataModel = this.collection || this.model;
-				// Set the html based on whether the controller contains a data model.
-				if (dataModel) {
-					html = this.template(dataModel.toJSON());
+				// TODO make collections and models available
+				if (this.collection) {
+					html = template(this.collection.toJSON());
+				} else if (this.model) {
+					var model  = this.model;
+					var object = {};
+					model.keys().forEach(function (key, index) {
+						var child = model.get(key);
+						if (child instanceof Backbone.Model) {
+							object[key] = child.toJSON();
+						}
+					});
+					html = template(Object.keys(object).length > 0 ? object : model.toJSON());
 				} else {
-					html = this.template();
+					html = template();
 				}
 			}
 
@@ -44,8 +55,9 @@ define(function (require) {
 			this.trigger('back');
 		},
 
-		addChildView: function (selector, route) {
-			this.trigger('addChildView', selector, route);
+		addChildView: function (selector, route, options) {
+			options['selector'] = selector;
+			this.trigger('addChildView', route, options);
 		}
 
 	});

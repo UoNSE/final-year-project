@@ -1,7 +1,6 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
-	var Handlebars = require('handlebars');
 	var $ = require('jquery');
 
 	var Cases = require('collection/Cases');
@@ -44,7 +43,7 @@ define(function (require) {
 			// Load the controller at the specified path.
 			return this._requirePromise(path).then(function (Controller) {
 				// Instantiate the controller.
-				var controller = new Controller();
+				var controller = new Controller(options);
 				// Trigger the back event for any listeners.
 				this.trigger('configureBack', controller.displayBack);
 				// Bind the events of the controller and load its styles.
@@ -93,12 +92,14 @@ define(function (require) {
 		/**
 		 *
 		 * @param controller
-		 * @param selector
 		 * @param route
+		 * @param options
 		 * @returns {Promise}
 		 */
-		onAddChildView: function (controller, selector, route) {
-			return this._loadController(route, {selector: selector}).then(function (childView) {
+		onAddChildView: function (controller, route, options) {
+			options.append = true;
+			options.parent = controller;
+			return this._loadController(route, options).then(function (childView) {
 				childView.parent = controller;
 				controller.childViews.push(childView);
 
@@ -196,7 +197,7 @@ define(function (require) {
 			// Set the model of the controller.
 			controller.model = new Backbone.Model();
 			this.trigger('loadModel', controller.model, options);
-			if (route) {
+			if (route && typeof route === 'string') {
 				var path = key + '/' + route;
 				this._requirePromise(path).then(function (Model) {
 					// Get the name of the model.
@@ -206,9 +207,12 @@ define(function (require) {
 					// Set the model using its name.
 					controller.model.set(name, model);
 					// Fetch the data model.
-					return this._fetchDataModel(resolve, model.has('url'), model);
+					return this._fetchDataModel(model.has('url'), model);
 				}.bind(this));
 			} else {
+				if (route) {
+					controller.model = route;
+				}
 				return Promise.resolve();
 			}
 		},
@@ -225,7 +229,7 @@ define(function (require) {
 			if (controller.template !== false) {
 				var path = 'text!' + route + 'View.html';
 				return this._requirePromise(path).then(function (template) {
-					controller.template = Handlebars.compile(template);
+					controller.template = template;
 					return this._renderView(controller);
 				}.bind(this));
 			} else {

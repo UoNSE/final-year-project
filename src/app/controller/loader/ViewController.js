@@ -29,10 +29,14 @@ define(function (require) {
 
 			options = options || {};
 
-			var parent = controller.parent;
+			var parent = options.parent;
 			var selector = options.selector;
 			var $element = parent ? $(parent.$el.find(selector)) : selector ? $(selector) : $(this.selector);
-			$element.html(controller.$el);
+			if (options.append) {
+				$element.append(controller.$el);
+			} else {
+				$element.html(controller.$el);
+			}
 
 			if (!parent) {
 				this.linkify(controller.$el);
