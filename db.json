@@ -1,12 +1,85 @@
 {
-  "cases": [
+  "caseinfo": [
     {
       "id": 1,
-      "name": "Case 1"
+      "name": "case name one",
+      "description": "maps to the first two phases of the clinical reasoning cycle",
+      "children": [
+        {
+          "id": 1,
+          "name": "Patient Background",
+          "patient details": {
+            "name": "Mrs Annon",
+            "age": "86 years",
+            "height": "162cm",
+            "weight": "56kg"
+          },
+          "medical history": [
+            "osteoporosis (six years)",
+            "osteoarthritis (10 years)",
+            "knee replacement (eight years)"
+          ],
+          "medicines": [
+            "alendronate 70 mg, one weekly",
+            "calcium carbonate 1500 mg, one daily",
+            "cholecalciferol 25 ?g, one daily",
+            "paracetamol 500 mg, two every day"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Context",
+          "context": [
+            "husband died 10 years ago",
+            "has found it increasingly difficult to manage at home on her own",
+            "especially with the steep steps to her front door and a large garden to maintain",
+            "found the increasing volume of traffic intimidating and quit driving",
+            "was assessed by an Aged Care Assessment Team (ACAT) and moved into Sunnybanks, a lowcare residential   aged-care facility",
+            "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
+            "when moved to Sunnybanks, Dr ABC, her general practitioner (GP), conducted a comprehensive medical assessment",
+            "was assessed as competent to administer her own medicines"
+          ]
+        }
+      ]
     },
     {
       "id": 2,
-      "name": "Case 2"
+      "media": true,
+      "name": "Triggers",
+      "triggers": [
+        "A few weeks ago, Mrs Annon was admitted to hospital after experiencing dizziness and fainting. She was diagnosed with atrial fibrillation and while in hospital, she started taking atenolol 50 mg daily and warfarin 3 mg daily",
+        "was discharged from hospital and returned to Sunnybanks. Her international normalised ratio (INR) on discharge was 2.5",
+        "Last Sunday, when Mrs Annon�s son collected her, he mentioned to one of the Sunnybanks� nurses that he thought his mother was becoming more forgetful"
+      ]
+    },
+    {
+      "id": 3,
+      "media": true,
+      "name": "Threeggrs",
+      "triggers": [
+        "A few weeks ago, Mrs Annon was admitted to hospital after experiencing dizziness and fainting. She was diagnosed with atrial fibrillation and while in hospital, she started taking atenolol 50 mg daily and warfarin 3 mg daily",
+        "was discharged from hospital and returned to Sunnybanks. Her international normalised ratio (INR) on discharge was 2.5",
+        "Last Sunday, when Mrs Annon�s son collected her, he mentioned to one of the Sunnybanks� nurses that he thought his mother was becoming more forgetful"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Fourchez",
+      "triggers": [
+        "A few weeks ago, Mrs Annon was admitted to hospital after experiencing dizziness and fainting. She was diagnosed with atrial fibrillation and while in hospital, she started taking atenolol 50 mg daily and warfarin 3 mg daily",
+        "was discharged from hospital and returned to Sunnybanks. Her international normalised ratio (INR) on discharge was 2.5",
+        "Last Sunday, when Mrs Annon�s son collected her, he mentioned to one of the Sunnybanks� nurses that he thought his mother was becoming more forgetful"
+      ]
+    },
+    {
+      "id": 5,
+      "media": true,
+      "name": "Figgers",
+      "triggers": [
+        "A few weeks ago, Mrs Annon was admitted to hospital after experiencing dizziness and fainting. She was diagnosed with atrial fibrillation and while in hospital, she started taking atenolol 50 mg daily and warfarin 3 mg daily",
+        "was discharged from hospital and returned to Sunnybanks. Her international normalised ratio (INR) on discharge was 2.5",
+        "Last Sunday, when Mrs Annon�s son collected her, he mentioned to one of the Sunnybanks� nurses that he thought his mother was becoming more forgetful"
+      ]
     }
   ]
 }

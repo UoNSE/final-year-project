@@ -1,0 +1,28 @@
+<div id="cards">
+    {{#each []}}
+    <div class="well" style="margin:20px;height:500px;width:400px;float:right;">
+        <div class="card-title">
+            <h3>{{name}}</h3>
+        </div>
+        <div class="card-content" style="background-color:ghostwhite;height:300px;border: 1px gray solid;">
+            {{#if media}}
+            <div class="card-media-container"></div>
+            <div class="card-media-controls" style="width:100%;padding:0 auto;">
+                <a href="javascript:void(0)" class="btn btn-xs btn-flat"><i class="mdi-av-fast-rewind"></i></a>
+                <a href="javascript:void(0)" class="btn btn-xs btn-flat"><i class="mdi-av-stop"></i></a>
+                <a href="javascript:void(0)" class="btn btn-xs btn-flat"><i class="mdi-av-pause"></i></a>
+                <a href="javascript:void(0)" class="btn btn-xs btn-flat"><i class="mdi-av-play-arrow"></i></a>
+                <a href="javascript:void(0)" class="btn btn-xs btn-flat"><i class="mdi-av-fast-forward"></i></a>
+            </div>
+            {{else}}
+            <table>
+                <tr><td>{{@key}} : </td><td>{{this}}</td></tr>
+            </table>
+            {{/if}}
+        </div>
+        <div class="card-button">
+            <a href="javascript:void(0)" class="btn btn-flat btn-success" style="right:5px;">Keep</a>
+        </div>
+    </div>
+    {{/each}}
+</div>

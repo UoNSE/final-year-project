@@ -11,6 +11,7 @@ define(function (require) {
 		routes: {
 			'': 'start',
 			'cases': 'cases',
+			'caseinfo' : 'caseInfo',
 			'case/:id/overview': 'caseOverview',
 			'case/:id/information': 'caseInformation',
 			'case/:id/information/background': 'caseBackground'
@@ -81,8 +82,11 @@ define(function (require) {
 
 		caseBackground: function (id) {
 			this._load('component/information/background/Background', id);
-		}
+		},
 
+		caseInfo: function(){
+			this._load('activity/caseinfo/component/CaseInfo');
+		}
 	});
 
 });
