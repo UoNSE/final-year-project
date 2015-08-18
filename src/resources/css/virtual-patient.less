@@ -40,7 +40,7 @@
   display: block;
   height: 100%;
   left: -20%;
-  top: 40%;
+  top: 30%;
 
 }
 
@@ -50,6 +50,15 @@
   height: 100%;
   left: -20%;
   top: 90%;
+
+}
+
+#questions-container{
+  position: absolute;
+  display: block;
+  height: 100%;
+  left: -20%;
+  top: 10%;
 
 }
 
@@ -159,6 +168,7 @@ font-size: 12pt;
   font-size: 8pt;
   width: 30em;
   text-align: left;
+  padding: 1em;
 }
 
 .card-icon{
@@ -171,17 +181,23 @@ font-size: 12pt;
   .card-icon
 }
 
-#speech-card {
+.speech-card {
   .card;
   background-color: lightBlue;
 }
 
 .observation-card {
   .card;
-  background-color: lightGray;
+  background-color: lighten(lightGray, 20%);
 }
 
 #test-card{
+    .observation-card;
+    display: float;
+    width: 15em !important;
+}
+
+#question-card{
     .observation-card;
     display: float;
     width: 15em !important;

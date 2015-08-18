@@ -28,6 +28,8 @@ define(function(require){
       'click #test-results-button': '_testResults',
       'click #patients-chart-button': '_showPatientsChart',
       'click #hide-chart-button': '_hidePatientsChart',
+      'click #question-card': '_questionCard',
+
     //   'hover #save-issue-button': '_saveIssue',
     },
     _onAfterRender: function () {
@@ -41,7 +43,8 @@ define(function(require){
       // draggables
       $('#patients-chart-table').draggable();
       $('#virtual-patient-img-container').draggable();
-      $('#speech-card').draggable();
+      $('#speech-card1').draggable();
+      $('#speech-card2').draggable();
 
       $('#observation-card1').draggable();
       $('#observation-card2').draggable();
@@ -51,6 +54,10 @@ define(function(require){
       $('#hide-chart-button').hide();
       $('.test-card').hide();
       $('.results-card').hide();
+      $('.question-card').hide();
+      $('.question-card').hide();
+      $('#speech-card2').hide();
+
 
 
     },
@@ -85,8 +92,16 @@ define(function(require){
     _questionPatient: function () {
 
     // TODO: explode options
+    $('.question-card').show();
+
 
     },
+
+    _questionCard: function(){
+    $('#speech-card2').show();
+},
+
+
     _testRequests: function () {
 
     // TODO: explode options
