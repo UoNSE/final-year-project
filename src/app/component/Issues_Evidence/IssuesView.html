@@ -1,0 +1,49 @@
+<div id="issues-container" class="abs-center">
+
+    {{#with case}}
+    <div id="issues">
+
+        {{#each issues}}
+
+        <div class="panel panel-info abs-center issue IEcard" style="width: 300px; height: 100px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Issue</h3>
+            </div>
+            <div class="panel-body">
+                {{content}}
+            </div>
+        </div>
+
+        {{/each}}
+
+    </div>
+
+    <div id="evidences">
+
+        {{#each evidence}}
+
+        <div class="panel panel-danger abs-center evidence IEcard" style="width: 300px; height: 100px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Evidence</h3>
+            </div>
+            <div class="panel-body">
+                {{content}}
+            </div>
+        </div>
+
+        {{/each}}
+
+    </div>
+
+    {{/with}}
+    <div id="menu" style="display: none; postion: relative">
+        <button id="delbtn"
+                class="btn btn-small btn-fab btn-raised btn-material-yellow abs-center mdi-action-delete"
+                style="font-size: 20pt; text-align: center; top: 300px; left: -75px">
+        </button>
+        <button id="splitbtn"
+                class="btn btn-small btn-fab btn-raised btn-material-yellow abs-center mdi-content-content-cut"
+                style="font-size: 20pt; text-align: center; top: 300px; left: 75px">
+        </button>
+    </div>
+</div>
