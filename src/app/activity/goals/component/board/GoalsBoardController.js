@@ -24,7 +24,7 @@ define(function (require) {
             'keyup .goal-content-search': 'searchGoals'
         },
 
-        _onAfterRender: function () {
+        onAfterRender: function () {
             Animate.scale($(''), {
                 css: {width: 150, height: 200, fontSize: 20},
                 delay: 500,
@@ -33,10 +33,15 @@ define(function (require) {
         },
 
         onBeforeRender: function () {
-
+            var selector = '.media-list.row.goals-container';
+            this.collection.each(function (model) {
+                this.addChildView(selector, 'activity/goals/component/actions/action/Action', {
+					model: model
+				});
+            }.bind(this));
         },
 
-        _onReady: function () {
+        onReady: function () {
             this.listenTo(this.collection, 'add', this.render);
         }
 
