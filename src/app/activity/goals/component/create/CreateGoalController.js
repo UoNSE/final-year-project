@@ -32,17 +32,13 @@ define(function (require) {
         },
 
         _addGoal: function (event) {
-            console.log('el: ' + this.$el);
             event.preventDefault();
-
-            var attr = {
-                content: this.$('#content').val()
-            };
-
-            var goal = new Goal(attr);
-
-            this.collection.add(goal);
-            goal.save();
+            var content = this.$('#content').val();
+            var goal = new Goal({content: content});
+            if (goal.isValid(content)) {
+                this.collection.add(goal);
+                goal.save();
+            }
             $('#back').click();
         }
 
