@@ -65,6 +65,8 @@ define(function (require) {
             //check collisions
             //get btn pos
             var pos=jQuery(event.target).offset();
+
+
             //check for card deletion
             var delbtn = $( "#delbtn").offset();
             var deldist = Math.sqrt(Math.abs(Math.pow((delbtn.left - pos.left),2) + Math.pow((delbtn.top - pos.top),2)));
@@ -72,38 +74,72 @@ define(function (require) {
             if(deldist<32){
                 (event.target).remove();
             }
-            //check for card merging
-            var list;
 
-            if($(event.target).hasClass("issue")){
-                //check all evidence cards
-                list = $('#evidences').children();
+
+            if ($(event.target).hasClass("merged")){
+                //check card splitting
+
+                var splitbtn = $( "#splitbtn").offset();
+                var splitdist = Math.sqrt(Math.abs(Math.pow((splitbtn.left - pos.left),2) + Math.pow((splitbtn.top - pos.top),2)));
+                //console.log(splitdist);
+                if(splitdist<32){
+                    //split cards
+                    //get each card data
+                    var textmain = $(event.target).text();
+                    var issue = textmain.split("|")[0];
+                    var evidence = textmain.split("|")[1];
+                    //delete base card
+                    (event.target).remove();
+                    //create new cards
+                    $("#issues").html($("#issues").html()+ "<button class='btn btn-default btn-fab btn-raised btn-material-red abs-center issue card' style='position: absolute'>" + issue + "</button>");
+                    //add RTS
+                    var list = $("#issues").children();
+                    for(var i=0; i<list.length;i++){
+                        var card = list[i];
+                        MultiTouchManager.getInstance().addElementRTS(card);
+                    }
+                    $("#evidences").html($("#evidences").html()+ "<button class='btn btn-default btn-fab btn-raised btn-material-green abs-center evidence card' style='position: absolute'>" + evidence + "</button>");
+                    //add RTS
+                    var list = $("#evidences").children();
+                    for(var i=0; i<list.length;i++){
+                        var card = list[i];
+                        MultiTouchManager.getInstance().addElementRTS(card);
+                    }
+                }
             }
             else {
-                //check all issue cards
-                list = $('#issues').children();
-            }
+                //check for card merging
 
-            for(var i=0;i<list.length;i++){
-                //div
-                var card = $(list[i]);
-                if(!card.hasClass("merged")){
-                    var cardpos = card.offset();
-                    var mergeDist = Math.sqrt(Math.abs(Math.pow((cardpos.left - pos.left),2) + Math.pow((cardpos.top - pos.top),2)));
-                    if(mergeDist<32){
-                        //add "merged" class to div
-                        card.addClass("merged");
-                        //update colour
-                        card.addClass("btn-material-orange");
-                        //update card text
-                        if($(event.target).hasClass("issue")){
-                            card.html($(event.target).text()+ " | " + card.text());
+                var list;
+                if ($(event.target).hasClass("issue")) {
+                    //check all evidence cards
+                    list = $('#evidences').children();
+                }
+                else {
+                    //check all issue cards
+                    list = $('#issues').children();
+                }
+                for (var i = 0; i < list.length; i++) {
+                    //div
+                    var card = $(list[i]);
+                    if (!card.hasClass("merged")) {
+                        var cardpos = card.offset();
+                        var mergeDist = Math.sqrt(Math.abs(Math.pow((cardpos.left - pos.left), 2) + Math.pow((cardpos.top - pos.top), 2)));
+                        if (mergeDist < 32) {
+                            //add "merged" class to div
+                            card.addClass("merged");
+                            //update colour
+                            card.addClass("btn-material-orange");
+                            //update card text
+                            if ($(event.target).hasClass("issue")) {
+                                card.html($(event.target).text() + " | " + card.text());
+                            }
+                            else {
+                                card.html(card.text() + " | " + $(event.target).text());
+                            }
+                            //remove old card
+                            (event.target).remove();
                         }
-                        else {
-                            card.html(card.text()+ " | " + $(event.target).text());
-                        }
-                        //remove old card
-                        (event.target).remove();
                     }
                 }
             }
