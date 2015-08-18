@@ -61,13 +61,20 @@ define(function (require) {
         },
 
         onDragEnd: function(){
-            //hide menu
-            $( "#menu" ).hide();
+
             //check collisions
             //get btn pos
             var pos=jQuery(event.target).offset();
-            //debug pos
-            //console.log("x: " + pos.left + " y: " + pos.top);
+            var delbtn = $( "#delbtn").offset();
+            var deldist = Math.sqrt(Math.abs(Math.pow((delbtn.left - pos.left),2) + Math.pow((delbtn.top - pos.top),2)));
+            //console.log(deldist);
+            if(deldist<32){
+                (event.target).remove();
+
+            }
+            
+            //hide menu
+            $( "#menu" ).hide();
         }
 
     });
