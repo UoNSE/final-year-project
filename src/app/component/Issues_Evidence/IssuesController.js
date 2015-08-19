@@ -212,11 +212,14 @@ define(function (require) {
         var touchX = event.pageX;
         var touchY = event.pageY;
 
+        //FYI
+        //FIX URL:http://stackoverflow.com/questions/3603065/how-to-make-jquery-to-not-round-value-returned-by-width
+
         var x1 = $element.offset().left;
-        var x2 = x1 + $element.width(); //button size is 56px as defined in bootstrap.css
+        var x2 = x1 + $element[0].getBoundingClientRect().width; //button size is 56px as defined in bootstrap.css
 
         var y1 = $element.offset().top;
-        var y2 = y1 + $element.height();
+        var y2 = y1 + $element[0].getBoundingClientRect().height;
 
         if ( touchX > x1 && touchX < x2 && touchY > y1 && touchY < y2 ){
             return true;
