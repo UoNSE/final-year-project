@@ -13,7 +13,9 @@ define(function (require) {
         events: {
             //register drag events by mouseup and mousedown (check with touch input)
             'mousedown .IEcard': 'onDragStart',
-            'mouseup .IEcard': 'onDragEnd'
+            'touchstart .IEcard': 'onDragStart',
+            'mouseup .IEcard': 'onDragEnd',
+            'touchend .IEcard': 'onDragEnd'
 
         },
 
@@ -21,7 +23,7 @@ define(function (require) {
 
             var Issues = $('#issues').children();
             var Evidencelist = $('#evidences').children();
-            var distance = 250;
+            var distance = 450;
             var len = Issues.length + Evidencelist.length;
             var i = 0;
 

@@ -49,7 +49,7 @@ define(function (require) {
 
 		onReady: function () {
 			this.listenTo(this.collection, 'add', this.render);
-			this.collection.add({name: 'New'});
+			//this.collection.add({name: 'New'});
 		},
 
 		onCaseClick: function (event) {
