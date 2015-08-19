@@ -30,8 +30,6 @@ define(function (require) {
 				this._router = new Router(navigation);
 				Backbone.history.start({pushState: true});
 			});
-
-			this._bindEvents();
 		}
 
 	});
