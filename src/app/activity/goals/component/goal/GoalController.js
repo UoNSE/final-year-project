@@ -9,11 +9,10 @@ define(function (require) {
         },
 
         onBeforeRender: function () {
-            this.listenTo(this.model, 'remove', this.remove)
+            this.listenTo(this.model, 'remove', this.remove);
         },
 
         onDeleteGoal: function (e) {
-            e.preventDefault();
             this.model.destroy();
         }
 

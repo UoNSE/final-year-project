@@ -25,12 +25,14 @@ define(function (require) {
         },
 
         onAfterRender: function () {
-
+            // TODO Hack
+            this.$el.find('#goals-activity-container').height(200 + this.collection.size() * 50);
         },
 
         onBeforeRender: function () {
-            var selector = '.media-list.row.goals-container';
+            var selector = '#goals-activity-container ul.row.goals-list';
             this.collection.each(function (model) {
+                debugger;
                 this.addChildView(selector, 'activity/goals/component/goal/Goal', {
 					model: model
 				});

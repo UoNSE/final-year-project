@@ -20,25 +20,16 @@ define(function (require) {
         styles: styles,
 
         events: {
-            'submit .goal-form': '_addGoal'
+            'click #submit-button': 'onAddGoal'
         },
 
-        _onAfterRender: function () {
-
-        },
-
-        _onReady: function () {
-        },
-
-        _addGoal: function (event) {
-            event.preventDefault();
-            var content = this.$('#content').val();
-            var goal = new Goal({content: content});
-            if (goal.isValid(content)) {
+        onAddGoal: function (event) {
+            var $goal = this.$el.find('input[name="goal"]');
+            var goal = new Goal({content: $goal.val()});
+            if (goal.isValid()) {
                 this.collection.add(goal);
                 goal.save();
             }
-            $('#back').click();
         }
 
     });

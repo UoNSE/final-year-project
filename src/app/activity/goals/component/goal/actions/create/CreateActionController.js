@@ -20,18 +20,14 @@ define(function (require) {
         styles: styles,
 
         events: {
-            'submit .action-form': '_addAction'
+            'submit .action-form': 'addAction'
         },
 
-        _onAfterRender: function () {
-            console.log('el: ' + this.$el);
-        },
-
-        _onReady: function () {
+        onReady: function () {
             $('#content').trigger('focus');
         },
 
-        _addAction: function (event) {
+        addAction: function (event) {
             event.preventDefault();
             var id = 1;
             var content = this.$('#content').val();

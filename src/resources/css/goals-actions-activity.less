@@ -1,37 +1,52 @@
 @button-size: 5em;
 @button-margin: 0.5em;
 
+@width: 70%;
+@height: @button-size + 10em;
+
 #goals-activity-container {
 
-  height: @button-size + 10em;
-  text-align: center;
+	width: @width;
+	height: @height;
+	text-align: center;
 
-  .prompt {
-    padding: 1em;
-    color: #000000;
-  }
+	.prompt {
+		color: #000000;
+	}
 
-  .goals-container {
-    padding: 2em;
-    width: 70%;
-  }
+	ul.goals-list {
 
-  .goal-content-input {
-    width: 50%;
-  }
+		li {
+			height: 3.5em;
 
-  #create-btn-wrapper {
+			button {
+				margin-left: 0.5em;
+			}
 
-    height: @button-size;
+		}
 
-    button {
-      width: @button-size !important;
-      height: @button-size !important;
-      color: #fff;
-      font-size: 1.1em !important;
-      margin-left: -@button-margin !important;
-    }
+	}
 
-  }
+	#create-goal {
+		width: @button-size !important;
+		height: @button-size !important;
+		color: #fff;
+		font-size: 1.1em !important;
+	}
+
+}
+
+#actions-container {
+
+	width: @width;
+	height: @height;
+	text-align: center;
+
+	#create-action {
+		width: @button-size !important;
+		height: @button-size !important;
+		color: #fff;
+		font-size: 1.1em !important;
+	}
 
 }

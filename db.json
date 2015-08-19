@@ -2,7 +2,7 @@
   "cases": [
     {
       "id": 1,
-      "name": "Mr. Dang Tien",
+      "name": "Case 1",
       "issues": [
         {
           "id": 1,
@@ -43,15 +43,8 @@
   ],
   "goals": [
     {
-      "content": "A new goal",
+      "content": "Hello",
       "id": 1
-    }
-  ],
-  "actions": [
-    {
-      "id": 1,
-      "goalId": 1,
-      "content": "A step towards parent goal"
     }
   ],
   "patients": [
@@ -141,12 +134,12 @@
     },
     {
       "id": 1,
-      "firstname": "Dang",
-      "lastname": "Tien",
-      "age": "75",
-      "dob": "1940-05-12",
+      "firstname": "Gerard",
+      "lastname": "Smith",
+      "age": "62",
+      "dob": "1914-05-12",
       "sex": "Male",
-      "profession": "Maintenance Engineer (Retired)",
+      "profession": "Physiotherapist",
       "metrics": [
         {
           "id": 1,
@@ -223,5 +216,6 @@
         }
       ]
     }
-  ]
+  ],
+  "actions": []
 }

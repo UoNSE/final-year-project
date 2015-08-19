@@ -9,8 +9,8 @@ define(function (require) {
             content: 'This is a Goal'
         },
 
-        isValid: function (content) {
-            return $.trim(content);
+        isValid: function () {
+            return $.trim(this.get('content'));
         }
 
     });
