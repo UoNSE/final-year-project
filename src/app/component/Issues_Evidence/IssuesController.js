@@ -86,8 +86,16 @@ define(function (require) {
             var splitbtn = $( "#splitbtn");
 
             //HACK:ascend until the 'true' parent is found
+            var parentLevel = 0;
             while ( !target.hasClass("IEcard")){
                 target = target.parent();
+
+                if (parentLevel > 4 ){
+                    return;
+                }
+                else {
+                    parentLevel++;
+                }
             }
 
             //check for card deletion
