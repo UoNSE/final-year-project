@@ -24,27 +24,39 @@ define(function (require) {
 				// Get the collection and model.
 				var collection = this.collection;
 				var model = this.model;
-				// Check if only a single collection exists.
-				if (collection instanceof Backbone.Collection && !model) {
-					// Execute the template with the collection in JSON format.
-					html = template(collection.toJSON());
-				// Check if only a model exists.
-				} else if (!collection && model instanceof Backbone.Model) {
-					html = template(model.toJSON());
-				// Check if either a collection or model exist. This means that there is at least two models/collections.
-				} else if (collection || model) {
+				// Check if either a collection or model exist.
+				if (collection || model) {
 					// Set the collection and model to either itself or an empty object to prevent errors when iterating.
 					collection = collection || {};
-					model  = model || {};
+					model = model || {};
 					// Instantiate an empty object that stores the JSON collections and models.
 					var object = {};
-					// Iterate over the collection and model and add their JSON values to the object.
-					$.each(collection, function (key, collection) {
-						object[key] = collection.toJSON();
-					});
-					$.each(model, function (key, model) {
-						object[key] = model.toJSON();
-					});
+					// Check if there is only one collection.
+					if (collection instanceof Backbone.Collection) {
+						// Add a collection to the object with a collection key.
+						object['collection'] = collection.toJSON();
+					} else {
+						// Iterate over the collections and and add the JSON values to the object.
+						$.each(collection, function (key, collection) {
+							object[key] = collection.toJSON();
+						});
+					}
+					// Check if there is only one model.
+					if (model instanceof Backbone.Model) {
+						// Add a model to the object with a model key.
+						object['model'] = model.toJSON();
+					} else {
+						// Iterate over the models and and add the JSON values to the object.
+						$.each(model, function (key, model) {
+							object[key] = model.toJSON();
+						});
+					}
+					// Get the keys from the object and check if it only has one key that is either a model or collection.
+					var keys = Object.keys(object);
+					if (keys.length === 1 && (object.collection || object.model)) {
+						// When there is only one key that wasn't a set object, make the object a flat value.
+						object = object[keys[0]];
+					}
 					// Execute the template with the object.
 					html = template(object);
 				} else {
