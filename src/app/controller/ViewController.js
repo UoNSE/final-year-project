@@ -19,29 +19,36 @@ define(function (require) {
 			var html = '';
 			//  Check if the controller contains a template.
 			if (this.template) {
+				// Compile the existing template.
 				var template = Handlebars.compile(this.template);
-				// Get the collection or model from the controller.
-				// TODO make collections and models available
+				// Get the collection and model.
 				var collection = this.collection;
-				if (collection instanceof Backbone.Collection) {
+				var model = this.model;
+				// Check if only a single collection exists.
+				if (collection instanceof Backbone.Collection && !model) {
+					// Execute the template with the collection in JSON format.
 					html = template(collection.toJSON());
-				} else if (collection || this.model) {
+				// Check if only a model exists.
+				} else if (!collection && model instanceof Backbone.Model) {
+					html = template(model.toJSON());
+				// Check if either a collection or model exist. This means that there is at least two models/collections.
+				} else if (collection || model) {
+					// Set the collection and model to either itself or an empty object to prevent errors when iterating.
 					collection = collection || {};
-					var model  = this.model || {};
+					model  = model || {};
+					// Instantiate an empty object that stores the JSON collections and models.
 					var object = {};
+					// Iterate over the collection and model and add their JSON values to the object.
 					$.each(collection, function (key, collection) {
 						object[key] = collection.toJSON();
 					});
-					if (model.keys) {
-						model.keys().forEach(function (key, index) {
-							var child = model.get(key);
-							if (child instanceof Backbone.Model) {
-								object[key] = child.toJSON();
-							}
-						});
-					}
-					html = template(Object.keys(object).length > 0 ? object : model.toJSON ? model.toJSON() : model);
+					$.each(model, function (key, model) {
+						object[key] = model.toJSON();
+					});
+					// Execute the template with the object.
+					html = template(object);
 				} else {
+					// No collection or models.
 					html = template();
 				}
 			}
