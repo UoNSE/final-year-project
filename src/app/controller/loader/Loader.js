@@ -46,13 +46,14 @@ define(function (require) {
 				var controller = new Controller(options);
 				// Trigger the back event for any listeners.
 				this.trigger('configureBack', controller.displayBack);
+				this.trigger('configureViewController', controller);
 				// Bind the events of the controller and load its styles.
 				this._bindEvents(controller, options);
 				this._loadStyles(controller.styles);
 				// Load the data models and template.
-				return this._loadDataModels(controller).then(function () {
+				//return this._loadDataModels(controller).then(function () {
 					return this._loadTemplate(route, controller);
-				}.bind(this));
+				//}.bind(this));
 			}.bind(this));
 		},
 

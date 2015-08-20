@@ -34,15 +34,15 @@ define(function (require) {
 			});
 		},
 
-		_onIdentifyIssues: function () {
+		onIdentifyIssues: function () {
 			// TODO
 		},
 
-		_onGoalsAndActions: function () {
+		onGoalsAndActions: function () {
 
 		},
 
-		_onReflection: function () {
+		onReflection: function () {
 			// TODO
 		}
 

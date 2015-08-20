@@ -15,10 +15,6 @@ define(function (require) {
 			'click #btn-start': 'onStart'
 		},
 
-		onBeforeRender: function () {
-			//this.addChildView('#mychild', 'component/cases/Cases');
-		},
-
 		onStart: function (event) {
 			console.log('click');
 			var button = $(event.target).addClass('disabled');

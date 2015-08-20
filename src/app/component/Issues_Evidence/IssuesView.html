@@ -1,40 +1,7 @@
 <div id="issues-container" class="abs-center">
 
-    {{#with case}}
-    <div id="issues">
-
-        {{#each issues}}
-
-        <div class="panel panel-info abs-center issue IEcard" style="width: 300px; height: 100px">
-            <div class="panel-heading">
-                <h3 class="panel-title">Issue</h3>
-            </div>
-            <div class="panel-body">
-                {{content}}
-            </div>
-        </div>
-
-        {{/each}}
-
-    </div>
-
-    <div id="evidences">
-
-        {{#each evidence}}
-
-        <div class="panel panel-danger abs-center evidence IEcard" style="width: 300px; height: 100px">
-            <div class="panel-heading">
-                <h3 class="panel-title">Evidence</h3>
-            </div>
-            <div class="panel-body">
-                {{content}}
-            </div>
-        </div>
-
-        {{/each}}
-    </div>
-
-    {{/with}}
+    <div id="issues" class="abs-center"></div>
+    <div id="evidence" class="abs-center"></div>
 
     <div id="menu" style="display: none">
         <button id="delbtn"

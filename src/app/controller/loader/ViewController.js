@@ -9,13 +9,13 @@ define(function (require) {
 	return Loader.extend({
 
 		selector: '#content',
-		_currentId: null,
+		currentCase: null,
 		_cases: null,
 
 		initialize: function () {
 			this._cases = new Cases();
 			this._cases.fetch();
-			this.on('loadModel', this.onLoadModel, this);
+			this.on('configureViewController', this.onConfigureViewController, this);
 			Loader.prototype.initialize.apply(this, arguments);
 		},
 
@@ -84,24 +84,23 @@ define(function (require) {
 		 * Loads a partial given the route.
 		 *
 		 * @param route The route that maps to the Backbone view and controller.
-		 * @param [id] The current id of the route.
+		 * @param currentCase The current case id.
 		 */
-		load: function (route, id) {
-			this._currentId = id;
-			this._loadController(route, {
-				currentId: id
-			});
+		load: function (route, currentCase) {
+			this.currentCase = currentCase;
+			this._loadController(route);
 		},
 
 		/**
-		 * Loads a model to the specified controller.
+		 * Configures the current controller.
 		 *
-		 * @param model The model being configured.
+		 * @param controller The controller being configured.
 		 */
-		onLoadModel: function (model) {
-			var id = this._currentId;
-			if (id) {
-				model.set('case', this._cases.get(id));
+		onConfigureViewController: function (controller) {
+			if (this.currentCase) {
+				var currentCase = this._cases.get(this.currentCase);
+				controller.model = controller.model || {};
+				controller.model['case'] = currentCase;
 			}
 		}
 

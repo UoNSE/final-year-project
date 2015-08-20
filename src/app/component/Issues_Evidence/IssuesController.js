@@ -5,52 +5,80 @@ define(function (require) {
     var $ = require('jquery');
 
     var ViewController = require('controller/ViewController');
-    var animate = require('behaviour/Animate').getInstance();
-    var multiTouchManager = require('behaviour/MultiTouchManager').getInstance();
-    var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
+    var Animate = require('behaviour/Animate').getInstance();
+
+    var Issues = require('collection/Issues');
+    var Evidence = require('collection/Evidence');
+
+    var IssueViewController = require('component/Issues_Evidence/issue/IssueController');
+    var EvidenceViewController = require('component/Issues_Evidence/evidence/EvidenceController');
+
     return ViewController.extend({
 
         events: {
             //register drag events by mouseup and mousedown (check with touch input)
-            'mousedown .IEcard': 'onDragStart',
-            'mouseup .IEcard': 'onDragEnd'
+            //'mousedown .IEcard': 'onDragStart',
+            //'mouseup .IEcard': 'onDragEnd'
+        },
 
+        collection: {
+            issues: new Issues(),
+            evidence: new Evidence()
+        },
+
+        initialize: function () {
+            ViewController.prototype.initialize.apply(this, arguments);
+            this.collection.issues.fetch();
+            this.collection.evidence.fetch();
+        },
+
+        onBeforeRender: function () {
+            this.collection.issues.forEach(function (issue) {
+                this.addNestedView('#issues', new IssueViewController({
+                    model: issue
+                }));
+            }.bind(this));
+
+            this.collection.evidence.forEach(function (evidence) {
+                this.addNestedView('#evidence', new EvidenceViewController({
+                    model: evidence
+                }));
+            }.bind(this));
         },
 
         onAfterRender: function () {
 
-            var Issues = $('#issues').children();
-            var Evidencelist = $('#evidences').children();
-            var distance = 250;
-            var len = Issues.length + Evidencelist.length;
-            var i = 0;
+            var issues = this.$el.find('#issues').children();
+            var evidence = this.$el.find('#evidence').children();
+            var total = issues.length + evidence.length;
+            var distance = 420;
 
-            for (; i < Issues.length; i++) {
-                var card = $(Issues[i]);
-                multiTouchManager.addElementRTS(card);
+            issues.each(function (index, card) {
+                var $card = $(card);
+                var angle =  2 * Math.PI * (index / total);
                 //card.css({"color": "black"/*, "width": (card.text().length * 19) + "px", "height":64 + "px", "word-wrap":"break-word"*/});
-                var angle =  2 * Math.PI * (i / len);
-                animate.scale(card, {
-                    delay: i * 50,
+                Animate.scale($card, {
+                    delay: index * 50,
                     animate: {
-                        top: (distance * Math.cos(angle)) - 150,
-                        left: (distance * Math.sin(angle))
+                        top: distance * Math.cos(angle),
+                        left: distance * Math.sin(angle)
                     }
                 });
-            }
-            for (var l=0; i < len; i++, l++) {
-                var card = $(Evidencelist[l]);
-                multiTouchManager.addElementRTS(card);
-                var angle = 2 * Math.PI * (i / len);
+            });
+
+            evidence.each(function (index, card) {
+                var $card = $(card);
+                var angle = 2 * Math.PI * ((index + issues.length) / total);
                 //card.css({"color": "black"/*, "width": (card.text().length * 19) + "px", "height":64 + "px", "word-wrap":"break-word"*/});
-                animate.scale(card, {
-                    delay: i * 50,
+                Animate.scale($card, {
+                    delay: index * 50,
                     animate: {
-                        top: (distance * Math.cos(angle)) -150,
-                        left: (distance * Math.sin(angle))
+                        top: distance * Math.cos(angle),
+                        left: distance * Math.sin(angle)
                     }
                 });
-            }
+            });
+
         },
 
         onDragStart: function() {
@@ -119,7 +147,7 @@ define(function (require) {
                 }
 
                 //create the respective issue & evidence
-                $("#issues").append( createCard( "Issue", resultstring.split("\n")[0] ) );4
+                $("#issues").append( createCard( "Issue", resultstring.split("\n")[0] ) );
                 //create evidence cards
                 var n = 1;
                 while (resultstring.split("\n")[n]!= ""){

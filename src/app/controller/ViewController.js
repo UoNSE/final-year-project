@@ -1,8 +1,9 @@
 define(function (require) {
 
+	var $ = require('jquery');
 	var Backbone = require('backbone');
-	var animate = require('behaviour/Animate').getInstance();
 	var Handlebars = require('handlebars');
+	var Animate = require('behaviour/Animate').getInstance();
 
 	return Backbone.View.extend({
 
@@ -21,26 +22,34 @@ define(function (require) {
 				var template = Handlebars.compile(this.template);
 				// Get the collection or model from the controller.
 				// TODO make collections and models available
-				if (this.collection) {
-					html = template(this.collection.toJSON());
-				} else if (this.model) {
-					var model  = this.model;
+				var collection = this.collection;
+				if (collection instanceof Backbone.Collection) {
+					html = template(collection.toJSON());
+				} else if (collection || this.model) {
+					collection = collection || {};
+					var model  = this.model || {};
 					var object = {};
-					model.keys().forEach(function (key, index) {
-						var child = model.get(key);
-						if (child instanceof Backbone.Model) {
-							object[key] = child.toJSON();
-						}
+					$.each(collection, function (key, collection) {
+						object[key] = collection.toJSON();
 					});
-					html = template(Object.keys(object).length > 0 ? object : model.toJSON());
+					if (model.keys) {
+						model.keys().forEach(function (key, index) {
+							var child = model.get(key);
+							if (child instanceof Backbone.Model) {
+								object[key] = child.toJSON();
+							}
+						});
+					}
+					html = template(Object.keys(object).length > 0 ? object : model.toJSON ? model.toJSON() : model);
 				} else {
 					html = template();
 				}
 			}
 
-			animate.reset();
+			Animate.reset();
 
 			// Set the html of the controller and trigger and after render event.
+			//this.setElement(html);
 			this.$el.html(html);
 
 			// Iterate through each child view and render them.

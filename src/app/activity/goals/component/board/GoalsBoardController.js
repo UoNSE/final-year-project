@@ -6,6 +6,8 @@ define(function (require) {
 
     var Animate = require('behaviour/Animate');
     var ViewController = require('controller/ViewController');
+
+    var Goals = require('collection/Goals');
     var GoalController = require('activity/goals/component/goal/GoalController');
 
     var styles = [
@@ -17,8 +19,13 @@ define(function (require) {
      */
     return ViewController.extend({
 
-        collection: 'Goals',
+        collection: new Goals(),
         styles: styles,
+
+        initialize: function () {
+            ViewController.prototype.initialize.apply(this, arguments);
+            this.collection.fetch();
+        },
 
         onBeforeRender: function () {
             var selector = '#goals-activity-container ul.row.goals-list';
