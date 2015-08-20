@@ -2,17 +2,16 @@ define(function (require) {
 
     'use strict';
 
-    var $ = require('jquery');
-
     var Animate = require('behaviour/Animate');
     var ViewController = require('controller/ViewController');
+    var ActionController = require('activity/goals/component/goal/actions/action/ActionController');
 
     var styles = [
         'goals-actions-activity.css'
     ];
 
     // TODO hack fix
-    var Collection = require('collection/Goals');
+    //var Collection = require('collection/Goals');
 
     /**
      * This is the controller for the Goals / Action Activity.
@@ -31,21 +30,20 @@ define(function (require) {
         },
 
         onBeforeRender: function () {
-            var collection = new Collection();
+            //var collection = new Collection();
             // todo HACK HACK
-            this.listenTo(collection, 'sync', function (collection) {
-                var url = window.location.href.split('/');
-                var id = url[url.length - 2];
-                this.model = collection.get(id);
-                debugger;
-                this.render();
-            });
-            collection.fetch();
+            //this.listenTo(collection, 'sync', function (collection) {
+            //    var url = window.location.href.split('/');
+            //    var id = url[url.length - 2];
+            //    this.model = collection.get(id);
+            //    this.render();
+            //});
+            //collection.fetch();
             var selector = 'ul#actions';
             this.collection.each(function (model) {
-                this.addChildView(selector, 'activity/goals/component/goal/actions/action/Action', {
+                this.addNestedView(selector, new ActionController({
                     model: model
-                });
+                }));
             }.bind(this));
         },
 

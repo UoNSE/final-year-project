@@ -111,7 +111,6 @@ define(function (require) {
         },
 
         goalsActionActivityCreateActions: function (id) {
-	        debugger;
             this._load('activity/goals/component/goal/actions/Actions', id);
         },
 

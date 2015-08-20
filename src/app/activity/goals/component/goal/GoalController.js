@@ -1,8 +1,11 @@
 define(function (require) {
 
     var ViewController = require('controller/ViewController');
+    var template = require('text!activity/goals/component/goal/GoalView.html');
 
     return ViewController.extend({
+
+        template: template,
 
         events: {
             'click .delete-goal': 'onDeleteGoal'
@@ -12,8 +15,9 @@ define(function (require) {
             this.listenTo(this.model, 'remove', this.remove);
         },
 
-        onDeleteGoal: function (e) {
+        onDeleteGoal: function () {
             this.model.destroy();
+            this.remove();
         }
 
     });

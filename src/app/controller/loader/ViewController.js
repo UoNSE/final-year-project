@@ -88,7 +88,9 @@ define(function (require) {
 		 */
 		load: function (route, id) {
 			this._currentId = id;
-			this._loadController(route);
+			this._loadController(route, {
+				currentId: id
+			});
 		},
 
 		/**
