@@ -16,57 +16,10 @@ define(function (require) {
 		},
 
 		render: function () {
-			var html = '';
-			//  Check if the controller contains a template.
-			if (this.template) {
-				// Compile the existing template.
-				var template = Handlebars.compile(this.template);
-				// Get the collection and model.
-				var collection = this.collection;
-				var model = this.model;
-				// Check if either a collection or model exist.
-				if (collection || model) {
-					// Set the collection and model to either itself or an empty object to prevent errors when iterating.
-					collection = collection || {};
-					model = model || {};
-					// Instantiate an empty object that stores the JSON collections and models.
-					var object = {};
-					// Check if there is only one collection.
-					if (collection instanceof Backbone.Collection) {
-						// Add a collection to the object with a collection key.
-						object['collection'] = collection.toJSON();
-					} else {
-						// Iterate over the collections and and add the JSON values to the object.
-						$.each(collection, function (key, collection) {
-							object[key] = collection.toJSON();
-						});
-					}
-					// Check if there is only one model.
-					if (model instanceof Backbone.Model) {
-						// Add a model to the object with a model key.
-						object['model'] = model.toJSON();
-					} else {
-						// Iterate over the models and and add the JSON values to the object.
-						$.each(model, function (key, model) {
-							object[key] = model.toJSON();
-						});
-					}
-					// Get the keys from the object and check if it only has one key that is either a model or collection.
-					var keys = Object.keys(object);
-					if (keys.length === 1 && (object.collection || object.model)) {
-						// When there is only one key that wasn't a set object, make the object a flat value.
-						object = object[keys[0]];
-					}
-					// Execute the template with the object.
-					html = template(object);
-				} else {
-					// No collection or models.
-					html = template();
-				}
-			}
-
 			Animate.reset();
 
+			// Initialise the HTML.
+			var html = this.template ? this._renderTemplate(this.template) : '';
 			// Set the html of the controller and trigger and after render event.
 			//this.setElement(html);
 			this.$el.html(html);
@@ -80,6 +33,73 @@ define(function (require) {
 
 			this.trigger('afterRender');
 			return this;
+		},
+
+		/**
+		 * Renders the Handlebars template.
+		 *
+		 * @param template The Handlebars template.
+		 * @returns {*} The HTML generated from the executed Handlebars template.
+		 * @private
+		 */
+		_renderTemplate: function (template) {
+			// Compile the template.
+			template = Handlebars.compile(template);
+			
+			// Get the collection and model.
+			var collection = this.collection;
+			var model = this.model;
+			
+			// Check if no collections or models exist.
+			if (!collection && !model) {
+				return template();
+			}
+			
+			// Instantiate an empty object that stores the JSON collections and models.
+			var object = {};
+
+			// Specify the key used to set a single collection and model.
+			var collectionKey = 'collection';
+			var modelKey = 'model';
+
+			// Stores the specified data models in the the object.
+			this._storeDataModel(object, collection, collectionKey, Backbone.Collection);
+			this._storeDataModel(object, model, modelKey, Backbone.Model);
+			
+			// Get the keys from the object and check if it only has one key that is either a model or collection.
+			var keys = Object.keys(object);
+			if (keys.length === 1 && (object[collectionKey] || object[modelKey])) {
+				// When there is only one key that wasn't a set object, make the object a flat value.
+				object = object[keys[0]];
+			}
+			
+			// Execute the template with the object and return it.
+			return template(object);
+		},
+
+		/**
+		 * Stores a representation of the data model into the object.
+		 *
+		 * @param object The object that will have the data model stored.
+		 * @param dataModel The data model, either a collection or model.
+		 * @param key The key to set on the object for a single data model.
+		 * @param instance The type to check against if there is only a single data model.
+		 * @private
+		 */
+		_storeDataModel: function (object, dataModel, key, instance) {
+			// Set the object and data model to either itself or an empty object to prevent errors when accessing properties.
+			object = object || {};
+			dataModel = dataModel || {};
+			// Check if there is only one data model.
+			if (dataModel instanceof instance) {
+				// Add the JSON data model to the object with the specified key.
+				object[key] = dataModel.toJSON();
+			} else {
+				// Iterate over the data models and and add the JSON values to the object.
+				$.each(dataModel, function (key, dataModel) {
+					object[key] = dataModel.toJSON();
+				});
+			}
 		},
 
 		back: function () {
