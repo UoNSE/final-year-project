@@ -40,19 +40,29 @@ define(function (require) {
 
 			animate.reset();
 
-			// Iterate through each child view and render them.
-			for (var i = 0, len = this.childViews.length; i < len; i++) {
-				this.childViews[i].render();
-			}
-
 			// Set the html of the controller and trigger and after render event.
 			this.$el.html(html);
+
+			// Iterate through each child view and render them.
+			for (var i = 0, len = this.childViews.length; i < len; i++) {
+				var child = this.childViews[i];
+				var view  = child.view;
+				this.$el.find(child.selector).append(view.render().$el);
+			}
+
 			this.trigger('afterRender');
 			return this;
 		},
 
 		back: function () {
 			this.trigger('back');
+		},
+
+		addNestedView: function (selector, view) {
+			this.childViews.push({
+				selector: selector,
+				view: view
+			});
 		},
 
 		addChildView: function (selector, route, options) {

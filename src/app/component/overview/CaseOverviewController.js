@@ -6,13 +6,9 @@ define(function (require) {
 	var ViewController = require('controller/ViewController');
 	var animate = require('behaviour/Animate').getInstance();
 
-	var styles = [
-		'case-overview.css'
-	];
-
 	return ViewController.extend({
 
-		styles: styles,
+		styles: 'case-overview.css',
 		selector: '#case-overview',
 
 		events: {
@@ -38,15 +34,15 @@ define(function (require) {
 			});
 		},
 
-		onIdentifyIssues: function () {
+		_onIdentifyIssues: function () {
 			// TODO
 		},
 
-		onGoalsAndActions: function () {
-			// TODO
+		_onGoalsAndActions: function () {
+
 		},
 
-		onReflection: function () {
+		_onReflection: function () {
 			// TODO
 		}
 
