@@ -24,7 +24,7 @@ gulp.task('less', function () {
  * Performs a JSHint code evaluation.
  */
 gulp.task('lint', function () {
-    return gulp.src('./src/*.js')
+    return gulp.src(paths.client)
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
         .pipe(jshint.reporter('jshint-stylish'))
