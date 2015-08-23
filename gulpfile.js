@@ -1,11 +1,13 @@
 'use strict';
 
-var bs = require('browser-sync');
 var gulp = require('gulp');
+var exec = require('gulp-exec');
 var less = require('gulp-less');
 var jshint = require('gulp-jshint');
-var nodemon = require('gulp-nodemon');
 
+/**
+ * Configuration: paths to scrips and resources.
+ */
 var paths = {
     client: ['src/app/*.js', 'src/app/**/*.js'],
     styles: ['src/resources/css']
@@ -16,7 +18,9 @@ var paths = {
  */
 gulp.task('less', function () {
     return gulp.src('src/resources/css/*.less')
-        .pipe(less())
+        .pipe(less({
+            paths: paths.styles
+        }))
         .pipe(gulp.dest('src/resources/css/'));
 });
 
@@ -35,7 +39,8 @@ gulp.task('lint', function () {
  * Serves our Node server.
  */
 gulp.task('serve', function () {
-    nodemon({script: 'app.js', ignore: 'node_modules/**/*.js'});
+    gulp.src('./')
+        .pipe(exec('node app.js'));
 });
 
 /**
@@ -44,10 +49,7 @@ gulp.task('serve', function () {
  * - bundles above tasks.
  */
 gulp.task('start', ['serve', 'less', 'lint'], function () {
-    bs({
-        notify: true,
-        injectChanges: true
-    });
+    // add additional config
 });
 
 /**
