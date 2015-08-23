@@ -10,11 +10,11 @@ define(function (require) {
 		styles: 'case-information.css',
 
 		events: {
-			'click .case-information .title': '_onTitle',
-			'click #patient-background': '_onPatientBackground',
-			'click #context': '_onContext',
-			'click #background': '_onBackground',
-			'click #virtual-patient': '_onVirtualPatient'
+			'click .case-information .title': 'onTitle',
+			'click #patient-background': 'onPatientBackground',
+			'click #context': 'onContext',
+			'click #background': 'onBackground',
+			'click #virtual-patient': 'onVirtualPatient'
 		},
 
 		onAfterRender: function () {
@@ -37,23 +37,23 @@ define(function (require) {
 			}
 		},
 
-		_onTitle: function () {
+		onTitle: function () {
 			this.back();
 		},
 
-		_onPatientBackground: function () {
+		onPatientBackground: function () {
 			// TODO
 		},
 
-		_onVirtualPatient: function () {
+		onVirtualPatient: function () {
 			// TODO
 		},
 
-		_onContext: function () {
+		onContext: function () {
 			// TODO
 		},
 
-		_onBackground: function () {
+		onBackground: function () {
 			animate.scaleOut($('.case-information'), {
 				duration: 500,
 				easing: 'easeInBack'

@@ -15,10 +15,12 @@ define(function (require) {
 
     return ViewController.extend({
 
+        styles: 'issues-evidence.css',
+
         events: {
             //register drag events by mouseup and mousedown (check with touch input)
-            //'mousedown .IEcard': 'onDragStart',
-            //'mouseup .IEcard': 'onDragEnd'
+            //'mousedown .card': 'onDragStart',
+            //'mouseup .card': 'onDragEnd'
         },
 
         collection: {
@@ -27,23 +29,35 @@ define(function (require) {
         },
 
         initialize: function () {
+
             ViewController.prototype.initialize.apply(this, arguments);
+
+            this.listenTo(this.collection.issues, 'sync', this.onIssuesSync);
+            this.listenTo(this.collection.evidence, 'sync', this.onEvidenceSync);
+
             this.collection.issues.fetch();
             this.collection.evidence.fetch();
+
         },
 
-        onBeforeRender: function () {
-            this.collection.issues.forEach(function (issue) {
+        onIssuesSync: function (issues) {
+            issues.forEach(function (issue) {
                 this.addNestedView('#issues', new IssueViewController({
                     model: issue
                 }));
             }.bind(this));
 
-            this.collection.evidence.forEach(function (evidence) {
+            this.listenTo(issues, 'add', this.render);
+        },
+
+        onEvidenceSync: function (evidence) {
+            evidence.forEach(function (evidence) {
                 this.addNestedView('#evidence', new EvidenceViewController({
                     model: evidence
                 }));
             }.bind(this));
+
+            this.listenTo(evidence, 'add', this.render);
         },
 
         onAfterRender: function () {
@@ -53,15 +67,19 @@ define(function (require) {
             var total = issues.length + evidence.length;
             var distance = 420;
 
+            var viewport = $(window);
+            var centreWidth = viewport.width() * 0.5;
+            var centreHeight = viewport.height() * 0.5;
+
             issues.each(function (index, card) {
                 var $card = $(card);
-                var angle =  2 * Math.PI * (index / total);
+                var angle = 2 * Math.PI * (index / total);
                 //card.css({"color": "black"/*, "width": (card.text().length * 19) + "px", "height":64 + "px", "word-wrap":"break-word"*/});
                 Animate.scale($card, {
                     delay: index * 50,
                     animate: {
-                        top: distance * Math.cos(angle),
-                        left: distance * Math.sin(angle)
+                        left: centreWidth + distance * Math.sin(angle),
+                        top: centreHeight + distance * Math.cos(angle)
                     }
                 });
             });
@@ -73,8 +91,8 @@ define(function (require) {
                 Animate.scale($card, {
                     delay: index * 50,
                     animate: {
-                        top: distance * Math.cos(angle),
-                        left: distance * Math.sin(angle)
+                        left: distance * Math.sin(angle),
+                        top: distance * Math.cos(angle)
                     }
                 });
             });
@@ -83,7 +101,7 @@ define(function (require) {
 
         onDragStart: function() {
             var par = $(event.target).parent();
-            while ( !par.hasClass("IEcard")){
+            while ( !par.hasClass("card")){
                 par = par.parent();
             }
             par.fadeTo("fast",0.65);
@@ -102,7 +120,7 @@ define(function (require) {
 
         onDragEnd: function(){
             var par = $(event.target).parent();
-            while ( !par.hasClass("IEcard")){
+            while ( !par.hasClass("card")){
                 par = par.parent();
             }
             par.fadeTo("fast",1);
@@ -110,12 +128,12 @@ define(function (require) {
             //get btn pos
             var pos=jQuery(event.target).offset();
             var target = $(event.target);
-            var delbtn = $( "#delbtn");
-            var splitbtn = $( "#splitbtn");
+            var delbtn = $( "#btn-delete");
+            var splitbtn = $( "#btn-split");
 
             //HACK:ascend until the 'true' parent is found
             var parentLevel = 0;
-            while ( !target.hasClass("IEcard")){
+            while ( !target.hasClass("card")){
                 target = target.parent();
 
                 if (parentLevel > 4 ){
@@ -166,7 +184,7 @@ define(function (require) {
                 }
 
                 //add RTS
-                var list = $("#evidences").children();
+                var list = $("#evidence").children();
                 for(var i=0; i<list.length;i++){
                     var card = list[i];
                     multiTouchManager.addElementRTS(card);
@@ -177,7 +195,7 @@ define(function (require) {
 
                 var list;
                 if (target.hasClass("issue")) {
-                    list = $('#evidences').children();
+                    list = $('#evidence').children();
                 }
                 else {
                     //check all issue cards

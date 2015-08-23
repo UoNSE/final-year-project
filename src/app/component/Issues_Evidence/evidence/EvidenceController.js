@@ -6,7 +6,6 @@ define(function (require) {
 	var template = require('text!component/Issues_Evidence/evidence/EvidenceView.html');
 
 	var MultiTouchManager = require('behaviour/MultiTouchManager').getInstance();
-	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
 
 	return ViewController.extend({
 
