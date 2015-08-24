@@ -1,112 +1,113 @@
 <div class="virtual-patient-component-container">
     <button id="flip-patient-button" class="btn btn-material-indigo btn-fab btn-raised">Flip</button>
     <button id="patients-chart-button" class="btn btn-material-indigo btn-fab btn-raised">Chart</button>
-
-    <!-- <button id="test-request-button" class="btn btn-primary btn-fab btn-raised title">Tests</button><br><br> -->
     <button id="test-request-button" class="btn btn-material-indigo btn-fab btn-raised">Tests</button>
     <br><br>
     <button id="test-results-button" class="btn btn-material-indigo btn-fab btn-raised">Results</button>
 
     <button id="question-patient-button" class="btn btn-material-indigo btn-fab btn-raised">Query<br>Patient</button>
-    <button id="save-issue-button" class="btn btn-material-green btn-fab btn-raised">Save<br>Issue</button>
-
-
-    <!-- <div class="menu">
-        <div class="menu-item abs-center">
-            <button class="btn btn-default btn-raised">Urine Analysis</button>
-            <button id="patient-background" class="btn btn-material-light-blue btn-fab btn-raised mdi-content-add"></button>
-        </div>
-        <div class="menu-item abs-center">
-            <button class="btn btn-default btn-raised">Blood Cell Count</button>
-            <button id="context" class="btn btn-material-light-blue btn-fab btn-raised mdi-content-add"></button>
-        </div>
-        <div class="menu-item abs-center">
-            <a href="case/{{case.id}}/information/background">
-                <button class="btn btn-default btn-raised">Xray</button>
-                <button id="background" class="btn btn-material-light-blue btn-fab btn-raised mdi-content-add"></button>
-            </a>
-        </div>
-        <div class="menu-item abs-center">
-            <a href="case/{{case.id}}/information/virtualpatient">
-                <button class="btn btn-default btn-raised">Virtual Patient</button>
-                <button id="virtual-patient" class="btn btn-material-light-blue btn-fab btn-raised mdi-content-add"></button>
-            </a>
-        </div>
-    </div> -->
+    <button id="save-evidence-button" class="btn btn-material-green btn-fab btn-raised">Save<br>Evidence</button>
 
 
     <div id="questions-container">
-
-        <button id="question-card" class="btn btn-material-blue btn-raised generic-card test-card">Are you hungry?</button>
         <br><br>
-        <!-- <button id="question-card" class="btn card question-card">Yes</button><br><br> -->
-
+        <ul>
+            <li>
+                <button id="question-card" class="btn btn-material-blue btn-raised generic-card question-card">Where does it hurt?</button>
+            </li>
+            <li>
+                <button id="question-card" class="btn btn-material-blue btn-raised generic-card question-card">When did the pain begin?</button>
+            </li>
+            <li>
+              <button id="question-card" class="btn btn-material-blue btn-raised generic-card question-card">Are you hungry?</button>
+            </li>
+            <li>
+              <button id="question-card" class="btn btn-material-blue btn-raised generic-card question-card">Are you thirsty?</button>
+            </li>
+        </ul>
     </div>
 
     <div id="button-container">
-
-        <button id="test-card1" class="btn btn-material-blue btn-raised generic-card test-card">Urine Analysis</button>
-        <br><br>
-        <button id="test-card2" class="btn btn-material-blue btn-raised generic-card test-card">Blood Test</button>
-        <br><br>
-        <button id="test-card3" class="btn btn-material-blue btn-raised generic-card test-card">Blood Test</button>
-        <br><br>
-
-        <button id="test-card4" class="btn btn-material-blue btn-raised generic-card test-card">XRAY</button>
-        <br><br>
-        <button id="test-card5" class="btn btn-material-blue btn-raised generic-card test-card">CTSCAN</button>
-        <br><br>
+        <ul>
+            <li>
+                <button id="test-card1" class="btn btn-material-blue btn-raised generic-card test-card">Urine Analysis</button>
+            </li>
+            <li>
+                <button id="test-card2" class="btn btn-material-blue btn-raised generic-card test-card">Blood Test</button>
+            </li>
+        <li>
+            <button id="test-card3" class="btn btn-material-blue btn-raised generic-card test-card">Blood Test</button>
+        </li>
+        <li>
+            <button id="test-card4" class="btn btn-material-blue btn-raised generic-card test-card">XRAY</button>
+        </li>
+        <li>
+            <button id="test-card5" class="btn btn-material-blue btn-raised generic-card test-card">CTSCAN</button>
+        </li>
     </div>
 
     <div id="results-container">
-
-        <button id="results-card1" class="btn btn-material-blue btn-raised generic-card test-card">Urine Analysis</button>
-        <br><br>
+        <ul>
+            <li>
+                <button id="results-card1" class="btn btn-material-blue btn-raised generic-card results-card">Urine Analysis</button>
+            </li>
     </div>
 
 
     <div id="virtual-patient-img-container">
-        <img id="virtual-patient-img" src="resources/images/androg.front.jpg">
+        <img id="virtual-patient-img" src="resources/images/androg.front.jpg"/>
         <!-- TODO: for each hotspot-->
         <button id="hotspot-button" class="btn btn-fab"></button>
     </div>
 
 
     <div id="card-container">
-        <div id="speech-card1" class="generic-card speech-card panel panel-default">
+        <!-- <div id="speech-card1" class="generic-card speech-card panel panel-default"> -->
+        <div id="speech-card1" class="generic-card speech-card card">
+
             <!-- <button  class=""> -->
-            <img class="speech-icon" src="resources/images/speech.png">
+            <img class="speech-icon" src="resources/images/speech.png"/>
             "I'm cold"
         </div>
-        <br>
+        <br><br>
 
-        <div id="speech-card2" class="generic-card speech-card panel panel-default">
+        <!-- <div id="speech-card2" class="generic-card speech-card panel panel-default"> -->
+        <div id="speech-card2" class="generic-card speech-card card">
             <!-- <button  class=""> -->
-            <img class="speech-icon" src="resources/images/speech.png">
-
-            "Question: Are you hungry?<br>
-            Response: Yes."
+            <img class="speech-icon" src="resources/images/speech.png"/>
+            <div class = "card-text">
+                <p>
+                    <b>Question:</b> Are you hungry?<br>
+                    <b>Response:</b> Yes."
+                </p>
+            </div>
         </div>
-        <br>
+        <br><br>
 
-        <div id="observation-card1" class="generic-card observation-card panel panel-default">
+        <!-- <div id="observation-card1" class="generic-card observation-card panel panel-default"> -->
+            <div id="observation-card1" class="generic-card observation-card card">
             <!-- <button id="observation-card" class="btn card observation-card"> -->
-            <img class="observe-icon" src="resources/images/observe.png">
+            <img class="observe-icon" src="resources/images/observe.png"/>
             Patient is elderly man.
         </div>
         <br><br>
 
-        <div id="observation-card2" class="generic-card observation-card panel panel-default">
+        <!-- <div id="observation-card2" class="generic-card observation-card panel panel-default"> -->
+        <div id="observation-card2" class="generic-card observation-card card">
+
             <!-- <button id="observation-card" class="btn card observation-card"> -->
-            <img class="observe-icon" src="resources/images/observe.png">
+            <img class="observe-icon" src="resources/images/observe.png"/>
             Patient is itchy all over.
             <!-- </button> -->
         </div>
         <br><br>
 
-        <div id="observation-card3" class="generic-card observation-card panel panel-default">
+        <!-- <div id="observation-card3" class="generic-card observation-card panel panel-"> -->
+        <!-- <div id="observation-card3" class="generic-card observation-card panel panel-default card"> -->
+        <div id="observation-card3" class="generic-card observation-card card">
+
             <!-- <button id="observation-card" class="btn card observation-card"> -->
-            <img class="observe-icon" src="resources/images/observe.png">
+            <img class="observe-icon" src="resources/images/observe.png"/>
             Patient appears anxious.
         </div>
         <br>
@@ -177,7 +178,7 @@
                 <td>{{this.dob}}</td>
             </tr>
             <tr>
-                <td>Profession</td>
+                <td>Occupation</td>
                 <td>{{this.profession}}</td>
             </tr>
         </table>

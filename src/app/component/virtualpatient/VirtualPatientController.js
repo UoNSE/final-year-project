@@ -1,7 +1,20 @@
-define(function(require){
+// TODO: merge the transformable items changes into current branch.
+//TODO: change saveIssue to saveEvidence. i overlooked thgis for the demo.
+//      here the patient collects evidence. the issues/evidence is for synthesis
+//      of this evidence into issues.
+//TODO: on hover event when issue cards are dragged onto save issue button.
+// TODO: save evidence to JSON.
+// TODO: convert current demo format into backbones format with models and subviews.
+//TODO: hide opened menus when another menu is opened.
+//TODO: fix charts showing up at start (should be hidden by default).
+//      onready calls dont seem to be working atm. were pre-brendans demo,
+//       am guessing this was to optimise the demo,
+//       but am not sure atm how to restore.
+//TODO: make hotspot from data
+// TODO: change hide-chart when opened to keep button there but change text to
+// hide chart as it is more consistent with other buttons.
 
-  //TODO: make cards draggable
-  //TODO: make hotspot from data
+define(function(require){
 
   var $ = require('jquery');
   var ViewController = require('controller/ViewController');
@@ -27,7 +40,6 @@ define(function(require){
       'click #results-card1': '_showUrineAnalysisChart',
       'click #hide-chart-button2': '_hideUrineAnalysisChart'
 
-    //   'hover #save-issue-button': '_saveIssue',
     },
     _onAfterRender: function () {
 
@@ -42,21 +54,21 @@ define(function(require){
       $('#virtual-patient-img-container').draggable();
       $('#speech-card1').draggable();
       $('#speech-card2').draggable();
-
       $('#observation-card1').draggable();
       $('#observation-card2').draggable();
       $('#observation-card3').draggable();
-
       $('#urine-analysis-results').draggable();
+      $('.panel').draggable();
 
+      //hidden
       $('#patients-chart-table').hide();
+      $('#urine-analysis-results').hide();
       $('#hide-chart-button').hide();
       $('.test-card').hide();
       $('.results-card').hide();
       $('.question-card').hide();
       $('.question-card').hide();
       $('#speech-card2').hide();
-      $('#urine-analysis-results').hide();
 
 
 
@@ -93,7 +105,7 @@ define(function(require){
     _showUrineAnalysisChart: function() {
 
       $('#urine-analysis-results').show();
-      $('#hide-chart-button').show();
+      $('#hide-chart-button2').show();
 
     },
 
@@ -104,26 +116,25 @@ define(function(require){
 
     },
 
-
+    // hideOtherMenus()
 
     _questionPatient: function () {
 
     // TODO: explode options
-    // $('.question-card').show();
-    if($('.question-card').is(":visible")){
-        $('.question-card').hide();
+        if($('.question-card').is(":visible")){
+            $('.question-card').hide();
 
-    }else{
-        $('.question-card').show();
+        }else{
+            $('.question-card').show();
 
-    }
+        }
 
 
     },
 
     _questionCard: function(){
     $('#speech-card2').show();
-},
+    },
 
 
     _testRequests: function () {
