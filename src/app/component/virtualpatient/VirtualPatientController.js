@@ -2,7 +2,8 @@
 //TODO: change saveIssue to saveEvidence. i overlooked thgis for the demo.
 //      here the patient collects evidence. the issues/evidence is for synthesis
 //      of this evidence into issues.
-//TODO: on hover event when issue cards are dragged onto save issue button.
+//TODO: on hover event when evidence cards (observations/responses)
+//      are dragged onto save evidence button.
 // TODO: save evidence to JSON.
 // TODO: convert current demo format into backbones format with models and subviews.
 //TODO: hide opened menus when another menu is opened.
