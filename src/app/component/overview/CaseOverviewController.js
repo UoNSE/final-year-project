@@ -4,15 +4,11 @@ define(function (require) {
 
 	var $ = require('jquery');
 	var ViewController = require('controller/ViewController');
-	var Animate = require('behaviour/Animate');
-
-	var styles = [
-		'case-overview.css'
-	];
+	var animate = require('behaviour/Animate').getInstance();
 
 	return ViewController.extend({
 
-		styles: styles,
+		styles: 'case-overview.css',
 		selector: '#case-overview',
 
 		events: {
@@ -23,8 +19,8 @@ define(function (require) {
 		},
 
 		onAfterRender: function () {
-			Animate.scale($(this.selector), {duration: 1000});
-			Animate.scale($('#btn-case-overview'), {
+			animate.scale($(this.selector), {duration: 1000});
+			animate.scale($('#btn-case-overview'), {
 				css: {fontSize: 20},
 				delay: 500,
 				duration: 1000
@@ -32,21 +28,21 @@ define(function (require) {
 		},
 
 		onCaseInformation: function () {
-			Animate.scaleOut($(this.selector), {
+			animate.scaleOut($(this.selector), {
 				duration: 500,
 				easing: 'easeInBack'
 			});
 		},
 
-		onIdentifyIssues: function () {
+		_onIdentifyIssues: function () {
 			// TODO
 		},
 
-		onGoalsAndActions: function () {
-			// TODO
+		_onGoalsAndActions: function () {
+
 		},
 
-		onReflection: function () {
+		_onReflection: function () {
 			// TODO
 		}
 

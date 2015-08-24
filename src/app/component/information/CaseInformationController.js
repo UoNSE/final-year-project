@@ -3,21 +3,18 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var ViewController = require('controller/ViewController');
-	var Animate = require('behaviour/Animate');
-
-	var styles = [
-		'case-information.css'
-	];
+	var animate = require('behaviour/Animate').getInstance();
 
 	return ViewController.extend({
 
-		styles: styles,
+		styles: 'case-information.css',
 
 		events: {
-			'click .case-information .title': 'onTitle',
-			'click #patient-background': 'onPatientBackground',
-			'click #context': 'onContext',
-			'click #background': 'onBackground'
+			'click .case-information .title': '_onTitle',
+			'click #patient-background': '_onPatientBackground',
+			'click #context': '_onContext',
+			'click #background': '_onBackground',
+			'click #virtual-patient': '_onVirtualPatient'
 		},
 
 		onAfterRender: function () {
@@ -25,12 +22,12 @@ define(function (require) {
 			var distance = 375;
 			var min = 3 * Math.PI / 4;
 			var max = 5 * Math.PI / 4;
-			Animate.scale($('.case-information .title'));
+			animate.scale($('.case-information .title'));
 			for (var i = 0, len = menuItems.length; i < len; i++) {
 				var menuItem = $(menuItems[i]);
 				var angle = min + ((i / len) * (max - min));
 				var width = Math.abs($(menuItem.children(0)).width() * 0.5 - $(menuItem.children(1)).width() * 0.5);
-				Animate.scale(menuItem, {
+				animate.scale(menuItem, {
 					delay: i * 50,
 					animate: {
 						top: -distance * Math.sin(angle),
@@ -40,20 +37,24 @@ define(function (require) {
 			}
 		},
 
-		onTitle: function () {
+		_onTitle: function () {
 			this.back();
 		},
 
-		onPatientBackground: function () {
+		_onPatientBackground: function () {
 			// TODO
 		},
 
-		onContext: function () {
+		_onVirtualPatient: function () {
 			// TODO
 		},
 
-		onBackground: function () {
-			Animate.scaleOut($('.case-information'), {
+		_onContext: function () {
+			// TODO
+		},
+
+		_onBackground: function () {
+			animate.scaleOut($('.case-information'), {
 				duration: 500,
 				easing: 'easeInBack'
 			});

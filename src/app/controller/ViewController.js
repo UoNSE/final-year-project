@@ -1,6 +1,7 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
+	var animate = require('behaviour/Animate').getInstance();
 	var Handlebars = require('handlebars');
 
 	return Backbone.View.extend({
@@ -26,21 +27,29 @@ define(function (require) {
 					var model  = this.model;
 					var object = {};
 					model.keys().forEach(function (key, index) {
-						object[key] = model.get(key).toJSON();
+						var child = model.get(key);
+						if (child instanceof Backbone.Model) {
+							object[key] = child.toJSON();
+						}
 					});
-					html = template(object);
+					html = template(Object.keys(object).length > 0 ? object : model.toJSON());
 				} else {
 					html = template();
 				}
 			}
 
-			// Iterate through each child view and render them.
-			for (var i = 0, len = this.childViews.length; i < len; i++) {
-				this.childViews[i].render();
-			}
+			animate.reset();
 
 			// Set the html of the controller and trigger and after render event.
 			this.$el.html(html);
+
+			// Iterate through each child view and render them.
+			for (var i = 0, len = this.childViews.length; i < len; i++) {
+				var child = this.childViews[i];
+				var view  = child.view;
+				this.$el.find(child.selector).append(view.render().$el);
+			}
+
 			this.trigger('afterRender');
 			return this;
 		},
@@ -49,8 +58,17 @@ define(function (require) {
 			this.trigger('back');
 		},
 
-		addChildView: function (selector, route) {
-			this.trigger('addChildView', selector, route);
+		addNestedView: function (selector, view) {
+			this.childViews.push({
+				selector: selector,
+				view: view
+			});
+		},
+
+		addChildView: function (selector, route, options) {
+			options = options || {};
+			options['selector'] = selector;
+			this.trigger('addChildView', route, options);
 		}
 
 	});

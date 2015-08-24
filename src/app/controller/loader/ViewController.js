@@ -4,6 +4,7 @@ define(function (require) {
 
 	var Loader = require('controller/loader/Loader');
 	var Cases = require('collection/Cases');
+	var animate = require('behaviour/Animate').getInstance();
 
 	return Loader.extend({
 
@@ -28,10 +29,16 @@ define(function (require) {
 
 			options = options || {};
 
-			var parent = controller.parent;
+			var parent = options.parent;
 			var selector = options.selector;
 			var $element = parent ? $(parent.$el.find(selector)) : selector ? $(selector) : $(this.selector);
-			$element.html(controller.$el);
+			if (options.append) {
+				$element.append(controller.$el);
+			} else {
+				$element.html(controller.$el);
+			}
+
+			controller.delegateEvents();
 
 			if (!parent) {
 				this.linkify(controller.$el);
@@ -51,17 +58,21 @@ define(function (require) {
 		 */
 		linkify: function (element) {
 
-			var anchors = element.find('a');
-			anchors.each(function (index, anchor) {
-				var $anchor = $(anchor);
-				$anchor.on('click', function (e) {
-					if (e.altKey || e.ctrlKey || e.shiftKey) {
-						// Allow special browser functions, open in new tab/window etc.
-						e.stopPropagation();
-						return;
-					}
-					// Prevent page from actually loading a new URL.
-					e.preventDefault();
+			// Must use jQuery delegate events so that this function is the last to fire in the event chain.
+			// Otherwise events binded with backbone fire last and animations will not have been triggered yet.
+			// See http://api.jquery.com/on/#direct-and-delegated-events
+			element.on('click', 'a', function (e) {
+				var $anchor = $(e.currentTarget);
+
+				if (e.altKey || e.ctrlKey || e.shiftKey) {
+					// Allow special browser functions, open in new tab/window etc.
+					e.stopPropagation();
+					return;
+				}
+				// Prevent page from actually loading a new URL.
+				e.preventDefault();
+
+				animate.onFinished(function () {
 					// Use the router navigation method instead, using the History API to simulate updating the URL.
 					this._router.navigate($anchor.attr('href'), {trigger: true});
 				}.bind(this));
@@ -77,7 +88,9 @@ define(function (require) {
 		 */
 		load: function (route, id) {
 			this._currentId = id;
-			this._loadController(route);
+			this._loadController(route, {
+				currentId: id
+			});
 		},
 
 		/**

@@ -3,6 +3,7 @@ var http = require('http');
 var favicon = require('serve-favicon');
 var compression = require('compression');
 var jsonServer = require('json-server');
+var lessMiddleware = require('less-middleware');
 
 var app = express();
 var server = http.Server(app);
@@ -12,6 +13,9 @@ app.use(favicon(__dirname + '/src/favicon.ico'));
 
 // Enable compression of responses
 app.use(compression());
+
+// Compile .less files to .css
+app.use(lessMiddleware(__dirname + '/src'));
 
 // Serve static files such as HTML, CSS, JavaScript, etc
 app.use(express.static(__dirname + '/src'));
