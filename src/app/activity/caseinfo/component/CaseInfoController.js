@@ -16,6 +16,15 @@ define(function (require) {
         collection: 'CaseInfos',
 
         //events
-        events: {}
+        events: {
+            'click .btn-keep':'keepCard'
+        },
+
+        keepCard : function(event) {
+            $(event.target).parents('.well').animate({
+                opacity: 0.25,
+                top: "+=50",
+            }, 2000, null);
+        }
     });
 });
