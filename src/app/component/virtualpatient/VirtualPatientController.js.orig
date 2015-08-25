@@ -1,21 +1,4 @@
-// TODO: merge the transformable items changes into current branch.
-//TODO: change saveIssue to saveEvidence. i overlooked thgis for the demo.
-//      here the patient collects evidence. the issues/evidence is for synthesis
-//      of this evidence into issues.
-//TODO: on hover event when evidence cards (observations/responses)
-//      are dragged onto save evidence button.
-// TODO: save evidence to JSON.
-// TODO: convert current demo format into backbones format with models and subviews.
-//TODO: hide opened menus when another menu is opened.
-//TODO: fix charts showing up at start (should be hidden by default).
-//      onready calls dont seem to be working atm. were pre-brendans demo,
-//       am guessing this was to optimise the demo,
-//       but am not sure atm how to restore.
-//TODO: make hotspot from data
-// TODO: change hide-chart when opened to keep button there but change text to
-// hide chart as it is more consistent with other buttons.
-
-define(function(require){
+define(function (require) {
 
     //TODO: make cards draggable
     //TODO: make hotspot from data
@@ -36,22 +19,19 @@ define(function(require){
         elements: $(),
         multitouch: MultiTouchManager.getInstance(),
         collection: 'Patients',
-        styles: 'virtual-patient.css', //default styles: styles,
+        styles: styles,
         selector: '#virtual-patient-img',
 
 
-    events: {
-      'click #context': '_onContext',
-      'click #background': '_onBackground',
-      'click #flip-patient-button': '_flipPatient',
-      'click #question-patient-button': '_questionPatient',
-      'click #test-request-button': '_testRequests',
-      'click #test-results-button': '_testResults',
-      'click #patients-chart-button': '_showPatientsChart',
-      'click #hide-chart-button': '_hidePatientsChart',
-      'click #question-card': '_questionCard',
-      'click #results-card1': '_showUrineAnalysisChart',
-      'click #hide-chart-button2': '_hideUrineAnalysisChart'
+        events: {
+            'click #context': '_onContext',
+            'click #background': '_onBackground',
+            'click #flip-patient-button': '_flipPatient',
+            'click #question-patient-button': '_questionPatient',
+            'click #test-request-button': '_testRequests',
+            'click #test-results-button': '_testResults',
+            'click #patients-chart-button': '_showPatientsChart',
+            'click #hide-chart-button': '_hidePatientsChart',
 
         },
         _onAfterRender: function () {
@@ -69,6 +49,7 @@ define(function(require){
                 $('#observation-card4').get()
             ]; // [a,b,c...
 
+<<<<<<< HEAD
             var transforms = [
                 //[glm.vec3.fromValues(-300, 0, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0], //(translate,,) (scale,,)
                 [glm.vec3.fromValues(300, 0, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
@@ -96,36 +77,49 @@ define(function(require){
 
 
         },
+=======
+  return ViewController.extend({
+
+    collection: 'Patients',
+    styles: 'virtual-patient.css',
+    selector: '#virtual-patient-img',
+>>>>>>> develop
 
         _onReady: function () {
             this.listenTo(this.collection, 'add', this.render);
             //this.collection.add({name: 'New'});
 
-      // draggables
-      $('#patients-chart-table').draggable();
-      $('#virtual-patient-img-container').draggable(); //sample jquery method
-      $('#speech-card1').draggable();
-      $('#speech-card2').draggable();
-      $('#observation-card1').draggable();
-      $('#observation-card2').draggable();
-      $('#observation-card3').draggable();
-      $('#urine-analysis-results').draggable();
-      $('.panel').draggable();
+<<<<<<< HEAD
+            // draggables
+            $('#patients-chart-table').draggable();
+            //$('#virtual-patient-img-container').draggable();  //sample jquery method
+            // $(".btn").draggable();
 
-      //hidden
-      $('#patients-chart-table').hide();
-      $('#urine-analysis-results').hide();
-      $('#hide-chart-button').hide();
-      $('.test-card').hide();
-      $('.results-card').hide();
-      $('.question-card').hide();
-      $('.question-card').hide();
-      $('#speech-card2').hide();
+=======
+    events: {
+      'click #context': '_onContext',
+      'click #background': '_onBackground',
+      'click #flip-patient-button': '_flipPatient',
+      'click #question-patient-button': '_questionPatient',
+      'click #test-request-button': '_testRequests',
+      'click #test-results-button': '_testResults',
+      'click #patients-chart-button': '_showPatientsChart',
+      'click #hide-chart-button': '_hidePatientsChart',
+      'click #question-card': '_questionCard',
+      'click #results-card1': '_showUrineAnalysisChart',
+      'click #hide-chart-button2': '_hideUrineAnalysisChart'
 
+    //   'hover #save-issue-button': '_saveIssue',
+    },
+    _onAfterRender: function () {
+>>>>>>> develop
 
+            $('#patients-chart-table').hide();
+            $('#hide-chart-button').hide();
 
         },
 
+<<<<<<< HEAD
         _flipPatient: function () {
 
             var virtual_patient_img = $('#virtual-patient-img');
@@ -141,11 +135,34 @@ define(function(require){
             $('#patients-chart-table').show();
             $('#hide-chart-button').show();
             $('#patients-chart-button').hide();
+=======
+      // draggables
+      $('#patients-chart-table').draggable();
+      $('#virtual-patient-img-container').draggable();
+      $('#speech-card1').draggable();
+      $('#speech-card2').draggable();
+
+      $('#observation-card1').draggable();
+      $('#observation-card2').draggable();
+      $('#observation-card3').draggable();
+
+      $('#urine-analysis-results').draggable();
+
+      $('#patients-chart-table').hide();
+      $('#hide-chart-button').hide();
+      $('.test-card').hide();
+      $('.results-card').hide();
+      $('.question-card').hide();
+      $('.question-card').hide();
+      $('#speech-card2').hide();
+      $('#urine-analysis-results').hide();
+
+
+>>>>>>> develop
 
         },
 
-
-    _hidePatientsChart: function() {
+        _hidePatientsChart: function () {
 
             $('#patients-chart-table').hide();
             $('#hide-chart-button').hide();
@@ -153,10 +170,35 @@ define(function(require){
 
         },
 
+        _questionPatient: function () {
+
+            // TODO: explode options
+
+<<<<<<< HEAD
+        },
+        _testRequests: function () {
+
+            // TODO: explode options
+=======
+
+    _hidePatientsChart: function() {
+>>>>>>> develop
+
+        },
+        _testResults: function () {
+
+            // TODO: explode options
+
+<<<<<<< HEAD
+        }
+
+    }); //end return function to send to viewController
+});   //end require
+=======
     _showUrineAnalysisChart: function() {
 
       $('#urine-analysis-results').show();
-      $('#hide-chart-button2').show();
+      $('#hide-chart-button').show();
 
     },
 
@@ -167,30 +209,31 @@ define(function(require){
 
     },
 
-    // hideOtherMenus()
+
 
     _questionPatient: function () {
 
     // TODO: explode options
-        if($('.question-card').is(":visible")){
-            $('.question-card').hide();
+    // $('.question-card').show();
+    if($('.question-card').is(":visible")){
+        $('.question-card').hide();
 
-        }else{
-            $('.question-card').show();
+    }else{
+        $('.question-card').show();
 
-        }
+    }
 
 
     },
 
     _questionCard: function(){
     $('#speech-card2').show();
-    },
+},
 
 
     _testRequests: function () {
 
-            // TODO: explode options
+    // TODO: explode options
 
     // var menuItems = $('.virtual-patient-component-container .menu .menu-item');
     // var distance = 100;
@@ -231,7 +274,7 @@ define(function(require){
     }else{
         $('.results-card').show();
 
-        }
+    }
 
     }
 
@@ -246,3 +289,4 @@ define(function(require){
 
   });
 });
+>>>>>>> develop
