@@ -25,7 +25,7 @@ define(function(require){
     var ViewController = require('controller/ViewController');
     var Animate = require('behaviour/Animate');
     var MultiTouchManager = require('behaviour/MultiTouchManager');
-    var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
+    var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour'); //
 
     var styles = [
         'virtual-patient.css'
@@ -54,7 +54,7 @@ define(function(require){
       'click #hide-chart-button2': '_hideUrineAnalysisChart'
 
         },
-        _onAfterRender: function () {
+        onAfterRender: function () {
             this._addItems();
         },
 
@@ -97,20 +97,11 @@ define(function(require){
 
         },
 
-        _onReady: function () {
+        onReady: function () {
             this.listenTo(this.collection, 'add', this.render);
             //this.collection.add({name: 'New'});
 
       // draggables
-      $('#patients-chart-table').draggable();
-      $('#virtual-patient-img-container').draggable(); //sample jquery method
-      $('#speech-card1').draggable();
-      $('#speech-card2').draggable();
-      $('#observation-card1').draggable();
-      $('#observation-card2').draggable();
-      $('#observation-card3').draggable();
-      $('#urine-analysis-results').draggable();
-      $('.panel').draggable();
 
       //hidden
       $('#patients-chart-table').hide();
@@ -192,23 +183,6 @@ define(function(require){
 
             // TODO: explode options
 
-    // var menuItems = $('.virtual-patient-component-container .menu .menu-item');
-    // var distance = 100;
-    // var min = 3 * Math.PI / 4 ;
-    // var max = 5 * Math.PI / 4;
-    // Animate.scale($('.virtual-patient-component-container .title'));
-    // for (var i = 0, len = menuItems.length; i < len; i++) {
-    //     var menuItem = $(menuItems[i]);
-    //     var angle = min + ((i / len) * (max - min));
-    //     var width = Math.abs($(menuItem.children(0)).width() * 0.5 - $(menuItem.children(1)).width() * 0.5);
-    //     Animate.scale(menuItem, {
-    //         delay: i * 50,
-    //         animate: {
-    //             top: -distance * Math.sin(angle),
-    //             left: distance * Math.cos(angle) - width
-    //         }
-    //     });
-    // }
 
     if($('.test-card').is(":visible")){
         $('.test-card').hide();
@@ -234,15 +208,5 @@ define(function(require){
         }
 
     }
-
-    // _saveIssue: function(){
-    // // if($('.card').is(":hover")){
-    // //     $('.card').hide();
-    // //
-    // // } // returns true or false
-    //
-    // }
-
-
   });
 });
