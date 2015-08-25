@@ -13,14 +13,17 @@ define(function (require) {
     var IssueViewController = require('component/Issues_Evidence/issue/IssueController');
     var EvidenceViewController = require('component/Issues_Evidence/evidence/EvidenceController');
 
+    var MultiTouchManager = require('behaviour/MultiTouchManager').getInstance();
+    var DraggableBehaviour = require('behaviour/DraggableBehaviour');
+
     return ViewController.extend({
 
         styles: 'issues-evidence.css',
         menu: null,
+        deleteCard: null,
+        splitCard: null,
 
         events: {
-            'mousedown .card': 'onDragStart',
-            'mouseup .card': 'onDragEnd',
             'mouseover #btn-delete': 'onDeleteMouseOver',
             'mouseover #btn-split': 'onSplitMouseOver',
             'mouseleave #btn-delete': 'onDeleteMouseLeave',
@@ -42,13 +45,20 @@ define(function (require) {
             this.collection.issues.fetch();
             this.collection.evidence.fetch();
 
+            this.deleteCard = false;
+            this.splitCard = false;
+
         },
 
         onIssuesSync: function (issues) {
+            // TODO clean up
             issues.forEach(function (issue) {
-                this.addNestedView('#issues', new IssueViewController({
+                var view = this.addNestedView('#issues', new IssueViewController({
                     model: issue
                 }));
+                MultiTouchManager.addElementRTS(view.el);
+                var element = MultiTouchManager.addElementDraggable(view.el);
+                this.bindDraggableEvents(element);
             }.bind(this));
 
             this.listenTo(issues, 'add', this.render);
@@ -57,13 +67,35 @@ define(function (require) {
 
         onEvidenceSync: function (evidence) {
             evidence.forEach(function (evidence) {
-                this.addNestedView('#evidence', new EvidenceViewController({
+                var view = this.addNestedView('#evidence', new EvidenceViewController({
                     model: evidence
                 }));
+                MultiTouchManager.addElementRTS(view.el);
+                var element = MultiTouchManager.addElementDraggable(view.el);
+                this.bindDraggableEvents(element);
             }.bind(this));
 
             this.listenTo(evidence, 'add', this.render);
             //this.render();
+        },
+
+        bindDraggableEvents: function (element) {
+            $(element).on({
+                drag: this.onDrag.bind(this),
+                drop: this.onDrop.bind(this)
+            });
+        },
+
+        onDrag: function () {
+            this.menu.toggleClass('hidden', false);
+        },
+
+        onDrop: function (event) {
+            var multiTouchElement = event.currentTarget;
+            var $card = multiTouchElement.element;
+            if (this.deleteCard) {
+                $card.remove();
+            }
         },
 
         onAfterRender: function () {
@@ -103,9 +135,6 @@ define(function (require) {
 
         },
 
-        onDragStart: function() {
-            this.menu.toggleClass('hidden', false);
-        },
 
         onDragEnd: function (event) {
             var $card = $(event.currentTarget);
@@ -113,9 +142,14 @@ define(function (require) {
             var deleteButton = $("#btn-delete");
             var splitButton = $("#btn-split");
 
+            debugger;
+
+            if (this.splitCard) {
+
+            }
+
             //check for card deletion
             //if(this.touchOverElement(delbtn,event) ){
-            //    $card.remove();
             //}
             //else if (this.touchOverElement(splitButton, event) ){
             //
@@ -220,41 +254,29 @@ define(function (require) {
             // TODO do in nicer way
             var button = $(event.currentTarget);
             button.removeClass('btn-material-yellow').addClass('btn-material-orange btn-material-yellow');
-            console.log('over');
+            console.log('delete');
+            this.deleteCard = true;
         },
 
         onSplitMouseOver: function (event) {
             var button = $(event.currentTarget);
             button.removeClass('btn-material-yellow').addClass('btn-material-orange btn-material-yellow');
-            console.log('over');
+            this.splitCard = true;
         },
 
         onDeleteMouseLeave: function (event) {
             var button = $(event.currentTarget);
             button.removeClass('btn-material-orange');
+            console.log('no delete');
+            this.deleteCard = false;
 
         },
 
         onSplitMouseLeave: function (event) {
             var button = $(event.currentTarget);
             button.removeClass('btn-material-orange');
+            this.splitCard = false;
         },
-
-        touchOverElement: function ($element, event) {
-			var touchX = event.pageX;
-			var touchY = event.pageY;
-
-			//FYI
-			//FIX URL:http://stackoverflow.com/questions/3603065/how-to-make-jquery-to-not-round-value-returned-by-width
-
-			var x1 = $element.offset().left;
-			var x2 = x1 + $element[0].getBoundingClientRect().width; //button size is 56px as defined in bootstrap.css
-
-			var y1 = $element.offset().top;
-			var y2 = y1 + $element[0].getBoundingClientRect().height;
-
-			return touchX > x1 && touchX < x2 && touchY > y1 && touchY < y2;
-		},
 
         createCard: function (cardType, content) {
 			var panelType =  ( cardType === "Issue" ) ? "info" : "danger";

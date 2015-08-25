@@ -2,7 +2,7 @@ define(function (require) {
 
 	'use strict';
 
-	var glm = require('glmatrix');
+	var $ = require('jquery');
 
 	function DraggableBehaviour (element) {
 
@@ -14,17 +14,25 @@ define(function (require) {
 
 	DraggableBehaviour.prototype.onMouseDown = function (element, event) {
 
-		var $element = this.element.element;
-		$element.css('pointer-events', 'none');
-		$element.fadeTo('fast', 0.65);
+		var $element = $(this.element);
+
+		var $el = this.element.element;
+		$el.css('pointer-events', 'none');
+		$el.fadeTo('fast', 0.65);
+
+		$element.trigger('drag');
 
 	};
 
 	DraggableBehaviour.prototype.onMouseUp = function (element, event) {
 
-		var $element = this.element.element;
-		$element.css('pointer-events', 'all');
-		$element.fadeTo('fast', 1);
+		var $element = $(this.element);
+
+		var $el = this.element.element;
+		$el.css('pointer-events', 'all');
+		$el.fadeTo('fast', 1);
+
+		$element.trigger('drop');
 
 	};
 
