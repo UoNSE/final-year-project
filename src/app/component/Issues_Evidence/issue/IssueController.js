@@ -7,7 +7,6 @@ define(function (require) {
 
 	var MultiTouchManager = require('behaviour/MultiTouchManager').getInstance();
 	var DraggableBehaviour = require('behaviour/DraggableBehaviour');
-	var $ = require('jquery');
 
 	return ViewController.extend({
 

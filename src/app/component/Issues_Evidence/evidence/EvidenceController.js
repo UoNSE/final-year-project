@@ -14,26 +14,11 @@ define(function (require) {
 
 		template: template,
 
-		events: {
-			'mousedown .card': 'onDragStart',
-			'mouseup .card': 'onDragEnd'
-		},
-
 		initialize: function () {
 			ViewController.prototype.initialize.apply(this, arguments);
 			this.render();
-			MultiTouchManager.addElementRTS(this.el)
+			MultiTouchManager.addElementRTS(this.el);
 			MultiTouchManager.addElementDraggable(this.el);
-		},
-
-		onDragStart: function (event) {
-			var $card = $(event.currentTarget);
-			$card.fadeTo('fast', 0.65);
-		},
-
-		onDragEnd: function (event) {
-			var $card = $(event.currentTarget);
-			$card.fadeTo('fast', 1);
 		}
 
 	});

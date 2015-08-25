@@ -19,7 +19,6 @@ define(function (require) {
         menu: null,
 
         events: {
-            //register drag events by mouseup and mousedown (check with touch input)
             'mousedown .card': 'onDragStart',
             'mouseup .card': 'onDragEnd',
             'mouseover #btn-delete': 'onDeleteMouseOver',
@@ -53,6 +52,7 @@ define(function (require) {
             }.bind(this));
 
             this.listenTo(issues, 'add', this.render);
+            //this.render();
         },
 
         onEvidenceSync: function (evidence) {
@@ -63,6 +63,7 @@ define(function (require) {
             }.bind(this));
 
             this.listenTo(evidence, 'add', this.render);
+            //this.render();
         },
 
         onAfterRender: function () {

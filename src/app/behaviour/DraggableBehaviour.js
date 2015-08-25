@@ -14,13 +14,17 @@ define(function (require) {
 
 	DraggableBehaviour.prototype.onMouseDown = function (element, event) {
 
-		this.element.element.css('pointer-events', 'none');
+		var $element = this.element.element;
+		$element.css('pointer-events', 'none');
+		$element.fadeTo('fast', 0.65);
 
 	};
 
 	DraggableBehaviour.prototype.onMouseUp = function (element, event) {
 
-		this.element.element.css('pointer-events', '');
+		var $element = this.element.element;
+		$element.css('pointer-events', 'all');
+		$element.fadeTo('fast', 1);
 
 	};
 
