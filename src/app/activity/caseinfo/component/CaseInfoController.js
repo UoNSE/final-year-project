@@ -62,7 +62,7 @@ define(function (require) {
         },
 
         keepCard : function(event) {
-            $(event.target).removeClass('btn-keep').addClass('btn-right').parents('.well').animate({
+            $(event.target).removeClass('btn-keep').addClass('btn-kept').parents('.well').animate({
                 opacity: 0.5,
                 top: "+=500",
             }, 500, null);
