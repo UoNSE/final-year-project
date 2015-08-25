@@ -7,6 +7,7 @@ define(function (require) {
 	var ZIndexManager = require('behaviour/ZIndexManager');
 	var MultiTouchElement = require('behaviour/MultiTouchElement');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
+	var DraggableBehaviour = require('behaviour/DraggableBehaviour');
 
 	function MultiTouchManager() {
 
@@ -26,6 +27,15 @@ define(function (require) {
 
 		var multiTouchElement = this.addElement(element);
 		var behaviour = new RotateTranslateScaleBehaviour(multiTouchElement);
+		multiTouchElement.addBehaviour(behaviour);
+		return multiTouchElement;
+
+	};
+
+	MultiTouchManager.prototype.addElementDraggable = function (element) {
+
+		var multiTouchElement = this.addElement(element);
+		var behaviour = new DraggableBehaviour(multiTouchElement);
 		multiTouchElement.addBehaviour(behaviour);
 		return multiTouchElement;
 

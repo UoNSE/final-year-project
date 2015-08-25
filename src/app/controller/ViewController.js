@@ -29,7 +29,6 @@ define(function (require) {
 				var child = this.childViews[i];
 				var view  = child.view;
 				this.$el.find(child.selector).append(view.render().$el);
-				view.delegateEvents();
 			}
 
 			this.trigger('afterRender');
