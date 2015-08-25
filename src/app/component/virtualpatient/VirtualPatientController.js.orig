@@ -19,22 +19,19 @@ define(function (require) {
         elements: $(),
         multitouch: MultiTouchManager.getInstance(),
         collection: 'Patients',
-        styles: 'virtual-patient.css', //default styles: styles,
+        styles: styles,
         selector: '#virtual-patient-img',
 
 
-    events: {
-      'click #context': '_onContext',
-      'click #background': '_onBackground',
-      'click #flip-patient-button': '_flipPatient',
-      'click #question-patient-button': '_questionPatient',
-      'click #test-request-button': '_testRequests',
-      'click #test-results-button': '_testResults',
-      'click #patients-chart-button': '_showPatientsChart',
-      'click #hide-chart-button': '_hidePatientsChart',
-      'click #question-card': '_questionCard',
-      'click #results-card1': '_showUrineAnalysisChart',
-      'click #hide-chart-button2': '_hideUrineAnalysisChart'
+        events: {
+            'click #context': '_onContext',
+            'click #background': '_onBackground',
+            'click #flip-patient-button': '_flipPatient',
+            'click #question-patient-button': '_questionPatient',
+            'click #test-request-button': '_testRequests',
+            'click #test-results-button': '_testResults',
+            'click #patients-chart-button': '_showPatientsChart',
+            'click #hide-chart-button': '_hidePatientsChart',
 
         },
         _onAfterRender: function () {
@@ -52,6 +49,7 @@ define(function (require) {
                 $('#observation-card4').get()
             ]; // [a,b,c...
 
+<<<<<<< HEAD
             var transforms = [
                 //[glm.vec3.fromValues(-300, 0, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0], //(translate,,) (scale,,)
                 [glm.vec3.fromValues(300, 0, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
@@ -79,14 +77,68 @@ define(function (require) {
 
 
         },
+=======
+  return ViewController.extend({
+
+    collection: 'Patients',
+    styles: 'virtual-patient.css',
+    selector: '#virtual-patient-img',
+>>>>>>> develop
 
         _onReady: function () {
             this.listenTo(this.collection, 'add', this.render);
             //this.collection.add({name: 'New'});
 
+<<<<<<< HEAD
+            // draggables
+            $('#patients-chart-table').draggable();
+            //$('#virtual-patient-img-container').draggable();  //sample jquery method
+            // $(".btn").draggable();
+
+=======
+    events: {
+      'click #context': '_onContext',
+      'click #background': '_onBackground',
+      'click #flip-patient-button': '_flipPatient',
+      'click #question-patient-button': '_questionPatient',
+      'click #test-request-button': '_testRequests',
+      'click #test-results-button': '_testResults',
+      'click #patients-chart-button': '_showPatientsChart',
+      'click #hide-chart-button': '_hidePatientsChart',
+      'click #question-card': '_questionCard',
+      'click #results-card1': '_showUrineAnalysisChart',
+      'click #hide-chart-button2': '_hideUrineAnalysisChart'
+
+    //   'hover #save-issue-button': '_saveIssue',
+    },
+    _onAfterRender: function () {
+>>>>>>> develop
+
+            $('#patients-chart-table').hide();
+            $('#hide-chart-button').hide();
+
+        },
+
+<<<<<<< HEAD
+        _flipPatient: function () {
+
+            var virtual_patient_img = $('#virtual-patient-img');
+            if (virtual_patient_img.attr("src") === "resources/images/androg.front.jpg") {
+                virtual_patient_img.attr("src", "resources/images/androg.back.jpg");
+            }
+            else {
+                virtual_patient_img.attr("src", "resources/images/androg.front.jpg");
+            }
+
+        },
+        _showPatientsChart: function () {
+            $('#patients-chart-table').show();
+            $('#hide-chart-button').show();
+            $('#patients-chart-button').hide();
+=======
       // draggables
       $('#patients-chart-table').draggable();
-      $('#virtual-patient-img-container').draggable(); //sample jquery method
+      $('#virtual-patient-img-container').draggable();
       $('#speech-card1').draggable();
       $('#speech-card2').draggable();
 
@@ -106,29 +158,11 @@ define(function (require) {
       $('#urine-analysis-results').hide();
 
 
+>>>>>>> develop
 
         },
 
-        _flipPatient: function () {
-
-            var virtual_patient_img = $('#virtual-patient-img');
-            if (virtual_patient_img.attr("src") === "resources/images/androg.front.jpg") {
-                virtual_patient_img.attr("src", "resources/images/androg.back.jpg");
-            }
-            else {
-                virtual_patient_img.attr("src", "resources/images/androg.front.jpg");
-            }
-
-        },
-        _showPatientsChart: function () {
-            $('#patients-chart-table').show();
-            $('#hide-chart-button').show();
-            $('#patients-chart-button').hide();
-
-        },
-
-
-    _hidePatientsChart: function() {
+        _hidePatientsChart: function () {
 
             $('#patients-chart-table').hide();
             $('#hide-chart-button').hide();
@@ -136,6 +170,31 @@ define(function (require) {
 
         },
 
+        _questionPatient: function () {
+
+            // TODO: explode options
+
+<<<<<<< HEAD
+        },
+        _testRequests: function () {
+
+            // TODO: explode options
+=======
+
+    _hidePatientsChart: function() {
+>>>>>>> develop
+
+        },
+        _testResults: function () {
+
+            // TODO: explode options
+
+<<<<<<< HEAD
+        }
+
+    }); //end return function to send to viewController
+});   //end require
+=======
     _showUrineAnalysisChart: function() {
 
       $('#urine-analysis-results').show();
@@ -174,7 +233,7 @@ define(function (require) {
 
     _testRequests: function () {
 
-            // TODO: explode options
+    // TODO: explode options
 
     // var menuItems = $('.virtual-patient-component-container .menu .menu-item');
     // var distance = 100;
@@ -215,7 +274,7 @@ define(function (require) {
     }else{
         $('.results-card').show();
 
-        }
+    }
 
     }
 
@@ -230,3 +289,4 @@ define(function (require) {
 
   });
 });
+>>>>>>> develop

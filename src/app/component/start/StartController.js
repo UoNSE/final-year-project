@@ -5,20 +5,24 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var ViewController = require('controller/ViewController');
-	var Animate = require('behaviour/Animate');
+	var animate = require('behaviour/Animate').getInstance();
 
 	return ViewController.extend({
 
 		displayBack: false,
 
 		events: {
-			'click #btn-start': '_onStart'
+			'click #btn-start': 'onStart'
 		},
 
-		_onStart: function (event) {
+		onBeforeRender: function () {
+			//this.addChildView('#mychild', 'component/cases/Cases');
+		},
+
+		onStart: function (event) {
+			console.log('click');
 			var button = $(event.target).addClass('disabled');
-			Animate.scaleOut(button, {
-				css: {opacity: 0},
+			animate.scaleOut(button, {
 				duration: 600,
 				easing: 'easeInBack'
 			});

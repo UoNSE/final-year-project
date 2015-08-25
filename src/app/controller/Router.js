@@ -1,43 +1,41 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
-	var Loader = require('controller/Loader');
-	var Back = require('shared/navigation/back/BackController');
+	var ViewControllerLoader = require('controller/loader/ViewController');
 
 	return Backbone.Router.extend({
 
-		_loader: null,
-		_back: null,
+		_navigation: null,
+		_viewControllerLoader: null,
 
 		routes: {
-			'': 'start',
-			'cases': 'cases',
-			'case/:id/overview': 'caseOverview',
-			'case/:id/information': 'caseInformation',
-			'case/:id/information/background': 'caseBackground',
-			'case/:id/information/virtualpatient': 'virtualPatient'
-		},
+			'':                                 'menu',
 
-		initialize: function () {
-            this._loader = new Loader(this);
-			this._loader.insert('shared/navigation/back/Back', $('body'), 0).then(function (controller) {
-				this._back = controller;
-				$(this._back.selector).hide();
-				this.trigger('ready');
-			}.bind(this));
+			'cases':                            'cases',
+			'case/:id/overview':                'caseOverview',
+			'case/:id/information':             'caseInformation',
+			'case/:id/information/background':  'caseBackground',
+			'case/:id/information/virtualpatient': 'virtualPatient',
+			'case/:id/issues': 'caseIssues',
 
-			this._loader.on({
-				configureBack: this._onConfigureBack.bind(this),
-				back: this._onBack.bind(this)
-			});
+			'activity/goals':                   'goalsActionActivity',
+            'activity/goals/create':            'goalsActionActivityCreateGoal',
+            'activity/goals/:id/actions':       'goalsActionActivityCreateActions'
+
+        },
+
+		initialize: function (navigation) {
+			this._navigation = navigation;
+            this._viewControllerLoader = new ViewControllerLoader(this);
+
+			this._viewControllerLoader.on('configureBack', this.onConfigureBack, this);
+			this._navigation.back.on('back', this.onBack, this);
 		},
 
 		/**
 		 * Loads the previous page in the history.
-		 *
-		 * @private
 		 */
-		_onBack: function () {
+		onBack: function () {
 			Backbone.history.history.back();
 		},
 
@@ -45,11 +43,11 @@ define(function (require) {
 		 * Changes the visibility of the back button depending on the back configuration.
 		 *
 		 * @param back The back configuration.
-		 * @private
 		 */
-		_onConfigureBack: function (back) {
-			if (this._back) {
-				var button = $(this._back.selector);
+		onConfigureBack: function (back) {
+			var backNavigation = this._navigation.back;
+			if (backNavigation) {
+				var button = $(backNavigation.selector);
 				// TODO add transitions
 				if (back === false || Backbone.history.getPath() === '') {
 					button.hide();
@@ -70,7 +68,11 @@ define(function (require) {
 			if (id) {
 				id = parseInt(id, 10);
 			}
-			this._loader.load(route, id);
+			this._viewControllerLoader.load(route, id);
+		},
+
+		menu: function () {
+			this._load('component/menu/Menu');
 		},
 
 		start: function () {
@@ -92,6 +94,25 @@ define(function (require) {
 		caseBackground: function (id) {
 			this._load('component/information/background/Background', id);
 		},
+
+		caseIssues: function (id) {
+			this._load('component/Issues_Evidence/Issues', id);
+		},
+
+        /**
+         * Goals and Actions Activity Board.
+         */
+		goalsActionActivity: function () {
+			this._load('activity/goals/component/board/GoalsBoard');
+		},
+
+        goalsActionActivityCreateGoal: function () {
+            this._load('activity/goals/component/create/CreateGoal');
+        },
+
+        goalsActionActivityCreateActions: function (id) {
+            this._load('activity/goals/component/goal/actions/Actions', id);
+        },
 
 		virtualPatient: function (id) {
 			this._load('component/virtualpatient/VirtualPatient', id);

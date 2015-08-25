@@ -1,6 +1,72 @@
 <div class="virtual-patient-component-container">
+<<<<<<< HEAD
+  <button id="flip-patient-button" class="btn btn-primary btn-fab btn-raised">Flip</button>
+  <button id="patients-chart-button" class="btn btn-primary btn-fab btn-raised">Chart</button>
+
+  <div id= "virtual-patient-img-container">
+    <img id ="virtual-patient-img" src = "resources/images/androg.front.jpg">
+    <!-- TODO: for each hotspot-->
+    <button id="hotspot-button" class="btn btn-fab"></button></img>
+  </div>
+  <div id="card-container">
+    <button id="speech-card" class="ocbtn btn">
+      <img class ="speech-icon" src = "resources/images/speech.png"/>
+      "I'm cold"</button>
+    <button id="observation-card2" class="ocbtn btn">
+      <img class ="observe-icon" src = "resources/images/observe.png"/>
+      Patient is expectant mother.</button>
+    <button id="observation-card3" class="ocbtn btn">
+      <img class ="observe-icon" src = "resources/images/observe.png"/>
+      Patient is itchy all over.</button>
+    <button id="observation-card4" class="ocbtn btn">
+      <img class ="observe-icon" src = "resources/images/observe.png"/>
+      Patient appears anxious.</button>
+  </div>
+  <div id="button-container">
+    <!--<button id="question-patient-button" class="btn btn-primary btn-fab btn-raised">Question<br>Patient {{patient.id}}</button><br><br>
+    <button id="question-patient-button" class="btn ">Patients name: {{this.patients.0.firstname}}</button><br><br>
+    <button id="question-patient-button" class="btn ">Patients name: {{this.firstname}}</button><br><br>
+    <button id="question-patient-button" class="btn ">Patients name: {{patients.0.firstname}}</button><br><br>-->
+
+    <button id="test-request-button" class="btn btn-primary btn-fab btn-raised">Test<br>Request</button><br><br>
+    <button id="test-results-button" class="btn btn-primary btn-fab btn-raised">Test<br>Results</button>
+  </div>
+
+  <div id="patients-chart-table">
+    {{#each []}}
+      <table >
+          <tr>
+            <td>First Name</td>
+            <td>{{this.firstname}}</td>
+          </tr>
+          <tr>
+          <td>Last Name</td>
+          <td>{{this.lastname}}</td>
+          </tr>
+          <tr>
+          <td>Gender</td>
+          <td>{{this.sex}}</td>
+          </tr>
+        <tr>
+        <td>Age</td>
+        <td>{{this.age}}</td>
+        </tr>
+        <tr>
+          <tr>
+          <td>DOB</td>
+          <td>{{this.dob}}</td>
+          </tr>
+        <td>Profession</td>
+        <td>{{this.profession}}</td>
+        </tr>
+      </table>
+    {{/each}}
+    <button id ="hide-chart-button" class="btn btn-primary btn-raised">Hide</button>
+  </div>
+=======
     <button id="flip-patient-button" class="btn btn-material-indigo btn-fab btn-raised">Flip</button>
     <button id="patients-chart-button" class="btn btn-material-indigo btn-fab btn-raised">Chart</button>
+>>>>>>> develop
 
     <!-- <button id="test-request-button" class="btn btn-primary btn-fab btn-raised title">Tests</button><br><br> -->
     <button id="test-request-button" class="btn btn-material-indigo btn-fab btn-raised">Tests</button>

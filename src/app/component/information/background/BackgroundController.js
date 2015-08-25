@@ -3,7 +3,7 @@ define(function (require) {
 	var $ = require('jquery');
 	var glm = require('glmatrix');
 	var ViewController = require('controller/ViewController');
-	var Animate = require('behaviour/Animate');
+	var animate = require('behaviour/Animate').getInstance();
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
 
@@ -13,7 +13,7 @@ define(function (require) {
 		multitouch: MultiTouchManager.getInstance(),
 		urls: ['box.gif', 'spiral.gif', 'torus.gif', 'triangle.gif'],
 
-		_onAfterRender: function () {
+		onAfterRender: function () {
 			this._addItems();
 		},
 
@@ -50,7 +50,7 @@ define(function (require) {
 				behaviour.needsUpdate();
 				this.elements = this.elements.add(element);
 			}
-			Animate.scale(container);
+			animate.scale(container);
 		}
 
 	});

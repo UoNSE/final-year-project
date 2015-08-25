@@ -2,13 +2,80 @@
   "cases": [
     {
       "id": 1,
-      "name": "Case 1"
+      "name": "Dang Tien",
+      "issues": [
+        {
+          "id": 1,
+          "content": "Dehydration"
+        },
+        {
+          "id": 2,
+          "content": "Hypovolaemia"
+        }
+      ],
+      "evidence": [
+        {
+          "id": 1,
+          "content": "Condition of oral mucosa",
+          "issueId": 1
+        },
+        {
+          "id": 2,
+          "content": "Level of thirst",
+          "issueId": 1
+        },
+        {
+          "id": 3,
+          "content": "Pale colour",
+          "issueId": 2
+        },
+        {
+          "id": 4,
+          "content": "Pulse rate very high (120 bpm)",
+          "issueId": 2
+        }
+      ]
     },
     {
       "id": 2,
-      "name": "Case 2"
+      "name": "Joe & Beth"
+    },
+    {
+      "id": 3,
+      "name": "Terry"
+    },
+    {
+      "id": 4,
+      "name": "Ben"
+    },
+    {
+      "id": 5,
+      "name": "Mark"
+    },
+    {
+      "id": 6,
+      "name": "Emily"
+    },
+    {
+      "id": 7,
+      "name": "Jane"
+    },
+    {
+      "id": 8,
+      "name": "Lauren"
+    },
+    {
+      "id": 9,
+      "name": "Bob"
     }
   ],
+  "goals": [
+    {
+      "content": "testing 123",
+      "id": 2
+    }
+  ],
+  "actions": [],
   "patients": [
     {
       "id": 1,
@@ -98,10 +165,10 @@
       "id": 1,
       "firstname": "Gerard",
       "lastname": "Smith",
-      "age": "101",
-      "dob": "12.05.1914",
-      "sex": "male",
-      "profession": "balloonist",
+      "age": "62",
+      "dob": "1914-05-12",
+      "sex": "Male",
+      "profession": "Physiotherapist",
       "metrics": [
         {
           "id": 1,

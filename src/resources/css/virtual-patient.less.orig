@@ -153,6 +153,26 @@
 }
 
 #patients-chart-table {
+<<<<<<< HEAD
+  //position:absolute;
+  //top:60%;
+  //left:10%;
+  width: 15%;
+  height: 70%;
+  border: solid black 1px;
+  border-spacing: 10px;
+  background-color: lighten(yellow,40%);
+  td {
+    padding: 10px;
+  }
+  #hide-chart-button {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: red !important;
+  }
+=======
 	.chart;
 	position: absolute;
 	top: 0%;
@@ -164,6 +184,7 @@
 	position: absolute;
 	top: 50%;
 	left: -20%;
+>>>>>>> develop
 }
 
 #hotspot-button {
@@ -211,6 +232,11 @@
 	width: 15em !important;
 }
 
+<<<<<<< HEAD
+.ocbtn {
+  .card;
+  background-color: lightGray;
+=======
 #question-card {
 	.observation-card;
 	width: 15em !important;
@@ -221,4 +247,5 @@
 	width: 15em !important;
 	//background-color: lightPink;
 
+>>>>>>> develop
 }

@@ -12,6 +12,10 @@ define(function (require) {
 			'click #back': '_onBack'
 		},
 
+		onReady: function () {
+			$(this.selector).hide();
+		},
+
 		_onBack: function () {
 			this.trigger('back');
 		}

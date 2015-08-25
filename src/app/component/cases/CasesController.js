@@ -5,17 +5,17 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var ViewController = require('controller/ViewController');
-	var Animate = require('behaviour/Animate');
+	var animate = require('behaviour/Animate').getInstance();
 
 	return ViewController.extend({
 
 		collection: 'Cases',
 
 		events: {
-			'click #cases .case': '_onCase'
+			'click #cases .case': 'onCaseClick'
 		},
 
-		_onAfterRender: function () {
+		onAfterRender: function () {
 			this._container = $('#cases-container');
 			var colorClasses = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
 				'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
@@ -27,33 +27,34 @@ define(function (require) {
 				var distance = 200;
 				var cls = 'btn-material-' + colorClasses[Math.round(i * colorClasses.length / len)];
 				button.addClass(cls);
-				Animate.scaleOut(button, {
+				animate.scaleIn(button, {
 					css: {
 						width: 100,
 						height: 100,
 						fontSize: 12,
-						textAlign: 'center'
+						textAlign: 'center',
+						transform: 'scale(0)'
 					},
 					delay: i * 50,
 					animate: {transform: 'translate(' + distance * Math.cos(angle) + 'px, ' + distance * -Math.sin(angle) + 'px) scale(1)'}
 				});
 			}
 
-			Animate.scale($('#btn-select-case'), {
+			animate.scale($('#btn-select-case'), {
 				css: {width: 150, height: 100, fontSize: 20},
 				delay: 500,
 				duration: 1000
 			});
 		},
 
-		_onReady: function () {
+		onReady: function () {
 			this.listenTo(this.collection, 'add', this.render);
 			//this.collection.add({name: 'New'});
 		},
 
-		_onCase: function (event) {
+		onCaseClick: function (event) {
 			$(event.target).addClass('disabled');
-			Animate.scaleOut(this._container, {
+			animate.scaleOut(this._container, {
 				duration: 500,
 				easing: 'easeInBack'
 			});

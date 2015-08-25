@@ -4,35 +4,31 @@ define(function (require) {
 
 	var $ = require('jquery');
 	var ViewController = require('controller/ViewController');
-	var Animate = require('behaviour/Animate');
-
-	var styles = [
-		'case-overview.css'
-	];
+	var animate = require('behaviour/Animate').getInstance();
 
 	return ViewController.extend({
 
-		styles: styles,
+		styles: 'case-overview.css',
 		selector: '#case-overview',
 
 		events: {
-			'click #case-information': '_onCaseInformation',
-			'click #identify-issues': '_onIdentifyIssues',
-			'click #goals-and-actions': '_onGoalsAndActions',
-			'click #reflection': '_onReflection'
+			'click #case-information': 'onCaseInformation',
+			'click #identify-issues': 'onIdentifyIssues',
+			'click #goals-and-actions': 'onGoalsAndActions',
+			'click #reflection': 'onReflection'
 		},
 
-		_onAfterRender: function () {
-			Animate.scale($(this.selector), {duration: 1000});
-			Animate.scale($('#btn-case-overview'), {
+		onAfterRender: function () {
+			animate.scale($(this.selector), {duration: 1000});
+			animate.scale($('#btn-case-overview'), {
 				css: {fontSize: 20},
 				delay: 500,
 				duration: 1000
 			});
 		},
 
-		_onCaseInformation: function () {
-			Animate.scaleOut($(this.selector), {
+		onCaseInformation: function () {
+			animate.scaleOut($(this.selector), {
 				duration: 500,
 				easing: 'easeInBack'
 			});
@@ -43,7 +39,7 @@ define(function (require) {
 		},
 
 		_onGoalsAndActions: function () {
-			// TODO
+
 		},
 
 		_onReflection: function () {
