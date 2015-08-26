@@ -1,7 +1,4 @@
-// TODO: merge the transformable items changes into current branch.
-//TODO: change saveIssue to saveEvidence. i overlooked thgis for the demo.
-//      here the patient collects evidence. the issues/evidence is for synthesis
-//      of this evidence into issues.
+// TODO: move module into activity folder as per http://wiki.uonse.org/display/FYP/2015/08/16/Creating+an+Activity
 //TODO: on hover event when evidence cards (observations/responses)
 //      are dragged onto save evidence button.
 // TODO: save evidence to JSON.
