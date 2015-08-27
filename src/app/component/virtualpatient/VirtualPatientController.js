@@ -43,11 +43,11 @@ define(function(require){
       'click #flip-patient-button': '_flipPatient',
       'click #test-results-button': '_testResults',
       'click #hide-chart-button': '_hidePatientsChart',
-      'click #question-card': '_questionCard',
+      'click #query-card': '_queryCard',
       'click #results-card1': '_showUrineAnalysisChart',
       'click #hide-chart-button2': '_hideUrineAnalysisChart',
 
-        'click #button-query': '_questionPatient',
+        'click #button-query': '_queryPatient',
         'click #button-tests': '_testRequests',
         'click #button-chart': '_showPatientsChart'
 
@@ -73,8 +73,8 @@ define(function(require){
                 $('#button-tests').get(),
 
                 $('#patients-chart-table').get(), // //jquery fetch things
-                $('#questions-container').get(),
-                $('#button-container').get()
+                $('#query-menu-container').get(),
+                $('#test-menu-container').get()
             ]; // [a,b,c...
 
             var transforms = [
@@ -91,8 +91,8 @@ define(function(require){
                 [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
 
                 [glm.vec3.fromValues(-334, -50, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(-365, -168, 0), glm.vec3.fromValues(0.25, 0.25, 1), 0],
-                [glm.vec3.fromValues(-237, -270, 0),   glm.vec3.fromValues(.25,.25, 1), 0]
+                [glm.vec3.fromValues(0, 0, 0), glm.vec3.fromValues(0.25, 0.25, 1), 0],
+                [glm.vec3.fromValues(0, 0, 0),   glm.vec3.fromValues(.25,.25, 1), 0]
             ];
             var numItems  = transformableResources.length;
             for (var i =0; i<numItems; i++) {
@@ -125,9 +125,9 @@ define(function(require){
       $('#hide-chart-button').hide();
       $('.test-card').hide();
       $('.results-card').hide();
-      //$('.question-card').hide();
-      //$('.question-card').hide();
-        $('#questions-container').hide();
+      //$('.query-card').hide();
+      //$('.query-card').hide();
+        $('#query-menu-container').hide();
 
 
         },
@@ -175,29 +175,29 @@ define(function(require){
 
     // hideOtherMenus()
 
-    _questionPatient: function () {
+    _queryPatient: function () {
 
     // TODO: explode options
         /*
-        if($('.question-card').is(":visible")){
-            $('.question-card').hide();
+        if($('.query-card').is(":visible")){
+            $('.query-card').hide();
 
         }else{
-            $('.question-card').show();
+            $('.query-card').show();
 
         }
         */
-        if($('#questions-container').is(":visible")){
-            $('#questions-container').hide();
+        if($('#query-menu-container').is(":visible")){
+            $('#query-menu-container').hide();
 
         }else{
-            $('#questions-container').show();
+            $('#query-menu-container').show();
 
         }
 
     },
 
-    _questionCard: function(){
+    _queryCard: function(){
     $('#speech-card2').show();
     },
 

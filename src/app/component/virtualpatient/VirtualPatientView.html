@@ -37,7 +37,7 @@
             <img class="speech-icon" src="resources/images/speech.png"/>
             <div class = "card-text">
                 <p>
-                    <b>Question:</b> Are you hungry?<br>
+                    <b>query:</b> Are you hungry?<br>
                     <b>Response:</b> Yes."
                 </p>
             </div>
@@ -88,44 +88,50 @@
 
    -->
 
-<!-- question pateint chart -------------------------------------->
+<!-- query patient chart -------------------------------------->
 
-    <div id="questions-container">
+    <div id="query-menu-container">
+        <button id="button-query" class="btn btn-material-indigo btn-fab btn-raised">Query</button>
+        <div id = "query-menu" class="button-menu">
         <br><br>
         <ul>
             <li>
-                <button id="question-card" class="btn btn-material-blue btn-raised generic-card question-card">Where does it hurt?</button>
+                <button id="query-card1" class="btn btn-material-blue btn-raised query-card">Where does it hurt?</button>
             </li>
             <li>
-                <button id="question-card" class="btn btn-material-blue btn-raised generic-card question-card">When did the pain begin?</button>
+                <button id="query-card2" class="btn btn-material-blue btn-raised query-card">When did the pain begin?</button>
             </li>
             <li>
-                <button id="question-card" class="btn btn-material-blue btn-raised generic-card question-card">Are you hungry?</button>
+                <button id="query-card3" class="btn btn-material-blue btn-raised query-card">Are you hungry?</button>
             </li>
             <li>
-                <button id="question-card" class="btn btn-material-blue btn-raised generic-card question-card">Are you thirsty?</button>
+                <button id="query-card4" class="btn btn-material-blue btn-raised query-card">Are you thirsty?</button>
             </li>
         </ul>
     </div>
+    </div>
 
-<!-- test cards ------------------------------------------------>
-    <div id="button-container">
+<!-- test menu ------------------------------------------------>
+    <div id="test-menu-container">
+        <button id="button-tests" class="btn btn-material-indigo btn-fab btn-raised">Tests</button>
+        <div id = "test-menu" class="button-menu">
         <ul>
             <li>
-                <button id="test-card1" class="btn btn-material-blue btn-raised generic-card test-card">Urine Analysis</button>
+                <button id="test-card1" class="btn btn-material-blue btn-raised results-card">Urine Analysis</button>
             </li>
             <li>
-                <button id="test-card2" class="btn btn-material-blue btn-raised generic-card test-card">Blood Test</button>
+                <button id="test-card2" class="btn btn-material-blue btn-raised test-card">Blood Test</button>
             </li>
             <li>
-                <button id="test-card3" class="btn btn-material-blue btn-raised generic-card test-card">Blood Test</button>
+                <button id="test-card3" class="btn btn-material-blue btn-raised test-card">Blood Test</button>
             </li>
             <li>
-                <button id="test-card4" class="btn btn-material-blue btn-raised generic-card test-card">XRAY</button>
+                <button id="test-card4" class="btn btn-material-blue btn-raised test-card">XRAY</button>
             </li>
             <li>
-                <button id="test-card5" class="btn btn-material-blue btn-raised generic-card test-card">CTSCAN</button>
+                <button id="test-card5" class="btn btn-material-blue btn-raised test-card">CTSCAN</button>
             </li>
+        </div>
     </div>
 
 <!--patients chartcharts: hidden by default in controller----------------------------------------------->
@@ -177,7 +183,7 @@
         <!--<img class="speech-icon" src="resources/images/speech.png"/>-->
         <div class = "card-text" style="margin-top:-1em">
             <p>
-                <b>Question:</b> Are you hungry?<br>
+                <b>query:</b> Are you hungry?<br>
                 <b>Response:</b> Yes."
             </p>
         </div>
@@ -197,8 +203,6 @@
 
 <!--Main buttons ------------------------------------------------------>
     <button id="button-chart" class="btn btn-material-indigo btn-fab">Chart</button>
-    <button id="button-tests" class="btn btn-material-indigo btn-fab btn-raised">Tests</button>
-    <button id="button-query" class="btn btn-material-indigo btn-fab btn-raised">Query</button>
 
 <!-- Virtual patient---------------------------------------------------------------------->
     <div id="virtual-patient-img-container"></div>
