@@ -91,8 +91,8 @@ define(function(require){
                 [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
 
                 [glm.vec3.fromValues(-334, -50, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(0, 0, 0), glm.vec3.fromValues(0.25, 0.25, 1), 0],
-                [glm.vec3.fromValues(0, 0, 0),   glm.vec3.fromValues(.25,.25, 1), 0]
+                [glm.vec3.fromValues(-200, 150, 0), glm.vec3.fromValues(0.25, 0.25, 1), 0],
+                [glm.vec3.fromValues(-100, 150, 0),   glm.vec3.fromValues(.25,.25, 1), 0]
             ];
             var numItems  = transformableResources.length;
             for (var i =0; i<numItems; i++) {
