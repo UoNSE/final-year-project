@@ -42,19 +42,15 @@
 
 }
 
-#button-menu{
-    position: relative;
-    bottom: 50px;
-}
 
-// #results-container {
-// 	position: absolute;
-// 	display: block;
-// 	height: 100%;
-// 	left: -20%;
-// 	top: 90%;
-//
-// }
+
+.button-menu{
+    position: relative;
+    // top: -200px;
+    top: 0px;
+    z-index: 0;
+
+}
 
 #query-menu-container {
   display:block;
@@ -72,11 +68,12 @@
 .vp-button {
 	//background-color: red !important;
 	padding: 1em;
-  margin:0;
+    margin:0;
 	width: @button-size !important;
 	height: @button-size !important;
 	text-align: center;
 	font-size: 12pt;
+    z-index: 1;
 }
 
 .smaller-vp-button {
@@ -191,10 +188,10 @@
 .menu-item{
     // .generic-card;
     font-size: 8pt;
-    width: 800px;
+    width: 200px;
     text-align: left;
-    height:200px;
-    font-size:4em;
+    height:50px;
+    font-size:1em;
 
 }
 

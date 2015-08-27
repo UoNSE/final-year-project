@@ -135,6 +135,9 @@
     </div>
 
 <!--patients chartcharts: hidden by default in controller----------------------------------------------->
+<div id = "patients-char-container">
+<button id="button-chart" class="btn btn-material-indigo btn-fab">Chart</button>
+
     <div id="patients-chart-table" class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Patients Chart</h3>
@@ -169,6 +172,7 @@
         {{/each}}
         <button id="hide-chart-button" class="btn btn-primary btn-raised hide-chart-button">Hide</button>
     </div>
+</div>
 
     <div id="speech-card1" class="generic-card speech-card card">
         <!--<img class="speech-icon" src="resources/images/speech.png"/>-->
@@ -200,9 +204,6 @@
     <div id="observation-card3" class="generic-card observation-card card">
         Patient appears anxious.
     </div>
-
-<!--Main buttons ------------------------------------------------------>
-    <button id="button-chart" class="btn btn-material-indigo btn-fab">Chart</button>
 
 <!-- Virtual patient---------------------------------------------------------------------->
     <div id="virtual-patient-img-container"></div>

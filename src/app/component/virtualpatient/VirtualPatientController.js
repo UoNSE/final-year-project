@@ -48,7 +48,7 @@ define(function(require){
       'click #hide-chart-button2': '_hideUrineAnalysisChart',
 
         'click #button-query': '_queryPatient',
-        'click #button-tests': '_testRequests',
+        'click #button-tests': '_testPatient',
         'click #button-chart': '_showPatientsChart'
 
         },
@@ -69,10 +69,10 @@ define(function(require){
                 $('#virtual-patient-img-container').get(),
 
                 $('#button-chart').get(),
-                $('#button-query').get(),
-                $('#button-tests').get(),
+                // $('#button-query').get(),
+                // $('#button-tests').get(),
 
-                $('#patients-chart-table').get(), // //jquery fetch things
+                $('#patients-chart-container').get(), // //jquery fetch things
                 $('#query-menu-container').get(),
                 $('#test-menu-container').get()
             ]; // [a,b,c...
@@ -84,15 +84,15 @@ define(function(require){
                 [glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
                 [glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
                 [glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
-                [glm.vec3.fromValues(0,0, 0),glm.vec3.fromValues(2.5,2.5, 1), 0],
+                [glm.vec3.fromValues(0, 0, 0),glm.vec3.fromValues(2.5,2.5, 1), 0],
 
                 [glm.vec3.fromValues(-430, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
-                [glm.vec3.fromValues(-330, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
-                [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
+                // [glm.vec3.fromValues(-330, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
+                // [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
 
                 [glm.vec3.fromValues(-334, -50, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(-200, 150, 0), glm.vec3.fromValues(0.25, 0.25, 1), 0],
-                [glm.vec3.fromValues(-100, 150, 0),   glm.vec3.fromValues(.25,.25, 1), 0]
+                [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0,1.0, 1), 0]
             ];
             var numItems  = transformableResources.length;
             for (var i =0; i<numItems; i++) {
@@ -117,17 +117,17 @@ define(function(require){
             this.listenTo(this.collection, 'add', this.render);
             //this.collection.add({name: 'New'});
 
-      // draggables
 
-      //hidden
-      $('#patients-chart-table').hide();
-      $('#urine-analysis-results').hide();
-      $('#hide-chart-button').hide();
-      $('.test-card').hide();
-      $('.results-card').hide();
-      //$('.query-card').hide();
-      //$('.query-card').hide();
-        $('#query-menu-container').hide();
+            //hidden
+            $('#patients-chart-table').hide();
+            $('#urine-analysis-results').hide();
+            $('#hide-chart-button').hide();
+            // $('.test-card').hide();
+            $('.results-card').hide();
+            //$('.query-card').hide();
+            //$('.query-card').hide();
+            $('#query-menu').hide();
+            $('#test-menu').hide();
 
 
         },
@@ -177,23 +177,31 @@ define(function(require){
 
     _queryPatient: function () {
 
-    // TODO: explode options
-        /*
-        if($('.query-card').is(":visible")){
-            $('.query-card').hide();
+        if($('#query-menu').is(":visible")){
+            $('#query-menu').hide();
 
         }else{
-            $('.query-card').show();
+            $('#query-menu').show();
 
         }
-        */
-        if($('#query-menu-container').is(":visible")){
-            $('#query-menu-container').hide();
 
-        }else{
-            $('#query-menu-container').show();
+        //position the menu based on how big it is (how many items)
+        // num.elements * size.element (menu-item)
+        // TODO: fix this.
+        $('.button-menu').each(function() {
+            // get number of menu items
+            // var numMenuItems = $( this ).find('.menu-item').length;
+            // console.log(numMenuItems);
+            // // get height of menu item.
+            // var menuItemHeight = $( this ).children('button').css('height')
+            // console.log(menuItemHeight);
+            // // calculate height of menu
+            // var menuHeight = numMenuItems * menuItemHeight;
+            // console.log(menuHeight);
+            menuHeight = 500;
+            $(this).offset({top:menuHeight});
 
-        }
+        });
 
     },
 
@@ -201,35 +209,66 @@ define(function(require){
     $('#speech-card2').show();
     },
 
+    // offsetMenus: function (){
+    //     //position the menu based on how big it is (how many items)
+    //     // num.elements * size.element (menu-item)
+    //     // TODO: fix this.
+    //     $('.button-menu').each(function() {
+    //         // get number of menu items
+    //         // var numMenuItems = $( this ).find('.menu-item').length;
+    //         // console.log(numMenuItems);
+    //         // // get height of menu item.
+    //         // var menuItemHeight = $( this ).children('button').css('height')
+    //         // console.log(menuItemHeight);
+    //         // // calculate height of menu
+    //         // var menuHeight = numMenuItems * menuItemHeight;
+    //         // console.log(menuHeight);
+    //         menuHeight = 500;
+    //         $(this).offset({top:menuHeight});
+    //
+    //     });
+    // },
 
-    _testRequests: function () {
+    _testPatient: function () {
 
-            // TODO: explode options
-
-
-    if($('.test-card').is(":visible")){
-        $('.test-card').hide();
+    if($('#test-menu').is(":visible")){
+        $('#test-menu').hide();
 
     }else{
-        $('.test-card').show();
+        $('#test-menu').show();
 
     }
+        //position the menu based on how big it is (how many items)
+        // num.elements * size.element (menu-item)
+        // TODO: fix this.
+        $('.button-menu').each(function() {
+            // get number of menu items
+            // var numMenuItems = $( this ).find('.menu-item').length;
+            // console.log(numMenuItems);
+            // // get height of menu item.
+            // var menuItemHeight = $( this ).children('button').css('height')
+            // console.log(menuItemHeight);
+            // // calculate height of menu
+            // var menuHeight = numMenuItems * menuItemHeight;
+            // console.log(menuHeight);
+            menuHeight = 500;
+            $(this).offset({top:menuHeight});
 
-
-
-
-    },
-    _testResults: function () {
-
-    // TODO: explode options
-    if($('.results-card').is(":visible")){
-        $('.results-card').hide();
-
-    }else{
-        $('.results-card').show();
-
-        }
+        });
 
     }
+  //   _testResults: function () {
+  //
+  //   // TODO: explode options
+  //   if($('.results-card').is(":visible")){
+  //       $('.results-card').hide();
+  //
+  //   }else{
+  //       $('.results-card').show();
+  //
+  //       }
+  //
+  //   }
+
   });
 });
