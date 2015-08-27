@@ -6,6 +6,7 @@ define(function (require) {
 
     var ViewController = require('controller/ViewController');
     var Animate = require('behaviour/Animate').getInstance();
+    var MultiTouchManager = require('behaviour/MultiTouchManager').getInstance();
 
     var Issues = require('collection/Issues');
     var Evidence = require('collection/Evidence');
@@ -34,7 +35,6 @@ define(function (require) {
         },
 
         initialize: function () {
-
             ViewController.prototype.initialize.apply(this, arguments);
 
             this.listenTo(this.collection.issues, 'sync', this.onIssuesSync);
@@ -68,16 +68,18 @@ define(function (require) {
         onAfterRender: function () {
 
             this.menu = $('#menu');
+            this.menu.toggleClass('hidden', true);
 
             var issues = this.$el.find('#issues').children();
             var evidence = this.$el.find('#evidence').children();
 
             var viewport = $(window);
 
-            issues.each(function (index, card) {
+            var placeCard = function(index, card) {
                 var $card = $(card);
-                var left = (viewport.width() * 0.5) - ($card.width() * 0.5);
+                var left =  (viewport.width() * 0.5) - ($card.width() * 0.5);
                 var top = (viewport.height() * 0.5) - ($card.height() * 0.5);
+
                 Animate.scale($card, {
                     delay: index * 50,
                     animate: {
@@ -85,24 +87,13 @@ define(function (require) {
                         top: top
                     }
                 });
-            });
+            };
 
-            evidence.each(function (index, card) {
-                var $card = $(card);
-                var left = (viewport.width() * 0.5) - ($card.width() * 0.5);
-                var top = (viewport.height() * 0.5) - ($card.height() * 0.5);
-                Animate.scale($card, {
-                    delay: index * 50,
-                    animate: {
-                        left: left,
-                        top: top
-                    }
-                });
-            });
-
+            issues.each( placeCard );
+            evidence.each( placeCard );
         },
 
-        onDragStart: function() {
+        onDragStart: function(event) {
             this.menu.toggleClass('hidden', false);
         },
 
@@ -111,105 +102,107 @@ define(function (require) {
             var position = $card.offset();
             var deleteButton = $("#btn-delete");
             var splitButton = $("#btn-split");
+            var target = $(event.currentTarget);
 
             //check for card deletion
-            //if(this.touchOverElement(delbtn,event) ){
-            //    $card.remove();
-            //}
-            //else if (this.touchOverElement(splitButton, event) ){
-            //
-            //    if ( !target.hasClass("merged") ){
-            //        return;
-            //    }
-            //
-            //    var children = target.children(".panel-body");
-            //
-            //    //check for blank lines
-            //    var resultstring = "";
-            //    for (var n=0;n<children.text().split("\n").length;n++){
-            //        if(!children.text().split("\n")[n].trim()==" "){
-            //            resultstring += children.text().split("\n")[n].trim()+"\n"
-            //        }
-            //    }
-            //
-            //    //create the respective issue & evidence
-            //    $("#issues").append( createCard( "Issue", resultstring.split("\n")[0] ) );
-            //    //create evidence cards
-            //    var n = 1;
-            //    while (resultstring.split("\n")[n]!= ""){
-            //        $("#evidences").append(createCard("Evidence", resultstring.split("\n")[n]));
-            //        n++;
-            //    }
-            //
-            //    //delete the pair
-            //    $card.remove();
-            //
-            //    //add RTS
-            //    var list = $("#issues").children();
-            //    for(var i=0; i<list.length;i++){
-            //        var card = list[i];
-            //        multiTouchManager.addElementRTS(card);
-            //    }
-            //
-            //    //add RTS
-            //    var list = $("#evidence").children();
-            //    for(var i=0; i<list.length;i++){
-            //        var card = list[i];
-            //        multiTouchManager.addElementRTS(card);
-            //    }
-            //}
-            //else {
-            //    //check for card merging
-            //
-            //    var list;
-            //    if (target.hasClass("issue")) {
-            //        list = $('#evidence').children();
-            //    }
-            //    else {
-            //        //check all issue cards
-            //        list = $('#issues').children();
-            //    }
-            //    for (var i = 0; i < list.length; i++) {
-            //        //div
-            //        var card = $(list[i]);
-            //       // if (!card.hasClass("merged")) {
-            //
-            //            if ( touchOverElement(card,event) ){
-            //
-            //
-            //                var issue;
-            //                var evidence;
-            //
-            //                //update card text
-            //                if (target.hasClass("issue")) {
-            //                    issue = target;
-            //                    evidence = card;
-            //                }
-            //                else {
-            //                    issue = card;
-            //                    evidence = target;
-            //                }
-            //
-            //                evidence.children().each( function() {
-            //                    issue.append( this );
-            //                });
-            //
-            //                issue.removeClass("panel-info");
-            //                issue.addClass("panel-success");
-            //                //add "merged" class to div
-            //                issue.addClass("merged");
-            //
-            //                //This is dirty, I know
-            //                issue.height( (issue.text().split("\n").length) * 22 - 75);
-            //
-            //                //remove old card
-            //                evidence.remove();
-            //
-            //                break;
-            //            }
-            //        //}
-            //    }
-            //}
+            if(this.touchOverElement(deleteButton,event) ){
+                $card.remove();
+            }
+            else if (this.touchOverElement(splitButton, event) ){
+
+                if ( !target.hasClass("merged") ){
+                    return;
+                }
+
+                var children = target.children(".panel-body");
+
+                //check for blank lines
+                var resultstring = "";
+                for (var n=0;n<children.text().split("\n").length;n++){
+                    if(!children.text().split("\n")[n].trim()==" "){
+                        resultstring += children.text().split("\n")[n].trim()+"\n"
+                    }
+                }
+
+                //create the respective issue & evidence
+                $("#issues").append( this.createCard( "Issue", resultstring.split("\n")[0] ) );
+                //create evidence cards
+                var n = 1;
+                while (resultstring.split("\n")[n]!= ""){
+                    $("#evidences").append(this.createCard("Evidence", resultstring.split("\n")[n]));
+                    n++;
+                }
+
+                //delete the pair
+                $card.remove();
+
+                //add RTS
+                //TODO: should be responsibility of issue & evidence controllers respectively?
+                var list = $("#issues").children();
+                for(var i=0; i<list.length;i++){
+                    var card = list[i];
+                    MultiTouchManager.addElementRTS(card);
+                }
+
+                //add RTS
+                var list = $("#evidence").children();
+                for(var i=0; i<list.length;i++){
+                    var card = list[i];
+                    MultiTouchManager.addElementRTS(card);
+                }
+            }
+            else {
+                //check for card merging
+
+                var list;
+                if (target.hasClass("issue")) {
+                    list = $('#evidence').children();
+                }
+                else {
+                    //check all issue cards
+                    list = $('#issues').children();
+                }
+                for (var i = 0; i < list.length; i++) {
+                    //div
+                    var card = $(list[i]);
+                   // if (!card.hasClass("merged")) {
+
+                        if ( this.touchOverElement(card,event) ){
+
+
+                            var issue;
+                            var evidence;
+
+                            //update card text
+                            if (target.hasClass("issue")) {
+                                issue = target;
+                                evidence = card;
+                            }
+                            else {
+                                issue = card;
+                                evidence = target;
+                            }
+
+                            evidence.children().each( function() {
+                                issue.append( this );
+                            });
+
+                            issue.removeClass("panel-info");
+                            issue.addClass("panel-success");
+                            //add "merged" class to div
+                            issue.addClass("merged");
+
+                            //This is dirty, I know
+                            issue.height( (issue.text().split("\n").length) * 22 - 75);
+
+                            //remove old card
+                            evidence.remove();
+
+                            break;
+                        }
+                    //}
+                }
+            }
 
             this.menu.toggleClass('hidden', true);
 

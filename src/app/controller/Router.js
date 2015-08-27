@@ -94,7 +94,7 @@ define(function (require) {
 		},
 
 		caseIssues: function (caseId) {
-			this._load('component/Issues_Evidence/Issues', caseId);
+			this._load('component/Issues_Evidence/IEModule', caseId);
 		},
 
         /**
