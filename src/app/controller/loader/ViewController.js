@@ -13,10 +13,10 @@ define(function (require) {
 		_cases: null,
 
 		initialize: function () {
+			Loader.prototype.initialize.apply(this, arguments);
 			this._cases = new Cases();
 			this._cases.fetch();
 			this.on('configureViewController', this.onConfigureViewController, this);
-			Loader.prototype.initialize.apply(this, arguments);
 		},
 
 		/**
@@ -94,13 +94,14 @@ define(function (require) {
 		/**
 		 * Configures the current controller.
 		 *
-		 * @param controller The controller being configured.
+		 * @param Controller The controller being configured.
 		 */
-		onConfigureViewController: function (controller) {
+		onConfigureViewController: function (Controller) {
+			// TODO
 			if (this.currentCase) {
 				var currentCase = this._cases.get(this.currentCase);
-				controller.model = controller.model || {};
-				controller.model['case'] = currentCase;
+				Controller.prototype.model = Controller.prototype.model || {};
+				Controller.prototype.model.case = currentCase;
 			}
 		}
 

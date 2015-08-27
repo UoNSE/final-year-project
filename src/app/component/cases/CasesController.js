@@ -7,11 +7,14 @@ define(function (require) {
 	var ViewController = require('controller/ViewController');
 	var Animate = require('behaviour/Animate').getInstance();
 
+	var template = require('text!component/cases/CasesView.html');
+
 	var Cases = require('collection/Cases');
 	var CaseController = require('component/cases/case/CaseController');
 
 	return ViewController.extend({
 
+		template: template,
 		collection: new Cases(),
 
 		events: {
@@ -20,16 +23,30 @@ define(function (require) {
 
 		initialize: function () {
 			ViewController.prototype.initialize.apply(this, arguments);
+			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
+			this.render();
 		},
 
-		onBeforeRender: function () {
+		addCase: function (model) {
 			var selector = '#cases';
-			this.collection.each(function (model) {
-				this.addNestedView(selector, new CaseController({
-					model: model
-				}));
+			this.addNestedView(selector, new CaseController({
+				model: model
+			}));
+		},
+
+		onAdd: function (model) {
+			this.addCase(model);
+			this.render();
+		},
+
+		onSync: function (collection) {
+			collection.each(function (model) {
+				this.addCase(model);
 			}.bind(this));
+
+			this.listenTo(this.collection, 'add', this.onAdd);
+			this.render();
 		},
 
 		onAfterRender: function () {
@@ -61,10 +78,6 @@ define(function (require) {
 				delay: 500,
 				duration: 1000
 			});
-		},
-
-		onReady: function () {
-			this.listenTo(this.collection, 'add', this.render);
 		},
 
 		onCaseClick: function (event) {

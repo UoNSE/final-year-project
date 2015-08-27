@@ -3,10 +3,14 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var ViewController = require('controller/ViewController');
-	var animate = require('behaviour/Animate').getInstance();
+
+	var template = require('text!component/information/CaseInformationView.html');
+
+	var Animate = require('behaviour/Animate').getInstance();
 
 	return ViewController.extend({
 
+		template: template,
 		styles: 'case-information.css',
 
 		events: {
@@ -17,17 +21,22 @@ define(function (require) {
 			'click #virtual-patient': 'onVirtualPatient'
 		},
 
+		initialize: function () {
+			ViewController.prototype.initialize.apply(this, arguments);
+			this.render();
+		},
+
 		onAfterRender: function () {
 			var menuItems = $('.case-information .menu .menu-item');
 			var distance = 375;
 			var min = 3 * Math.PI / 4;
 			var max = 5 * Math.PI / 4;
-			animate.scale($('.case-information .title'));
+			Animate.scale($('.case-information .title'));
 			for (var i = 0, len = menuItems.length; i < len; i++) {
 				var menuItem = $(menuItems[i]);
 				var angle = min + ((i / len) * (max - min));
 				var width = Math.abs($(menuItem.children(0)).width() * 0.5 - $(menuItem.children(1)).width() * 0.5);
-				animate.scale(menuItem, {
+				Animate.scale(menuItem, {
 					delay: i * 50,
 					animate: {
 						top: -distance * Math.sin(angle),
@@ -54,7 +63,7 @@ define(function (require) {
 		},
 
 		onBackground: function () {
-			animate.scaleOut($('.case-information'), {
+			Animate.scaleOut($('.case-information'), {
 				duration: 500,
 				easing: 'easeInBack'
 			});

@@ -2,22 +2,32 @@ define(function (require) {
 
 	var $ = require('jquery');
 	var glm = require('glmatrix');
+
 	var ViewController = require('controller/ViewController');
-	var animate = require('behaviour/Animate').getInstance();
+
+	var template = require('text!component/information/background/BackgroundView.html');
+
+	var Animate = require('behaviour/Animate').getInstance();
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
 
 	return ViewController.extend({
 
+		template: template,
 		elements: $(),
 		multitouch: MultiTouchManager.getInstance(),
 		urls: ['box.gif', 'spiral.gif', 'torus.gif', 'triangle.gif'],
 
-		onAfterRender: function () {
-			this._addItems();
+		initialize: function () {
+			ViewController.prototype.initialize.apply(this, arguments);
+			this.render();
 		},
 
-		_addItems: function () {
+		onAfterRender: function () {
+			this.addItems();
+		},
+
+		addItems: function () {
 			var resources = [
 				'<video src="resources/video/animation.mp4" type="video/mp4" class="item" autoplay loop muted>',
 				'<img src="resources/images/human.jpg" class="item" />',

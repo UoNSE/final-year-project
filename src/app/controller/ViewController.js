@@ -11,8 +11,7 @@ define(function (require) {
 
 		initialize: function () {
 			this.childViews = [];
-			this.on('beforeRender', this.onBeforeRender, this);
-			this.on('ready', this.onReady, this);
+
 		},
 
 		render: function () {

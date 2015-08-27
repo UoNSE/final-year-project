@@ -5,20 +5,27 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var ViewController = require('controller/ViewController');
-	var animate = require('behaviour/Animate').getInstance();
+	var template = require('text!component/start/StartView.html');
+
+	var Animate = require('behaviour/Animate').getInstance();
 
 	return ViewController.extend({
 
 		displayBack: false,
+		template: template,
 
 		events: {
 			'click #btn-start': 'onStart'
 		},
 
+		initialize: function () {
+			ViewController.prototype.initialize.apply(this, arguments);
+			this.render();
+		},
+
 		onStart: function (event) {
-			console.log('click');
 			var button = $(event.target).addClass('disabled');
-			animate.scaleOut(button, {
+			Animate.scaleOut(button, {
 				duration: 600,
 				easing: 'easeInBack'
 			});
