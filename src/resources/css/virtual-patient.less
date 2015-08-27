@@ -8,21 +8,20 @@
 @button-size: 7em;
 
 .virtual-patient-component-container {
+  /*
 	position: relative;
 	left: 30%;
-	// height: 800px;
-	// height: 100%;
 	height: 60em;
+	*/
+  width:100%;
+  height:100%;
 
 }
 
 #virtual-patient-img-container {
-	position: relative;
-	display: table;
-	height: 100%;
-	vertical-align: middle !important;
-	margin-left: auto;
-	margin-right: auto;
+  background-image: url("../images/androg.front.jpg");
+  width:135px;
+   height:313px; /*135x313*/
 	// left: 40%;
 }
 
@@ -53,12 +52,7 @@
 }
 
 #questions-container {
-	position: absolute;
-	display: block;
-	height: 100%;
-	left: -20%;
-	top: 10%;
-
+  display:block;
 }
 
 #virtual-patient-img {
@@ -73,6 +67,7 @@
 .vp-button {
 	//background-color: red !important;
 	padding: 1em;
+  margin:0;
 	width: @button-size !important;
 	height: @button-size !important;
 	text-align: center;
@@ -84,52 +79,19 @@
 	height: 5em+1em !important;
 }
 
-#flip-patient-button {
+#button-chart {
 	.vp-button;
 	.smaller-vp-button;
-	position: absolute;
-	top: 90%;
-	left: 20%;
 }
 
-#patients-chart-button {
+#button-query {
 	.vp-button;
 	.smaller-vp-button;
-	position: absolute;
-	top: 10%;
-	left: 20%;
 }
 
-#question-patient-button {
+#button-tests {
 	.vp-button;
 	.smaller-vp-button;
-	position: absolute;
-	top: 30%;
-	left: 20%;
-}
-
-#test-request-button {
-	.vp-button;
-	.smaller-vp-button;
-	position: absolute;
-	top: 50%;
-	left: 20%;
-}
-
-#test-results-button {
-	.vp-button;
-	.smaller-vp-button;
-	position: absolute;
-	top: 70%;
-	left: 20%;
-}
-
-#save-evidence-button {
-	.vp-button;
-	.smaller-vp-button;
-	position: absolute;
-	top: 80%;
-	left: 85%;
 }
 
 .chart {
@@ -149,9 +111,7 @@
 
 #patients-chart-table {
 	.chart;
-	position: absolute;
-	top: 0%;
-	left: -20%;
+  height:350px;
 }
 
 #urine-analysis-results {
@@ -176,9 +136,16 @@
 
 .generic-card {
 	font-size: 8pt;
-	width: 30em;
+	width: 1200px; /* the size of the background image ~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    height: 384px;
 	text-align: left;
-	padding: 1em;
+
+  background-repeat:no-repeat;
+  background-position:64px 64px;
+  background-size: 256px 256px; /*native res*/
+  padding-left:384px;
+  font-size:4em;
+  padding-top:100px;
 }
 
 .card-icon {
@@ -207,26 +174,28 @@
 
 .speech-card {
 	.generic-card;
-	background-color: lightBlue;
+	/*background-color: lightBlue;*/
+  background-image: url("../images/speech.png");
 }
 
 .observation-card {
 	.generic-card;
+  background-image: url("../images/observe.png");
 }
 
 .test-card {
 	.observation-card;
-	width: 15em !important;
+	//width: 15em !important;
 }
 
 .question-card {
 	.observation-card;
-	width: 15em !important;
+	//width: 15em !important;
 }
 
 .results-card {
 	.observation-card;
-	width: 15em !important;
+	//width: 15em !important;
 	//background-color: lightPink;
 
 }

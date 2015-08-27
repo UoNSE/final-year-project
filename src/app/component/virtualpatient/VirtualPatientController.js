@@ -38,17 +38,18 @@ define(function(require){
 
 
     events: {
-      'click #context': '_onContext',
+      'click #context': '_onContext', /* @TODO: delete most of these (depracated) */
       'click #background': '_onBackground',
       'click #flip-patient-button': '_flipPatient',
-      'click #question-patient-button': '_questionPatient',
-      'click #test-request-button': '_testRequests',
       'click #test-results-button': '_testResults',
-      'click #patients-chart-button': '_showPatientsChart',
       'click #hide-chart-button': '_hidePatientsChart',
       'click #question-card': '_questionCard',
       'click #results-card1': '_showUrineAnalysisChart',
-      'click #hide-chart-button2': '_hideUrineAnalysisChart'
+      'click #hide-chart-button2': '_hideUrineAnalysisChart',
+
+        'click #button-query': '_questionPatient',
+        'click #button-tests': '_testRequests',
+        'click #button-chart': '_showPatientsChart'
 
         },
         onAfterRender: function () {
@@ -59,21 +60,39 @@ define(function(require){
             //---------------------------------------------
             var transformableResources = [
                 //'<div style="background-color:#00f;width:100px;height:100px"></div>',
-                $('#patients-chart-table').get(), // //jquery fetch things
-                $('#speech-card').get(),
+                $('#speech-card1').get(),
+                $('#speech-card2').get(),
+
+                $('#observation-card1').get(),
                 $('#observation-card2').get(),
                 $('#observation-card3').get(),
-                $('#observation-card4').get()
+                $('#virtual-patient-img-container').get(),
+
+                $('#button-chart').get(),
+                $('#button-query').get(),
+                $('#button-tests').get(),
+
+                $('#patients-chart-table').get(), // //jquery fetch things
+                $('#questions-container').get(),
+                $('#button-container').get()
             ]; // [a,b,c...
 
             var transforms = [
-                //[glm.vec3.fromValues(-300, 0, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0], //(translate,,) (scale,,)
-                [glm.vec3.fromValues(300, 0, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(-420, -300, 0),   glm.vec3.fromValues( .25,.25, 1), 0], //(translate,,) (scale,,)
+                [glm.vec3.fromValues(-420, -300, 0),   glm.vec3.fromValues( .25,.25, 1), 0],
 
-                [glm.vec3.fromValues(0, 300, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(100, 300, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(500, 300, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(-100, 300, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0]
+                [glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
+                [glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
+                [glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
+                [glm.vec3.fromValues(0,0, 0),glm.vec3.fromValues(2.5,2.5, 1), 0],
+
+                [glm.vec3.fromValues(-430, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
+                [glm.vec3.fromValues(-330, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
+                [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
+
+                [glm.vec3.fromValues(-334, -50, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(-365, -168, 0), glm.vec3.fromValues(0.25, 0.25, 1), 0],
+                [glm.vec3.fromValues(-237, -270, 0),   glm.vec3.fromValues(.25,.25, 1), 0]
             ];
             var numItems  = transformableResources.length;
             for (var i =0; i<numItems; i++) {
@@ -106,10 +125,9 @@ define(function(require){
       $('#hide-chart-button').hide();
       $('.test-card').hide();
       $('.results-card').hide();
-      $('.question-card').hide();
-      $('.question-card').hide();
-      $('#speech-card2').hide();
-
+      //$('.question-card').hide();
+      //$('.question-card').hide();
+        $('#questions-container').hide();
 
 
         },
@@ -160,6 +178,7 @@ define(function(require){
     _questionPatient: function () {
 
     // TODO: explode options
+        /*
         if($('.question-card').is(":visible")){
             $('.question-card').hide();
 
@@ -167,7 +186,14 @@ define(function(require){
             $('.question-card').show();
 
         }
+        */
+        if($('#questions-container').is(":visible")){
+            $('#questions-container').hide();
 
+        }else{
+            $('#questions-container').show();
+
+        }
 
     },
 
