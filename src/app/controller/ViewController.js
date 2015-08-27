@@ -18,7 +18,7 @@ define(function (require) {
 			Animate.reset();
 
 			// Initialise the HTML.
-			var html = this.template ? this._renderTemplate(this.template) : '';
+			var html = this.template ? this.renderTemplate(this.template) : '';
 			// Set the html of the controller and trigger and after render event.
 			//this.setElement(html);
 			this.$el.html(html);
@@ -39,9 +39,8 @@ define(function (require) {
 		 *
 		 * @param template The Handlebars template.
 		 * @returns {*} The HTML generated from the executed Handlebars template.
-		 * @private
 		 */
-		_renderTemplate: function (template) {
+		renderTemplate: function (template) {
 			// Compile the template.
 			template = Handlebars.compile(template);
 			
@@ -62,8 +61,8 @@ define(function (require) {
 			var modelKey = 'model';
 
 			// Stores the specified data models in the the object.
-			this._storeDataModel(object, collection, collectionKey, Backbone.Collection);
-			this._storeDataModel(object, model, modelKey, Backbone.Model);
+			this.storeDataModel(object, collection, collectionKey, Backbone.Collection);
+			this.storeDataModel(object, model, modelKey, Backbone.Model);
 			
 			// Get the keys from the object and check if it only has one key that is either a model or collection.
 			var keys = Object.keys(object);
@@ -83,9 +82,8 @@ define(function (require) {
 		 * @param dataModel The data model, either a collection or model.
 		 * @param key The key to set on the object for a single data model.
 		 * @param instance The type to check against if there is only a single data model.
-		 * @private
 		 */
-		_storeDataModel: function (object, dataModel, key, instance) {
+		storeDataModel: function (object, dataModel, key, instance) {
 			// Set the object and data model to either itself or an empty object to prevent errors when accessing properties.
 			object = object || {};
 			dataModel = dataModel || {};

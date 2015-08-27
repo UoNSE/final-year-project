@@ -18,6 +18,31 @@ define(function (require) {
 
 	};
 
+	ZIndexManager.prototype.removeElement = function (multiTouchElement) {
+
+		var key = this.findElementKey(multiTouchElement);
+		if (key) {
+			delete this.elements[key];
+		}
+
+	};
+
+	ZIndexManager.prototype.findElementKey = function (multiTouchElement) {
+
+		var elements = this.elements;
+		for (var key in elements) {
+			if (elements.hasOwnProperty(key)) {
+				var element = this.elements[key];
+				if (element === multiTouchElement) {
+					return key;
+				}
+			}
+		}
+
+		return null;
+
+	};
+
 	ZIndexManager.prototype.onMouseDown = function (element, event) {
 
 		this.bringToFront(element);
