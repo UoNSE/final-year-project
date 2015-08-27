@@ -111,6 +111,7 @@ define(function (require) {
 				selector: selector,
 				view: view
 			});
+			return view;
 		},
 
 		addChildView: function (selector, route, options) {

@@ -35,6 +35,7 @@ define(function (require) {
         },
 
         initialize: function () {
+
             ViewController.prototype.initialize.apply(this, arguments);
 
             this.listenTo(this.collection.issues, 'sync', this.onIssuesSync);
@@ -87,7 +88,7 @@ define(function (require) {
                         top: top
                     }
                 });
-            };
+            });
 
             issues.each( placeCard );
             evidence.each( placeCard );
