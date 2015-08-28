@@ -3,6 +3,7 @@ define(function (require) {
 	'use strict';
 
 	var Object2D = require('Object2D');
+	var $ = require('jquery');
 
 	var Circle = require('component/test/circle/CircleController');
 	var Rectangle = require('component/test/rectangle/RectangleController');
@@ -30,20 +31,24 @@ define(function (require) {
 
 		render: function () {
 			this.children.forEach(function (child) {
-				this.renderObject(child);
+				this.renderObject(child, this.$el);
 			}, this);
 
 			return this;
 		},
 
-		renderObject: function (object) {
-			var el = this.$el;
-			var childEl = object.render().el;
-			object.updateWorld();
+		renderObject: function (object, $el) {
+			var childEl = $(object.render().el);
+			childEl.attr('id', object.id);
 			object.moveToPosition();
-			el.append(childEl);
+			var container = $el.children('.component-children');
+			if (container.length === 0) {
+				container = $('<div>', {'class': 'component-children'});
+				$el.append(container);
+			}
+			container.append(childEl);
 			object.children.forEach(function (child) {
-				this.renderObject(child);
+				this.renderObject(child, childEl);
 			}, this);
 		}
 	});
