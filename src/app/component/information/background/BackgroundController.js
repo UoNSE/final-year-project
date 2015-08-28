@@ -12,8 +12,12 @@ define(function (require) {
 		elements: $(),
 		multitouch: MultiTouchManager.getInstance(),
 		urls: ['box.gif', 'spiral.gif', 'torus.gif', 'triangle.gif'],
+		styles: 'background.css',
 
 		onAfterRender: function () {
+			this.addChildView('.background', 'component/inventory/Inventory', {
+				append: true
+			});
 			this._addItems();
 		},
 
