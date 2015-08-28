@@ -23,6 +23,10 @@ define(function(require){
     var Animate = require('behaviour/Animate');
     var MultiTouchManager = require('behaviour/MultiTouchManager');
     var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour'); //
+    var numberItemsShowingInFeed = 0;
+    var feedCardSchedule = [1000,2000,3000,4000];
+    // var eventFeedCardQueue = ["hello", "hello goodbye", "you say", "hello", "and i say", "goodbye"];
+    var eventCardFeedQueue = ["observation-card1", "observation-card2", "observation-card3"];
 
     var styles = [
         'virtual-patient.css'
@@ -52,11 +56,59 @@ define(function(require){
         'click #button-chart': '_showPatientsChart'
 
         },
-        onAfterRender: function () {
-            this._addItems();
+
+        // add child views here.
+        onBeforRender: function(){
+
         },
 
-        _addItems: function () {
+        // make any dynamic changes to the DOM here (eg. Animations, etc).
+        onAfterRender: function () {
+            this._transformItems();
+        },
+
+        // everything should have loaded. Add Model and Collection event handling here.
+        onReady: function () {
+            this.listenTo(this.collection, 'add', this.render);
+            //this.collection.add({name: 'New'});
+
+            this._hideElements();
+            this._startEventFeed();
+
+
+        },
+
+        _hideElements: function(){
+            $('#patients-chart-table').hide();
+            $('#urine-analysis-results').hide();
+            $('#hide-chart-button').hide();
+            $('.observation-card').hide();
+            $('.speech-card').hide();
+            //$('.query-card').hide();
+            $('#query-menu').hide();
+            $('#test-menu').hide();
+        },
+
+        _startEventFeed: function() {
+            // while there are still feed item / event cards unshown,
+            // progressively show them as per the hardcoded schedule.
+            // will eventually depend on JSON data.
+            // TODO: replace hardcoded schedule with JSON.
+
+            // loop through queue
+            // while(eventFeedCardQueue.length > 0){
+            for (var i = 0; i < eventCardFeedQueue.length; i++) {
+                // after interval, reveal element
+                var myVar=setInterval(function(){
+                    // show element
+                    // alert("#"+eventCardFeedQueue[i]);
+                    // $('#'+eventCardFeedQueue[i]).show();
+                    $('#observation-card1').show();
+                },1000);
+            }
+        },
+
+        _transformItems: function () {
             //---------------------------------------------
             var transformableResources = [
                 //'<div style="background-color:#00f;width:100px;height:100px"></div>',
@@ -109,25 +161,6 @@ define(function(require){
                 behaviour.needsUpdate();
                 this.elements = this.elements.add(element);
             }
-
-
-        },
-
-        onReady: function () {
-            this.listenTo(this.collection, 'add', this.render);
-            //this.collection.add({name: 'New'});
-
-
-            //hidden
-            $('#patients-chart-table').hide();
-            $('#urine-analysis-results').hide();
-            $('#hide-chart-button').hide();
-            // $('.test-card').hide();
-            $('.results-card').hide();
-            //$('.query-card').hide();
-            //$('.query-card').hide();
-            $('#query-menu').hide();
-            $('#test-menu').hide();
 
 
         },
@@ -185,11 +218,9 @@ define(function(require){
 
         }
 
-        //position the menu based on how big it is (how many items)
-        // num.elements * size.element (menu-item)
-        // TODO: fix this.
+        // should be replaced with this._offsetMenu();
         $('.button-menu').each(function() {
-            // get number of menu items
+            //get number of menu items
             // var numMenuItems = $( this ).find('.menu-item').length;
             // console.log(numMenuItems);
             // // get height of menu item.
@@ -202,32 +233,7 @@ define(function(require){
             $(this).offset({top:menuHeight});
 
         });
-
     },
-
-    _queryCard: function(){
-    $('#speech-card2').show();
-    },
-
-    // offsetMenus: function (){
-    //     //position the menu based on how big it is (how many items)
-    //     // num.elements * size.element (menu-item)
-    //     // TODO: fix this.
-    //     $('.button-menu').each(function() {
-    //         // get number of menu items
-    //         // var numMenuItems = $( this ).find('.menu-item').length;
-    //         // console.log(numMenuItems);
-    //         // // get height of menu item.
-    //         // var menuItemHeight = $( this ).children('button').css('height')
-    //         // console.log(menuItemHeight);
-    //         // // calculate height of menu
-    //         // var menuHeight = numMenuItems * menuItemHeight;
-    //         // console.log(menuHeight);
-    //         menuHeight = 500;
-    //         $(this).offset({top:menuHeight});
-    //
-    //     });
-    // },
 
     _testPatient: function () {
 
@@ -238,11 +244,9 @@ define(function(require){
         $('#test-menu').show();
 
     }
-        //position the menu based on how big it is (how many items)
-        // num.elements * size.element (menu-item)
-        // TODO: fix this.
+        // should be replaced with this._offsetMenu();
         $('.button-menu').each(function() {
-            // get number of menu items
+            // //get number of menu items
             // var numMenuItems = $( this ).find('.menu-item').length;
             // console.log(numMenuItems);
             // // get height of menu item.
@@ -256,19 +260,28 @@ define(function(require){
 
         });
 
+    },
+
+    _offsetMenu: function (){
+        //position the menu based on how big it is (how many items)
+        // num.elements * size.element (menu-item)
+        // TODO: fix this.
+        // $('.button-menu').each(function() {
+            // get number of menu items
+            // var numMenuItems = $( this ).find('.menu-item').length;
+            // console.log(numMenuItems);
+            // // get height of menu item.
+            // var menuItemHeight = $( this ).children('button').css('height')
+            // console.log(menuItemHeight);
+            // // calculate height of menu
+            // var menuHeight = numMenuItems * menuItemHeight;
+            // console.log(menuHeight);
+        //     menuHeight = 500;
+        //     $(this).offset({top:menuHeight});
+        //
+        // });
     }
-  //   _testResults: function () {
-  //
-  //   // TODO: explode options
-  //   if($('.results-card').is(":visible")){
-  //       $('.results-card').hide();
-  //
-  //   }else{
-  //       $('.results-card').show();
-  //
-  //       }
-  //
-  //   }
+
 
   });
 });
