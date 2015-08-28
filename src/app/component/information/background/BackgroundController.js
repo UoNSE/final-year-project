@@ -7,9 +7,10 @@ define(function (require) {
 
 	var template = require('text!component/information/background/BackgroundView.html');
 
-	var Animate = require('behaviour/Animate').getInstance();
+	var animate = require('behaviour/Animate').getInstance();
 	var MultiTouchManager = require('behaviour/MultiTouchManager');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
+	var InventoryController = require('component/inventory/InventoryController');
 
 	return ViewController.extend({
 
@@ -21,13 +22,11 @@ define(function (require) {
 
 		initialize: function () {
 			ViewController.prototype.initialize.apply(this, arguments);
+			this.addNestedView('.background', new InventoryController());
 			this.render();
 		},
 
 		onAfterRender: function () {
-			this.addChildView('.background', 'component/inventory/Inventory', {
-				append: true
-			});
 			this.addItems();
 		},
 

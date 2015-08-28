@@ -43,16 +43,16 @@ define(function (require) {
 		renderTemplate: function (template) {
 			// Compile the template.
 			template = Handlebars.compile(template);
-			
+
 			// Get the collection and model.
 			var collection = this.collection;
 			var model = this.model;
-			
+
 			// Check if no collections or models exist.
 			if (!collection && !model) {
 				return template();
 			}
-			
+
 			// Instantiate an empty object that stores the JSON collections and models.
 			var object = {};
 
@@ -63,14 +63,14 @@ define(function (require) {
 			// Stores the specified data models in the the object.
 			this.storeDataModel(object, collection, collectionKey, Backbone.Collection);
 			this.storeDataModel(object, model, modelKey, Backbone.Model);
-			
+
 			// Get the keys from the object and check if it only has one key that is either a model or collection.
 			var keys = Object.keys(object);
 			if (keys.length === 1 && (object[collectionKey] || object[modelKey])) {
 				// When there is only one key that wasn't a set object, make the object a flat value.
 				object = object[keys[0]];
 			}
-			
+
 			// Execute the template with the object and return it.
 			return template(object);
 		},
