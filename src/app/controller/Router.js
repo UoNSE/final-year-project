@@ -9,18 +9,18 @@ define(function (require) {
 		_viewControllerLoader: null,
 
 		routes: {
-			'':                                 'menu',
+			'': 'menu',
 
-			'cases':                            'cases',
-			'case/:id/overview':                'caseOverview',
-			'case/:id/information':             'caseInformation',
-			'case/:id/information/background':  'caseBackground',
-			'case/:id/information/virtualpatient': 'virtualPatient',
-			'case/:id/issues': 'caseIssues',
+			'cases': 'cases',
+			'cases/:id/overview': 'caseOverview',
+			'cases/:id/information': 'caseInformation',
+			'cases/:id/information/background': 'caseBackground',
+			'cases/:id/information/virtualpatient': 'virtualPatient',
+			'cases/:id/activity/issues': 'caseIssues',
 
-			'activity/goals':                   'goalsActionActivity',
-            'activity/goals/create':            'goalsActionActivityCreateGoal',
-            'activity/goals/:id/actions':       'goalsActionActivityCreateActions'
+			'cases/:id/activity/goals': 'goalsActionActivity',
+            'cases/:id/activity/goals/create': 'goalsActionActivityCreateGoal',
+            'cases/:id/activity/goals/:id/actions': 'goalsActionActivityCreateActions'
 
         },
 
@@ -61,18 +61,16 @@ define(function (require) {
 		 * Loads the page given the route.
 		 *
 		 * @param route The path to the base route.
-		 * @param id The id of the current case.
+		 * @param currentCase The current case.
 		 * @private
 		 */
-		_load: function (route, id) {
-			if (id) {
-				id = parseInt(id, 10);
-			}
-			this._viewControllerLoader.load(route, id);
+		_load: function (route, currentCase) {
+			currentCase = parseInt(currentCase, 10);
+			this._viewControllerLoader.load(route, currentCase);
 		},
 
 		menu: function () {
-			this._load('component/menu/Menu');
+			this._load('component/start/Start');
 		},
 
 		start: function () {
@@ -83,20 +81,20 @@ define(function (require) {
 			this._load('component/cases/Cases');
 		},
 
-		caseOverview: function (id) {
-			this._load('component/overview/CaseOverview', id);
+		caseOverview: function (caseId) {
+			this._load('component/overview/CaseOverview', caseId);
 		},
 
-		caseInformation: function (id) {
-			this._load('component/information/CaseInformation', id);
+		caseInformation: function (caseId) {
+			this._load('component/information/CaseInformation', caseId);
 		},
 
-		caseBackground: function (id) {
-			this._load('component/information/background/Background', id);
+		caseBackground: function (caseId) {
+			this._load('component/information/background/Background', caseId);
 		},
 
-		caseIssues: function (id) {
-			this._load('component/Issues_Evidence/Issues', id);
+		caseIssues: function (caseId) {
+			this._load('component/Issues_Evidence/IEModule', caseId);
 		},
 
         /**
@@ -110,12 +108,13 @@ define(function (require) {
             this._load('activity/goals/component/create/CreateGoal');
         },
 
-        goalsActionActivityCreateActions: function (id) {
-            this._load('activity/goals/component/goal/actions/Actions', id);
+        goalsActionActivityCreateActions: function (caseId, goalId) {
+	        // TODO goal id
+            this._load('activity/goals/component/goal/actions/Actions', caseId);
         },
 
-		virtualPatient: function (id) {
-			this._load('component/virtualpatient/VirtualPatient', id);
+		virtualPatient: function (caseId) {
+			this._load('component/virtualpatient/VirtualPatient', caseId);
 		}
 
 	});

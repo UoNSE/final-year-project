@@ -5,6 +5,9 @@ define(function (require) {
     var $ = require('jquery');
 
     var ViewController = require('controller/ViewController');
+
+    var template = require('text!activity/goals/component/create/CreateGoalView.html');
+
     var Goal = require('model/Goal');
     var Animate = require('behaviour/Animate');
     var styles = [
@@ -16,6 +19,7 @@ define(function (require) {
      */
     return ViewController.extend({
 
+        template: template,
         collection: 'Goals',
         styles: styles,
 

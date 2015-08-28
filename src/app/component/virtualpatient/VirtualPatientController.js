@@ -5,14 +5,18 @@ define(function(require){
 
   var $ = require('jquery');
   var ViewController = require('controller/ViewController');
+
+  var template = require('text!component/virtualpatient/VirtualPatientView.html');
+
+  var Patients = require('collection/Patients');
   var Animate = require('behaviour/Animate');
 
   return ViewController.extend({
 
-    collection: 'Patients',
+    template: template,
+    collection: new Patients(),
     styles: 'virtual-patient.css',
     selector: '#virtual-patient-img',
-
 
     events: {
       'click #context': '_onContext',
@@ -29,11 +33,19 @@ define(function(require){
 
     //   'hover #save-issue-button': '_saveIssue',
     },
-    _onAfterRender: function () {
 
+    initialize: function () {
+      ViewController.prototype.initialize.apply(this, arguments);
+      this.listenTo(this.collection, 'sync', this.onSync);
+      this.collection.fetch();
+      this.render();
     },
 
-    _onReady: function () {
+    onSync: function (collection) {
+      // TODO
+    },
+
+    onAfterRender: function () {
       this.listenTo(this.collection, 'add', this.render);
       //this.collection.add({name: 'New'});
 

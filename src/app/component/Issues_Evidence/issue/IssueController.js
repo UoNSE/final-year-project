@@ -3,29 +3,15 @@ define(function (require) {
 	'use strict';
 
 	var ViewController = require('controller/ViewController');
-
-	var template = require('text!shared/navigation/back/BackView.html');
+	var template = require('text!component/Issues_Evidence/issue/IssueView.html');
 
 	return ViewController.extend({
 
 		template: template,
-		selector: '#back',
-
-		events: {
-			'click #back': 'onBack'
-		},
 
 		initialize: function () {
 			ViewController.prototype.initialize.apply(this, arguments);
 			this.render();
-		},
-
-		onReady: function () {
-			$(this.selector).hide();
-		},
-
-		onBack: function () {
-			this.trigger('back');
 		}
 
 	});

@@ -18,7 +18,8 @@ define(function (require) {
 			mousedown: this.onMouseDown.bind(this),
 			touchstart: this.onTouchStart.bind(this),
 			touchmove: this.onTouchMove.bind(this),
-			touchend: this.onTouchEnd.bind(this)
+			touchend: this.onTouchEnd.bind(this),
+			remove: this.onRemove.bind(this)
 		});
 
 	};
@@ -82,6 +83,12 @@ define(function (require) {
 
 		event.preventDefault();
 		this.dispatchEvent('onTouchEnd', event);
+
+	};
+
+	MultiTouchElement.prototype.onRemove = function () {
+
+		$(this).trigger('remove');
 
 	};
 
