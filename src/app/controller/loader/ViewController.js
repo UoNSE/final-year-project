@@ -31,7 +31,7 @@ define(function (require) {
 
 			var parent = options.parent;
 			var selector = options.selector;
-			var $element = parent ? $(parent.$el.find(selector)) : selector ? $(selector) : $(this.selector);
+			var $element = parent ? selector ? $(parent.$el.find(selector)) : parent.$el : selector ? $(selector) : $(this.selector);
 			if (options.append) {
 				$element.append(controller.$el);
 			} else {
