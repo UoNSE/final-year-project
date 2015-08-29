@@ -1,5 +1,4 @@
 define(function (require) {
-
 	'use strict';
 
 	var $ = require('jquery');
@@ -16,5 +15,8 @@ define(function (require) {
 		return this;
 	};
 
+	if (Math.TAU === undefined) {
+		Math.TAU = 2 * Math.PI;
+	}
 });
 

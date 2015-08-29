@@ -5,14 +5,20 @@ define(function (require) {
 
 	return Object2D.extend({
 
-		attributes: {
-			'class': 'rectangle'
+		events: {
+			'click h3': 'onClick'
 		},
 
 		initialize: function () {
 			Object2D.prototype.initialize.call(this);
 
 			this.name = 'Rectangle';
+		},
+
+		onClick: function () {
+
+			alert('Clicked.');
+
 		},
 
 		render: function () {

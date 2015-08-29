@@ -25,6 +25,13 @@ define(function (require) {
 
 		},
 
+		setPolar: function (r, theta) {
+			this.x = r * Math.cos(theta);
+			this.y = r * Math.sin(theta);
+
+			return this;
+		},
+
 		setX: function (x) {
 
 			this.x = x;

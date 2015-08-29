@@ -21,8 +21,8 @@ define(function (require) {
 		},
 		moveToPosition: function () {
 			this.$el.css({
-				'transform': 'translate(' + this.position.x + 'px, ' + this.position.y + 'px)'
-					+ ' rotateZ(' + this.rotation + 'rad)'
+				'transform': 'translate(calc(-50% + ' + this.position.x + 'px), calc(-50% + ' + this.position.y + 'px))'
+					+ ' rotateZ(' + (this.rotation / Math.TAU) + 'turn)'
 					+ ' scale(' + this.scale.x + ', ' + this.scale.y + ')'
 			});
 		},

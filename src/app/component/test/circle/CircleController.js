@@ -5,10 +5,6 @@ define(function (require) {
 
 	return Object2D.extend({
 
-		attributes: {
-			'class': 'circle'
-		},
-
 		initialize: function () {
 			Object2D.prototype.initialize.call(this);
 
