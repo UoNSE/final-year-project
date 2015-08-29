@@ -26,10 +26,15 @@ define(function (require) {
         menu: null,
         deleteCard: null,
         splitCard: null,
+        mergeCard: null,
+        dragging: null,
 
         events: {
             'mouseover #btn-delete': 'onDeleteMouseOver',
             'mouseover #btn-split': 'onSplitMouseOver',
+            'mouseover .card': 'onCardMouseOver',
+
+            'mouseleave .card': 'onCardMouseLeave',
             'mouseleave #btn-delete': 'onDeleteMouseLeave',
             'mouseleave #btn-split': 'onSplitMouseLeave'
         },
@@ -55,6 +60,8 @@ define(function (require) {
 
             this.deleteCard = false;
             this.splitCard = false;
+            this.mergeCard = false;
+            this.dragging = false;
 
             this.buttonColour = 'btn-material-yellow';
             this.buttonHoverColour = 'btn-material-orange';
@@ -279,6 +286,7 @@ define(function (require) {
          */
         onDrag: function () {
             this.menu.toggleClass('hidden', false);
+            this.dragging = true;
         },
 
         /**
@@ -287,6 +295,7 @@ define(function (require) {
          * @param event
          */
         onDrop: function (event) {
+            this.dragging = false;
             var multiTouchElement = event.currentTarget;
             var $card = multiTouchElement.element;
             // Check if we are currently hovering on the delete button.
@@ -297,7 +306,16 @@ define(function (require) {
             if (this.splitCard) {
                 // TODO
             }
+            // Check if hovering over another card
+            if (this.mergeCard != null) {
+                //merge
+                this.merge(event, this.mergeCard);
+            }
             this.menu.toggleClass('hidden', true);
+        },
+
+        merge: function (event, card){
+            event.currentTarget.element.append( card );
         },
 
         onDeleteMouseOver: function (event) {
@@ -323,6 +341,20 @@ define(function (require) {
             var button = $(event.currentTarget);
             button.removeClass(this.buttonHoverColour);
             this.splitCard = false;
+        },
+
+        onCardMouseOver: function (event) {
+            if(this.dragging && this.mergeCard== null){
+                var card = $(event.currentTarget);
+                this.mergeCard = card;
+            }
+        },
+
+        onCardMouseLeave: function (event) {
+            if(this.mergeCard != null){
+                var card = $(event.currentTarget);
+                this.mergeCard = null;
+            }
         },
 
         createCard: function (cardType, content) {
