@@ -47,6 +47,8 @@ define(function (require) {
         //hide back button
         displayBack: false,
 
+        styles : 'caseinfo.css',
+
         //model collection
         collection: 'CaseInfos',
 
@@ -64,23 +66,16 @@ define(function (require) {
         keepCard : function(event) {
             $(event.target).removeClass('btn-keep').addClass('btn-kept').parents('.well').animate({
                 opacity: 0.5,
-                top: "+=500",
+                top: "+=500"
             }, 500, null);
         },
-
-        moveRight : function(event) {
-                    $(event.target).removeClass('btn-right').addClass('btn-kept').parents('.well').animate({
-                        opacity: 0.5,
-                        left: "+=250",
-                    }, 500, null);
-                },
 
         restoreCard : function(event) {
             $(event.target).removeClass('btn-kept').addClass('btn-keep').parents('.well').animate({
                 opacity: 1,
-                top: "-=500",
+                top: "-=500"
             }, 500, null);
-        },
+        }
 
     });
 });
