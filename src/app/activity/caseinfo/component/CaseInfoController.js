@@ -60,14 +60,14 @@ define(function (require) {
         },
 
         keepCard: function (event) {
-            $(event.target).removeClass('btn-keep').addClass('btn-kept').parents('.card').animate({
+            $(event.target).removeClass('btn-keep').addClass('btn-kept').parents('.infocard').animate({
                 opacity: 0.5,
                 top: "+=500"
             }, 500, null);
         },
 
         restoreCard: function (event) {
-            $(event.target).removeClass('btn-kept').addClass('btn-keep').parents('.card').animate({
+            $(event.target).removeClass('btn-kept').addClass('btn-keep').parents('.infocard').animate({
                 opacity: 1,
                 top: "-=500"
             }, 500, null);
