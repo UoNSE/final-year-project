@@ -2,7 +2,7 @@
         <div id='activity-clock'>00:00:00</div>
     {{#with case}}
         {{#each caseinfo}}
-        <div class="well infocard" style="padding:0px">
+        <div id="infocard-{{id}}" class="well infocard" style="padding:0px">
             <div class="card-title">
                 {{title}}
             </div>
@@ -28,7 +28,7 @@
                 <div class="content-text">
                     <ul>
                         {{#each text}}
-                        <li>{{this}}</li>
+                        <li id="info-{{../id}}-{{@index}}" class="list-item">{{this}}</li>
                         {{/each}}
                     </ul>
                 </div>

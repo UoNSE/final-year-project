@@ -50,7 +50,9 @@ define(function (require) {
         //events
         events: {
             'click .btn-keep':'keepCard',
-            'click .btn-kept':'restoreCard'
+            'click .btn-kept':'restoreCard',
+            'click .list-item' : 'selectListItem'
+            //'click .content-media': 'selectMediaItem'
         },
 
         onReady: function () {
@@ -69,6 +71,23 @@ define(function (require) {
                 opacity: 1,
                 top: "-=500"
             }, 500, null);
+        },
+
+        selectListItem: function (event) {
+            var item = $(event.target);
+
+            if (!(item.hasClass('inv-list-item'))) {
+                if (item.hasClass('selected-text')){
+                    $("#list-"+item.attr('id')).remove();
+                } else {
+                    item.clone().attr('id','list-'+item.attr('id')).addClass('inv-list-item').appendTo($('.inventory').find('ul'));
+                }
+            } else {
+                var id = item.attr('id');
+                item.remove();
+                item = $("#"+(id.slice(5,id.length)));
+            }
+            item.toggleClass('selected-text');
         },
 
         onAfterRender: function () {
