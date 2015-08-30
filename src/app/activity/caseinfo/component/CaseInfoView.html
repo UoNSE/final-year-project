@@ -1,92 +1,43 @@
-<style>
-    #activity-clock {
-        top:0px;
-        left:1100px;
-        position:absolute;
-        padding:5px;
-        height:50px;
-        width:180px;
-        background-color:deepskyblue;
-        border: 1px solid darkblue;
-        font-size:10pt;
-        font-weight:bold;
-    }
-    #item-container {
-        width:1280px;
-        height:800px;
-        top:500px;
-        position:absolute;
-        padding:5px;
-        background-color:pink;
-        border: 1px solid darkred;
-        text-align:right;
-    }
-    .well {
-        margin:10px;
-        width:160px;
-        float:left;
-        padding:0px;
-    }
-    .card-title {
-        margin:5px 20px;
-        font-size:8pt;
-        font-weight:bold;
-    }
-    .card-content {
-        background-color:ghostwhite;
-        /*border: 1px gray solid;*/
-        font-size:8pt;
-    }
-    img,video {
-        width:100%;
-        height:100%;
-    }
-    ul{
-        padding-left:15px;
-    }
-    .btn-keep {
-        margin:1px;
-    }
-</style>
-<div id="cards" style="width:1800px;position:relative;">
-    <div id="item-container"><h2>Item Container</h2></div>
-    <div id='activity-clock'>Clock goes here</div>
-    {{#each []}}
-    <div class="well" style="position:relative;top:0px;padding:0px;">
-        <div class="card-title">
-            {{title}}
-        </div>
-        <div class="card-content">
-            <div class="content-media">
-            {{#if image}}
-            <img src="{{source}}" alt="{{imgtext}}">
-            {{/if}}
-            {{#if video}}
-            <video controls>
-                <source src="{{source}}" type="video/{{type}}">
-                browser unsupported for watching video
-            </video>
-            {{/if}}
-            {{#if audio}}
-            <audio controls>
-                <source src="{{source}}" type="audio/{{type}}">
-            </audio>
-            {{/if}}
+<div class="background">
+        <div id='activity-clock'>00:00:00</div>
+    {{#with case}}
+        {{#each caseinfo}}
+        <div class="well infocard" style="padding:0px">
+            <div class="card-title">
+                {{title}}
             </div>
-            {{#if text}}
+            <div class="card-content">
+                <div class="content-media">
+                    {{#if image}}
+                    <img src="{{source}}" alt="{{imgtext}}">
+                    {{/if}}
+                    {{#if video}}
+                    <video controls>
+                        <source src="{{source}}" type="video/{{type}}">
+                        browser unsupported for watching video
+                    </video>
+                    {{/if}}
+                    {{#if audio}}
+                    <audio controls>
+                        <source src="{{source}}" type="audio/{{type}}">
+                    </audio>
+                    {{/if}}
+                </div>
+                {{#if text}}
 
-            <div class="content-text">
-            <ul>
-            {{#each text}}
-                <li>{{this}}</li>
-            {{/each}}
-            </ul>
+                <div class="content-text">
+                    <ul>
+                        {{#each text}}
+                        <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+                {{/if}}
             </div>
-            {{/if}}
+            <div class="card-button">
+                <div class="pull-right btn-keep btn btn-xs btn-flat btn-success">Keep</div>
+            </div>
         </div>
-        <div class="card-button">
-            <div class="pull-right btn-keep btn btn-xs btn-flat btn-success">Keep</div>
-        </div>
-    </div>
-    {{/each}}
+        {{/each}}
+    {{/with}}
 </div>

@@ -34,6 +34,61 @@
           "content": "Pulse rate very high (120 bpm)",
           "issueId": 2
         }
+      ],
+      "caseinfo": [
+        {
+          "id": 1,
+          "title": "Information",
+          "text": [
+            "husband died 10 years ago",
+            "has found it increasingly difficult to manage at home on her own",
+            "especially with the steep steps to her front door and a large garden to maintain",
+            "found the increasing volume of traffic intimidating and quit driving",
+            "was assessed by an Aged Care Assessment Team (ACAT) and moved into Sunnybanks, a lowcare residential   aged-care facility",
+            "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
+            "when moved to Sunnybanks, Dr ABC, her general practitioner (GP), conducted a comprehensive medical assessment",
+            "was assessed as competent to administer her own medicines"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Medications",
+          "text": [
+            "alendronate 70 mg, one weekly",
+            "calcium carbonate 1500 mg, one daily",
+            "cholecalciferol 25 ?g, one daily",
+            "paracetamol 500 mg, two every day"
+          ]
+        },
+        {
+          "id": 3,
+          "image": true,
+          "title": "Image Two",
+          "source": "http://lorempixel.com/360/300/animals",
+          "imgtext": "Another random animal pic",
+          "text": [
+            "what kind of animal is this?",
+            "bad temperament",
+            "lives alone"
+          ]
+        },
+        {
+          "id": 4,
+          "video": true,
+          "title": "Video Example",
+          "type": "mp4",
+          "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
+          "text": [
+            "A placeholder video card"
+          ]
+        },
+        {
+          "id": 5,
+          "image": true,
+          "title": "Image One",
+          "source": "http://lorempixel.com/360/300/animals",
+          "imgtext": "A random animal pic"
+        }
       ]
     },
     {
@@ -69,12 +124,7 @@
       "name": "Bob"
     }
   ],
-  "goals": [
-    {
-      "content": "testing 123",
-      "id": 2
-    }
-  ],
+  "goals": [],
   "actions": [],
   "patients": [
     {
@@ -244,99 +294,6 @@
           "patientId": 1
         }
       ]
-    }
-  ],
-  "caseinfo": [
-    {
-      "id": 1,
-      "title": "Information",
-      "text": [
-        "husband died 10 years ago",
-        "has found it increasingly difficult to manage at home on her own",
-        "especially with the steep steps to her front door and a large garden to maintain",
-        "found the increasing volume of traffic intimidating and quit driving",
-        "was assessed by an Aged Care Assessment Team (ACAT) and moved into Sunnybanks, a lowcare residential   aged-care facility",
-        "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
-        "when moved to Sunnybanks, Dr ABC, her general practitioner (GP), conducted a comprehensive medical assessment",
-        "was assessed as competent to administer her own medicines"
-      ],
-      "description": "children unused atm",
-      "children": [
-        {
-          "id": 1,
-          "title": "Patient Background",
-          "patient details": {
-            "title": "Mrs Annon",
-            "age": "86 years",
-            "height": "162cm",
-            "weight": "56kg"
-          },
-          "medical history": [
-            "osteoporosis (six years)",
-            "osteoarthritis (10 years)",
-            "knee replacement (eight years)"
-          ],
-          "medicines": [
-            "alendronate 70 mg, one weekly",
-            "calcium carbonate 1500 mg, one daily",
-            "cholecalciferol 25 ?g, one daily",
-            "paracetamol 500 mg, two every day"
-          ]
-        },
-        {
-          "id": 2,
-          "title": "Information",
-          "text": [
-            "husband died 10 years ago",
-            "has found it increasingly difficult to manage at home on her own",
-            "especially with the steep steps to her front door and a large garden to maintain",
-            "found the increasing volume of traffic intimidating and quit driving",
-            "was assessed by an Aged Care Assessment Team (ACAT) and moved into Sunnybanks, a lowcare residential   aged-care facility",
-            "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
-            "when moved to Sunnybanks, Dr ABC, her general practitioner (GP), conducted a comprehensive medical assessment",
-            "was assessed as competent to administer her own medicines"
-          ]
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "title": "Medications",
-      "text": [
-        "alendronate 70 mg, one weekly",
-        "calcium carbonate 1500 mg, one daily",
-        "cholecalciferol 25 ?g, one daily",
-        "paracetamol 500 mg, two every day"
-      ]
-    },
-    {
-      "id": 3,
-      "image": true,
-      "title": "Image Two",
-      "source": "http://lorempixel.com/360/300/animals",
-      "imgtext": "Another random animal pic",
-      "text": [
-        "what kind of animal is this?",
-        "bad temperament",
-        "lives alone"
-      ]
-    },
-    {
-      "id": 4,
-      "video": true,
-      "title": "Video Example",
-      "type": "mp4",
-      "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
-      "text": [
-        "A placeholder video card"
-      ]
-    },
-    {
-      "id": 5,
-      "image": true,
-      "title": "Image One",
-      "source": "http://lorempixel.com/360/300/animals",
-      "imgtext": "A random animal pic"
     }
   ]
 }

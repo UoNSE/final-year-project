@@ -42,7 +42,10 @@ define(function (require) {
 		},
 
 		_onPatientBackground: function () {
-			// TODO
+			animate.scaleOut($('.case-information'), {
+				duration: 500,
+				easing: 'easeInBack'
+			});
 		},
 
 		_onVirtualPatient: function () {

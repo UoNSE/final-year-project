@@ -16,9 +16,9 @@ define(function (require) {
 			'case/:id/information':             'caseInformation',
 			'case/:id/information/background':  'caseBackground',
 			'case/:id/information/virtualpatient': 'virtualPatient',
-			'case/:id/issues': 'caseIssues',
+			'case/:id/issues':                  'caseIssues',
 
-			'activity/caseinfo':                'caseInfo',
+			'case/:id/activity/caseinfo':       'caseInfo',
 
 			'activity/goals':                   'goalsActionActivity',
             'activity/goals/create':            'goalsActionActivityCreateGoal',
@@ -106,8 +106,8 @@ define(function (require) {
 		/**
 		 * Case Information Module
 		 */
-		caseInfo: function () {
-			this._load('activity/caseinfo/component/CaseInfo');
+		caseInfo: function (id) {
+			this._load('activity/caseinfo/component/CaseInfo', id);
 		},
 
         /**
