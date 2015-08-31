@@ -54,7 +54,8 @@ define(function(require){
         'click #hide-chart-button2': '_hideUrineAnalysisChart',
         'click #button-query': '_queryPatient',
         'click #button-tests': '_testPatient',
-        'click #button-chart': '_showPatientsChart'
+        'click #button-chart': '_showPatientsChart',
+        'click #test-card3': '_showSubMenu'
         // 'click .menu-item': '_menuItemSelection'
         },
 
@@ -87,6 +88,8 @@ define(function(require){
             $('.speech-card').hide();
             $('#query-menu').hide();
             $('#test-menu').hide();
+            // $('.button-menu').hide();
+            $('#test-menu-container2').hide();
         },
 
         // callback to offset cards already shown.
@@ -296,21 +299,21 @@ define(function(require){
 
         }
 
-        // should be replaced with this._offsetMenu();
-        $('.button-menu').each(function() {
-            //get number of menu items
-            // var numMenuItems = $( this ).find('.menu-item').length;
-            // console.log(numMenuItems);
-            // // get height of menu item.
-            // var menuItemHeight = $( this ).children('button').css('height')
-            // console.log(menuItemHeight);
-            // // calculate height of menu
-            // var menuHeight = numMenuItems * menuItemHeight;
-            // console.log(menuHeight);
-            menuHeight = 500;
-            $(this).offset({top:menuHeight});
-
-        });
+        // // should be replaced with this._offsetMenu();
+        // $('.button-menu').each(function() {
+        //     //get number of menu items
+        //     // var numMenuItems = $( this ).find('.menu-item').length;
+        //     // console.log(numMenuItems);
+        //     // // get height of menu item.
+        //     // var menuItemHeight = $( this ).children('button').css('height')
+        //     // console.log(menuItemHeight);
+        //     // // calculate height of menu
+        //     // var menuHeight = numMenuItems * menuItemHeight;
+        //     // console.log(menuHeight);
+        //     menuHeight = 500;
+        //     $(this).offset({top:menuHeight});
+        //
+        // });
     },
 
     _testPatient: function () {
@@ -333,8 +336,9 @@ define(function(require){
             // // calculate height of menu
             // var menuHeight = numMenuItems * menuItemHeight;
             // console.log(menuHeight);
-            menuHeight = 500;
-            $(this).offset({top:menuHeight});
+
+            // menuHeight = 500;
+            // $(this).offset({top:menuHeight});
 
         });
 
@@ -368,6 +372,23 @@ define(function(require){
     //     $(id).css("background-color","orange");
     //
     // }
+
+    _showSubMenu: function(){
+        // get the sub-menu below and show
+        // here we just show the blood sub menu for demo
+        // $('#test-menu-container2').show();
+
+        if($('#test-menu-container2').is(":visible")){
+            $('#test-menu-container2').hide();
+
+        }else{
+            $('#test-menu-container2').show();
+
+        }
+
+    }
+
+    //TODO: if submenu is expanded. when menu item clicked again, collapse it.
 
 
   });
