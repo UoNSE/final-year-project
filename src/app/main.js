@@ -29,7 +29,7 @@ define(function (require) {
 		}
 	});
 
-	require(['controller/Application', 'addons'], function (Application) {
+	require(['core/Application', 'addons'], function (Application) {
 
 		new Application();
 

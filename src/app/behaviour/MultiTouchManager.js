@@ -56,10 +56,13 @@ define(function (require) {
 	};
 
 	MultiTouchManager.prototype.onRemove = function (event) {
-		var multiTouchElement = event.currentTarget;
+		this.remove(event.currentTarget);
+
+	};
+
+	MultiTouchManager.prototype.remove = function (multiTouchElement) {
 		this.elements.splice(this.elements.indexOf(multiTouchElement), 1);
 		this.zIndexManager.removeElement(multiTouchElement);
-
 	};
 
 	return Factory.createFactory(MultiTouchManager);

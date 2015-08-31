@@ -1,20 +1,47 @@
 define(function (require) {
 	'use strict';
 
+	var $ = require('jquery');
+
 	// All credit to three.js, this is just wrapped for AMD.
 	// Source: https://raw.githubusercontent.com/mrdoob/three.js/master/src/math/Vector2.js
 	// Docs: http://threejs.org/docs/#Reference/Math/Vector2
 
 	function Vector2 (x, y) {
-
-		this.x = x || 0;
-		this.y = y || 0;
+		var _x = x || 0;
+		var _y = y || 0;
+		Object.defineProperties(this, {
+			x: {
+				enumerable: true,
+				get: function () {
+					return _x;
+				},
+				set: function (value) {
+					_x = value;
+					this.onChange();
+				}
+			},
+			y: {
+				enumerable: true,
+				get: function () {
+					return _y;
+				},
+				set: function (value) {
+					_y = value;
+					this.onChange();
+				}
+			}
+		})
 
 	}
 
 	Vector2.prototype = {
 
 		constructor: Vector2,
+
+		onChange: function () {
+			$(this).trigger('change');
+		},
 
 		set: function (x, y) {
 

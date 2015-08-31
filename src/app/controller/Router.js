@@ -8,15 +8,21 @@ define(function (require) {
 			'': 'menu'
         },
 
+		initialize: function (scene) {
+			this._scene = scene;
+		},
+
 		menu: function () {
 			this.load('Menu');
 		},
 
 		load: function (page) {
 			require(['page/' + page], function (Page) {
+				//page.render();
 				var page = new Page();
-				page.render();
-			});
+				this._scene.add(page);
+				this._scene.render();
+			}.bind(this));
 		}
 
 	});

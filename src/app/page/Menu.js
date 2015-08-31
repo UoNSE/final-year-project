@@ -1,28 +1,22 @@
 define(function (require) {
-
 	'use strict';
 
-	var Object2D = require('Object2D');
-	var $ = require('jquery');
-	var TWEEN = require('tweenjs');
-
-	var Circle = require('component/test/circle/CircleController');
-	var Rectangle = require('component/test/rectangle/RectangleController');
+	var Object2D = require('core/Object2D');
+	var Circle = require('component/test/circle/Circle');
+	var Rectangle = require('component/test/rectangle/Rectangle');
 
 	return Object2D.extend({
-		el: '#content',
-
 		initialize: function () {
 			Object2D.prototype.initialize.call(this);
 
 			this.name = 'menu';
 
-			var m = 5;
+			var m = 3;
 			for (var j = 0; j < m; j++) {
 				var circle = new Circle();
-				//circle.position.set(300, 400);
+				circle.position.setPolar(200, j / m * Math.TAU);
 				//circle.rotation = -Math.TAU / 8;
-				circle.scale.set(0.85, 0.85);
+				//circle.scale.set(0.85, 0.85);
 				this.add(circle);
 
 				new TWEEN.Tween(circle).to({
@@ -33,7 +27,7 @@ define(function (require) {
 
 				new TWEEN.Tween({
 					circle: circle,
-					r: 250,
+					r: 200,
 					theta: j / m * Math.TAU
 				}).to({
 					theta: j / m * Math.TAU + Math.TAU
@@ -42,53 +36,23 @@ define(function (require) {
 					this.circle.moveToPosition();
 				}).repeat(Infinity).start();
 
-				var n = 14;
+				var n = 8;
 				var r = 130;
 				for (var i = 0; i < n; i++) {
 					var theta = i * Math.TAU / n;
 					var rectangle = new Rectangle();
 					rectangle.position.setPolar(r, theta);
 					rectangle.rotation = i / n * Math.TAU + Math.TAU / 4;
-					rectangle.scale.set(0.5, 0.5);
+					//rectangle.scale.set(0.5, 0.5);
 
-					new TWEEN.Tween(rectangle).to({rotation: rectangle.rotation + Math.TAU}, 8000).onUpdate(function () {
-						this.moveToPosition();
-					}).repeat(Infinity).start();
+					//new TWEEN.Tween(rectangle).to({rotation: rectangle.rotation + Math.TAU}, 8000).onUpdate(function () {
+					//	this.moveToPosition();
+					//}).repeat(Infinity).start();
 
 					circle.add(rectangle);
 				}
 			}
-			this.animate();
-		},
-
-		animate: function (time) {
-			requestAnimationFrame(this.animate.bind(this));
-			TWEEN.update(time);
-		},
-
-		render: function () {
-			this.children.forEach(function (child) {
-				this.renderObject(child, this.$el);
-			}, this);
-
-			return this;
-		},
-
-		renderObject: function (object, $el) {
-			var childEl = $(object.render().el);
-			childEl.attr('id', object.id);
-			object.moveToPosition();
-			var container = $el.children('.component-children');
-			if (container.length === 0) {
-				container = $('<div>', {'class': 'component-children'});
-				$el.append(container);
-			}
-			container.append(childEl);
-			object.children.forEach(function (child) {
-				this.renderObject(child, childEl);
-			}, this);
 		}
 	});
-
 });
 
