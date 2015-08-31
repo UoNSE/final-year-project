@@ -24,8 +24,8 @@ define(function(require){
     var MultiTouchManager = require('behaviour/MultiTouchManager');
     var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour'); //
     var numEventCardsShowingInFeed = 0;
-    var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3"];
-    var feedCardSchedule = [1000,2000,3000,4000];
+    var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3", "#speech-card1","#speech-card2"];
+    var feedCardSchedule = [1000,2000,3000,4000,5000];
     var cardsDisplayedList = [];
 
 
@@ -183,7 +183,13 @@ define(function(require){
                 $('#observation-card3').get(),
                 $('#virtual-patient-img-container').get(),
 
-                $('#button-chart').get(),
+                // we might need to change it back to this later.
+                // atm were translating containers cos i wasnt sure how to
+                // transform both the button and menu at once.
+                // this is a hack with a bug -
+                // ie. you can drag around the container.
+
+                // $('#button-chart').get(),
                 // $('#button-query').get(),
                 // $('#button-tests').get(),
 
@@ -201,11 +207,11 @@ define(function(require){
                 [glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
                 [glm.vec3.fromValues(0, 0, 0),glm.vec3.fromValues(2.5,2.5, 1), 0],
 
-                [glm.vec3.fromValues(-430, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
+                // [glm.vec3.fromValues(-430, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
                 // [glm.vec3.fromValues(-330, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
                 // [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
 
-                [glm.vec3.fromValues(-334, -50, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
                 [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
                 [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0,1.0, 1), 0]
             ];
