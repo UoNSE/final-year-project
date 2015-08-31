@@ -26,16 +26,6 @@ define(function (require) {
 					}
 				}
 			});
-
-			this.on('change', this.moveToPosition.bind(this));
-		},
-
-		moveToPosition: function () {
-			this.$el.css({
-				'transform': 'translate(calc(-50% + ' + this.position.x + 'px), calc(-50% + ' + (-this.position.y) + 'px))'
-				+ ' rotateZ(' + (-this.rotation / Math.TAU) + 'turn)'
-				+ ' scale(' + this.scale.x + ', ' + this.scale.y + ')'
-			});
 		},
 
 		onSetInteractive: function (enabled) {

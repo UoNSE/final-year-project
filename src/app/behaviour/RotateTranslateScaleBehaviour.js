@@ -38,6 +38,7 @@ define(function (require) {
 			//var touchInfo = this.touches[touch.identifier];
 			var point = this.pageToWorld(new Vector2(touch.pageX, touch.pageY));
 			this.component.component.worldPosition.copy(point);
+			this.component.component.needsWorldUpdate = false;
 		}
 	};
 

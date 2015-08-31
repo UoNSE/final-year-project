@@ -9,7 +9,7 @@ define(function (require) {
         },
 
 		initialize: function (scene) {
-			this._scene = scene;
+			this.scene = scene;
 		},
 
 		menu: function () {
@@ -18,10 +18,7 @@ define(function (require) {
 
 		load: function (page) {
 			require(['page/' + page], function (Page) {
-				//page.render();
-				var page = new Page();
-				this._scene.add(page);
-				this._scene.render();
+				this.scene.add(new Page());
 			}.bind(this));
 		}
 

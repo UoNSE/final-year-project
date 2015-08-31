@@ -1,81 +1,40 @@
 define(function (require) {
 	'use strict';
 
-	var $ = require('jquery');
-
 	// All credit to three.js, this is just wrapped for AMD.
 	// Source: https://raw.githubusercontent.com/mrdoob/three.js/master/src/math/Vector2.js
 	// Docs: http://threejs.org/docs/#Reference/Math/Vector2
 
 	function Vector2 (x, y) {
-		this.__x = x || 0;
-		this.__y = y || 0;
-		Object.defineProperties(this, {
-			x: {
-				enumerable: true,
-				get: function () {
-					return this.__x;
-				},
-				set: function (value) {
-					this.__x = value;
-					this.onChange();
-				}
-			},
-			y: {
-				enumerable: true,
-				get: function () {
-					return this.__y;
-				},
-				set: function (value) {
-					this.__y = value;
-					this.onChange();
-				}
-			}
-		});
+
+		this.x = x || 0;
+		this.y = y || 0;
+
 	}
 
 	Vector2.prototype = {
 
 		constructor: Vector2,
 
-		onChange: function () {
-			$(this).trigger('change');
-		},
-
 		set: function (x, y) {
 
-			this.__x = x;
-			this.__y = y;
-			this.onChange();
+			this.x = x;
+			this.y = y;
 
 			return this;
 
 		},
 
 		setPolar: function (r, theta) {
-			this.__x = r * Math.cos(theta);
-			this.__y = r * Math.sin(theta);
-			this.onChange();
-
-			return this;
-		},
-
-		rotateZ: function (theta) {
-			var ca = Math.cos(theta);
-			var sa = Math.sin(theta);
-			this.set(
-				ca * this.__x - sa * this.__y,
-				sa * this.__x + ca * this.__y
-			);
-			this.onChange();
+			this.x = r * Math.cos(theta);
+			this.y = r * Math.sin(theta);
 
 			return this;
 		},
 
 		setX: function (x) {
 
-			this.__x = x;
-			this.onChange();
+			this.x = x;
 
 			return this;
 
@@ -83,8 +42,7 @@ define(function (require) {
 
 		setY: function (y) {
 
-			this.__y = y;
-			this.onChange();
+			this.y = y;
 
 			return this;
 
@@ -95,12 +53,10 @@ define(function (require) {
 			switch (index) {
 
 				case 0:
-					this.__x = value;
-					this.onChange();
+					this.x = value;
 					break;
 				case 1:
-					this.__y = value;
-					this.onChange();
+					this.y = value;
 					break;
 				default:
 					throw new Error('index is out of range: ' + index);
@@ -114,11 +70,9 @@ define(function (require) {
 			switch (index) {
 
 				case 0:
-					return this.__x;
-					this.onChange();
+					return this.x;
 				case 1:
-					return this.__y;
-					this.onChange();
+					return this.y;
 				default:
 					throw new Error('index is out of range: ' + index);
 
@@ -128,9 +82,8 @@ define(function (require) {
 
 		copy: function (v) {
 
-			this.__x = v.x;
-			this.__y = v.y;
-			this.onChange();
+			this.x = v.x;
+			this.y = v.y;
 
 			return this;
 
@@ -138,9 +91,8 @@ define(function (require) {
 
 		add: function (v, w) {
 
-			this.__x += v.x;
-			this.__y += v.y;
-			this.onChange();
+			this.x += v.x;
+			this.y += v.y;
 
 			return this;
 
@@ -148,9 +100,8 @@ define(function (require) {
 
 		addScalar: function (s) {
 
-			this.__x += s;
-			this.__y += s;
-			this.onChange();
+			this.x += s;
+			this.y += s;
 
 			return this;
 
@@ -158,9 +109,8 @@ define(function (require) {
 
 		addVectors: function (a, b) {
 
-			this.__x = a.x + b.x;
-			this.__y = a.y + b.y;
-			this.onChange();
+			this.x = a.x + b.x;
+			this.y = a.y + b.y;
 
 			return this;
 
@@ -168,9 +118,8 @@ define(function (require) {
 
 		sub: function (v, w) {
 
-			this.__x -= v.x;
-			this.__y -= v.y;
-			this.onChange();
+			this.x -= v.x;
+			this.y -= v.y;
 
 			return this;
 
@@ -178,9 +127,8 @@ define(function (require) {
 
 		subScalar: function (s) {
 
-			this.__x -= s;
-			this.__y -= s;
-			this.onChange();
+			this.x -= s;
+			this.y -= s;
 
 			return this;
 
@@ -188,9 +136,8 @@ define(function (require) {
 
 		subVectors: function (a, b) {
 
-			this.__x = a.x - b.x;
-			this.__y = a.y - b.y;
-			this.onChange();
+			this.x = a.x - b.x;
+			this.y = a.y - b.y;
 
 			return this;
 
@@ -198,9 +145,8 @@ define(function (require) {
 
 		multiply: function (v) {
 
-			this.__x *= v.x;
-			this.__y *= v.y;
-			this.onChange();
+			this.x *= v.x;
+			this.y *= v.y;
 
 			return this;
 
@@ -208,9 +154,8 @@ define(function (require) {
 
 		multiplyVectors: function (a, b) {
 
-			this.__x = a.x * b.x;
-			this.__y = a.y * b.y;
-			this.onChange();
+			this.x = a.x * b.x;
+			this.y = a.y * b.y;
 
 			return this;
 
@@ -218,19 +163,25 @@ define(function (require) {
 
 		multiplyScalar: function (s) {
 
-			this.__x *= s;
-			this.__y *= s;
-			this.onChange();
+			this.x *= s;
+			this.y *= s;
 
 			return this;
 
 		},
 
+		reciprocal: function (v) {
+
+			this.x = 1 / this.x;
+			this.y = 1 / this.y;
+
+			return this;
+		},
+
 		divide: function (v) {
 
-			this.__x /= v.x;
-			this.__y /= v.y;
-			this.onChange();
+			this.x /= v.x;
+			this.y /= v.y;
 
 			return this;
 
@@ -238,9 +189,8 @@ define(function (require) {
 
 		divideVectors: function (a, b) {
 
-			this.__x = a.x / b.x;
-			this.__y = a.y / b.y;
-			this.onChange();
+			this.x = a.x / b.x;
+			this.y = a.y / b.y;
 
 			return this;
 
@@ -252,16 +202,15 @@ define(function (require) {
 
 				var invScalar = 1 / scalar;
 
-				this.__x *= invScalar;
-				this.__y *= invScalar;
+				this.x *= invScalar;
+				this.y *= invScalar;
 
 			} else {
 
-				this.__x = 0;
-				this.__y = 0;
+				this.x = 0;
+				this.y = 0;
 
 			}
-			this.onChange();
 
 			return this;
 
@@ -269,18 +218,17 @@ define(function (require) {
 
 		min: function (v) {
 
-			if (this.__x > v.x) {
+			if (this.x > v.x) {
 
-				this.__x = v.x;
-
-			}
-
-			if (this.__y > v.y) {
-
-				this.__y = v.y;
+				this.x = v.x;
 
 			}
-			this.onChange();
+
+			if (this.y > v.y) {
+
+				this.y = v.y;
+
+			}
 
 			return this;
 
@@ -288,18 +236,17 @@ define(function (require) {
 
 		max: function (v) {
 
-			if (this.__x < v.x) {
+			if (this.x < v.x) {
 
-				this.__x = v.x;
-
-			}
-
-			if (this.__y < v.y) {
-
-				this.__y = v.y;
+				this.x = v.x;
 
 			}
-			this.onChange();
+
+			if (this.y < v.y) {
+
+				this.y = v.y;
+
+			}
 
 			return this;
 
@@ -309,26 +256,25 @@ define(function (require) {
 
 			// This function assumes min < max, if this assumption isn't true it will not operate correctly
 
-			if (this.__x < min.x) {
+			if (this.x < min.x) {
 
-				this.__x = min.x;
+				this.x = min.x;
 
-			} else if (this.__x > max.x) {
+			} else if (this.x > max.x) {
 
-				this.__x = max.x;
-
-			}
-
-			if (this.__y < min.y) {
-
-				this.__y = min.y;
-
-			} else if (this.__y > max.y) {
-
-				this.__y = max.y;
+				this.x = max.x;
 
 			}
-			this.onChange();
+
+			if (this.y < min.y) {
+
+				this.y = min.y;
+
+			} else if (this.y > max.y) {
+
+				this.y = max.y;
+
+			}
 
 			return this;
 		},
@@ -357,9 +303,8 @@ define(function (require) {
 
 		floor: function () {
 
-			this.__x = Math.floor(this.x);
-			this.__y = Math.floor(this.y);
-			this.onChange();
+			this.x = Math.floor(this.x);
+			this.y = Math.floor(this.y);
 
 			return this;
 
@@ -367,9 +312,8 @@ define(function (require) {
 
 		ceil: function () {
 
-			this.__x = Math.ceil(this.x);
-			this.__y = Math.ceil(this.y);
-			this.onChange();
+			this.x = Math.ceil(this.x);
+			this.y = Math.ceil(this.y);
 
 			return this;
 
@@ -377,9 +321,8 @@ define(function (require) {
 
 		round: function () {
 
-			this.__x = Math.round(this.x);
-			this.__y = Math.round(this.y);
-			this.onChange();
+			this.x = Math.round(this.x);
+			this.y = Math.round(this.y);
 
 			return this;
 
@@ -387,9 +330,8 @@ define(function (require) {
 
 		roundToZero: function () {
 
-			this.__x = ( this.x < 0 ) ? Math.ceil(this.x) : Math.floor(this.x);
-			this.__y = ( this.y < 0 ) ? Math.ceil(this.y) : Math.floor(this.y);
-			this.onChange();
+			this.x = ( this.x < 0 ) ? Math.ceil(this.x) : Math.floor(this.x);
+			this.y = ( this.y < 0 ) ? Math.ceil(this.y) : Math.floor(this.y);
 
 			return this;
 
@@ -397,9 +339,8 @@ define(function (require) {
 
 		negate: function () {
 
-			this.__x = -this.x;
-			this.__y = -this.y;
-			this.onChange();
+			this.x = -this.x;
+			this.y = -this.y;
 
 			return this;
 
@@ -407,19 +348,19 @@ define(function (require) {
 
 		dot: function (v) {
 
-			return this.__x * v.x + this.__y * v.y;
+			return this.x * v.x + this.y * v.y;
 
 		},
 
 		lengthSq: function () {
 
-			return this.__x * this.x + this.__y * this.y;
+			return this.x * this.x + this.y * this.y;
 
 		},
 
 		length: function () {
 
-			return Math.sqrt(this.__x * this.x + this.__y * this.y);
+			return Math.sqrt(this.x * this.x + this.y * this.y);
 
 		},
 
@@ -437,7 +378,7 @@ define(function (require) {
 
 		distanceToSquared: function (v) {
 
-			var dx = this.__x - v.x, dy = this.__y - v.y;
+			var dx = this.x - v.x, dy = this.y - v.y;
 			return dx * dx + dy * dy;
 
 		},
@@ -457,9 +398,8 @@ define(function (require) {
 
 		lerp: function (v, alpha) {
 
-			this.__x += ( v.x - this.x ) * alpha;
-			this.__y += ( v.y - this.y ) * alpha;
-			this.onChange();
+			this.x += ( v.x - this.x ) * alpha;
+			this.y += ( v.y - this.y ) * alpha;
 
 			return this;
 
@@ -475,7 +415,7 @@ define(function (require) {
 
 		equals: function (v) {
 
-			return ( ( v.x === this.__x ) && ( v.y === this.__y ) );
+			return ( ( v.x === this.x ) && ( v.y === this.y ) );
 
 		},
 
@@ -483,9 +423,8 @@ define(function (require) {
 
 			if (offset === undefined) offset = 0;
 
-			this.__x = array[offset];
-			this.__y = array[offset + 1];
-			this.onChange();
+			this.x = array[offset];
+			this.y = array[offset + 1];
 
 			return this;
 
@@ -496,16 +435,29 @@ define(function (require) {
 			if (array === undefined) array = [];
 			if (offset === undefined) offset = 0;
 
-			array[offset] = this.__x;
-			array[offset + 1] = this.__y;
+			array[offset] = this.x;
+			array[offset + 1] = this.y;
 
 			return array;
 
 		},
 
+		fromAttribute: function (attribute, index, offset) {
+
+			if (offset === undefined) offset = 0;
+
+			index = index * attribute.itemSize + offset;
+
+			this.x = attribute.array[index];
+			this.y = attribute.array[index + 1];
+
+			return this;
+
+		},
+
 		clone: function () {
 
-			return new Vector2(this.__x, this.__y);
+			return new Vector2(this.x, this.y);
 
 		}
 
@@ -513,3 +465,4 @@ define(function (require) {
 
 	return Vector2;
 });
+

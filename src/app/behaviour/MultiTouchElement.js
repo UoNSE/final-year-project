@@ -18,8 +18,8 @@ define(function (require) {
 		this.element.on({
 			mousedown: this.onMouseDown.bind(this),
 			touchstart: this.onTouchStart.bind(this),
-			touchmove: this.onTouchMove.bind(this),
-			touchend: this.onTouchEnd.bind(this),
+			//touchmove: this.onTouchMove.bind(this),
+			//touchend: this.onTouchEnd.bind(this),
 			remove: this.onRemove.bind(this)
 		});
 
@@ -41,8 +41,8 @@ define(function (require) {
 
 		// Attach events to the window.
 		// This improves robustness when the cursor leaves the window or element during drag.
-		// Also only listen for the mousemove event when dragging (after mousedown).
-		// Unbind after drag (mouseup).
+		// Also only listen for the touchmove event when dragging (after touchstart).
+		// Unbind after drag (touchend).
 		var $window = $(window);
 		var onMouseMove = this.onMouseMove.bind(this);
 		$window.on('mousemove', onMouseMove);
@@ -71,6 +71,16 @@ define(function (require) {
 
 		event.preventDefault();
 		this.dispatchEvent('onTouchStart', event);
+
+		var $window = $(window);
+		var onTouchMove = this.onTouchMove.bind(this);
+		$window.on('touchmove', onTouchMove);
+		$window.one('touchend', function () {
+
+			$window.off('touchmove', onTouchMove);
+			this.onTouchEnd.apply(this, arguments);
+
+		}.bind(this));
 
 	};
 
