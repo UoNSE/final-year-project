@@ -23,10 +23,10 @@ define(function(require){
     var Animate = require('behaviour/Animate');
     var MultiTouchManager = require('behaviour/MultiTouchManager');
     var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour'); //
-    var numberItemsShowingInFeed = 0;
-    var feedCardSchedule = [1000,2000,3000,4000];
-    // var eventFeedCardQueue = ["hello", "hello goodbye", "you say", "hello", "and i say", "goodbye"];
-    var eventCardFeedQueue = ["observation-card1", "observation-card2", "observation-card3"];
+    var numEventCardsShowingInFeed = 0;
+    // var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3"];
+    var cardsDisplayedList = [];
+
 
     var styles = [
         'virtual-patient.css'
@@ -42,15 +42,14 @@ define(function(require){
 
 
     events: {
-      'click #context': '_onContext', /* @TODO: delete most of these (depracated) */
-      'click #background': '_onBackground',
-      'click #flip-patient-button': '_flipPatient',
-      'click #test-results-button': '_testResults',
-      'click #hide-chart-button': '_hidePatientsChart',
-      'click #query-card': '_queryCard',
-      'click #results-card1': '_showUrineAnalysisChart',
-      'click #hide-chart-button2': '_hideUrineAnalysisChart',
-
+        'click #context': '_onContext', /* @TODO: delete most of these (depracated) */
+        'click #background': '_onBackground',
+        'click #flip-patient-button': '_flipPatient',
+        'click #test-results-button': '_testResults',
+        'click #hide-chart-button': '_hidePatientsChart',
+        'click #query-card': '_queryCard',
+        'click #results-card1': '_showUrineAnalysisChart',
+        'click #hide-chart-button2': '_hideUrineAnalysisChart',
         'click #button-query': '_queryPatient',
         'click #button-tests': '_testPatient',
         'click #button-chart': '_showPatientsChart'
@@ -58,7 +57,7 @@ define(function(require){
         },
 
         // add child views here.
-        onBeforRender: function(){
+        onBeforeRender: function(){
 
         },
 
@@ -78,7 +77,7 @@ define(function(require){
 
         },
 
-        _hideElements: function(){
+        _hideElements: function() {
             $('#patients-chart-table').hide();
             $('#urine-analysis-results').hide();
             $('#hide-chart-button').hide();
@@ -89,24 +88,91 @@ define(function(require){
             $('#test-menu').hide();
         },
 
+        // callback to offset cards already shown.
+        _offsetDisplayedCards: function(passedCardsDisplayList){
+            // here the list is not defined.
+            console.log("passedCardsDisplayList: "+passedCardsDisplayList);
+            // before showing another card,
+            // offset down every card already shown
+            for (var i = 0; i < numEventCardsShowingInFeed; i++){
+            // for (cardDisplayedId in passedCardsDisplayList){
+                var cardDisplayedId =  passedCardsDisplayList[i]
+                // console.log("this displayed card's id is: "+passedCardsDisplayList[i]);
+                console.log("this displayed card's id is: "+cardDisplayedId);
+                // var cardHeight = $(".generic-card").height();
+                var cardHeight = 200;
+                if (cardDisplayedId != null){
+                    var topOffset = $(cardDisplayedId).offset().top;
+
+                    console.log("cards showing in feed: "+numEventCardsShowingInFeed);
+                    // $(cardDisplayedId).offset({top:cardHeight*numEventCardsShowingInFeed*-1});
+                    console.log("displayedCard's top offset is: "+topOffset);
+                    $(cardDisplayedId).offset({top: topOffset + cardHeight *1});
+                }
+            }
+        },
+
+        //add new card
+        _addNewCard: function(i, thisCardId, offsetCardsCallback){
+            var feedCardSchedule = [1000,2000,3000,4000];
+
+            setTimeout(function(){
+
+            // before adding new card, offset already showing cards.
+            if (typeof(offsetCardsCallback) === "function"){
+
+                // copy the list and pass it to the callback.
+                var passedCardsDisplayList = cardsDisplayedList.slice();
+                offsetCardsCallback(passedCardsDisplayList);
+            }
+
+            // show the new card
+            $(thisCardId).show();
+
+            // add this card to the cardsDisplayedList.
+            cardsDisplayedList.push(thisCardId);
+
+            // here the list is defined
+            console.log("cardsDisplayedList: "+cardsDisplayedList);
+
+            // increment event cards showed counter
+            numEventCardsShowingInFeed++;
+
+            }, feedCardSchedule[i]);
+
+        },
+
         _startEventFeed: function() {
+
+            // var cardsDisplayedList = [];
+            var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3"];
+
+            var numEventCards = eventCardFeedQueue.length;
+            console.log("num of event cards in queue: "+numEventCards);
+
             // while there are still feed item / event cards unshown,
             // progressively show them as per the hardcoded schedule.
             // will eventually depend on JSON data.
             // TODO: replace hardcoded schedule with JSON.
 
-            // loop through queue
             // while(eventFeedCardQueue.length > 0){
-            for (var i = 0; i < eventCardFeedQueue.length; i++) {
-                // after interval, reveal element
-                var myVar=setInterval(function(){
-                    // show element
-                    // alert("#"+eventCardFeedQueue[i]);
-                    // $('#'+eventCardFeedQueue[i]).show();
-                    $('#observation-card1').show();
-                },1000);
-            }
-        },
+
+            // loop through card queue
+            for (var i = 0; i < numEventCards; i++) {
+
+                // console.log("#"+eventCardFeedQueue[i]);
+                var thisCardId = eventCardFeedQueue[i];
+                console.log(thisCardId);
+
+                // a reference to the callback
+                var offsetCardsCallback = this._offsetDisplayedCards;
+
+                this._addNewCard(i, thisCardId, offsetCardsCallback);
+                if($(thisCardId).is(":visible")){
+                    console.log(thisCardId + " is visible");
+                }
+            } // end card loop
+        }, // end feed function,
 
         _transformItems: function () {
             //---------------------------------------------
