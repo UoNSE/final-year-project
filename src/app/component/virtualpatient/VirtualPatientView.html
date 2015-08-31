@@ -12,42 +12,43 @@
                 <button id="results-card1" class="btn btn-material-blue btn-raised generic-card results-card">Urine Analysis</button>
             </li>
     </div>
+-->
 
-
-    <div id="virtual-patient-img-container">
+     <!-- <div id="virtual-patient-img-container">
         <img id="virtual-patient-img" src="resources/images/androg.front.jpg"/>
 
         <button id="hotspot-button" class="btn btn-fab"></button><script>/*TODO: for each hotspot*/<script>
-    </div>
+    </div> -->
 
 
-    <div id="card-container">
-
-        <div id="speech-card1" class="generic-card speech-card card">
-
-            <
-            <img class="speech-icon" src="resources/images/speech.png"/>
-            "I'm cold"
-        </div>
-        <br><br>
-
-
-        <div id="speech-card2" class="generic-card speech-card card">
-
-            <img class="speech-icon" src="resources/images/speech.png"/>
-            <div class = "card-text">
-                <p>
-                    <b>query:</b> Are you hungry?<br>
-                    <b>Response:</b> Yes."
-                </p>
-            </div>
-        </div>
-        <br><br>
-
-
-
-        <br>
-    </div>
+<!-- //     <div id="card-container">
+//
+//         <div id="speech-card1" class="generic-card speech-card card">
+//
+//             <
+//             <img class="speech-icon" src="resources/images/speech.png"/>
+//             "I'm cold"
+//         </div>
+//         <br><br>
+//
+//
+//         <div id="speech-card2" class="generic-card speech-card card">
+//
+//             <img class="speech-icon" src="resources/images/speech.png"/>
+//             <div class = "card-text">
+//                 <p>
+//                     <b>query:</b> Are you hungry?<br>
+//                     <b>Response:</b> Yes."
+//                 </p>
+//             </div>
+//         </div>
+//         <br><br>
+//
+//
+//
+//         <br>
+//     </div>
+//  -->
 
     <div id="urine-analysis-results" class="panel panel-info">
         <div class="panel-heading">
@@ -86,7 +87,7 @@
         <button id="hide-chart-button2" class="btn btn-primary btn-raised hide-chart-button">Hide</button>
     </div>
 
-   -->
+
 
 <!-- query patient chart -------------------------------------->
 
@@ -117,10 +118,12 @@
         <div id = "test-menu" class="button-menu">
         <ul>
             <li>
-                <button id="test-card1" class="btn btn-material-blue btn-raised results-card">Urine Analysis</button>
+                <button id="test-card1" class="btn btn-material-blue btn-raised results-card"
+                style="background-color:green">Urine Analysis</button>
             </li>
             <li>
-                <button id="test-card2" class="btn btn-material-blue btn-raised test-card">Blood Test</button>
+                <button id="test-card2" class="btn btn-material-blue btn-raised test-card"
+                style="background-color:orange">Blood Test</button>
             </li>
             <li>
                 <button id="test-card3" class="btn btn-material-blue btn-raised test-card">Blood Test</button>
@@ -207,6 +210,8 @@
     </div>
     <div id ="dummy-collection-box">Dummy Evidence Box</div>
 
-<!-- Virtual patient---------------------------------------------------------------------->
-    <div id="virtual-patient-img-container"></div>
-</div>
+    <!-- Virtual patient---------------------------------------------------------------------->
+    <div id="virtual-patient-img-container">
+        <button id="hotspot-button" class="btn btn-fab"></button>
+    </div>
+</div> <!-- end the component container -->

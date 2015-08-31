@@ -45,16 +45,17 @@ define(function(require){
     events: {
         'click #context': '_onContext', /* @TODO: delete most of these (depracated) */
         'click #background': '_onBackground',
-        'click #flip-patient-button': '_flipPatient',
+        'dblclick #virtual-patient-img-container': '_flipPatient',
+        // 'click #flip-patient-button': '_flipPatient',
         'click #test-results-button': '_testResults',
         'click #hide-chart-button': '_hidePatientsChart',
         'click #query-card': '_queryCard',
-        'click #results-card1': '_showUrineAnalysisChart',
+        'click #test-card1': '_showUrineAnalysisChart',
         'click #hide-chart-button2': '_hideUrineAnalysisChart',
         'click #button-query': '_queryPatient',
         'click #button-tests': '_testPatient',
-        'click #button-chart': '_showPatientsChart',
-        'click .menu-item': '_menuItemSelection'
+        'click #button-chart': '_showPatientsChart'
+        // 'click .menu-item': '_menuItemSelection'
         },
 
         // add child views here.
@@ -84,7 +85,6 @@ define(function(require){
             $('#hide-chart-button').hide();
             $('.observation-card').hide();
             $('.speech-card').hide();
-            //$('.query-card').hide();
             $('#query-menu').hide();
             $('#test-menu').hide();
         },
@@ -195,8 +195,9 @@ define(function(require){
 
                 $('#patients-chart-container').get(), // //jquery fetch things
                 $('#query-menu-container').get(),
-                $('#test-menu-container').get()
-            ]; // [a,b,c...
+                $('#test-menu-container').get(),
+                $('#urine-analysis-results').get()
+            ];
 
             var transforms = [
                 [glm.vec3.fromValues(-420, -300, 0),   glm.vec3.fromValues( .25,.25, 1), 0], //(translate,,) (scale,,)
@@ -213,7 +214,9 @@ define(function(require){
 
                 [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
                 [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0,1.0, 1), 0]
+                [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0,1.0, 1), 0],
+                [glm.vec3.fromValues(0, 0, 0), glm.vec3.fromValues(1.0,1.0, 1), 0]
+
             ];
             var numItems  = transformableResources.length;
             for (var i =0; i<numItems; i++) {
@@ -236,12 +239,18 @@ define(function(require){
 
         _flipPatient: function () {
 
-            var virtual_patient_img = $('#virtual-patient-img');
-            if (virtual_patient_img.attr("src") === "resources/images/androg.front.jpg") {
-                virtual_patient_img.attr("src", "resources/images/androg.back.jpg");
+            var virtual_patient_img_container = $('#virtual-patient-img-container');
+            // if (virtual_patient_img.attr("src") === "resources/images/androg.front.jpg") {
+            //     virtual_patient_img.attr("src", "resources/images/androg.back.jpg");
+            // }
+            // else {
+            //     virtual_patient_img.attr("src", "resources/images/androg.front.jpg");
+            // }
+            if (virtual_patient_img_container.attr("background-image") === "resources/images/androg.front.jpg") {
+                virtual_patient_img.attr("background-image", "resources/images/androg.back.jpg");
             }
             else {
-                virtual_patient_img.attr("src", "resources/images/androg.front.jpg");
+                virtual_patient_img.attr("background-image", "resources/images/androg.front.jpg");
             }
 
         },
@@ -351,10 +360,14 @@ define(function(require){
         // });
     },
 
-    _menuItemSelection: function(){
-        $(this).css("background-color","orange");
-
-    }
+    // _menuItemSelection: function(){
+    //     var id = this.id;
+    //     // console.log(this);
+    //
+    //     console.log(id);
+    //     $(id).css("background-color","orange");
+    //
+    // }
 
 
   });
