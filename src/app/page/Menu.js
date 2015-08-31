@@ -39,6 +39,8 @@ define(function (require) {
 				for (var i = 0; i < n; i++) {
 					var theta = i * Math.TAU / n;
 					var rectangle = new Rectangle();
+					rectangle.draggable = true;
+					rectangle.droppable = true;
 					rectangle.position.setPolar(r, theta);
 					rectangle.rotation = i / n * Math.TAU + Math.TAU / 4;
 					//rectangle.scale.set(0.5, 0.5);

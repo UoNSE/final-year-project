@@ -1,9 +1,17 @@
 define(function (require) {
 	'use strict';
 
-	function MathUtil() {
+	var Vector2 = require('math/Vector2');
 
+	function MathUtil() {
 	}
+
+	MathUtil.FLIP_Y = new Vector2(1, -1);
+
+	MathUtil.pageToWorld = function (vector) {
+		var client = new Vector2(window.innerWidth, window.innerHeight);
+		return new Vector2().subVectors(vector, client.divideScalar(2)).multiply(MathUtil.FLIP_Y);
+	};
 
 	MathUtil.generateUUID = (function () {
 

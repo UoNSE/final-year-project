@@ -1,21 +1,15 @@
 define(function (require) {
-
 	'use strict';
 
 	var Vector2 = require('math/Vector2');
+	var MathUtil = require('math/MathUtil');
 
 	function RotateTranslateScaleBehaviour (component) {
 
 		this.component = component;
 		this.touches = {};
-		this.flipY = new Vector2(1, -1);
 
 	}
-
-	RotateTranslateScaleBehaviour.prototype.pageToWorld = function (vector) {
-		var client = new Vector2(window.innerWidth, window.innerHeight);
-		return new Vector2().subVectors(vector, client.divideScalar(2)).multiply(this.flipY);
-	};
 
 	RotateTranslateScaleBehaviour.prototype.onTouchStart = function (component, event) {
 
@@ -36,7 +30,7 @@ define(function (require) {
 		if (len === 1) {
 			var touch = targetTouches[0];
 			//var touchInfo = this.touches[touch.identifier];
-			var point = this.pageToWorld(new Vector2(touch.pageX, touch.pageY));
+			var point = MathUtil.pageToWorld(new Vector2(touch.pageX, touch.pageY));
 			this.component.component.worldPosition.copy(point);
 			this.component.component.needsWorldUpdate = false;
 		}
