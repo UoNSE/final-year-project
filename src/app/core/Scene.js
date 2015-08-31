@@ -37,7 +37,7 @@ define(function (require) {
 		},
 
 		animate: function (time) {
-			//requestAnimationFrame(this.animate.bind(this));
+			requestAnimationFrame(this.animate.bind(this));
 			TWEEN.update(time);
 		}
 	});

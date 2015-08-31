@@ -32,7 +32,7 @@ define(function (require) {
 
 		moveToPosition: function () {
 			this.$el.css({
-				'transform': 'translate(calc(-50% + ' + this.position.x + 'px), calc(-50% + ' + this.position.y + 'px))'
+				'transform': 'translate(calc(-50% + ' + this.position.x + 'px), calc(-50% + ' + (-this.position.y) + 'px))'
 				+ ' rotateZ(' + (-this.rotation / Math.TAU) + 'turn)'
 				+ ' scale(' + this.scale.x + ', ' + this.scale.y + ')'
 			});
@@ -40,9 +40,9 @@ define(function (require) {
 
 		onSetInteractive: function (enabled) {
 			if (enabled) {
-				this.multiTouchElement = multiTouchManager.addElementRTS(this.$el);
+				this.multiTouchElement = multiTouchManager.addElementRTS(this);
 			} else {
-				multiTouchManager.remove(this.multiTouchElement);
+				multiTouchManager.remove(this);
 			}
 		}
 	});

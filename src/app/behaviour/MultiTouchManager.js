@@ -23,35 +23,35 @@ define(function (require) {
 
 	}
 
-	MultiTouchManager.prototype.addElementRTS = function (element) {
+	MultiTouchManager.prototype.addElementRTS = function (component) {
 
-		var multiTouchElement = this.addElement(element);
-		var behaviour = new RotateTranslateScaleBehaviour(multiTouchElement);
-		multiTouchElement.addBehaviour(behaviour);
-		return multiTouchElement;
-
-	};
-
-	MultiTouchManager.prototype.addElementDraggable = function (element) {
-
-		var multiTouchElement = this.addElement(element);
-		var behaviour = new DraggableBehaviour(multiTouchElement);
-		multiTouchElement.addBehaviour(behaviour);
-		return multiTouchElement;
+		var multiTouchComponent = this.addElement(component);
+		var behaviour = new RotateTranslateScaleBehaviour(multiTouchComponent);
+		multiTouchComponent.addBehaviour(behaviour);
+		return multiTouchComponent;
 
 	};
 
-	MultiTouchManager.prototype.addElement = function (element) {
+	MultiTouchManager.prototype.addElementDraggable = function (component) {
 
-		var multiTouchElement = new MultiTouchElement(element);
+		var multiTouchComponent = this.addElement(component);
+		var behaviour = new DraggableBehaviour(multiTouchComponent);
+		multiTouchComponent.addBehaviour(behaviour);
+		return multiTouchComponent;
+
+	};
+
+	MultiTouchManager.prototype.addElement = function (component) {
+
+		var multiTouchComponent = new MultiTouchElement(component);
 
 		// Add a remove binding for when the element is no longer on the DOM.
-		$(multiTouchElement).on('remove', this.onRemove.bind(this));
+		$(multiTouchComponent).on('remove', this.onRemove.bind(this));
 
-		this.elements.push(multiTouchElement);
-		this.zIndexManager.registerElement(multiTouchElement);
-		multiTouchElement.addBehaviour(this.zIndexManager);
-		return multiTouchElement;
+		this.elements.push(multiTouchComponent);
+		this.zIndexManager.registerElement(multiTouchComponent);
+		multiTouchComponent.addBehaviour(this.zIndexManager);
+		return multiTouchComponent;
 
 	};
 
@@ -60,9 +60,9 @@ define(function (require) {
 
 	};
 
-	MultiTouchManager.prototype.remove = function (multiTouchElement) {
-		this.elements.splice(this.elements.indexOf(multiTouchElement), 1);
-		this.zIndexManager.removeElement(multiTouchElement);
+	MultiTouchManager.prototype.remove = function (multiTouchComponent) {
+		this.elements.splice(this.elements.indexOf(multiTouchComponent), 1);
+		this.zIndexManager.removeElement(multiTouchComponent);
 	};
 
 	return Factory.createFactory(MultiTouchManager);

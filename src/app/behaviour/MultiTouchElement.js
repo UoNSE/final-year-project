@@ -4,9 +4,10 @@ define(function (require) {
 
 	var $ = require('jquery');
 
-	function MultiTouchElement (element) {
+	function MultiTouchElement (component) {
 
-		this.element = $(element);
+		this.component = component;
+		this.element = component.$el;
 		this.behaviours = [];
 		this.bindEvents();
 
