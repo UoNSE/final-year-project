@@ -53,8 +53,8 @@ define(function(require){
         'click #hide-chart-button2': '_hideUrineAnalysisChart',
         'click #button-query': '_queryPatient',
         'click #button-tests': '_testPatient',
-        'click #button-chart': '_showPatientsChart'
-
+        'click #button-chart': '_showPatientsChart',
+        'click .menu-item': '_menuItemSelection'
         },
 
         // add child views here.
@@ -349,6 +349,11 @@ define(function(require){
         //     $(this).offset({top:menuHeight});
         //
         // });
+    },
+
+    _menuItemSelection: function(){
+        $(this).css("background-color","orange");
+
     }
 
 
