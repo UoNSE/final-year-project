@@ -24,7 +24,8 @@ define(function(require){
     var MultiTouchManager = require('behaviour/MultiTouchManager');
     var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour'); //
     var numEventCardsShowingInFeed = 0;
-    // var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3"];
+    var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3"];
+    var feedCardSchedule = [1000,2000,3000,4000];
     var cardsDisplayedList = [];
 
 
@@ -114,7 +115,6 @@ define(function(require){
 
         //add new card
         _addNewCard: function(i, thisCardId, offsetCardsCallback){
-            var feedCardSchedule = [1000,2000,3000,4000];
 
             setTimeout(function(){
 
@@ -143,9 +143,6 @@ define(function(require){
         },
 
         _startEventFeed: function() {
-
-            // var cardsDisplayedList = [];
-            var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3"];
 
             var numEventCards = eventCardFeedQueue.length;
             console.log("num of event cards in queue: "+numEventCards);
