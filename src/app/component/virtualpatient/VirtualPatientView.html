@@ -1,11 +1,8 @@
-
-
 <div class="virtual-patient-component-container">
     <!-- Virtual patient---------------------------------------------------------------------->
-    <div id="virtual-patient-img-container">
-        <button class="btn btn-fab"></button>
-        <button id="hotspot-button" class="btn btn-fab"></button>
-        <button id="target" class="btn btn-fab"></button>
+    <div id="vp-container"> <!--virtual-patient-img-container = 512x768-->
+        <button class="hotspot" style="margin:12% 0 0 64%"></button> <!--load these positions in dynamically from json-->
+        <button id="target">abc</button>
     </div>
 
 
@@ -215,8 +212,8 @@
             </tr>
 
             <tr>
-                <td>Current medications:</td>
-                <td><ul><li>Insulin</li></ul></td>
+                <td>Current medication:</td>
+                <td>Insulin</td>
             </tr>
         </table>
         {{/each}}

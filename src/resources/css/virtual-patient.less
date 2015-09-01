@@ -7,6 +7,32 @@
 
 @button-size: 7em;
 
+//-----------------------------------vp+hotspots
+#vp-container{
+  display:block;
+  position: absolute; //absolute;
+  right:20%;
+  margin-left:0px; //right:0 no
+  margin-top:-82px;
+  background-image: url("../images/vp-outline.png");
+  background-repeat:no-repeat;
+  background-position: top right;
+  min-width:768px; //614 is 60% of the screen with the other 410 reserved for left+right menu 512px;
+  min-height:768px;
+  height:100%;
+  width:auto;
+  //background-color:black;
+}
+
+.hotspot {
+  width:56px;
+  height:56px;
+  background-color:rgba(255,0,0,0.5);
+  border-radius:50%;
+  border:none;
+}
+//-----------------------------------
+
 .virtual-patient-component-container {
   /*
 	position: relative;
@@ -51,10 +77,10 @@
 
 #dummy-collection-box{
     position: absolute;
-    left: 75%;
+    right:0;
     top: 0%;
     height: 100%; //768px fullscreen default on table
-    width: 25%; //256px fullscreen default on table
+    width: 20%; //256px fullscreen default on table
     border:none;
     background-color: #aaa;
 }
@@ -139,9 +165,11 @@
 	left: 20%;
 }
 
-/*------------------------------------------------------redo me---*/
+/*------------------------------------------------------virtual patient---*/
 
-#virtual-patient-img-container {
+
+
+#virtual-patient-img-container { //former virtual patient
   /*
   background-image: url("../images/androg.front.jpg");
   width:135px;
@@ -149,11 +177,13 @@
   bottom: 50px; */
 
   marign-left:50px !important;
-  padding-left:-256px;
+  padding-left:256px;
+  border:100px solid red;
   margin-top:-82px;
   background-image: url("../images/vp-outline.png");
-  width:512px;
-  height:768px;
+  width:100%;//512px;
+  height:100%; //768px;
+  min-height:900px;
   background-color:black;
 }
 

@@ -57,7 +57,8 @@ define(function(require){
         'click #button-chart': '_showPatientsChart',
         'click #test-card3': '_showSubMenu',
         'click #test-card4': '_showTarget',
-        'click #test-card5': '_showTarget'
+        'click #test-card5': '_showTarget',
+        'click .hotspot': '_hotSpotClick'
         // 'click .menu-item': '_menuItemSelection'
         },
 
@@ -78,8 +79,6 @@ define(function(require){
 
             this._hideElements();
             this._startEventFeed();
-
-
         },
 
         _hideElements: function() {
@@ -230,9 +229,9 @@ define(function(require){
                 // [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
 
                 //[glm.vec3.fromValues(0, 0, 0),glm.vec3.fromValues(2.5,2.5, 1), 0],
-                [glm.vec3.fromValues(500, -100, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(500, -100, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(500, -100, 0), glm.vec3.fromValues(1.0,1.0, 1), 0],
+                [glm.vec3.fromValues(170, 500, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(170, 500, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(170, 500, 0), glm.vec3.fromValues(1.0,1.0, 1), 0],
                 [glm.vec3.fromValues(0, 0, 0), glm.vec3.fromValues(1.0,1.0, 1), 0]
 
             ];
@@ -402,6 +401,10 @@ define(function(require){
         }
 
     },
+
+      _hotSpotClick: function(){
+        alert('Hotspot Activated!');
+      },
 
     //TODO: if submenu is expanded. when menu item clicked again, collapse it.
 
