@@ -204,7 +204,7 @@ define(function(require){
                 // $('#button-query').get(),
                 // $('#button-tests').get(),
 
-                $('#virtual-patient-img-container').get(),
+                //$('#virtual-patient-img-container').get(),
                 $('#patients-chart-container').get(), // //jquery fetch things
                 $('#query-menu-container').get(),
                 $('#test-menu-container').get(),
@@ -229,7 +229,7 @@ define(function(require){
                 // [glm.vec3.fromValues(-330, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
                 // [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
 
-                [glm.vec3.fromValues(0, 0, 0),glm.vec3.fromValues(2.5,2.5, 1), 0],
+                //[glm.vec3.fromValues(0, 0, 0),glm.vec3.fromValues(2.5,2.5, 1), 0],
                 [glm.vec3.fromValues(500, -100, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
                 [glm.vec3.fromValues(500, -100, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
                 [glm.vec3.fromValues(500, -100, 0), glm.vec3.fromValues(1.0,1.0, 1), 0],

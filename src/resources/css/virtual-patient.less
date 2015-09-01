@@ -18,14 +18,6 @@
 
 }
 
-#virtual-patient-img-container {
-  background-image: url("../images/androg.front.jpg");
-  width:135px;
-   height:313px; /*135x313*/
-   bottom: 50px;
-	// left: 40%;
-}
-
 #card-container {
 	position: absolute;
 	display: block;
@@ -147,10 +139,26 @@
 	left: 20%;
 }
 
+/*------------------------------------------------------redo me---*/
+
+#virtual-patient-img-container {
+  /*
+  background-image: url("../images/androg.front.jpg");
+  width:135px;
+  height:313px;
+  bottom: 50px; */
+
+  marign-left:50px !important;
+  padding-left:-256px;
+  margin-top:-82px;
+  background-image: url("../images/vp-outline.png");
+  width:512px;
+  height:768px;
+  background-color:black;
+}
+
 #hotspot-button {
-	position: relative;
-	top: 70%;
-	left: 30%;
+
 	background-color: red !important;
 	.opacity;
 	padding: 1.5em;
@@ -160,6 +168,8 @@
 	font-size: 14pt;
     transform: scale(0.5,0.5);
 }
+
+
 
 .generic-card {
 	font-size: 8pt;
