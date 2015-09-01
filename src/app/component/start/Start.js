@@ -3,13 +3,18 @@ define(function (require) {
 	'use strict';
 
 	var Component = require('core/Component');
-	var Handlebars = require('handlebars');
-	var template = require('text!component/start/Start.html');
+	var template = require('text!component/start/Start.hbs');
 
 	return Component.extend({
 
+		template: template,
+
 		events: {
 			'click #btn-start': 'onStart'
+		},
+
+		model: {
+			text: 'Touch to\nStart'
 		},
 
 		//initialize: function () {
@@ -20,13 +25,6 @@ define(function (require) {
 			new TWEEN.Tween(this).to({
 				rotation: this.rotation + Math.TAU
 			}, 2000).repeat(Infinity).start();
-		},
-
-		render: function () {
-			this.$el.html(Handlebars.compile(template)({
-				text: 'Touch to\nStart'
-			}));
-			return this;
 		}
 
 	});

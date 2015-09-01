@@ -5,8 +5,9 @@ define(function (require) {
 	return Backbone.Router.extend({
 
 		routes: {
-			'': 'menu',
-			'start': 'start'
+			'': 'start',
+			'start': 'start',
+			'cases': 'cases'
         },
 
 		initialize: function (scene) {
@@ -19,6 +20,10 @@ define(function (require) {
 
 		start: function () {
 			this.load('Start');
+		},
+
+		cases: function () {
+			this.load('Cases');
 		},
 
 		load: function (page) {
