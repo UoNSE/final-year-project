@@ -339,7 +339,7 @@ define(function (require) {
             event = event.currentTarget.element;
             //allow multiple evidence cards but only one issue card per stack
             var parent = card.parent();
-            if(!($(event).hasClass("issuestack") || $(parent).hasClass("issuestack") || ((card).hasClass("issue") && $(event).children().hasClass("issue")))) {
+            if(!(($(event).hasClass("issuestack") && (card.hasClass("issue"))) || ($(parent).hasClass("issuestack") && ($(event).children().hasClass("issue"))) || (card.hasClass("issue") && $(event).children().hasClass("issue")))) {
                 //store parent for deletion
                 var newclass = $(card).hasClass("issue")||$(event).children().hasClass("issue") ? "issuestack" : "evidencestack";
                 event.children().append(card.children());
