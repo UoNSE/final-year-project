@@ -303,21 +303,43 @@ define(function (require) {
             }
             // Check if we are currently hovering on the split button.
             if (this.splitCard) {
-                // TODO
+                // split
+                this.cardSplit($card);
             }
             // Check if hovering over another card
             if (this.mergeCard != null) {
                 //merge
-                this.merge(event, this.mergeCard);
+                this.cardMerge(event, this.mergeCard);
             }
             this.menu.toggleClass('hidden', true);
         },
 
-        merge: function (event, card){
+        cardSplit: function($card){
+            //dependent on merging function
+            var childElem = $card.children().children();
+            childElem.each(function(){
+                console.log("element " + this.outerHTML);
+                console.log("element " + $(this).text());
+            });
+
+            /*for(var n=0;n<childElem.length;n=n+2){
+                var newcard = this.createCard($(childElem[n]).text(), $(childElem[n+1]).text());
+                if(childElem[n].text()=="Issue"){
+                    $("#issues").append(newcard);
+                }
+                else{
+                    $("#evidence").append(newcard);
+                }
+            }*/
+
+
+        },
+
+        cardMerge: function (event, card){
             event = event.currentTarget.element;
             //allow multiple evidence cards but only one issue card per stack
             var parent = card.parent();
-            if(!($(event).hasClass("issuestack") || $(parent).hasClass("issuestack") || ((card).hasClass("issue")&&$(event).children().hasClass("issue")))) {
+            if(!($(event).hasClass("issuestack") || $(parent).hasClass("issuestack") || ((card).hasClass("issue") && $(event).children().hasClass("issue")))) {
                 //store parent for deletion
                 var newclass = $(card).hasClass("issue")||$(event).children().hasClass("issue") ? "issuestack" : "evidencestack";
                 event.children().append(card.children());
@@ -369,7 +391,14 @@ define(function (require) {
 
         createCard: function (cardType, content) {
 			var panelType =  ( cardType === "Issue" ) ? "info" : "danger";
-			return "<div class='panel panel-" + panelType + " abs-center "+cardType.toLowerCase()+" card' style='width: 300px; height: 100px'>"+"\n"+"<div class='panel-heading'>"+"\n"+"<h3 class='panel-title'>" + cardType + "</h3>"+"\n"+"</div>"+"\n"+"<div class='panel-body'>" +"\n"+ content +"\n"+ "</div>"+"\n"+"</div>";
+			return "<div class='panel panel-" + panelType + " card " + function(){return ( cardType === "Issue" ) ? "issue": ""} + "' >"+
+                "\n"+"<div class='panel-heading'>"+
+                "\n"+"<h3 class='panel-title'>" + cardType + "</h3>"+
+                "\n"+"</div>"+
+                "\n"+"<div class='panel-body'>" +
+                "\n"+ content +
+                "\n"+ "</div>"+
+                "\n"+"</div>";
 		}
 
     });
