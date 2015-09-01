@@ -1,10 +1,15 @@
+{{#with case}}
 <div class="background">
-        <div id='activity-clock'>00:00:00</div>
-    {{#with case}}
+    <div id='activity-clock' class="well activity-clock-high">{{caseinfo-timer}}</div>
+    <div id="infocard-container" style="margin-top:60px">
         {{#each caseinfo}}
-        <div id="infocard-{{id}}" class="well infocard" style="padding:0px">
+        {{#if show-threshold}}
+        <div id="infocard-{{id}}" threshold="{{show-threshold}}" class="well infocard hidden-info" style="padding:5px">
+        {{else}}
+        <div id="infocard-{{id}}" class="well infocard" style="padding:5px">
+        {{/if}}
             <div class="card-title">
-                {{title}}
+            {{title}}
             </div>
             <div class="card-content">
                 <div class="content-media">
@@ -23,21 +28,25 @@
                     </audio>
                     {{/if}}
                 </div>
-                {{#if text}}
 
                 <div class="content-text">
                     <ul>
-                        {{#each text}}
-                        <li id="info-{{../id}}-{{@index}}" class="list-item">{{this}}</li>
+                        {{#each items}}
+                        {{#if issue}}
+                        <li id="info-{{../../id}}-{{@index}}" issue="{{issue}}" class="list-item">{{text}}</li>
+                        {{else}}
+                        <li id="info-{{../../id}}-{{@index}}" class="list-item">{{text}}</li>
+                        {{/if}}
                         {{/each}}
                     </ul>
                 </div>
-                {{/if}}
+
             </div>
             <div class="card-button">
                 <div class="pull-right btn-keep btn btn-xs btn-flat btn-success">Keep</div>
             </div>
         </div>
         {{/each}}
-    {{/with}}
+    </div>
 </div>
+{{/with}}
