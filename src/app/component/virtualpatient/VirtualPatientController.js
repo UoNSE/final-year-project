@@ -55,7 +55,9 @@ define(function(require){
         'click #button-query': '_queryPatient',
         'click #button-tests': '_testPatient',
         'click #button-chart': '_showPatientsChart',
-        'click #test-card3': '_showSubMenu'
+        'click #test-card3': '_showSubMenu',
+        'click #test-card4': '_showTarget',
+        'click #test-card5': '_showTarget'
         // 'click .menu-item': '_menuItemSelection'
         },
 
@@ -90,6 +92,7 @@ define(function(require){
             $('#test-menu').hide();
             // $('.button-menu').hide();
             $('#test-menu-container2').hide();
+            $('#target').hide();
         },
 
         // callback to offset cards already shown.
@@ -386,10 +389,21 @@ define(function(require){
 
         }
 
-    }
+    },
 
     //TODO: if submenu is expanded. when menu item clicked again, collapse it.
 
+    _showTarget: function(){
+        //TODO: make target more unique, like a crosshair maybe.
+        //TODO: make target transformable.
+        //TODO: make crosshair disappear when another menu item selected or
+        // button collapsed or other element selected.
+        // basically on any click event other than selecting the scan area.
+
+        // if xray or ctscan is picked. then show target on virtual patient
+        // of where the scan will be done. (circle area).
+        $("#target").show();
+    }
 
   });
 });
