@@ -317,21 +317,39 @@ define(function (require) {
         cardSplit: function($card){
             //dependent on merging function
             var childElem = $card.children().children();
-            childElem.each(function(){
-                console.log("element " + this.outerHTML);
-                console.log("element " + $(this).text());
-            });
-
-            /*for(var n=0;n<childElem.length;n=n+2){
-                var newcard = this.createCard($(childElem[n]).text(), $(childElem[n+1]).text());
-                if(childElem[n].text()=="Issue"){
+            childElem.each(function(i, element){
+                //skip panel-body elements
+                if(i % 2 == 1){
+                    return true;
+                }
+                var nextRow = childElem.eq(i + 1);
+                //console.log("element " + this.outerHTML);
+                console.log("type '" + $(element).text().trim()+ "'");
+                console.log("text '" + $(nextRow).text().trim() + "'");
+                var newcard = this.createCard($(element).text().trim(), $(nextRow).text().trim());
+                if($(element).text().trim()=="Issue"){
                     $("#issues").append(newcard);
                 }
                 else{
                     $("#evidence").append(newcard);
                 }
-            }*/
+            }.bind(this));
+            $card.remove();
 
+
+
+            var list = $("#issues").children();
+            for(var i=0; i<list.length;i++){
+                var card = list[i];
+                MultiTouchManager.addElementRTS(card);
+            }
+
+            //add RTS
+            var list = $("#evidence").children();
+            for(var i=0; i<list.length;i++){
+                var card = list[i];
+                MultiTouchManager.addElementRTS(card);
+            }
 
         },
 
@@ -342,11 +360,16 @@ define(function (require) {
             if(!(($(event).hasClass("issuestack") && (card.hasClass("issue"))) || ($(parent).hasClass("issuestack") && ($(event).children().hasClass("issue"))) || (card.hasClass("issue") && $(event).children().hasClass("issue")))) {
                 //store parent for deletion
                 var newclass = $(card).hasClass("issue")||$(event).children().hasClass("issue") ? "issuestack" : "evidencestack";
-                event.children().append(card.children());
-                //$(event).removeClass("card");
-                //add stack class
-                $(event).addClass(newclass);
-                parent.remove();
+                if($(card).hasClass("issue")){
+                    $(card).append(event.children().children());
+                    parent.addClass(newclass);
+                    $(event).remove();
+                }
+                else {
+                    event.children().append(card.children());
+                    $(event).addClass(newclass);
+                    parent.remove();
+                }
             }
         },
 
@@ -391,14 +414,21 @@ define(function (require) {
 
         createCard: function (cardType, content) {
 			var panelType =  ( cardType === "Issue" ) ? "info" : "danger";
-			return "<div class='panel panel-" + panelType + " card " + function(){return ( cardType === "Issue" ) ? "issue": ""} + "' >"+
-                "\n"+"<div class='panel-heading'>"+
-                "\n"+"<h3 class='panel-title'>" + cardType + "</h3>"+
-                "\n"+"</div>"+
-                "\n"+"<div class='panel-body'>" +
+            var classes = ( cardType === "Issue" ) ? "issue": "";
+
+            "<div style='z-index: 7; position: absolute; transform: translate(0px, 0px) rotate(0rad) skewX(0rad) scale(1, 1); left: 411px; top: 421px;'>" +
+            "</div>"
+
+			return "<div >" +
+                "\n<div class='panel panel-" + panelType + " card " + classes + "' >"+
+                "\n<div class='panel-heading'>"+
+                "\n<h3 class='panel-title'>" + cardType + "</h3>"+
+                "\n</div>"+
+                "\n<div class='panel-body'>" +
                 "\n"+ content +
-                "\n"+ "</div>"+
-                "\n"+"</div>";
+                "\n</div>"+
+                "\n</div>"+
+                "\n</div>";
 		}
 
     });
