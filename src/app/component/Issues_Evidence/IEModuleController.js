@@ -33,7 +33,6 @@ define(function (require) {
             'mouseover #btn-delete': 'onDeleteMouseOver',
             'mouseover #btn-split': 'onSplitMouseOver',
             'mouseover .card': 'onCardMouseOver',
-
             'mouseleave .card': 'onCardMouseLeave',
             'mouseleave #btn-delete': 'onDeleteMouseLeave',
             'mouseleave #btn-split': 'onSplitMouseLeave'
@@ -315,7 +314,18 @@ define(function (require) {
         },
 
         merge: function (event, card){
-            event.currentTarget.element.append( card );
+            event = event.currentTarget.element;
+            //allow multiple evidence cards but only one issue card per stack
+            var parent = card.parent();
+            if(!($(event).hasClass("issuestack") || $(parent).hasClass("issuestack") || ((card).hasClass("issue")&&$(event).children().hasClass("issue")))) {
+                //store parent for deletion
+                var newclass = $(card).hasClass("issue")||$(event).children().hasClass("issue") ? "issuestack" : "evidencestack";
+                event.children().append(card.children());
+                //$(event).removeClass("card");
+                //add stack class
+                $(event).addClass(newclass);
+                parent.remove();
+            }
         },
 
         onDeleteMouseOver: function (event) {
