@@ -3,7 +3,7 @@ define(function (require) {
 	'use strict';
 
 	var Backbone = require('backbone');
-	var Router = require('controller/Router');
+	var Router = require('core/Router');
 	var Scene = require('core/Scene');
 	var Camera = require('core/Camera');
 	var CSS2DRenderer = require('core/CSS2DRenderer');

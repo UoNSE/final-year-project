@@ -110,6 +110,12 @@ define(function (require) {
 			child.parent = this;
 			this.children.push(child);
 		},
+		removeAll: function () {
+			this.children.forEach(function (child) {
+				child.trigger('removechild');
+			});
+			this.children.length = 0;
+		},
 		updateLocal: function (force) {
 			this.transform.copy(this.worldTransform);
 

@@ -48,9 +48,12 @@ define(function (require) {
 			element.attr('id', object.id);
 			container.append(element);
 			object.added = true;
-			return element;
+			object.on('removechild', function () {
+				$(object.id).remove();
+			});
 		}
 		this.applyTransform(object.$el, transform);
+		return element;
 	};
 
 	CSS2DRenderer.prototype.applyTransform = function (element, transform) {

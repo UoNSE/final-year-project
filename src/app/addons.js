@@ -2,6 +2,7 @@ define(function (require) {
 	'use strict';
 
 	var $ = require('jquery');
+	var Handlebars = require('handlebars');
 
 	$.fn.insertAt = function (index, element) {
 		var lastIndex = this.children().size();
@@ -77,5 +78,12 @@ define(function (require) {
 			// 8. return undefined
 		};
 	}
+
+	// http://stackoverflow.com/a/12397602/868679
+	Handlebars.registerHelper('breaklines', function(text) {
+		text = Handlebars.Utils.escapeExpression(text);
+		text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
+		return new Handlebars.SafeString(text);
+	});
 });
 
