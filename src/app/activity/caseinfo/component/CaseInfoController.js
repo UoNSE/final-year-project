@@ -6,7 +6,8 @@ define(function (require) {
     var MultiTouchManager = require('behaviour/MultiTouchManager');
     var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
     var ViewController = require('controller/ViewController');
-    var Animate = require('behaviour/Animate');
+    var animate = require('behaviour/Animate');
+    var glm = require('glmatrix');
 
     var clockTimeout = 1000;
     var activityTimer = 0;
@@ -41,7 +42,7 @@ define(function (require) {
         //hide back button
 
         displayBack: false,
-
+        multitouch: MultiTouchManager.getInstance(),
         styles : 'case-info.css',
 
         //model collection - not needed???
@@ -52,11 +53,51 @@ define(function (require) {
             'click .btn-keep':'keepCard',
             'click .btn-kept':'restoreCard',
             'click .list-item' : 'selectListItem'
-            //'click .content-media': 'selectMediaItem'
         },
+
 
         onReady: function () {
             setInterval(updateClock, clockTimeout);
+
+            var resources = disp( $( ".infocard" ).toArray().reverse() );
+             var transforms = [
+                [glm.vec3.fromValues(300, 100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+                [glm.vec3.fromValues(-300, 0, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+                [glm.vec3.fromValues(0, 100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+                [glm.vec3.fromValues(300, -100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+                [glm.vec3.fromValues(0, -100, 0), glm.vec3.fromValues(1, 1, 1), 0]
+             ];
+
+            function disp( divs ) {
+              var a = [];
+              for ( var i = 0; i < divs.length; i++ ) {
+                a.push( divs[ i ].innerHTML );
+              }
+              $( "span" ).text( a.join( " " ) );
+              return a;
+            }
+
+
+            	var numItems = resources.length;
+            	//var container = $('.card-content');
+            	var container = $('<div class="abs-center"></div>');
+            	container.appendTo($('.infocard'));
+            	for (var i = 0; i < numItems; i++) {
+            		var element = $(resources[i]);
+            		element.addClass("abs-center").appendTo(container);
+            		element.css('transform', transforms[i]);
+            		//var colors = ['#ff0000', '#ffffff', '#d4ee9f'];
+            		//element.css('backgroundColor', colors[Math.floor(Math.random() * colors.length)]);
+            		var multiTouchElement = this.multitouch.addElement(element);
+            		var behaviour = new RotateTranslateScaleBehaviour(multiTouchElement);
+            		multiTouchElement.addBehaviour(behaviour);
+            		glm.vec3.copy(behaviour.translation, transforms[i][0]);
+            		glm.vec3.copy(behaviour.scale, transforms[i][1]);
+            		glm.vec3.copy(behaviour.rotation, transforms[i][2]);
+            		behaviour.needsUpdate();
+            		this.elements = this.elements.add(element);
+            	}
+            animate.scale(container);
         },
 
         keepCard: function (event) {
