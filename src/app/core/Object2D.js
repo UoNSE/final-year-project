@@ -109,6 +109,22 @@ define(function (require) {
 			}
 			child.parent = this;
 			this.children.push(child);
+		},
+		updateLocal: function (force) {
+			this.transform.copy(this.worldTransform);
+
+			if (this.parent) {
+				this.parent.updateWorld(force);
+				this.transform.worldToLocal(this.parent.worldTransform)
+			}
+		},
+		updateWorld: function (force) {
+			if (this.parent) {
+				this.parent.updateWorld(force);
+				this.worldTransform.copy(this.parent.worldTransform).applyTransform(this.transform);
+			} else {
+				this.worldTransform.copy(this.transform);
+			}
 		}
 	});
 
