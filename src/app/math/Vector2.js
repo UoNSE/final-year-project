@@ -26,10 +26,25 @@ define(function (require) {
 		},
 
 		setPolar: function (r, theta) {
+
 			this.x = r * Math.cos(theta);
 			this.y = r * Math.sin(theta);
 
 			return this;
+
+		},
+
+		rotateZ: function (theta) {
+
+			var ca = Math.cos(theta);
+			var sa = Math.sin(theta);
+			this.set(
+				ca * this.x - sa * this.y,
+				sa * this.x + ca * this.y
+			);
+
+			return this;
+
 		},
 
 		setX: function (x) {

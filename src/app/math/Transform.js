@@ -29,28 +29,8 @@ define(function (require) {
 		});
 	}
 
-	Transform.prototype.applyInverseTransform = function (transform) {
-		var ca = Math.cos(-transform.rotation);
-		var sa = Math.sin(-transform.rotation);
-		var tx = this.position.x - transform.position.x;
-		var ty = this.position.y - transform.position.y;
-		var sx = transform.scale.x;
-		var sy = transform.scale.y;
-		this.position.set((ca * tx - sa * ty) / sx, (sa * tx + ca * ty) / sy);
-		this.rotation -= transform.rotation;
-		this.scale.divideVectors(this.scale, transform.scale);
-
-		return this;
-	};
-
 	Transform.prototype.applyTransform = function (transform) {
-		var ca = Math.cos(transform.rotation);
-		var sa = Math.sin(transform.rotation);
-		var tx = this.position.x;
-		var ty = this.position.y;
-		var sx = transform.scale.x;
-		var sy = transform.scale.y;
-		this.position.set(sx * (ca * tx - sa * ty) + transform.position.x, sy * (sa * tx + ca * ty) + transform.position.y);
+		this.position.rotateZ(transform.rotation).multiply(transform.scale).add(transform.position);
 		this.rotation += transform.rotation;
 		this.scale.multiplyVectors(this.scale, transform.scale);
 
@@ -59,11 +39,19 @@ define(function (require) {
 
 	Transform.prototype.getInverse = function () {
 		var inverse = this.clone();
-		inverse.position.negate();
+		inverse.position.negate().divide(inverse.scale).rotateZ(-inverse.rotation);
 		inverse.scale.reciprocal();
 		inverse.rotation *= -1;
 
 		return inverse;
+	};
+
+	Transform.prototype.localToWorld = function (reference) {
+		return this.copy(reference.clone().applyTransform(this));
+	};
+
+	Transform.prototype.worldToLocal = function (reference) {
+		return this.applyTransform(reference.getInverse());
 	};
 
 	Transform.prototype.copy = function (transform) {

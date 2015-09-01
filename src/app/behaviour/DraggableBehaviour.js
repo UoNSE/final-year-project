@@ -4,9 +4,10 @@ define(function (require) {
 
 	var $ = require('jquery');
 
-	function DraggableBehaviour (component) {
+	function DraggableBehaviour (component, multiTouchManager) {
 
 		this.component = component;
+		this.multiTouchManager = multiTouchManager;
 
 	}
 
@@ -35,11 +36,26 @@ define(function (require) {
 	};
 
 	DraggableBehaviour.prototype.onTouchStart = function (element, event) {
-		this.component.element.trigger('drag');
+		this.component.component.trigger('drag', {
+			draggable: this.component.component
+		});
 	};
 
 	DraggableBehaviour.prototype.onTouchMove = function (element, event) {
-
+		var touch = event.originalEvent.targetTouches[0];
+		var x = touch.pageX;
+		var y = touch.pageY;
+		var elements = $(document.elementsFromPoint(x, y)).filter('section.component').not(this.component.element);
+		elements.each(function (index, element) {
+			var id = $(element).attr('id');
+			var multiTouchElement = this.multiTouchManager.get(id);
+			if (multiTouchElement) {
+				multiTouchElement.component.trigger('draghover', {
+					draggable: this.component.component,
+					droppable: multiTouchElement.component
+				});
+			}
+		}.bind(this));
 	};
 
 	DraggableBehaviour.prototype.onTouchEnd = function (element, event) {
@@ -47,10 +63,19 @@ define(function (require) {
 		var x = touch.pageX;
 		var y = touch.pageY;
 		var elements = $(document.elementsFromPoint(x, y)).filter('section.component').not(this.component.element);
-		if (elements.length > 0) {
-			elements.trigger('drop');
-			console.log('drop!');
-		}
+		elements.each(function (index, element) {
+			var id = $(element).attr('id');
+			var multiTouchElement = this.multiTouchManager.get(id);
+			if (multiTouchElement) {
+				multiTouchElement.component.trigger('drop', {
+					draggable: this.component.component,
+					droppable: multiTouchElement.component
+				});
+			}
+		}.bind(this));
+		this.component.component.trigger('dragend', {
+			draggable: this.component.component
+		});
 	};
 
 	return DraggableBehaviour;

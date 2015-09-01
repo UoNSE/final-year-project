@@ -29,7 +29,7 @@ define(function (require) {
 		} else {
 			transform = object.worldTransform;
 			if (object.parent) {
-				object.transform.copy(transform).applyInverseTransform(object.parent.worldTransform);
+				object.transform.copy(transform).worldToLocal(object.parent.worldTransform);
 			} else {
 				object.transform.copy(object.worldTransform);
 			}

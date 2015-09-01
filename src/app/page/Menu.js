@@ -14,10 +14,11 @@ define(function (require) {
 			var m = 3;
 			for (var j = 0; j < m; j++) {
 				var circle = new Circle();
+				circle.interactive = true;
 				circle.position.setPolar(200, j / m * Math.TAU);
 				//circle.rotation = -Math.TAU / 8;
 				//circle.rotation = -Math.TAU / 6;
-				//circle.scale.set(0.5, 0.5);
+				circle.scale.set(0.5, 0.5);
 				this.add(circle);
 
 				new TWEEN.Tween(circle).to({
@@ -46,6 +47,20 @@ define(function (require) {
 					//rectangle.scale.set(0.5, 0.5);
 
 					//new TWEEN.Tween(rectangle).to({rotation: rectangle.rotation + Math.TAU}, 8000).repeat(Infinity).start();
+					rectangle.on({
+						drag: function (event) {
+							event.draggable.$el.css('opacity', 0.5);
+						},
+						draghover: function (event) {
+							event.draggable.$el.css('opacity', 0.8);
+						},
+						dragend: function (event) {
+							event.draggable.$el.css('opacity', 1);
+						},
+						drop: function (event) {
+							console.log('drop');
+						}
+					});
 
 					circle.add(rectangle);
 				}

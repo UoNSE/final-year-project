@@ -11,6 +11,7 @@ define(function (require) {
 
 	function MultiTouchManager() {
 		this.elements = [];
+		this.elementsHash = {};
 		this.zIndexManager = new ZIndexManager();
 
 		$(window).on('touchmove', function (event) {
@@ -19,6 +20,10 @@ define(function (require) {
 		});
 	}
 
+	MultiTouchManager.prototype.get = function (id) {
+		return this.elementsHash[id];
+	};
+
 	MultiTouchManager.prototype.addElement = function (component) {
 		var multiTouchComponent = new MultiTouchElement(component);
 
@@ -26,6 +31,7 @@ define(function (require) {
 		$(multiTouchComponent).on('remove', this.onRemove.bind(this));
 
 		this.elements.push(multiTouchComponent);
+		this.elementsHash[component.id] = multiTouchComponent;
 		this.zIndexManager.registerElement(multiTouchComponent);
 		multiTouchComponent.addBehaviour(this.zIndexManager);
 		return multiTouchComponent;
@@ -38,7 +44,7 @@ define(function (require) {
 	};
 
 	MultiTouchManager.prototype.makeDraggable = function (multiTouchComponent) {
-		var behaviour = new DraggableBehaviour(multiTouchComponent);
+		var behaviour = new DraggableBehaviour(multiTouchComponent, this);
 		multiTouchComponent.addBehaviour(behaviour);
 		return multiTouchComponent;
 	};
@@ -56,6 +62,7 @@ define(function (require) {
 
 	MultiTouchManager.prototype.remove = function (multiTouchComponent) {
 		this.elements.splice(this.elements.indexOf(multiTouchComponent), 1);
+		delete this.elementsHash[multiTouchComponent.component.id];
 		this.zIndexManager.removeElement(multiTouchComponent);
 		multiTouchComponent.unbindEvents();
 	};
