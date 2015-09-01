@@ -1,5 +1,4 @@
 define(function (require) {
-
 	'use strict';
 
 	var Component = require('core/Component');
@@ -12,7 +11,6 @@ define(function (require) {
 		template: template,
 
 		events: {
-			//'click #btn-start': 'onStart'
 		},
 
 		collection: new Cases(),
@@ -26,27 +24,19 @@ define(function (require) {
 
 		onSync: function (collection) {
 			var length = collection.length;
+			var colorClasses = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
+				'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
 			collection.each(function (model, i) {
 				var newCase = new Case({
-					model: model
+					model: {
+						case: model,
+						color: colorClasses[Math.round(i * colorClasses.length / length)]
+					}
 				});
 				newCase.position.setPolar(200, i / length * Math.TAU);
 				this.add(newCase);
 			}.bind(this));
-
-			//this.listenTo(this.collection, 'add', this.onAdd);
-		},
-
-		addCase: function (model) {
-			this.add(new Case({
-				model: model
-			}));
-		},
-
-		//onAdd: function (model) {
-		//	this.addCase(model);
-		//}
+		}
 
 	});
-
 });
