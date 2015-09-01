@@ -15,8 +15,6 @@ define(function (require) {
 			Object2D.prototype.initialize.apply(this, arguments);
 
 			var interactive = false;
-			var draggable = false;
-			var droppable = false;
 			Object.defineProperties(this, {
 				interactive: {
 					enumerable: true,
@@ -27,30 +25,6 @@ define(function (require) {
 						if (interactive != value) {
 							interactive = value;
 							this.onSetInteractive(value);
-						}
-					}
-				},
-				draggable: {
-					enumerable: true,
-					get: function () {
-						return draggable;
-					},
-					set: function (value) {
-						if (draggable != value) {
-							draggable = value;
-							this.onSetDraggable(value);
-						}
-					}
-				},
-				droppable: {
-					enumerable: true,
-					get: function () {
-						return droppable;
-					},
-					set: function (value) {
-						if (droppable != value) {
-							droppable = value;
-							this.onSetDroppable(value);
 						}
 					}
 				}
@@ -69,14 +43,14 @@ define(function (require) {
 			multiTouchManager.makeRTS(this.getMultiTouchElement());
 		},
 
-		onSetDraggable: function (enabled) {
+		setDraggable: function (options) {
 			// TODO: handle remove
-			multiTouchManager.makeDraggable(this.getMultiTouchElement());
+			multiTouchManager.makeDraggable(this.getMultiTouchElement(), options);
 		},
 
-		onSetDroppable: function (enabled) {
+		setDroppable: function (options) {
 			// TODO: handle remove
-			multiTouchManager.makeDroppable(this.getMultiTouchElement());
+			multiTouchManager.makeDroppable(this.getMultiTouchElement(), options);
 		}
 	});
 });

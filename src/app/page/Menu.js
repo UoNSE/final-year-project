@@ -40,8 +40,10 @@ define(function (require) {
 				for (var i = 0; i < n; i++) {
 					var theta = i * Math.TAU / n;
 					var rectangle = new Rectangle();
-					rectangle.draggable = true;
-					rectangle.droppable = true;
+					rectangle.setDraggable();
+					rectangle.setDroppable({
+						types: Rectangle
+					});
 					rectangle.position.setPolar(r, theta);
 					rectangle.rotation = i / n * Math.TAU + Math.TAU / 4;
 					//rectangle.scale.set(0.5, 0.5);
@@ -51,14 +53,14 @@ define(function (require) {
 						drag: function (event) {
 							event.draggable.$el.css('opacity', 0.5);
 						},
-						draghover: function (event) {
-							event.draggable.$el.css('opacity', 0.8);
-						},
-						dragend: function (event) {
+						dragendsource: function (event) {
 							event.draggable.$el.css('opacity', 1);
 						},
-						drop: function (event) {
-							console.log('drop');
+						dropsink: function (event) {
+							console.log('dropsink');
+						},
+						dropsource: function (event) {
+							console.log('dropsource');
 						}
 					});
 

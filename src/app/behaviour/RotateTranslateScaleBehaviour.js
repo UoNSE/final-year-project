@@ -11,6 +11,12 @@ define(function (require) {
 
 	}
 
+	RotateTranslateScaleBehaviour.prototype.onMouseMove = function (element, event) {
+		var point = MathUtil.pageToWorld(new Vector2(event.pageX, event.pageY));
+		this.component.component.worldPosition.copy(point);
+		this.component.component.updateLocal(true);
+	};
+
 	RotateTranslateScaleBehaviour.prototype.onTouchStart = function (component, event) {
 
 		var changedTouches = event.originalEvent.changedTouches;

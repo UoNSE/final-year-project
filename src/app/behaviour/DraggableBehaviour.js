@@ -4,9 +4,9 @@ define(function (require) {
 
 	var $ = require('jquery');
 
-	function DraggableBehaviour (component, multiTouchManager) {
+	function DraggableBehaviour (multiTouchElement, multiTouchManager, options) {
 
-		this.component = component;
+		this.multiTouchElement = multiTouchElement;
 		this.multiTouchManager = multiTouchManager;
 
 	}
@@ -36,8 +36,8 @@ define(function (require) {
 	};
 
 	DraggableBehaviour.prototype.onTouchStart = function (element, event) {
-		this.component.component.trigger('drag', {
-			draggable: this.component.component
+		this.multiTouchElement.component.trigger('drag', {
+			draggable: this.multiTouchElement.component
 		});
 	};
 
@@ -45,13 +45,13 @@ define(function (require) {
 		var touch = event.originalEvent.targetTouches[0];
 		var x = touch.pageX;
 		var y = touch.pageY;
-		var elements = $(document.elementsFromPoint(x, y)).filter('section.component').not(this.component.element);
+		var elements = $(document.elementsFromPoint(x, y)).filter('section.component').not(this.multiTouchElement.element);
 		elements.each(function (index, element) {
 			var id = $(element).attr('id');
 			var multiTouchElement = this.multiTouchManager.get(id);
 			if (multiTouchElement) {
 				multiTouchElement.component.trigger('draghover', {
-					draggable: this.component.component,
+					draggable: this.multiTouchElement.component,
 					droppable: multiTouchElement.component
 				});
 			}
@@ -62,19 +62,19 @@ define(function (require) {
 		var touch = event.originalEvent.changedTouches[0];
 		var x = touch.pageX;
 		var y = touch.pageY;
-		var elements = $(document.elementsFromPoint(x, y)).filter('section.component').not(this.component.element);
+		var elements = $(document.elementsFromPoint(x, y)).filter('section.component').not(this.multiTouchElement.element);
 		elements.each(function (index, element) {
 			var id = $(element).attr('id');
 			var multiTouchElement = this.multiTouchManager.get(id);
 			if (multiTouchElement) {
-				multiTouchElement.component.trigger('drop', {
-					draggable: this.component.component,
+				multiTouchElement.component.trigger('dragendsink', {
+					draggable: this.multiTouchElement.component,
 					droppable: multiTouchElement.component
 				});
 			}
 		}.bind(this));
-		this.component.component.trigger('dragend', {
-			draggable: this.component.component
+		this.multiTouchElement.component.trigger('dragendsource', {
+			draggable: this.multiTouchElement.component
 		});
 	};
 

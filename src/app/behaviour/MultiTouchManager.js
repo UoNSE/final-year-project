@@ -43,14 +43,14 @@ define(function (require) {
 		return multiTouchComponent;
 	};
 
-	MultiTouchManager.prototype.makeDraggable = function (multiTouchComponent) {
-		var behaviour = new DraggableBehaviour(multiTouchComponent, this);
+	MultiTouchManager.prototype.makeDraggable = function (multiTouchComponent, options) {
+		var behaviour = new DraggableBehaviour(multiTouchComponent, this, options);
 		multiTouchComponent.addBehaviour(behaviour);
 		return multiTouchComponent;
 	};
 
-	MultiTouchManager.prototype.makeDroppable = function (multiTouchComponent) {
-		var behaviour = new DroppableBehaviour(multiTouchComponent);
+	MultiTouchManager.prototype.makeDroppable = function (multiTouchComponent, options) {
+		var behaviour = new DroppableBehaviour(multiTouchComponent, this, options);
 		multiTouchComponent.addBehaviour(behaviour);
 		return multiTouchComponent;
 	};
