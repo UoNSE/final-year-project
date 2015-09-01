@@ -24,9 +24,8 @@ define(function(require){
     var MultiTouchManager = require('behaviour/MultiTouchManager');
     var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour'); //
     var numEventCardsShowingInFeed = 0;
-    var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3", "#speech-card1","#speech-card2",
-    "#dummy-card1", "#dummy-card2","#dummy-card3", "#dummy-card4"];
-    var feedCardSchedule = [1000,2000,3000,4000,5000, 6000, 7000, 8000, 9000];
+    var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3", "#speech-card1","#speech-card2"]; // ,"#dummy-card1", "#dummy-card2","#dummy-card3", "#dummy-card4"
+    var feedCardSchedule = [1000,2000,3000,4000,5000]; //, 6000, 7000, 8000, 9000
     var cardsDisplayedList = [];
 
 
@@ -189,10 +188,10 @@ define(function(require){
                 $('#observation-card2').get(),
                 $('#observation-card3').get(),
 
-                $('#dummy-card1').get(),
-                $('#dummy-card2').get(),
-                $('#dummy-card3').get(),
-                $('#dummy-card4').get(),
+                //$('#dummy-card1').get(),
+                //$('#dummy-card2').get(),
+                //$('#dummy-card3').get(),
+                //$('#dummy-card4').get(),
 
 
                 // we might need to change it back to this later.
@@ -220,10 +219,10 @@ define(function(require){
                 [glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
                 [glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
 
-                [glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
-                [glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
-                [glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
-                [glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
+                //[glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
+                //[glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
+                //[glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
+                //[glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
 
 
                 // [glm.vec3.fromValues(-430, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
@@ -231,9 +230,9 @@ define(function(require){
                 // [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
 
                 [glm.vec3.fromValues(0, 0, 0),glm.vec3.fromValues(2.5,2.5, 1), 0],
-                [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
-                [glm.vec3.fromValues(500, 800, 0), glm.vec3.fromValues(1.0,1.0, 1), 0],
+                [glm.vec3.fromValues(500, -100, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(500, -100, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+                [glm.vec3.fromValues(500, -100, 0), glm.vec3.fromValues(1.0,1.0, 1), 0],
                 [glm.vec3.fromValues(0, 0, 0), glm.vec3.fromValues(1.0,1.0, 1), 0]
 
             ];
