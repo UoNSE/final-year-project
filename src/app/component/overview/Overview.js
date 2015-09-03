@@ -5,6 +5,7 @@ define(function (require) {
 	var template = require('text!component/overview/Overview.hbs');
 
 	var Timeline = require('component/timeline/Timeline');
+	var Hint = require('component/hint/Hint');
 
 	return Component.extend({
 
@@ -21,14 +22,20 @@ define(function (require) {
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 
-			var timeline = this.add(new Timeline({
+			this.add(new Timeline({
 				buttons: [
 					{text: 'Case\nInformation'},
-					{text: 'Identify Issues', disabled: true},
+					{text: 'Identify\nIssues', disabled: true},
 					{text: 'Goals and\nActions', disabled: true},
 					{text: 'Reflection', disabled: true}
 				]
 			}));
+			var hint = this.add(new Hint({
+				model: {
+					text: 'Touch an activity below'
+				}
+			}));
+			hint.position.y = 100;
 		},
 
 		onCaseInformation: function () {
