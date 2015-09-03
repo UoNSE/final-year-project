@@ -6,35 +6,7 @@
     },
     {
       "id": 2,
-      "name": "Joe & Beth"
-    },
-    {
-      "id": 3,
-      "name": "Terry"
-    },
-    {
-      "id": 4,
-      "name": "Ben"
-    },
-    {
-      "id": 5,
-      "name": "Mark"
-    },
-    {
-      "id": 6,
-      "name": "Emily"
-    },
-    {
-      "id": 7,
-      "name": "Jane"
-    },
-    {
-      "id": 8,
-      "name": "Lauren"
-    },
-    {
-      "id": 9,
-      "name": "Bob"
+      "name": "Case 2"
     }
   ],
   "topics": [
@@ -89,79 +61,8 @@
   ],
   "goals": [
     {
-      "content": "testing 123",
-      "id": 2
-    }
-  ],
-  "actions": [],
-  "questions": [
-    {
-      "id": 1,
-      "text": "what seems to be the problem?"
-    },
-    {
-      "id": 2,
-      "text": "where does it hurt?"
-    },
-    {
-      "id": 3,
-      "text": "when did the pain begin?"
-    }
-  ],
-  "testtype": [
-    {
-      "id": 1,
-      "text": "urine analysis"
-    },
-    {
-      "id": 2,
-      "text": "blood test",
-      "bloodtesttype": [
-        {
-          "id": 1,
-          "text": "cbc"
-        },
-        {
-          "id": 2,
-          "text": "esr"
-        },
-        {
-          "id": 3,
-          "text": "glucose"
-        },
-        {
-          "id": 4,
-          "text": "lipoprotein"
-        },
-        {
-          "id": 5,
-          "text": "eliza"
-        },
-        {
-          "id": 6,
-          "text": "std"
-        },
-        {
-          "id": 7,
-          "text": "western blot"
-        },
-        {
-          "id": 8,
-          "text": "liver function"
-        },
-        {
-          "id": 9,
-          "text": "hormones"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "text": "xray"
-    },
-    {
-      "id": 4,
-      "text": "ctscan"
+      "content": "Hello",
+      "id": 1
     }
   ],
   "patients": [
@@ -176,7 +77,7 @@
       "metrics": [
         {
           "id": 1,
-          "temperature": "37°C",
+          "temperature": "37Â°C",
           "pulse": "112 bpm",
           "respiratory rate": "22 breaths per minute",
           "blood pressure": "90/50",
@@ -187,7 +88,7 @@
           "patientId": 1
         }
       ],
-      "issues": [
+      "problems": [
         {
           "id": 1,
           "codename": "NOF",
@@ -218,7 +119,7 @@
         {
           "id": 2,
           "observation": "Drinking",
-          "result": "Oral intake–sips only",
+          "result": "Oral intakeâ€“sips only",
           "patientId": 1
         },
         {
@@ -233,10 +134,24 @@
           "result": "pale, clammy",
           "patientId": 1
         }
+      ],
+      "responses": [
+        {
+          "id": 1,
+          "question": "appetite",
+          "answer": "not very",
+          "patientId": 1
+        },
+        {
+          "id": 2,
+          "question": "thirst",
+          "answer": "very",
+          "patientId": 1
+        }
       ]
     },
     {
-      "id": 2,
+      "id": 1,
       "firstname": "Gerard",
       "lastname": "Smith",
       "age": "62",
@@ -246,7 +161,7 @@
       "metrics": [
         {
           "id": 1,
-          "temperature": "37°C",
+          "temperature": "37Â°C",
           "pulse": "112 bpm",
           "respiratory rate": "22 breaths per minute",
           "blood pressure": "90/50",
@@ -257,7 +172,7 @@
           "patientId": 1
         }
       ],
-      "issues": [
+      "problems": [
         {
           "id": 1,
           "codename": "NOF",
@@ -288,7 +203,7 @@
         {
           "id": 2,
           "observation": "Drinking",
-          "result": "Oral intake–sips only",
+          "result": "Oral intakeâ€“sips only",
           "patientId": 1
         },
         {
@@ -319,5 +234,6 @@
         }
       ]
     }
-  ]
+  ],
+  "actions": []
 }

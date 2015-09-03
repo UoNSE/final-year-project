@@ -14,27 +14,32 @@
 
 define(function(require){
 
+    //TODO: make cards draggable
+    //TODO: make hotspot from data
+
     var $ = require('jquery');
-    var template = require('text!component/virtualpatient/VirtualPatientView.html');
-    var Patients = require('collection/Patients');
     var glm = require('glmatrix');
     var ViewController = require('controller/ViewController');
+    var Animate = require('behaviour/Animate');
     var MultiTouchManager = require('behaviour/MultiTouchManager');
-    var DraggableBehaviour = require('behaviour/DraggableBehaviour');
     var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour'); //
     var numEventCardsShowingInFeed = 0;
     var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3", "#speech-card1","#speech-card2"]; // ,"#dummy-card1", "#dummy-card2","#dummy-card3", "#dummy-card4"
     var feedCardSchedule = [1000,2000,3000,4000,5000]; //, 6000, 7000, 8000, 9000
     var cardsDisplayedList = [];
 
+
+    var styles = [
+        'virtual-patient.css'
+    ];
+
     return ViewController.extend({
 
-    template: template,
-    collection: new Patients(),
-    multitouch: MultiTouchManager.getInstance(),
-    // collection: 'Patients',
-    styles: 'virtual-patient.css',
-    selector: '#virtual-patient-img',
+        elements: $(),
+        multitouch: MultiTouchManager.getInstance(),
+        collection: 'Patients',
+        styles: 'virtual-patient.css', //default styles: styles,
+        selector: '#virtual-patient-img',
 
 
     events: {
@@ -57,34 +62,24 @@ define(function(require){
         // 'click .menu-item': '_menuItemSelection'
         },
 
-        initialize: function () {
-          ViewController.prototype.initialize.apply(this, arguments);
-          this.listenTo(this.collection, 'sync', this.onSync);
-          this.collection.fetch();
-          this.render();
+        // add child views here.
+        onBeforeRender: function(){
+
         },
 
-        onSync: function (collection) {
-          // TODO
-        },
-
+        // make any dynamic changes to the DOM here (eg. Animations, etc).
         onAfterRender: function () {
-        //   this.listenTo(this.collection, 'add', this.render);
-          //this.collection.add({name: 'New'});
-          this._transformItems();
-          this._hideElements();
-          this._startEventFeed();
-
+            this._transformItems();
         },
 
         // everything should have loaded. Add Model and Collection event handling here.
-        // onReady: function () {
-        //     this.listenTo(this.collection, 'add', this.render);
-        //     //this.collection.add({name: 'New'});
-        //     alert("hello world");
-        //     this._hideElements();
-        //     this._startEventFeed();
-        // },
+        onReady: function () {
+            this.listenTo(this.collection, 'add', this.render);
+            //this.collection.add({name: 'New'});
+
+            this._hideElements();
+            this._startEventFeed();
+        },
 
         _hideElements: function() {
             $('#patients-chart-table').hide();
@@ -246,19 +241,14 @@ define(function(require){
                 element.addClass("abs-center").appendTo(this.$el);
                 element.css('transform', transforms[i]);
 
-                // MultiTouchManager.addElementRTS(element);
-                // var draggableMTelement = MultiTouchManager.addElementDraggable(element);
-                // this.bindDraggableEvents(draggableMTelement);
-
                 var multiTouchElement = this.multitouch.addElement(element);
                 var behaviour = new RotateTranslateScaleBehaviour(multiTouchElement);
                 multiTouchElement.addBehaviour(behaviour);
-
                 glm.vec3.copy(behaviour.translation, transforms[i][0]);
                 glm.vec3.copy(behaviour.scale, transforms[i][1]);
                 glm.vec3.copy(behaviour.rotation, transforms[i][2]);
                 behaviour.needsUpdate();
-                // this.elements = this.elements.add(element);
+                this.elements = this.elements.add(element);
             }
 
 

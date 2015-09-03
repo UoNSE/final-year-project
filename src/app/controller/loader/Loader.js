@@ -42,6 +42,7 @@ define(function (require) {
 			var path = route + 'Controller';
 			// Load the controller at the specified path.
 			return this._requirePromise(path).then(function (Controller) {
+				this.trigger('configureViewController', Controller);
 				// Instantiate the controller.
 				var controller = new Controller(options);
 				// Trigger the back event for any listeners.
@@ -49,10 +50,8 @@ define(function (require) {
 				// Bind the events of the controller and load its styles.
 				this._bindEvents(controller, options);
 				this._loadStyles(controller.styles);
-				// Load the data models and template.
-				return this._loadDataModels(controller).then(function () {
-					return this._loadTemplate(route, controller);
-				}.bind(this));
+				this.render(controller);
+				return Promise.resolve(controller);
 			}.bind(this));
 		},
 
@@ -121,138 +120,6 @@ define(function (require) {
 		 */
 		onBack: function () {
 			this.trigger('back');
-		},
-
-		/**
-		 * Loads the collections and model bound to a controller.
-		 *
-		 * @param controller The controller that contains the collection and model.
-		 * @returns {Promise}
-		 * @private
-		 */
-		_loadDataModels: function (controller) {
-			return Promise.all([
-				this._loadCollection(controller),
-				this._loadModel(controller)
-			]);
-		},
-
-		/**
-		 * Fetches the data model if a url exists and resolves the underlying promise.
-		 *
-		 * @param url The url on the data model.
-		 * @param dataModel The data model that may contain information to fetch.
-		 * @returns {Promise}
-		 * @private
-		 */
-		_fetchDataModel: function (url, dataModel) {
-			if (url) {
-				return new Promise(function (resolve) {
-					this.listenTo(dataModel, 'sync', function () {
-						resolve();
-					});
-					dataModel.fetch();
-				}.bind(this));
-			} else {
-				return Promise.resolve();
-			}
-		},
-
-		/**
-		 * Loads a collection to the specified controller.
-		 *
-		 * @param controller The controller that contains the data model.
-		 * @returns {Promise}
-		 * @private
-		 */
-		_loadCollection: function (controller) {
-			var key = 'collection';
-			var route = controller[key];
-			if (route) {
-				var path = key + '/' + route;
-				return this._requirePromise(path).then(function (Collection) {
-					// Instantiate the collection and fetch its data if it contains a url.
-					var collection = new Collection();
-					controller.collection = collection;
-					// Fetch the data model.
-					return this._fetchDataModel(collection.url, collection);
-				}.bind(this));
-			} else {
-				// Nothing to load, resolve the promise.
-				return Promise.resolve();
-			}
-		},
-
-		/**
-		 * Loads a model to the specified controller.
-		 *
-		 * @param controller The controller that contains the model.
-		 * @param options The configuration options.
-		 * @returns {Promise}
-		 * @private
-		 */
-		_loadModel: function (controller, options) {
-			var key = 'model';
-			var route = controller[key];
-			// Set the model of the controller.
-			controller.model = new Backbone.Model();
-			this.trigger('loadModel', controller.model, options);
-			if (route && typeof route === 'string') {
-				var path = key + '/' + route;
-				this._requirePromise(path).then(function (Model) {
-					// Get the name of the model.
-					var name = route.split('/').pop().toLowerCase();
-					// Instantiate the model and fetch its data if it contains a url.
-					var model = new Model();
-					// Set the model using its name.
-					controller.model.set(name, model);
-					// Fetch the data model.
-					return this._fetchDataModel(model.has('url'), model);
-				}.bind(this));
-			} else {
-				if (route) {
-					controller.model = route;
-				}
-				return Promise.resolve();
-			}
-		},
-
-		/**
-		 * Loads the template associated with a route and renders the view.
-		 *
-		 * @param route The base path to the view and controller.
-		 * @param controller The controller that contains the template and render information.
-		 * @returns {Promise}
-		 * @private
-		 */
-		_loadTemplate: function (route, controller) {
-			if (controller.template !== false) {
-				var path = 'text!' + route + 'View.html';
-				return this._requirePromise(path).then(function (template) {
-					controller.template = template;
-					return this._renderView(controller);
-				}.bind(this));
-			} else {
-				return this._renderView(controller);
-			}
-		},
-
-		/**
-		 * Renders a view by calling the render function of both the loader and the controller.
-		 *
-		 * @param controller The controller associated with the view.
-		 * @returns {Promise}
-		 * @private
-		 */
-		_renderView: function (controller) {
-			controller.trigger('beforeRender');
-			return new Promise(function (resolve) {
-				this.listenToOnce(controller, 'afterRender', function () {
-					controller.trigger('ready');
-					resolve(controller);
-				});
-				controller.render();
-			}.bind(this));
 		}
 
 	});

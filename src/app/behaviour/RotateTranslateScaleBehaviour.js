@@ -6,6 +6,8 @@ define(function (require) {
 
 	function RotateTranslateScaleBehaviour (element) {
 
+		element.element.css('position', 'absolute');
+
 		this.element = element;
 		this.touches = {};
 		this.moving = false;
