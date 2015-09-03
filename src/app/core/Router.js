@@ -1,40 +1,43 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
+	var $ = require('jquery');
 
 	return Backbone.Router.extend({
 
-		routes: {
-			'': 'start',
-			'start': 'start',
-			'cases': 'cases',
-			'cases/:id/overview': 'overview'
-        },
-
 		initialize: function (scene) {
 			this.scene = scene;
+
+			this.setupRoutes({
+				'': 'Start',
+				'start': 'Start',
+				'cases': 'Cases',
+				'cases/:id/overview': 'Overview'
+			});
 		},
 
-		menu: function () {
-			this.load('Menu');
+		setupRoutes: function (routes) {
+			var namedParam    = /(\(\?)?:\w+/g;
+			$.each(routes, function (url, page) {
+				var match;
+				var names = [];
+				while ((match = namedParam.exec(url)) !== null) {
+					names.push(match[0].substring(1));
+				}
+				this.route(url, page, function () {
+					var urlParams = {};
+					for (var i = 0, len = names.length; i < len; i++) {
+						urlParams[names[i]] = arguments[i];
+					}
+					this.load(page, urlParams);
+				}.bind(this));
+			}.bind(this));
 		},
 
-		start: function () {
-			this.load('Start');
-		},
-
-		cases: function () {
-			this.load('Cases');
-		},
-
-		overview: function (id) {
-			this.load('Overview'); // TODO: magically insert id
-		},
-
-		load: function (page) {
+		load: function (page, urlParams) {
 			require(['page/' + page], function (Page) {
 				this.scene.removeAll();
-				this.scene.add(new Page());
+				this.scene.add(new Page(urlParams));
 			}.bind(this));
 		}
 
