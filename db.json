@@ -76,6 +76,77 @@
     }
   ],
   "actions": [],
+  "questions": [
+    {
+        "id": 1,
+        "text": "what seems to be the problem?"
+    },
+    {
+        "id": 2,
+        "text": "where does it hurt?"
+    },
+    {
+        "id": 3,
+        "text": "when did the pain begin?"
+    }
+  ],
+  "testtype": [
+    {
+        "id": 1,
+        "text": "urine analysis"
+    },
+    {
+        "id": 2,
+        "text": "blood test"
+        "bloodtesttype":[
+            {
+                "id": 1,
+                "text": "cbc"
+            },
+            {
+                "id": 2,
+                "text": "esr"
+            },
+            {
+                "id": 3,
+                "text": "glucose"
+            },
+            {
+                "id": 4,
+                "text": "lipoprotein"
+            },
+            {
+                "id": 5,
+                "text": "eliza"
+            },
+            {
+                "id": 6,
+                "text": "std"
+            },
+            {
+                "id": 7,
+                "text": "western blot"
+            },
+            {
+                "id": 8,
+                "text": "liver function"
+            },
+            {
+                "id": 9,
+                "text": "hormones"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "text": "xray"
+    },
+    {
+        "id": 4,
+        "text": "ctscan"
+    }
+  ],
+
   "patients": [
     {
       "id": 1,
@@ -99,7 +170,7 @@
           "patientId": 1
         }
       ],
-      "problems": [
+      "issues": [
         {
           "id": 1,
           "codename": "NOF",
@@ -148,13 +219,19 @@
       ],
       "responses": [
         {
-          "id": 1,
+        "id": 1,
+        "questionId":
+        "answer": "not very",
+        "patientId": 1
+        },
+        {
+          "id": 2,
           "question": "appetite",
           "answer": "not very",
           "patientId": 1
         },
         {
-          "id": 2,
+          "id": 3,
           "question": "thirst",
           "answer": "very",
           "patientId": 1
@@ -162,7 +239,7 @@
       ]
     },
     {
-      "id": 1,
+      "id": 2,
       "firstname": "Gerard",
       "lastname": "Smith",
       "age": "62",
@@ -183,7 +260,7 @@
           "patientId": 1
         }
       ],
-      "problems": [
+      "issues": [
         {
           "id": 1,
           "codename": "NOF",
