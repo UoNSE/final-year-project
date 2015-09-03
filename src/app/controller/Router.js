@@ -115,6 +115,18 @@ define(function (require) {
 
 		virtualPatient: function (caseId) {
 			this._load('component/virtualpatient/VirtualPatient', caseId);
+		},
+
+		questionsMenu: function (caseId) {
+			this._load('component/virtualpatient/QuestionsMenu', caseId);
+		},
+
+		testsMenu: function (caseId) {
+			this._load('component/virtualpatient/TestsMenu', caseId);
+		},
+
+		eventFeed: function (caseId) {
+			this._load('component/virtualpatient/EventFeed', caseId);
 		}
 
 	});
