@@ -26,9 +26,8 @@ define(function(require){
 
     // controllers
     var ViewController = require('controller/ViewController');
-    var TestMenuController = require('controller/TestMenuController');    
-    var QuestionsMenuController = require('controller/TestMenuController');
-
+    var TestMenuController = require('controller/TestsMenuController');
+    var QuestionsMenuController = require('controller/TestsMenuController');
 
     // behaviours
     var glm = require('glmatrix');
