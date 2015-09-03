@@ -12,6 +12,7 @@ define(function (require) {
 		},
 		multiTouchElement: null,
 		template: '',
+		classes: [],
 
 		initialize: function () {
 			Object2D.prototype.initialize.apply(this, arguments);

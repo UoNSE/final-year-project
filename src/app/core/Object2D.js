@@ -64,6 +64,13 @@ define(function (require) {
 					}
 				}
 			});
+
+			this.on('loaded', function () {
+				this.onLoad();
+			}, this);
+		},
+		onLoad: function () {
+			// Override in submodule
 		},
 		//translateOnRotation: function (value, rotation) {
 		//	var localRotation = this.parent.worldRotation - rotation;
@@ -109,6 +116,7 @@ define(function (require) {
 			}
 			child.parent = this;
 			this.children.push(child);
+			return child;
 		},
 		removeAll: function () {
 			this.children.forEach(function (child) {

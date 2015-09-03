@@ -7,7 +7,8 @@ define(function (require) {
 		routes: {
 			'': 'start',
 			'start': 'start',
-			'cases': 'cases'
+			'cases': 'cases',
+			'cases/:id/overview': 'overview'
         },
 
 		initialize: function (scene) {
@@ -24,6 +25,10 @@ define(function (require) {
 
 		cases: function () {
 			this.load('Cases');
+		},
+
+		overview: function (id) {
+			this.load('Overview'); // TODO: magically insert id
 		},
 
 		load: function (page) {

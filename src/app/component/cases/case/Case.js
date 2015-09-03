@@ -5,6 +5,8 @@ define(function (require) {
 	var template = require('text!component/cases/case/Case.hbs');
 
 	return Component.extend({
-		template: template
+		template: template,
+		classes: 'case',
+		styles: ['component/cases/case/Case.css']
 	});
 });

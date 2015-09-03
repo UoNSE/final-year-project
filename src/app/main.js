@@ -14,7 +14,8 @@ define(function (require) {
 			'jquery.transform3d': '../lib/jquery.transform.js/jquery.transform3d',
 			'jquery.transform2d': '../lib/jquery.transform.js/jquery.transform2d',
 			'jquery-ui': '../lib/jquery-ui/jquery-ui',
-			'tweenjs': '../lib/tweenjs/build/tween.min'
+			'tweenjs': '../lib/tweenjs/build/tween.min',
+			'bluebird': '../lib/bluebird/js/browser/bluebird'
 		},
 		shim: {
 			'backbone': {
