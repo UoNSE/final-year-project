@@ -5,7 +5,7 @@ define(function (require) {
 	return Backbone.Model.extend({
 
 		defaults: {
-			content: 'This is an Issue'
+			data: 'This is an Issue'
 		}
 
 	});

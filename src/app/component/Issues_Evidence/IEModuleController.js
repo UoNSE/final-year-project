@@ -160,100 +160,7 @@ define(function (require) {
             var $card = $(event.currentTarget);
             var position = $card.offset();
 
-            //else if (this.touchOverElement(splitButton, event) ){
-            //
-            //    if ( !target.hasClass("merged") ){
-            //        return;
-            //    }
-            //
-            //    var children = target.children(".panel-body");
-            //
-            //    //check for blank lines
-            //    var resultstring = "";
-            //    for (var n=0;n<children.text().split("\n").length;n++){
-            //        if(!children.text().split("\n")[n].trim()==" "){
-            //            resultstring += children.text().split("\n")[n].trim()+"\n"
-            //        }
-            //    }
-            //
-            //    //create the respective issue & evidence
-            //    $("#issues").append( createCard( "Issue", resultstring.split("\n")[0] ) );
-            //    //create evidence cards
-            //    var n = 1;
-            //    while (resultstring.split("\n")[n]!= ""){
-            //        $("#evidences").append(createCard("Evidence", resultstring.split("\n")[n]));
-            //        n++;
-            //    }
-            //
-            //    //delete the pair
-            //    $card.remove();
-            //
-            //    //add RTS
-            //    var list = $("#issues").children();
-            //    for(var i=0; i<list.length;i++){
-            //        var card = list[i];
-            //        multiTouchManager.addElementRTS(card);
-            //    }
-            //
-            //    //add RTS
-            //    var list = $("#evidence").children();
-            //    for(var i=0; i<list.length;i++){
-            //        var card = list[i];
-            //        multiTouchManager.addElementRTS(card);
-            //    }
-            //}
-            //else {
-            //    //check for card merging
-            //
-            //    var list;
-            //    if (target.hasClass("issue")) {
-            //        list = $('#evidence').children();
-            //    }
-            //    else {
-            //        //check all issue cards
-            //        list = $('#issues').children();
-            //    }
-            //    for (var i = 0; i < list.length; i++) {
-            //        //div
-            //        var card = $(list[i]);
-            //       // if (!card.hasClass("merged")) {
-            //
-            //            if ( touchOverElement(card,event) ){
-            //
-            //
-            //                var issue;
-            //                var evidence;
-            //
-            //                //update card text
-            //                if (target.hasClass("issue")) {
-            //                    issue = target;
-            //                    evidence = card;
-            //                }
-            //                else {
-            //                    issue = card;
-            //                    evidence = target;
-            //                }
-            //
-            //                evidence.children().each( function() {
-            //                    issue.append( this );
-            //                });
-            //
-            //                issue.removeClass("panel-info");
-            //                issue.addClass("panel-success");
-            //                //add "merged" class to div
-            //                issue.addClass("merged");
-            //
-            //                //This is dirty, I know
-            //                issue.height( (issue.text().split("\n").length) * 22 - 75);
-            //
-            //                //remove old card
-            //                evidence.remove();
-            //
-            //                break;
-            //            }
-            //        //}
-            //    }
-            //}
+
 
         },
 
@@ -323,33 +230,27 @@ define(function (require) {
                     return true;
                 }
                 var nextRow = childElem.eq(i + 1);
-                //console.log("element " + this.outerHTML);
-                console.log("type '" + $(element).text().trim()+ "'");
-                console.log("text '" + $(nextRow).text().trim() + "'");
                 var newcard = this.createCard($(element).text().trim(), $(nextRow).text().trim());
                 if($(element).text().trim()=="Issue"){
                     $("#issues").append(newcard);
+                    var list = $("#issues").children();
+                    for(var i=0; i<list.length;i++){
+                        var card = list[i];
+                        if($(card).html()==$(newcard).html())
+                            this.addCardBehaviour(card);
+                    }
                 }
                 else{
                     $("#evidence").append(newcard);
+                    var list = $("#evidence").children();
+                    for(var i=0; i<list.length;i++){
+                        var card = list[i];
+                        if($(card).html()==$(newcard).html())
+                            this.addCardBehaviour(card);
+                    }
                 }
             }.bind(this));
             $card.remove();
-
-
-
-            var list = $("#issues").children();
-            for(var i=0; i<list.length;i++){
-                var card = list[i];
-                this.addCardBehaviour(card);
-            }
-
-            //add RTS
-            var list = $("#evidence").children();
-            for(var i=0; i<list.length;i++){
-                var card = list[i];
-                this.addCardBehaviour(card);
-            }
 
         },
 
