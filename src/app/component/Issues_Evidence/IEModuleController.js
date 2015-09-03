@@ -341,14 +341,14 @@ define(function (require) {
             var list = $("#issues").children();
             for(var i=0; i<list.length;i++){
                 var card = list[i];
-                MultiTouchManager.addElementRTS(card);
+                this.addCardBehaviour(card);
             }
 
             //add RTS
             var list = $("#evidence").children();
             for(var i=0; i<list.length;i++){
                 var card = list[i];
-                MultiTouchManager.addElementRTS(card);
+                this.addCardBehaviour(card);
             }
 
         },

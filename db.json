@@ -7,13 +7,13 @@
         {
           "id": 1,
           "name": "lungs",
-          "issues":[
+          "issues": [
             {
-              "id":1,
+              "id": 1,
               "data": "Dehydration",
-              "evidence":[
+              "evidence": [
                 {
-                  "id":1,
+                  "id": 1,
                   "data": "Condition of oral mucosa",
                   "score": 10
                 },
@@ -25,9 +25,9 @@
               ]
             },
             {
-              "id":2,
+              "id": 2,
               "data": "Hypovolaemia",
-              "evidence":[
+              "evidence": [
                 {
                   "id": 3,
                   "data": "Pale colour",
