@@ -17,6 +17,7 @@ define(function (require) {
 			'cases/:id/information/background': 'caseBackground',
 			'cases/:id/information/virtualpatient': 'virtualPatient',
 			'cases/:id/activity/issues': 'caseIssues',
+			'cases/:id/activity/issues/topics': 'caseTopicUnlock',
 
 			'cases/:id/activity/goals': 'goalsActionActivity',
             'cases/:id/activity/goals/create': 'goalsActionActivityCreateGoal',
@@ -95,6 +96,10 @@ define(function (require) {
 
 		caseIssues: function (caseId) {
 			this._load('component/Issues_Evidence/IEModule', caseId);
+		},
+
+		caseTopicUnlock: function (caseId) {
+			this._load('component/Issues_Evidence/Topic_Unlock/TopicUnlock', caseId);
 		},
 
         /**
