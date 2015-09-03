@@ -91,8 +91,22 @@ define(function(require){
           questions.fetch();
           this.listenTo(testtypes, 'sync', this.onSync);
           testtypes.fetch();
+
+          this.addChildView('#query-menu', 'component/virtualpatient/QuestionsMenu');
+          this.addChildView('#test-menu', 'component/virtualpatient/TestsMenu');
+          this.addChildView('#event-feed', 'component/virtualpatient/EventFeed');
+          this.addChildView('#patients-chart-table', 'component/virtualpatient/PatientsChart');
+
           this.render();
         },
+
+        // onBeforeRender: function() {
+        //     console.log('on before render');
+        //     this.addChildView('#query-menu', 'component/virtualpatient/QuestionsMenu');
+        //     this.addChildView('#test-menu', 'component/virtualpatient/TestsMenu');
+        //     this.addChildView('#event-feed', 'component/virtualpatient/EventFeed');
+        //     this.addChildView('#patients-chart-table', 'component/virtualpatient/PatientsChart');
+        // },
 
         onSync: function (collection) {
           // TODO
@@ -104,15 +118,13 @@ define(function(require){
           this._transformItems();
           this._hideElements();
           this._startEventFeed();
+        //   this.setSubView('#query-menu', QuestionsMenuController, this.collection.questions);
         },
 
-        // everything should have loaded. Add Model and Collection event handling here.
-        // onReady: function () {
-        //     this.listenTo(this.collection, 'add', this.render);
-        //     //this.collection.add({name: 'New'});
-        //     alert("hello world");
-        //     this._hideElements();
-        //     this._startEventFeed();
+        // setSubView: function (selector, ViewController, model) {
+        //     this.addNestedView(selector, new ViewController({
+        //         model: model
+        //     }));
         // },
 
         _hideElements: function() {
@@ -310,6 +322,8 @@ define(function(require){
             }
 
         },
+
+
         _showPatientsChart: function () {
             $('#patients-chart-table').show();
             $('#hide-chart-button').show();
