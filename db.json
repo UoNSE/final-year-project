@@ -2,51 +2,61 @@
   "cases": [
     {
       "id": 1,
-      "name": "Case 1",
-      "topics": [
-        {
-          "id": 1,
-          "name": "lungs",
-          "issues": [
-            {
-              "id": 1,
-              "data": "Dehydration",
-              "evidence": [
-                {
-                  "id": 1,
-                  "data": "Condition of oral mucosa",
-                  "score": 10
-                },
-                {
-                  "id": 2,
-                  "data": "Level of thirst",
-                  "score": 10
-                }
-              ]
-            },
-            {
-              "id": 2,
-              "data": "Hypovolaemia",
-              "evidence": [
-                {
-                  "id": 3,
-                  "data": "Pale colour",
-                  "score": 2
-                },
-                {
-                  "id": 4,
-                  "data": "Pulse rate very high (120 bpm)",
-                  "score": 2
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      "name": "Case 1"
     },
     {
       "id": 2,
       "name": "Case 2"
+    }
+  ],
+  "topics": [
+    {
+      "id": 1,
+      "name": "lungs",
+      "caseId": 1
+    },
+    {
+      "id": 2,
+      "name": "heart",
+      "caseId": 2
+    }
+  ],
+  "issues": [
+    {
+      "id": 1,
+      "data": "Dehydration",
+      "topicId": 1
+    },
+    {
+      "id": 2,
+      "data": "Hypovolaemia",
+      "topicId": 1
+    }
+  ],
+  "evidence": [
+    {
+      "id": 1,
+      "data": "Condition of oral mucosa",
+      "score": 10,
+      "issueId": 1
+    },
+    {
+      "id": 2,
+      "data": "Level of thirst",
+      "score": 10,
+      "issueId": 1
+    },
+    {
+      "id": 3,
+      "data": "Pale colour",
+      "score": 2,
+      "issueId": 2
+    },
+    {
+      "id": 4,
+      "data": "Pulse rate very high (120 bpm)",
+      "score": 2,
+      "issueId": 2
     }
   ],
   "goals": [
