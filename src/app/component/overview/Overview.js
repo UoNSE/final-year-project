@@ -25,15 +25,15 @@ define(function (require) {
 
 			this.add(new Timeline({
 				collection: new Buttons([
-					{text: 'Case\nInformation'},
-					{text: 'Identify\nIssues', disabled: true},
-					{text: 'Goals and\nActions', disabled: true},
+					{text: 'Case Information'},
+					{text: 'Identify Issues', disabled: true},
+					{text: 'Goals and Actions', disabled: true},
 					{text: 'Reflection', disabled: true}
 				])
 			}));
 			var hint = this.add(new Hint({
 				model: {
-					text: 'Touch an activity below'
+					text: 'Tap an activity below'
 				}
 			}));
 			hint.position.y = 100;

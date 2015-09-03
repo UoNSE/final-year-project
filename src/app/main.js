@@ -27,6 +27,16 @@ define(function (require) {
 			'tweenjs': {
 				exports: 'TWEEN'
 			}
+		},
+		config: {
+			'core/Router': {
+				routes: {
+					'': 'Start',
+					'start': 'Start',
+					'cases': 'Cases',
+					'cases/:id/overview': 'Overview'
+				}
+			}
 		}
 	});
 

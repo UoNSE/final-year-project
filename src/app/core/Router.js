@@ -1,4 +1,4 @@
-define(function (require) {
+define(function (require, exports, module) {
 
 	var Backbone = require('backbone');
 	var $ = require('jquery');
@@ -8,12 +8,8 @@ define(function (require) {
 		initialize: function (scene) {
 			this.scene = scene;
 
-			this.setupRoutes({
-				'': 'Start',
-				'start': 'Start',
-				'cases': 'Cases',
-				'cases/:id/overview': 'Overview'
-			});
+			// Note: add new routes in main.js
+			this.setupRoutes(module.config().routes);
 		},
 
 		setupRoutes: function (routes) {
