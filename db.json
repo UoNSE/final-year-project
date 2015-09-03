@@ -2,39 +2,7 @@
   "cases": [
     {
       "id": 1,
-      "name": "Dang Tien",
-      "issues": [
-        {
-          "id": 1,
-          "content": "Dehydration"
-        },
-        {
-          "id": 2,
-          "content": "Hypovolaemia"
-        }
-      ],
-      "evidence": [
-        {
-          "id": 1,
-          "content": "Condition of oral mucosa",
-          "issueId": 1
-        },
-        {
-          "id": 2,
-          "content": "Level of thirst",
-          "issueId": 1
-        },
-        {
-          "id": 3,
-          "content": "Pale colour",
-          "issueId": 2
-        },
-        {
-          "id": 4,
-          "content": "Pulse rate very high (120 bpm)",
-          "issueId": 2
-        }
-      ]
+      "name": "Case 1"
     },
     {
       "id": 2,
@@ -69,6 +37,56 @@
       "name": "Bob"
     }
   ],
+  "topics": [
+    {
+      "id": 1,
+      "name": "lungs",
+      "caseId": 1
+    },
+    {
+      "id": 2,
+      "name": "heart",
+      "caseId": 2
+    }
+  ],
+  "issues": [
+    {
+      "id": 1,
+      "data": "Dehydration",
+      "topicId": 1
+    },
+    {
+      "id": 2,
+      "data": "Hypovolaemia",
+      "topicId": 1
+    }
+  ],
+  "evidence": [
+    {
+      "id": 1,
+      "data": "Condition of oral mucosa",
+      "score": 10,
+      "issueId": 1
+    },
+    {
+      "id": 2,
+      "data": "Level of thirst",
+      "score": 10,
+      "issueId": 1
+    },
+    {
+      "id": 3,
+      "data": "Pale colour",
+      "score": 2,
+      "issueId": 2
+    },
+    {
+      "id": 4,
+      "data": "Pulse rate very high (120 bpm)",
+      "score": 2,
+      "issueId": 2
+    }
+  ],
   "goals": [
     {
       "content": "testing 123",
@@ -97,7 +115,7 @@
     },
     {
         "id": 2,
-        "text": "blood test"
+        "text": "blood test",
         "bloodtesttype":[
             {
                 "id": 1,
@@ -214,26 +232,6 @@
           "id": 4,
           "observation": "skin",
           "result": "pale, clammy",
-          "patientId": 1
-        }
-      ],
-      "responses": [
-        {
-        "id": 1,
-        "questionId":
-        "answer": "not very",
-        "patientId": 1
-        },
-        {
-          "id": 2,
-          "question": "appetite",
-          "answer": "not very",
-          "patientId": 1
-        },
-        {
-          "id": 3,
-          "question": "thirst",
-          "answer": "very",
           "patientId": 1
         }
       ]
