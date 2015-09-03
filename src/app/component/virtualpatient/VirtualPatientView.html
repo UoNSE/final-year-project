@@ -101,6 +101,9 @@
         <br><br>
         <ul>
             <li>
+                <button id="query-card1" class="btn btn-material-blue btn-raised query-card menu-item">{{#foreach questions}}</button>
+            </li>
+            <li>
                 <button id="query-card1" class="btn btn-material-blue btn-raised query-card menu-item">Where does it hurt?</button>
             </li>
             <li>
@@ -186,7 +189,7 @@
         <div class="panel-heading">
             <h3 class="panel-title">Patients Chart</h3>
         </div>
-        {{#each []}}
+        {{#each patients}}
         <table>
             <tr>
                 <td>First Name</td>

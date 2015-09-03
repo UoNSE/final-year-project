@@ -15,22 +15,42 @@
 define(function(require){
 
     var $ = require('jquery');
+
+    // the virtual patient view
     var template = require('text!component/virtualpatient/VirtualPatientView.html');
+
+    // collections
     var Patients = require('collection/Patients');
-    var glm = require('glmatrix');
+    var Questions = require('collection/TestTypes');
+    var TestTypes = require('collection/TestTypes');
+
+    // controllers
     var ViewController = require('controller/ViewController');
+    var TestMenuController = require('controller/TestMenuController');    
+    var QuestionsMenuController = require('controller/TestMenuController');
+
+
+    // behaviours
+    var glm = require('glmatrix');
     var MultiTouchManager = require('behaviour/MultiTouchManager');
     var DraggableBehaviour = require('behaviour/DraggableBehaviour');
-    var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour'); //
+    var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
+
+    // class variables
     var numEventCardsShowingInFeed = 0;
     var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3", "#speech-card1","#speech-card2"]; // ,"#dummy-card1", "#dummy-card2","#dummy-card3", "#dummy-card4"
     var feedCardSchedule = [1000,2000,3000,4000,5000]; //, 6000, 7000, 8000, 9000
     var cardsDisplayedList = [];
 
+
     return ViewController.extend({
 
     template: template,
-    collection: new Patients(),
+    collection: {
+        patients: new Patients(),
+        questions: new Questions(),
+        testtypes: new TestTypes(),
+    },
     multitouch: MultiTouchManager.getInstance(),
     // collection: 'Patients',
     styles: 'virtual-patient.css',
@@ -59,8 +79,17 @@ define(function(require){
 
         initialize: function () {
           ViewController.prototype.initialize.apply(this, arguments);
-          this.listenTo(this.collection, 'sync', this.onSync);
-          this.collection.fetch();
+
+          var patients = this.collection.patients;
+          var questions = this.collection.questions;
+          var testtypes = this.collection.testtypes;
+
+          this.listenTo(patients, 'sync', this.onSync);
+          patients.fetch();
+          this.listenTo(questions, 'sync', this.onSync);
+          questions.fetch();
+          this.listenTo(testtypes, 'sync', this.onSync);
+          testtypes.fetch();
           this.render();
         },
 
@@ -74,7 +103,6 @@ define(function(require){
           this._transformItems();
           this._hideElements();
           this._startEventFeed();
-
         },
 
         // everything should have loaded. Add Model and Collection event handling here.
