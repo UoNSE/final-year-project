@@ -5,16 +5,15 @@ define(function (require) {
 	var Button = require('component/button/Button');
 
 	return Component.extend({
-		initialize: function (options) {
+		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 
-			var n = options.buttons.length;
+			var buttons = this.collection;
+			var n = buttons.size();
 			var distanceBetween = 200;
-			options.buttons.forEach(function (buttonOptions, i) {
+			buttons.each(function (model, i) {
 				var button = new Button({
-					model: {
-						text: buttonOptions.text
-					}
+					model: model
 				});
 				var scale = i - (n - 1) / 2;
 				button.position.set(scale * distanceBetween, 0);

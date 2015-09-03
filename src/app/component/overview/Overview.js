@@ -4,6 +4,7 @@ define(function (require) {
 	var Component = require('core/Component');
 	var template = require('text!component/overview/Overview.hbs');
 
+	var Buttons = require('collection/Buttons');
 	var Timeline = require('component/timeline/Timeline');
 	var Hint = require('component/hint/Hint');
 
@@ -23,12 +24,12 @@ define(function (require) {
 			Component.prototype.initialize.apply(this, arguments);
 
 			this.add(new Timeline({
-				buttons: [
+				collection: new Buttons([
 					{text: 'Case\nInformation'},
 					{text: 'Identify\nIssues', disabled: true},
 					{text: 'Goals and\nActions', disabled: true},
 					{text: 'Reflection', disabled: true}
-				]
+				])
 			}));
 			var hint = this.add(new Hint({
 				model: {
