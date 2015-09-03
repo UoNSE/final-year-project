@@ -223,6 +223,10 @@ define(function (require) {
 
         cardSplit: function($card){
             //dependent on merging function
+            
+            if(!($card.hasClass("issuestack")||$card.hasClass("evidencestack"))){
+                return;
+            }
             var childElem = $card.children().children();
             childElem.each(function(i, element){
                 //skip panel-body elements
@@ -237,7 +241,7 @@ define(function (require) {
                     for(var i=0; i<list.length;i++){
                         var card = list[i];
                         if($(card).html()==$(newcard).html())
-                            this.addCardBehaviour(card);
+                            this.placeCard(i,card);
                     }
                 }
                 else{
@@ -246,7 +250,7 @@ define(function (require) {
                     for(var i=0; i<list.length;i++){
                         var card = list[i];
                         if($(card).html()==$(newcard).html())
-                            this.addCardBehaviour(card);
+                            this.placeCard(i,card);
                     }
                 }
             }.bind(this));
