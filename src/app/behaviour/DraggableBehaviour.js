@@ -68,7 +68,10 @@ define(function (require) {
 			// Check if we are no longer dragging an element, by checking if the element doesn't exist in the current intersection.
 			if ($elements.index(component.$el) === -1) {
 				// Trigger a touchleave event and remove the element from the set.
-				component.trigger('touchleave');
+				component.trigger('touchleave', {
+					draggable: this.multiTouchElement.component,
+					droppable: component
+				});
 				delete this.dragging[key];
 			}
 		}.bind(this));
@@ -79,8 +82,12 @@ define(function (require) {
 			var multiTouchElement = this.multiTouchManager.get(id);
 			// If the multitouch element exists, add the component to the list of components being hovered on and trigger a touch enter event.
 			if (multiTouchElement) {
-				this.dragging[id] = multiTouchElement.component;
-				multiTouchElement.component.trigger('touchenter');
+				var droppable = multiTouchElement.component;
+				this.dragging[id] = droppable;
+				multiTouchElement.component.trigger('touchenter', {
+					draggable: this.multiTouchElement.component,
+					droppable: droppable
+				});
 			}
 		}.bind(this));
 	};

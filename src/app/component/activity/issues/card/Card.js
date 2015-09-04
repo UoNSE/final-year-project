@@ -2,16 +2,16 @@ define(function (require) {
 
 	'use strict';
 
-	var Panel = require('component/panel/Panel');
+	var Container = require('component/container/Container');
 
-	return Panel.extend({
+	return Container.extend({
+
 		initialize: function () {
-			Panel.prototype.initialize.apply(this, arguments);
+			Container.prototype.initialize.apply(this, arguments);
 			this.interactive = true;
-			this.setDraggable({
-				opacity: 0.7
-			});
+			this.setDraggable({opacity: 0.7});
 		}
+
 	});
 
 });

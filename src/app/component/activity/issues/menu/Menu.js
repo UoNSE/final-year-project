@@ -23,6 +23,8 @@ define(function (require) {
 			this.delete.position.set(75, -200);
 			this.split.position.set(-75, -200);
 
+			this.bindEvents();
+
 		},
 
 		addDeleteButton: function () {
@@ -41,6 +43,19 @@ define(function (require) {
 					color: this.color
 				})
 			}));
+		},
+
+		bindEvents: function () {
+			this.delete.on('dragendsink', this.onDelete.bind(this));
+			this.split.on('dragendsink', this.onSplit.bind(this));
+		},
+
+		onDelete: function (event) {
+			this.trigger('delete', event);
+		},
+
+		onSplit: function (event) {
+			this.trigger('split', event);
 		},
 
 		hide: function () {

@@ -6,11 +6,13 @@ define(function (require) {
 
     var IssuesCollection = require('collection/Issues');
     var EvidenceCollection = require('collection/Evidence');
+    var Container = require('model/Container');
     var Panel = require('model/Panel');
 
     var Menu = require('component/activity/issues/menu/Menu');
     var Issue = require('component/activity/issues/card/issue/Issue');
     var Evidence = require('component/activity/issues/card/evidence/Evidence');
+    var Merge = require('component/activity/issues/card/merge/Merge');
 
     return Component.extend({
 
@@ -40,6 +42,10 @@ define(function (require) {
             evidence.fetch();
 
             this.menu = this.add(new Menu());
+            this.menu.on({
+                delete: this.onDelete.bind(this),
+                split: this.onSplit.bind(this)
+            });
             //this.menu.hide();
 
         },
@@ -118,7 +124,7 @@ define(function (require) {
         bindDraggableEvents: function (component) {
             component.on({
                 drag: this.onDrag.bind(this),
-                dragendsource: this.onDrop.bind(this)
+                dragendsink: this.onDrop.bind(this)
             });
         },
 
@@ -135,24 +141,39 @@ define(function (require) {
          * @param event
          */
         onDrop: function (event) {
-            var menu = this.menu;
-            var card = event.draggable;
-            // Check if we are currently hovering on the delete button.
-            if (menu.delete.isActive()) {
-                card.remove();
+            var draggable = event.draggable;
+            var droppable = event.droppable;
+            this.merge(draggable, droppable);
 
-            }
-            // Check if we are currently hovering on the split button.
-            if (menu.split.isActive()) {
-                // TODO
-            }
             //menu.hide();
         },
 
-        createCard: function (cardType, content) {
-			var panelType =  ( cardType === "Issue" ) ? "info" : "danger";
-			return "<div class='panel panel-" + panelType + " abs-center "+cardType.toLowerCase()+" card' style='width: 300px; height: 100px'>"+"\n"+"<div class='panel-heading'>"+"\n"+"<h3 class='panel-title'>" + cardType + "</h3>"+"\n"+"</div>"+"\n"+"<div class='panel-body'>" +"\n"+ content +"\n"+ "</div>"+"\n"+"</div>";
-		}
+        onDelete: function (event) {
+            event.draggable.remove();
+        },
+
+        onSplit: function (event) {
+            // TODO
+        },
+
+        merge: function (draggable, droppable) {
+            if (droppable instanceof Merge) {
+                droppable.collection.add(draggable.model);
+                draggable.remove();
+            } else {
+                var merge = this.add(new Merge({
+                    model: new Container({
+                        title: 'Issues and evidence',
+                        color: 'success',
+                        components: new Backbone.Collection([draggable, droppable])
+                    })
+                }));
+                merge.position.copy(droppable.position);
+                draggable.remove();
+                droppable.remove();
+            }
+        },
+
 
     });
 

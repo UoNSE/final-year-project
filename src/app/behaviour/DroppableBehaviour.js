@@ -6,6 +6,8 @@ define(function (require) {
 		this.multiTouchElement = multiTouchElement;
 		this.droppableTypes = options.types ? Array.isArray(options.types) ? options.types : [options.types] : [];
 		this.multiTouchElement.component.on({
+			touchenter: this.onTouchEnter.bind(this),
+			touchleave: this.onTouchLeave.bind(this),
 			dragendsink: this.onDragEndSink.bind(this),
 			dragendsource: this.onDragEndSource.bind(this)
 		});
@@ -18,6 +20,15 @@ define(function (require) {
 	DroppableBehaviour.prototype.onMouseLeave = function () {
 		this.multiTouchElement.component.trigger('mouseleave');
 	};
+
+	DroppableBehaviour.prototype.onTouchEnter = function (event) {
+		this.drop(event, 'dropenter');
+	};
+
+	DroppableBehaviour.prototype.onTouchLeave = function (event) {
+		this.drop(event, 'dropleave');
+	};
+
 
 	DroppableBehaviour.prototype.onDragEndSink = function (event) {
 		this.drop(event, 'dropsink');

@@ -6,6 +6,11 @@ define(function (require) {
 
 	return Card.extend({
 
+		initialize: function () {
+			Card.prototype.initialize.apply(this, arguments);
+			this.setDroppable({types: Card});
+		}
+
 	});
 
 });

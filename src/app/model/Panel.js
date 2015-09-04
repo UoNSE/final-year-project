@@ -5,15 +5,14 @@ define(function (require) {
 	return Backbone.Model.extend({
 
 		defaults: {
-			heading: 'Heading',
-			body: 'Body',
+			title: 'Title',
+			body: '',
 			color: 'default',
 			classes: null,
 			width: 300,
-			height: 100
+			height: 90
 		}
 
 	});
 
 });
-
