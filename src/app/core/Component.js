@@ -1,6 +1,8 @@
 define(function (require) {
 	'use strict';
 
+	var $ = require('jquery');
+
 	var Object2D = require('core/Object2D');
 	var Handlebars = require('handlebars');
 	var multiTouchManager = require('behaviour/MultiTouchManager').getInstance();
@@ -94,14 +96,20 @@ define(function (require) {
 			dataModel = dataModel || {};
 			// Check if there is only one data model.
 			if (dataModel instanceof instance) {
+				this.bindDataModelEvents(dataModel);
 				// Add the JSON data model to the object with the specified key.
 				object[key] = dataModel.toJSON();
 			} else {
 				// Iterate over the data models and and add the JSON values to the object.
 				$.each(dataModel, function (key, dataModel) {
+					this.bindDataModelEvents(dataModel);
 					object[key] = dataModel.toJSON ? dataModel.toJSON() : dataModel;
-				});
+				}.bind(this));
 			}
+		},
+
+		bindDataModelEvents: function (model) {
+			this.listenTo(model, 'change', this.render);
 		},
 
 		getMultiTouchElement: function () {
