@@ -12,6 +12,8 @@ define(function (require) {
 
 	MultiTouchElement.prototype.bindEvents = function () {
 		this.element.on({
+			mouseenter: this.onMouseEnter.bind(this),
+			mouseleave: this.onMouseLeave.bind(this),
 			mousedown: this.onMouseDown.bind(this),
 			touchstart: this.onTouchStart.bind(this),
 			remove: this.onRemove.bind(this)
@@ -28,6 +30,14 @@ define(function (require) {
 				this.behaviours[i][eventCallbackName](this.element, event);
 			}
 		}
+	};
+
+	MultiTouchElement.prototype.onMouseEnter = function (event) {
+		this.dispatchEvent('onMouseEnter', event);
+	};
+
+	MultiTouchElement.prototype.onMouseLeave = function (event) {
+		this.dispatchEvent('onMouseLeave', event);
 	};
 
 	MultiTouchElement.prototype.onMouseDown = function (event) {
