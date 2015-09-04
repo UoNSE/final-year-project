@@ -1,2 +1,5 @@
-<button class="cpn-button btn btn-primary btn-fab btn-raised{{#if disabled}} btn-disabled{{/if}}">{{breaklines text}}</button>
-
+<!--{{#if href}}{{#unless disabled}}<a href="{{href}}">{{/unless}}{{/if}}-->
+{{#if href}}<a href="{{href}}">{{/if}}
+<button class="cpn-button btn btn-{{mtl-color color}} btn-fab btn-raised{{#if disabled}} btn-disabled{{/if}}">{{breaklines text}}</button>
+<!--{{#if href}}{{#unless disabled}}</a>{{/unless}}{{/if}}-->
+{{#if href}}</a>{{/if}}

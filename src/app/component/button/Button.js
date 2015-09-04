@@ -5,10 +5,8 @@ define(function (require) {
 	var template = require('text!component/button/Button.hbs');
 
 	return Component.extend({
-
 		template: template,
-		styles: ['component/button/Button.css']
-
+		styles: 'component/button/Button.css'
 	});
 
 });

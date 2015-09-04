@@ -6,7 +6,9 @@ define(function (require) {
 
 		defaults: {
 			text: 'button',
-			disabled: false
+			color: 'primary',
+			disabled: false,
+			href: null
 		}
 
 	});

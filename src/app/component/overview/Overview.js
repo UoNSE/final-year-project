@@ -13,22 +13,15 @@ define(function (require) {
 		template: template,
 		styles: 'case-overview.css',
 
-		events: {
-			//'click #case-information': 'onCaseInformation',
-			//'click #identify-issues': 'onIdentifyIssues',
-			//'click #goals-and-actions': 'onGoalsAndActions',
-			//'click #reflection': 'onReflection'
-		},
-
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 
 			this.add(new Timeline({
 				collection: new Buttons([
-					{text: 'Case Information'},
-					{text: 'Identify Issues', disabled: true},
-					{text: 'Goals and Actions', disabled: true},
-					{text: 'Reflection', disabled: true}
+					{text: 'Case Information', href: this.getLink('information')},
+					{text: 'Identify Issues', href: this.getActivityLink('issues'), disabled: true},
+					{text: 'Goals and Actions', href: this.getActivityLink('goals-and-actions'), disabled: true},
+					{text: 'Reflection', href: this.getActivityLink('reflection'), disabled: true}
 				])
 			}));
 			var hint = this.add(new Hint({
@@ -39,24 +32,12 @@ define(function (require) {
 			hint.position.y = 100;
 		},
 
-		onCaseInformation: function () {
-			// TODO
-			//Animate.scaleOut($(this.selector), {
-			//	duration: 500,
-			//	easing: 'easeInBack'
-			//});
+		getActivityLink: function (name) {
+			return 'cases/' + '1' + '/activity/' + name;
 		},
 
-		onIdentifyIssues: function () {
-			// TODO
-		},
-
-		onGoalsAndActions: function () {
-
-		},
-
-		onReflection: function () {
-			// TODO
+		getLink: function (name) {
+			return 'cases/' + '1' + '/' + name;
 		}
 
 	});
