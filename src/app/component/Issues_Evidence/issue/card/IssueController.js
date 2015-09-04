@@ -3,7 +3,7 @@ define(function (require) {
 	'use strict';
 
 	var ViewController = require('controller/ViewController');
-	var template = require('text!component/Issues_Evidence/issue/IssueView.html');
+	var template = require('text!component/Issues_Evidence/issue/card/IssueView.html');
 
 	return ViewController.extend({
 

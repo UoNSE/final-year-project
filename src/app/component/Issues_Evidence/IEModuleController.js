@@ -13,7 +13,7 @@ define(function (require) {
     var Issues = require('collection/Issues');
     var Evidence = require('collection/Evidence');
 
-    var IssueViewController = require('component/Issues_Evidence/issue/IssueController');
+    var IssueViewController = require('component/Issues_Evidence/issue/card/IssueController');
     var EvidenceViewController = require('component/Issues_Evidence/evidence/EvidenceController');
 
     var MultiTouchManager = require('behaviour/MultiTouchManager').getInstance();
