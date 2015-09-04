@@ -18,7 +18,7 @@ define(function (require) {
 
 			this.add(new Timeline({
 				collection: new Buttons([
-					{text: 'Case Information', href: this.getLink('information')},
+					{text: 'Case Information', href: 'cases/' + this.model.id + '/information'},
 					{text: 'Identify Issues', href: this.getActivityLink('issues'), disabled: true},
 					{text: 'Goals and Actions', href: this.getActivityLink('goals-and-actions'), disabled: true},
 					{text: 'Reflection', href: this.getActivityLink('reflection'), disabled: true}
@@ -33,11 +33,7 @@ define(function (require) {
 		},
 
 		getActivityLink: function (name) {
-			return 'cases/' + '1' + '/activity/' + name;
-		},
-
-		getLink: function (name) {
-			return 'cases/' + '1' + '/' + name;
+			return 'cases/' + this.model.id + '/activity/' + name;
 		}
 
 	});

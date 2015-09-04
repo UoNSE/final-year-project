@@ -31,13 +31,13 @@ define(function (require) {
 		config: {
 			'core/Router': {
 				routes: {
-					'': 'start',
-					'start': 'start',
-					'cases': 'cases',
-					'cases/:id/overview': 'overview',
-					'cases/:id/information': 'information',
-					'cases/:id/activity/virtual-patient': 'virtualPatient',
-					'cases/:id/activity/issues': 'issues'
+					'': 'Start',
+					'start': 'Start',
+					'cases': 'Cases',
+					'cases/:id/overview': 'case/Overview',
+					'cases/:id/information': 'Information',
+					'cases/:id/activity/virtual-patient': 'activity/VirtualPatient',
+					'cases/:id/activity/issues': 'activity/Issues'
 				}
 			}
 		}

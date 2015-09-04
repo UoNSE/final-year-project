@@ -22,12 +22,6 @@ define(function (require) {
 				}));
 			}.bind(this));
 
-			//Animate.scale($(this.selector), {duration: 1000});
-			//Animate.scale($('#btn-case-overview'), {
-			//	css: {fontSize: 20},
-			//	delay: 500,
-			//	duration: 1000
-			//});
 		}
 	});
 });
