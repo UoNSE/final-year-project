@@ -11,8 +11,8 @@ define(function (require) {
 	return Component.extend({
 
 		template: template,
-		classes: ['cases-container'],
-		styles: ['component/cases/Cases.css'],
+		classes: 'cases-container',
+		styles: 'component/cases/Cases.css',
 
 		collection: new Cases(),
 

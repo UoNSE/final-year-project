@@ -13,7 +13,7 @@ define(function (require, exports, module) {
 		},
 
 		setupRoutes: function (routes) {
-			var namedParam    = /(\(\?)?:\w+/g;
+			var namedParam = /(\(\?)?:\w+/g;
 			$.each(routes, function (url, page) {
 				var match;
 				var names = [];
