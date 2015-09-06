@@ -4,6 +4,8 @@ var gulp = require('gulp');
 var exec = require('gulp-exec');
 var less = require('gulp-less');
 var jshint = require('gulp-jshint');
+var babel = require('gulp-babel');
+
 
 /**
  * Configuration: paths to scrips and resources.
@@ -45,10 +47,20 @@ gulp.task('serve', function () {
 
 /**
  * Task:
+ * - Performs Babel 'transpilation' giving us access to ES6 features.
+ */
+gulp.task('babel', function () {
+    return gulp.src(paths.client)
+        .pipe(babel())
+        .pipe(gulp.dest('dist'));
+});
+
+/**
+ * Task:
  * - initiates 'serve' and reloads changes.
  * - bundles above tasks.
  */
-gulp.task('start', ['serve', 'less', 'lint'], function () {
+gulp.task('start', ['babel', 'serve', 'less', 'lint'], function () {
     // add additional config
 });
 
