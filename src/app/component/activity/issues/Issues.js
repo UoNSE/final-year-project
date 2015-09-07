@@ -6,19 +6,19 @@ define(function (require) {
 
     var IssuesCollection = require('collection/Issues');
     var EvidenceCollection = require('collection/Evidence');
-    var Container = require('model/Container');
+    var IssueGroupModel = require('model/IssueGroup');
     var Panel = require('model/Panel');
 
     var Menu = require('component/activity/issues/menu/Menu');
     var Issue = require('component/activity/issues/card/issue/Issue');
     var Evidence = require('component/activity/issues/card/evidence/Evidence');
-    var Merge = require('component/activity/issues/card/merge/Merge');
+    var IssueGroup = require('component/activity/issues/card/issuegroup/IssueGroup');
 
     return Component.extend({
 
         template: template,
         classes: ['issues'],
-        styles: 'component/activity/issues/issues.css',
+        styles: 'component/activity/issues/Issues.css',
 
         menu: null,
 
@@ -30,6 +30,9 @@ define(function (require) {
         initialize: function () {
 
             Component.prototype.initialize.apply(this, arguments);
+
+			this.width = 300;
+			this.height = 90;
 
             var issues = this.collection.issues;
             var evidence = this.collection.evidence;
@@ -91,7 +94,9 @@ define(function (require) {
                 model: new Panel({
                     title: 'Issue',
                     body: model.get('content'),
-                    color: 'danger'
+                    color: 'danger',
+					width: this.width,
+					height: this.height
                 })
             }));
             this.bindDraggableEvents(issue);
@@ -109,7 +114,9 @@ define(function (require) {
                 model: new Panel({
                     title: 'Evidence',
                     body: model.get('content'),
-                    color: 'info'
+                    color: 'info',
+					width: this.width,
+					height: this.height
                 })
             }));
             this.bindDraggableEvents(evidence);
@@ -157,23 +164,25 @@ define(function (require) {
         },
 
         merge: function (draggable, droppable) {
-            if (droppable instanceof Merge) {
+            if (droppable instanceof IssueGroup) {
+                // TODO
                 droppable.collection.add(draggable.model);
                 draggable.remove();
             } else {
-                var merge = this.add(new Merge({
-                    model: new Container({
+				debugger;
+                var issueGroup = this.add(new IssueGroup({
+                    model: new IssueGroupModel({
+						width: this.width,
                         title: 'Issues and evidence',
                         color: 'success',
-                        components: new Backbone.Collection([draggable, droppable])
+                        evidence: new Backbone.Collection([draggable.model, droppable.model])
                     })
                 }));
-                merge.position.copy(droppable.position);
+                issueGroup.position.copy(droppable.position);
                 draggable.remove();
                 droppable.remove();
             }
-        },
-
+        }
 
     });
 

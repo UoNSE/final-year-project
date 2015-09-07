@@ -9,8 +9,8 @@ define(function (require) {
 			body: '',
 			color: 'default',
 			classes: null,
-			width: 300,
-			height: 90
+			width: null,
+			height: null
 		}
 
 	});
