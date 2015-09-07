@@ -25,17 +25,20 @@
     {
       "id": 1,
       "data": "Dehydration",
-      "topicId": 1
+      "topicId": 1,
+      "cost": 20
     },
     {
       "id": 2,
       "data": "Hypovolaemia",
-      "topicId": 2
+      "topicId": 2,
+      "cost": 4
     },
     {
       "id": 3,
       "data": "Nausea",
-      "topicId": 1
+      "topicId": 1,
+      "cost": 0
     }
   ],
   "evidence": [
@@ -43,24 +46,28 @@
       "id": 1,
       "data": "Condition of oral mucosa",
       "score": 10,
+      "maxscore": 20,
       "issueId": 1
     },
     {
       "id": 2,
       "data": "Level of thirst",
       "score": 10,
+      "maxscore": 20,
       "issueId": 1
     },
     {
       "id": 3,
       "data": "Pale colour",
       "score": 2,
+      "maxscore": 4,
       "issueId": 2
     },
     {
       "id": 4,
       "data": "Pulse rate very high (120 bpm)",
       "score": 2,
+      "maxscore": 4,
       "issueId": 2
     }
   ],

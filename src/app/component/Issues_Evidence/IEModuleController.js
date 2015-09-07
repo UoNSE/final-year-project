@@ -219,6 +219,7 @@ define(function (require) {
                 this.cardMerge(event, this.mergeCard);
             }
             this.menu.toggleClass('hidden', true);
+            console.log(this.getScore($card));
         },
 
         cardSplit: function($card){
@@ -234,7 +235,7 @@ define(function (require) {
                     return true;
                 }
                 var nextRow = childElem.eq(i + 1);
-                var newcard = this.createCard($(element).text().trim(), $(nextRow).text().trim());
+                var newcard = this.createCard($(element).text().trim(), $(nextRow).html().trim());
                 if($(element).text().trim()=="Issue"){
                     $("#issues").append(newcard);
                     var list = $("#issues").children();
@@ -257,6 +258,38 @@ define(function (require) {
             $card.remove();
 
         },
+
+        getScore: function(card){
+            var list=$(card).find(".score");
+            var maxlist = $(card).find(".max-score");
+            var count = 0;
+            var max = 0;
+            var penalty = 0;
+            list.each(function(){
+                count += parseInt($(this).text(),10);
+            })
+            maxlist.each(function(){
+                if(max==0){
+                    max = parseInt($(this).text(),10);
+                }
+                else if(max != parseInt($(this).text(),10)){
+                    penalty += 1;
+                    if(max > parseInt($(this).text(),10)){
+                        max = parseInt($(this).text(),10);
+                    }
+                }
+            })
+            if (penalty != 0){
+                console.log("penalty");
+                count -= penalty;
+            }
+            else if (max != count) {
+
+                count -= 2;
+            }
+            return count;
+        },
+
 
         cardMerge: function (event, card){
             event = event.currentTarget.element;
