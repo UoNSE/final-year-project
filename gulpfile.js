@@ -5,7 +5,7 @@ var exec = require('gulp-exec');
 var less = require('gulp-less');
 var jshint = require('gulp-jshint');
 var babel = require('gulp-babel');
-
+var watch = require('gulp-watch');
 
 /**
  * Configuration: paths to scrips and resources.
@@ -14,17 +14,6 @@ var paths = {
     client: ['src/app/*.js', 'src/app/**/*.js'],
     styles: ['src/resources/css']
 };
-
-/**
- * Compiles .less files.
- */
-gulp.task('less', function () {
-    return gulp.src('src/resources/css/*.less')
-        .pipe(less({
-            paths: paths.styles
-        }))
-        .pipe(gulp.dest('src/resources/css/'));
-});
 
 /**
  * Performs a JSHint code evaluation.
@@ -52,7 +41,20 @@ gulp.task('serve', function () {
 gulp.task('babel', function () {
     return gulp.src(paths.client)
         .pipe(babel())
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('src/dist'));
+});
+
+/**
+ * Task:
+ * - Performs all tasks involving JS code.
+ */
+gulp.task('dev', function () {
+    return gulp.src(paths.client)
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(babel())
+        .pipe(gulp.dest('src/dist'));
 });
 
 /**
@@ -60,11 +62,12 @@ gulp.task('babel', function () {
  * - initiates 'serve' and reloads changes.
  * - bundles above tasks.
  */
-gulp.task('start', ['babel', 'serve', 'less', 'lint'], function () {
+gulp.task('start', function () {
     // add additional config
+    gulp.watch(paths.scripts, ['dev']);
 });
 
 /**
  * Default startup task.
  */
-gulp.task('default', ['start']);
+gulp.task('default', ['start', 'dev']);

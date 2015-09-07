@@ -3,4 +3,4 @@
 /src/lib/
 /src/resources/css/*.css
 *.orig
-/dist
+/src/dist
