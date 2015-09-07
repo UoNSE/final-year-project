@@ -70,4 +70,4 @@ gulp.task('start', function () {
 /**
  * Default startup task.
  */
-gulp.task('default', ['start', 'dev']);
+gulp.task('default', ['start', 'dev', 'serve']);
