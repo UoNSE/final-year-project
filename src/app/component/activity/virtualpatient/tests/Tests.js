@@ -9,6 +9,8 @@ define(function(require) {
 
 	var UrineAnalysis = require('component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis');
 	var BloodTest = require('component/activity/virtualpatient/tests/bloodtest/BloodTest');
+	var Scan = require('component/activity/virtualpatient/tests/scan/Scan');
+
 
 	return Component.extend({
 		template: template,
@@ -22,6 +24,9 @@ define(function(require) {
 
 			this.urineAnalysis = this.createUrineAnalysis(offset, 0);
 			this.bloodTest = this.createBloodTest(offset, 50);
+			this.xray = this.createXray(offset, 100);
+			this.ctscan = this.createCTScan(offset, 150);
+
 		},
 
 		createButton: function (text, color) {
@@ -35,6 +40,40 @@ define(function(require) {
 
 		onToggleTest: function (test, event) {
 			test.toggle();
+		},
+
+		createXray: function (x, y) {
+
+			var button = this.createButton('Xray', 'info');
+			button.position.set(-x, y);
+
+			var xray = new Scan();
+
+			xray.position.x = x;
+			xray.hide();
+
+			button.add(xray);
+			button.on('click', this.onToggleTest.bind(this, xray));
+
+			return this.add(button);
+
+		},
+
+		createCTScan: function (x, y) {
+
+			var button = this.createButton('CTScan', 'info');
+			button.position.set(-x, y);
+
+			var ctscan = new Scan();
+
+			ctscan.position.x = x;
+			ctscan.hide();
+
+			button.add(ctscan);
+			button.on('click', this.onToggleTest.bind(this, ctscan));
+
+			return this.add(button);
+
 		},
 
 		createUrineAnalysis: function (x, y) {
