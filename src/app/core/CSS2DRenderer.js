@@ -26,7 +26,7 @@ define(function (require) {
 		var transform;
 
 		if (object.needsWorldUpdate) {
-			transform = object.worldTransform.copy(object.transform).applyTransform(parentTransform)
+			transform = object.worldTransform.copy(object.transform).applyTransform(parentTransform);
 		} else {
 			object.transform.copy(object.worldTransform);
 			if (object.parent) {
