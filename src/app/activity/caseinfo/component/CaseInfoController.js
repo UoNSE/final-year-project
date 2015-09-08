@@ -8,9 +8,8 @@ define(function (require) {
     var ViewController = require('controller/ViewController');
     var Animate = require('behaviour/Animate');
 
-    var clockTimeout = 1000;
+    //var clockTimeout = 1000;
     var activityTimer = 0;
-    var hintCount = 0;
     var CLOCK_TIMEOUT = 1000;
     var CLOCK_MID = 600000;
     var CLOCK_LOW = 300000;
@@ -65,38 +64,31 @@ define(function (require) {
         return "Time Remaining \n" + numHours + ":" + numMins + ":" + numSecs;
     }
 
-    function updateClock(){
-        activityTimer += clockTimeout;
-        console.log(activityTimer)
-
-        switch(activityTimer){
-            case 120000:
-                        console.log("HINT");
-                        hintCount = activityTimer;
-                        break;
-            case (hintCount+120000):
-                        console.log("HINT");
-                        hintCount = activityTimer;
-                        break;
-            default:
-                        break;
-        }
-
-        $('#activity-clock').text(convertTimer(activityTimer));
     function updateClock() {
         if (ACTIVITY_TIMER !== 0) {
             ACTIVITY_TIMER -= CLOCK_TIMEOUT;
             if (ACTIVITY_TIMER < 0) {
                 ACTIVITY_TIMER = 0;
             }
-            if (ACTIVITY_TIMER < CLOCK_LOW) {
-                $('#activity-clock').addClass('activity-clock-low');
-                CLOCK_LOW = -1;
-            } else if (ACTIVITY_TIMER < CLOCK_MID) {
-                $('#activity-clock').addClass('activity-clock-mid');
-                CLOCK_MID = -1;
+            switch(true){
+                        case (ACTIVITY_TIMER < CLOCK_LOW):
+                                    console.log("HINT");
+                                    $('#infocard-3>.card-content').css('box-shadow', '0 0 50px blue');
+                                    $('#activity-clock').addClass('activity-clock-low').removeClass('activity-clock-mid');
+                                    CLOCK_LOW = -1;
+                                    $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
+                                    break;
+                        case (ACTIVITY_TIMER < CLOCK_MID):
+                                    console.log("HINT");
+                                    $('#infocard-1>.card-content').css('box-shadow', '0 0 50px blue');
+                                    $('#activity-clock').addClass('activity-clock-mid').removeClass('activity-clock-high');
+                                    CLOCK_MID = -1;
+                                    $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
+                                    break;
+                        default:
+                                    $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
+                                    break;
             }
-            $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
         }
     }
 
