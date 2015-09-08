@@ -129,44 +129,45 @@ define(function (require) {
         showIssues: function( $topic ) {
             this.hideAllIssues();
 
+            $('#btn-select-topic').html ("Select an<br/> Issue");
+
             var topicId = $topic.attr('topicid');
 
-            var issues = this.$el.find('#issues').children();
+            var issues = $('#issues').find('[topicid=' + topicId + ']');
 
             var originX = parseInt($topic.css('left'));
             var originY = parseInt($topic.css('top'));
 
-            var baseAngle = this.getAngleBetweenObjects($topic,$("#btn-select-topic"));
             var angleSpan = Math.PI / 2;
-            var distance = 300;
+            var baseAngle = this.getAngleBetweenObjects($topic,$("#btn-select-topic")) - angleSpan;
+            var distance = 200 + (issues.length * 100 * ( angleSpan / (Math.PI * 2))) / (Math.PI * 2) * 10;
 
-            issues.each( function( index, issueContainer ) {
-                var $issue = $(issueContainer).find('.issue');
 
-                if (topicId === $issue.attr('topicid')){
-                    var angle = baseAngle + (index / issues.length - issues.length / 2) * angleSpan;
+            console.log(baseAngle);
 
-                    var left = originX + Math.cos(angle) * distance;
-                    var top = originY + Math.sin(angle) * distance;
+            issues.each( function( index, issue ) {
+                var $issue = $(issue);
 
-                    $issue.show();
-                    Animate.scale($issue, {
-                        css: {
-                            width: 10,
-                            height: 10,
-                            left: originX,
-                            top: originY,
-                            fontSize: 12,
-                            textAlign: 'center',
-                        },
-                        animate: {
-                            left: left,
-                            top: top,
-                            width:100,
-                            height:100
-                        }
-                    });
-                }
+                var angle = baseAngle + (index / issues.length) * angleSpan;
+
+                var left = originX + Math.cos(angle) * distance;
+                var top = originY + Math.sin(angle) * distance;
+
+                $issue.show();
+                Animate.scale($issue, {
+                    css: {
+                        width: 100,
+                        height: 100,
+                        left: originX,
+                        top: originY,
+                        fontSize: 12,
+                        textAlign: 'center'
+                    },
+                    animate: {
+                        left: left,
+                        top: top
+                    }
+                });
             });
         },
 
@@ -179,7 +180,12 @@ define(function (require) {
             var pos1 = $obj1.position();
             var pos2 = $obj2.position();
 
-            return Math.atan2(pos1.left - pos2.left, pos1.top - pos2.top);
+            return (Math.atan2(pos1.left - pos2.left, pos1.top - pos2.top) + Math.PI * 2) % (Math.PI * 2);
+        },
+
+        //analyses all evidence stacks and current expenditures and returns the credit available for use
+        getCredit: function() {
+            return 100;
         }
 
     });
