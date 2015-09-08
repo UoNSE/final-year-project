@@ -113,6 +113,8 @@ define(function(require){
                 relY = relY.toFixed(2); //round
                 console.log(relX + '% : ' + relY+'%');
             });
+        },
+
         onSync: function (collection) {
           // TODO
         },

@@ -4,7 +4,8 @@ define(function(require) {
 	//TODO: make cards draggable
 	//TODO: make hotspot from data
 
-
+	var Button = require('component/button/Button');
+	var ButtonModel = require('model/Button');
 
 	var Component = require('core/Component');
 	var template = require('text!component/activity/virtualpatient/VirtualPatient.hbs');
@@ -13,6 +14,9 @@ define(function(require) {
 	var ActionButtonModel = require('model/ActionButton');
 
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
+	var Patient = require('component/activity/virtualpatient/patient/Patient');
+	var EventFeed = require('component/activity/virtualpatient/eventfeed/EventFeed');
+	var Chart = require('component/activity/virtualpatient/chart/Chart');
 
 	var Patients = require('collection/Patients');
 
@@ -29,7 +33,10 @@ define(function(require) {
 
 			this.addButtons();
 			this.tests = this.add(new Tests());
-
+			this.patient = this.add(new Patient());
+			// this.eventfeed = this.add(new EventFeed());
+			// this.chart = this.add(new Chart());
+			this.chart = this.addChart();
 			this.collection.fetch();
 		},
 
@@ -43,12 +50,41 @@ define(function(require) {
 			var offset = 100;
 			texts.forEach(function (text, i) {
 				var button = this.add(new ActionButton({
-					model: new ActionButtonModel({text: text})
+					model: new ActionButtonModel({
+						text: text,
+						id: text
+					})
 				}));
 				var scale = i - (n - 1) / 2;
 				button.position.set(scale * (offset + offset * 0.1), -200);
 			}.bind(this));
-		}
+		},
+
+		addChart: function () {
+
+			// var button = this.createButton('Urine Analysis', 'info');
+			// button.position.set(-x, y);
+			// var button = $('Chart').get();
+			var button = this.createButton('Chart', 'info');
+
+			var chart = new Chart();
+			// chart.position.x = x;
+			chart.hide();
+
+			button.add(chart);
+			button.on('click', this.onToggleTest.bind(this, chart));
+
+			return this.add(button);
+
+		},
+		createButton: function (text, color) {
+			return new Button({
+				model: new ButtonModel({
+					text: text,
+					color: color
+				})
+			});
+		},
 
 	});
 
