@@ -4,7 +4,7 @@ define(function (require) {
 	var Component = require('core/Component');
 	var template = require('text!component/overview/Overview.hbs');
 
-	var Buttons = require('collection/Buttons');
+	var ActionButtons = require('collection/ActionButtons');
 	var Timeline = require('component/timeline/Timeline');
 	var Hint = require('component/hint/Hint');
 
@@ -17,7 +17,7 @@ define(function (require) {
 			Component.prototype.initialize.apply(this, arguments);
 
 			this.add(new Timeline({
-				collection: new Buttons([
+				collection: new ActionButtons([
 					{text: 'Case Information', href: 'cases/' + this.model.id + '/information'},
 					{text: 'Identify Issues', href: this.getActivityLink('issues'), disabled: true},
 					{text: 'Goals and Actions', href: this.getActivityLink('goals-and-actions'), disabled: true},
@@ -25,9 +25,7 @@ define(function (require) {
 				])
 			}));
 			var hint = this.add(new Hint({
-				model: {
-					text: 'Tap an activity below'
-				}
+				model: {text: 'Tap an activity below'}
 			}));
 			hint.position.y = 100;
 		},

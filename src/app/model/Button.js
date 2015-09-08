@@ -5,10 +5,12 @@ define(function (require) {
 	return Backbone.Model.extend({
 
 		defaults: {
-			text: 'button',
+			text: '',
 			color: 'primary',
 			disabled: false,
-			href: null
+			href: null,
+			classes: null,
+			styles: null
 		}
 
 	});

@@ -2,15 +2,17 @@ define(function (require) {
 	'use strict';
 
 	var Component = require('core/Component');
-	var template = require('text!component/cases/Cases.hbs');
-	var Cases = require('collection/Cases');
+
 	var Case = require('component/cases/case/Case');
+	var Hint = require('component/hint/Hint');
+
+	var Cases = require('collection/Cases');
+	var ActionButton = require('model/ActionButton');
+
 	var TWEEN = require('tweenjs');
 	var Vector2 = require('math/Vector2');
 
 	return Component.extend({
-
-		template: template,
 		classes: 'cases-container',
 		styles: 'component/cases/Cases.css',
 
@@ -22,6 +24,11 @@ define(function (require) {
 			this.cases = [];
 			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
+
+			this.add(new Hint({
+				model: {text: 'Pick a Case'}
+			}));
+
 		},
 
 		onSync: function (collection) {
@@ -30,10 +37,11 @@ define(function (require) {
 				'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
 			collection.each(function (model, i) {
 				var newCase = new Case({
-					model: {
-						case: model,
-						color: colorClasses[Math.round(i * colorClasses.length / length)]
-					}
+					model: new ActionButton({
+						text: model.get('name'),
+						color: colorClasses[Math.round(i * colorClasses.length / length)],
+						href: 'cases/' + model.get('id') + '/overview'
+					})
 				});
 				newCase.position.set(0, 0);
 				newCase.scale.set(0, 0);

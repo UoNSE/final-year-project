@@ -1,12 +1,11 @@
 define(function (require) {
 	'use strict';
 
-	var Component = require('core/Component');
-	var template = require('text!component/cases/case/Case.hbs');
+	var ActionButton = require('component/actionbutton/ActionButton');
 
-	return Component.extend({
-		template: template,
+	return ActionButton.extend({
 		classes: 'case',
-		styles: ['component/cases/case/Case.css']
+		styles: 'component/cases/case/Case.css'
 	});
+
 });

@@ -1,15 +1,20 @@
 define(function (require) {
 
-	var Backbone = require('backbone');
+	var _ = require('underscore');
 
-	return Backbone.Model.extend({
+	var Button = require('model/Button');
+
+	var ActionButton = Button.extend({
 
 		defaults: {
-			color: 'primary',
-			icon: 'content-add'
+			icon: null
 		}
 
 	});
+
+	_.extend(ActionButton.prototype.defaults, Button.prototype.defaults);
+
+	return ActionButton;
 
 });
 

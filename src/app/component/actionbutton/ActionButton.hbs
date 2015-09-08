@@ -1,1 +1,8 @@
-<button class="btn btn-{{mtl-color color}} btn-fab btn-raised mdi-{{icon}}"></button>
+<!--{{#if href}}{{#unless disabled}}<a href="{{href}}">{{/unless}}{{/if}}-->
+{{#if href}}<a href="{{href}}">{{/if}}
+<button class="mtl-fab btn btn-{{mtl-color color}} btn-fab btn-raised{{#if disabled}} btn-disabled{{/if}}{{#if classes}} {{classes}}{{/if}}{{#if icon}} mdi-{{icon}}{{/if}}"
+{{#if styles}}style="{{#each styles}}{{@key}}: {{units this}};{{styles}}{{/each}}{{/if}}">
+	{{text}}
+</button>
+<!--{{#if href}}{{#unless disabled}}</a>{{/unless}}{{/if}}-->
+{{#if href}}</a>{{/if}}

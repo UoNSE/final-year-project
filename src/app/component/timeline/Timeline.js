@@ -2,17 +2,19 @@ define(function (require) {
 	'use strict';
 
 	var Component = require('core/Component');
-	var Button = require('component/button/Button');
+	var ActionButton = require('component/actionbutton/ActionButton');
 
 	return Component.extend({
-		initialize: function () {
-			Component.prototype.initialize.apply(this, arguments);
+		classes: 'timeline',
+		styles: 'component/timeline/Timeline.css',
 
+		initialize: function (width, height) {
+			Component.prototype.initialize.apply(this, arguments);
 			var buttons = this.collection;
 			var n = buttons.size();
 			var distanceBetween = 200;
 			buttons.each(function (model, i) {
-				var button = new Button({
+				var button = new ActionButton({
 					model: model
 				});
 				var scale = i - (n - 1) / 2;

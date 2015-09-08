@@ -1,222 +1,222 @@
-//TODO: make responsive
-// TODO halp
-@import "../../../../resources/css/mixins.less";
-
-@button-size: 7em;
-
-.virtual-patient {
-
-	position: relative;
-	left: 30%;
-	// height: 800px;
-	// height: 100%;
-	height: 60em;
-
-}
-
-#virtual-patient-img-container {
-	position: relative;
-	display: table;
-	height: 100%;
-	vertical-align: middle !important;
-	margin-left: auto;
-	margin-right: auto;
-	// left: 40%;
-}
-
-#card-container {
-	position: absolute;
-	display: block;
-	height: 100%;
-	left: 75%;
-	top: 0%;
-}
-
-#button-container {
-	position: absolute;
-	display: block;
-	height: 100%;
-	left: -20%;
-	top: 30%;
-
-}
-
-#results-container {
-	position: absolute;
-	display: block;
-	height: 100%;
-	left: -20%;
-	top: 90%;
-
-}
-
-#questions-container {
-	position: absolute;
-	display: block;
-	height: 100%;
-	left: -20%;
-	top: 10%;
-
-}
-
-#virtual-patient-img {
-	height: 100%;
-	position: relative;
-	display: inline-block;
-	vertical-align: middle !important;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.vp-button {
-	//background-color: red !important;
-	padding: 1em;
-	width: @button-size !important;
-	height: @button-size !important;
-	text-align: center;
-	font-size: 12pt;
-}
-
-.smaller-vp-button {
-	width: 5em+1em !important;
-	height: 5em+1em !important;
-}
-
-#flip-patient-button {
-	.vp-button;
-	.smaller-vp-button;
-	position: absolute;
-	top: 90%;
-	left: 20%;
-}
-
-#patients-chart-button {
-	.vp-button;
-	.smaller-vp-button;
-	position: absolute;
-	top: 10%;
-	left: 20%;
-}
-
-#question-patient-button {
-	.vp-button;
-	.smaller-vp-button;
-	position: absolute;
-	top: 30%;
-	left: 20%;
-}
-
-#test-request-button {
-	.vp-button;
-	.smaller-vp-button;
-	position: absolute;
-	top: 50%;
-	left: 20%;
-}
-
-#test-results-button {
-	.vp-button;
-	.smaller-vp-button;
-	position: absolute;
-	top: 70%;
-	left: 20%;
-}
-
-#save-issue-button {
-	.vp-button;
-	.smaller-vp-button;
-	position: absolute;
-	top: 80%;
-	left: 85%;
-	//background-color: darken(lightGreen, 20%) !important;
-
-}
-
-.chart {
-	//border: solid black 1px;
-	//border-spacing: 10px;
-	//background-color: lighten(yellow, 40%);
-	td {
-		padding: 10px;
-	}
-	width: 20em;
-
-	.hide-chart-button {
-		position: relative;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-		//background-color: red !important;
-	}
-}
-
-#patients-chart-table {
-	.chart;
-	position: absolute;
-	top: 0%;
-	left: -20%;
-}
-
-#urine-analysis-results {
-	.chart;
-	position: absolute;
-	top: 50%;
-	left: -20%;
-}
-
-#hotspot-button {
-	position: absolute;
-	top: 70%;
-	left: 30%;
-	//background-color: red !important;
-	.opacity;
-	padding: 1.5em;
-	width: 1em !important;
-	height: 1em !important;
-	text-align: center;
-	font-size: 14pt;
-}
-
-.generic-card {
-	font-size: 8pt;
-	width: 30em;
-	text-align: left;
-	padding: 1em;
-}
-
-.card-icon {
-	width: 20%;
-	height: 20%;
-	padding-right: 1em;
-}
-
-.speech-icon, .observe-icon {
-	.card-icon
-}
-
-.speech-card {
-	.generic-card;
-	background-color: lightBlue;
-}
-
-.observation-card {
-	.generic-card;
-	//background-color: lighten(lightGray, 20%);
-}
-
-.test-card {
-	.observation-card;
-	width: 15em !important;
-}
-
-#question-card {
-	.observation-card;
-	width: 15em !important;
-}
-
-.results-card {
-	.observation-card;
-	width: 15em !important;
-	//background-color: lightPink;
-
-}
+////TODO: make responsive
+//// TODO halp
+//@import "../../../../resources/css/mixins.less";
+//
+//@button-size: 7em;
+//
+//.virtual-patient {
+//
+//	position: relative;
+//	left: 30%;
+//	// height: 800px;
+//	// height: 100%;
+//	height: 60em;
+//
+//}
+//
+//#virtual-patient-img-container {
+//	position: relative;
+//	display: table;
+//	height: 100%;
+//	vertical-align: middle !important;
+//	margin-left: auto;
+//	margin-right: auto;
+//	// left: 40%;
+//}
+//
+//#card-container {
+//	position: absolute;
+//	display: block;
+//	height: 100%;
+//	left: 75%;
+//	top: 0;
+//}
+//
+//#button-container {
+//	position: absolute;
+//	display: block;
+//	height: 100%;
+//	left: -20%;
+//	top: 30%;
+//
+//}
+//
+//#results-container {
+//	position: absolute;
+//	display: block;
+//	height: 100%;
+//	left: -20%;
+//	top: 90%;
+//
+//}
+//
+//#questions-container {
+//	position: absolute;
+//	display: block;
+//	height: 100%;
+//	left: -20%;
+//	top: 10%;
+//
+//}
+//
+//#virtual-patient-img {
+//	height: 100%;
+//	position: relative;
+//	display: inline-block;
+//	vertical-align: middle !important;
+//	margin-left: auto;
+//	margin-right: auto;
+//}
+//
+//.vp-button {
+//	//background-color: red !important;
+//	padding: 1em;
+//	width: @button-size !important;
+//	height: @button-size !important;
+//	text-align: center;
+//	font-size: 12pt;
+//}
+//
+//.smaller-vp-button {
+//	width: 5em+1em !important;
+//	height: 5em+1em !important;
+//}
+//
+//#flip-patient-button {
+//	.vp-button;
+//	.smaller-vp-button;
+//	position: absolute;
+//	top: 90%;
+//	left: 20%;
+//}
+//
+//#patients-chart-button {
+//	.vp-button;
+//	.smaller-vp-button;
+//	position: absolute;
+//	top: 10%;
+//	left: 20%;
+//}
+//
+//#question-patient-button {
+//	.vp-button;
+//	.smaller-vp-button;
+//	position: absolute;
+//	top: 30%;
+//	left: 20%;
+//}
+//
+//#test-request-button {
+//	.vp-button;
+//	.smaller-vp-button;
+//	position: absolute;
+//	top: 50%;
+//	left: 20%;
+//}
+//
+//#test-results-button {
+//	.vp-button;
+//	.smaller-vp-button;
+//	position: absolute;
+//	top: 70%;
+//	left: 20%;
+//}
+//
+//#save-issue-button {
+//	.vp-button;
+//	.smaller-vp-button;
+//	position: absolute;
+//	top: 80%;
+//	left: 85%;
+//	//background-color: darken(lightGreen, 20%) !important;
+//
+//}
+//
+//.chart {
+//	//border: solid black 1px;
+//	//border-spacing: 10px;
+//	//background-color: lighten(yellow, 40%);
+//	td {
+//		padding: 10px;
+//	}
+//	width: 20em;
+//
+//	.hide-chart-button {
+//		position: relative;
+//		display: block;
+//		margin-left: auto;
+//		margin-right: auto;
+//		//background-color: red !important;
+//	}
+//}
+//
+//#patients-chart-table {
+//	.chart;
+//	position: absolute;
+//	top: 0%;
+//	left: -20%;
+//}
+//
+//#urine-analysis-results {
+//	.chart;
+//	position: absolute;
+//	top: 50%;
+//	left: -20%;
+//}
+//
+//#hotspot-button {
+//	position: absolute;
+//	top: 70%;
+//	left: 30%;
+//	//background-color: red !important;
+//	.opacity;
+//	padding: 1.5em;
+//	width: 1em !important;
+//	height: 1em !important;
+//	text-align: center;
+//	font-size: 14pt;
+//}
+//
+//.generic-card {
+//	font-size: 8pt;
+//	width: 30em;
+//	text-align: left;
+//	padding: 1em;
+//}
+//
+//.card-icon {
+//	width: 20%;
+//	height: 20%;
+//	padding-right: 1em;
+//}
+//
+//.speech-icon, .observe-icon {
+//	.card-icon
+//}
+//
+//.speech-card {
+//	.generic-card;
+//	background-color: lightBlue;
+//}
+//
+//.observation-card {
+//	.generic-card;
+//	//background-color: lighten(lightGray, 20%);
+//}
+//
+//.test-card {
+//	.observation-card;
+//	width: 15em !important;
+//}
+//
+//#question-card {
+//	.observation-card;
+//	width: 15em !important;
+//}
+//
+//.results-card {
+//	.observation-card;
+//	width: 15em !important;
+//	//background-color: lightPink;
+//
+//}

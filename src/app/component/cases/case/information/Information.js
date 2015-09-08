@@ -3,7 +3,7 @@ define(function (require) {
 	var Component = require('core/Component');
 	var template = require('text!component/case/information/Information.hbs');
 
-	var Buttons = require('collection/Buttons');
+	var ActionButtons = require('collection/ActionButtons');
 	var Timeline = require('component/timeline/Timeline');
 	var Hint = require('component/hint/Hint');
 
@@ -15,18 +15,16 @@ define(function (require) {
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 			this.add(new Timeline({
-				collection: new Buttons([
-					{text: 'Virtual\nPatient', href: this.getLink('virtual-patient')}
+				collection: new ActionButtons([
+					{text: 'Virtual Patient', href: this.getLink('virtual-patient')}
 				])
 			}));
-			var hint = this.add(new Hint({
-				model: {text: 'Case Information'}
-			}));
+			var hint = this.add(new Hint({model: {text: 'Case Information'}}));
 			hint.position.y = 100;
 		},
 
 		getLink: function (name) {
-			return 'case/' + '1' + '/activity/' + name;
+			return 'cases/' + '1' + '/activity/' + name;
 		}
 
 	});
