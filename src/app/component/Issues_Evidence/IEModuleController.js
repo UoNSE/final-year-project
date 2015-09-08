@@ -60,7 +60,7 @@ define(function (require) {
             this.deleteCard = false;
             this.splitCard = false;
             this.mergeCard = false;
-            this.dragging = false;
+            this.dragging = null;
 
             this.buttonColour = 'btn-material-yellow';
             this.buttonHoverColour = 'btn-material-orange';
@@ -196,6 +196,8 @@ define(function (require) {
             this.dragging = true;
 
             $("#evidence-brief").fadeOut();
+            
+            this.dragging = event.currentTarget;
         },
 
         /**
@@ -204,7 +206,7 @@ define(function (require) {
          * @param event
          */
         onDrop: function (event) {
-            this.dragging = false;
+            this.dragging = null;
             var multiTouchElement = event.currentTarget;
             var $card = multiTouchElement.element;
             // Check if we are currently hovering on the delete button.
@@ -340,9 +342,13 @@ define(function (require) {
         },
 
         onCardMouseOver: function (event) {
-            if(this.dragging && this.mergeCard== null){
+
+            if(this.dragging != null && this.mergeCard== null){
                 var card = $(event.currentTarget);
-                card.addClass("cardHover");
+                if(!(card.hasClass("issue") && ($(this.dragging).children().hasClass("issue") || $(this.dragging).children().hasClass("issuestack")))) {
+                    //debugger;
+                    card.addClass("cardHover");
+                }
                 this.mergeCard = card;
             }
         },
