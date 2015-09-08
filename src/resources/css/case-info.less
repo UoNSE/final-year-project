@@ -2,11 +2,12 @@
   bottom:20px;
   left:180px;
   position:absolute;
-  padding:5px;
+  padding:20px;
   height:100px;
   width:250px;
-  font-size:18pt;
+  font-size:16pt;
   font-weight:bold;
+  box-shadow : 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);/*-3px 1px 6px 0 rgba(0,0,0,0.12);*/
 }
 
 .activity-clock-high {
@@ -22,6 +23,10 @@
 .activity-clock-low {
   background-color: lightcoral;
   border: 1px solid darkred;
+  -webkit-animation: pulse 1s linear infinite;
+  -moz-animation: pulse 1s linear infinite;
+  -ms-animation: pulse 1s linear infinite;
+  animation: pulse 1s linear infinite;
 }
 
 /*#item-container {
@@ -65,4 +70,28 @@ ul{
 
 .selected-text{
   background-color:lightgreen;
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  50% {
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
 }

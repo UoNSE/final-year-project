@@ -16,15 +16,15 @@ define(function (require) {
     var hiddenCards;
     var sCounter = 0;
 
-    function issueTrack(){
+    function issueTrack() {
         //track individual issues that are revealed to pass to Issues/Evidence activity
     }
 
     function showHidden(text) {
-        if ((text.attr('issue')) != null){
+        if ((text.attr('issue')) != null) {
             ++sCounter;
-            $('.hidden-info').each(function() {
-                if ($(this).attr('threshold') <= sCounter){
+            $('.hidden-info').each(function () {
+                if ($(this).attr('threshold') <= sCounter) {
                     $(this).removeClass('.hidden-info').fadeIn(2500);
                 }
             });
@@ -33,46 +33,53 @@ define(function (require) {
     }
 
     function init() {
-        hiddenCards = $('.hidden-info').css('display', 'none');/*.each(function() {
-            //hidden.push($(this).attr('id'));
-        });*/
+        hiddenCards = $('.hidden-info').css('display', 'none');
+        /*.each(function() {
+         //hidden.push($(this).attr('id'));
+         });*/
         var times = ($('#activity-clock').text()).split(":");
-        ACTIVITY_TIMER += +times[0]*60*60;
-        ACTIVITY_TIMER += +times[1]*60;
+        ACTIVITY_TIMER += +times[0] * 60 * 60;
+        ACTIVITY_TIMER += +times[1] * 60;
         ACTIVITY_TIMER += +times[2];
         ACTIVITY_TIMER *= 1000;
     }
 
-    function convertTimer(milli){
+    function convertTimer(milli) {
         var milliSecs = milli;
         var msSecs = (1000);
         var msMins = (msSecs * 60);
         var msHours = (msMins * 60);
-        var numHours = ~~(milliSecs/msHours);
+        var numHours = ~~(milliSecs / msHours);
         var numMins = ~~((milliSecs - (numHours * msHours)) / msMins);
-        var numSecs = ~~((milliSecs - (numHours * msHours) - (numMins * msMins))/ msSecs);
+        var numSecs = ~~((milliSecs - (numHours * msHours) - (numMins * msMins)) / msSecs);
 
-        if (numSecs < 10){
-            numSecs = "0" + +numSecs; }
-        if (numMins < 10){
+        if (numSecs < 10) {
+            numSecs = "0" + +numSecs;
+        }
+        if (numMins < 10) {
             numMins = "0" + +numMins;
         }
-        if (numHours < 10){
+        if (numHours < 10) {
             numHours = "0" + +numHours;
         }
-        return numHours + ":" + numMins + ":" + numSecs;
+        return "Time Remaining \n" + numHours + ":" + numMins + ":" + numSecs;
     }
 
-    function updateClock(){
-        ACTIVITY_TIMER -= CLOCK_TIMEOUT;
-        if (ACTIVITY_TIMER < CLOCK_LOW) {
-            $('#activity-clock').addClass('activity-clock-low');
-            CLOCK_LOW = -1;
-        } else if (ACTIVITY_TIMER < CLOCK_MID){
-            $('#activity-clock').addClass('activity-clock-mid');
-            CLOCK_MID = -1;
+    function updateClock() {
+        if (ACTIVITY_TIMER !== 0) {
+            ACTIVITY_TIMER -= CLOCK_TIMEOUT;
+            if (ACTIVITY_TIMER < 0) {
+                ACTIVITY_TIMER = 0;
+            }
+            if (ACTIVITY_TIMER < CLOCK_LOW) {
+                $('#activity-clock').addClass('activity-clock-low');
+                CLOCK_LOW = -1;
+            } else if (ACTIVITY_TIMER < CLOCK_MID) {
+                $('#activity-clock').addClass('activity-clock-mid');
+                CLOCK_MID = -1;
+            }
+            $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
         }
-        $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
     }
 
     return ViewController.extend({
@@ -80,16 +87,16 @@ define(function (require) {
 
         displayBack: false,
 
-        styles : 'case-info.css',
+        styles: 'case-info.css',
 
         //model collection - not needed???
         //collection: 'CaseInfos',
 
         //events
         events: {
-            'click .btn-keep':'keepCard',
-            'click .btn-kept':'restoreCard',
-            'click .list-item' : 'selectListItem'
+            'click .btn-keep': 'keepCard',
+            'click .btn-kept': 'restoreCard',
+            'click .list-item': 'selectListItem'
             //'click .content-media': 'selectMediaItem'
         },
 
@@ -116,18 +123,18 @@ define(function (require) {
             var item = $(event.target);
 
             if (!(item.hasClass('inv-list-item'))) {
-                if (item.hasClass('selected-text')){
-                    $("#list-"+item.attr('id')).remove();
+                if (item.hasClass('selected-text')) {
+                    $("#list-" + item.attr('id')).remove();
                     --sCounter;
                 } else {
                     showHidden(item);
-                    item.clone().attr('id','list-'+item.attr('id')).addClass('inv-list-item well').appendTo($('.inventory').find('ul'));
+                    item.clone().attr('id', 'list-' + item.attr('id')).addClass('inv-list-item well').css('box-shadow', '-3px 1px 6px 0 rgba(0,0,0,0.12)').appendTo($('.inventory').find('ul'));
                 }
             } else {
                 var id = item.attr('id');
                 item.remove();
                 --sCounter;
-                item = $("#"+(id.slice(5,id.length)));
+                item = $("#" + (id.slice(5, id.length)));
             }
             item.toggleClass('selected-text');
         },
