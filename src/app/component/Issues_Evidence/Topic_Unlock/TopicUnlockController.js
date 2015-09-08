@@ -22,6 +22,7 @@ define(function (require) {
 
         template: template,
         styles: 'issues-evidence.css',
+        elementSize: '150',
 
         collection: {
             topics: new Topics(),
@@ -29,8 +30,11 @@ define(function (require) {
         },
 
         events: {
-            'click #topics .Topic' : 'onTopicClick'
+            'click #topics .Topic' : 'onTopicClick',
+            'click #issues .issue' : 'onIssueClick'
         },
+
+        //TODO:Move data such as topic id, cost, etc... out of the DOM(HTML)
 
         initialize: function () {
 
@@ -80,6 +84,7 @@ define(function (require) {
 
 
         onAfterRender: function () {
+            this.renderCreditAmount();
             var topics = this.$el.find('#topics').children();
             this.placeTopics(topics);
 
@@ -107,8 +112,8 @@ define(function (require) {
                     css: {
                         fontSize:12,
                         textAlign: 'center',
-                        width: 100,
-                        height: 100
+                        width: 120,
+                        height: 120
                     },
                     delay: index * 50,
                     animate: {
@@ -140,10 +145,7 @@ define(function (require) {
 
             var angleSpan = Math.PI / 2;
             var baseAngle = this.getAngleBetweenObjects($topic,$("#btn-select-topic")) - angleSpan;
-            var distance = 200 + (issues.length * 100 * ( angleSpan / (Math.PI * 2))) / (Math.PI * 2) * 10;
-
-
-            console.log(baseAngle);
+            var distance = 200 + (issues.length * 100 * ( angleSpan / (Math.PI * 2))) / (Math.PI * 2) * 20;
 
             issues.each( function( index, issue ) {
                 var $issue = $(issue);
@@ -156,8 +158,8 @@ define(function (require) {
                 $issue.show();
                 Animate.scale($issue, {
                     css: {
-                        width: 100,
-                        height: 100,
+                        width: 120,
+                        height: 120,
                         left: originX,
                         top: originY,
                         fontSize: 12,
@@ -183,9 +185,37 @@ define(function (require) {
             return (Math.atan2(pos1.left - pos2.left, pos1.top - pos2.top) + Math.PI * 2) % (Math.PI * 2);
         },
 
+        onIssueClick: function( event ) {
+            var $issue = $(event.currentTarget);
+
+            if ( this.getCredit() >= $issue.attr("cost") && !$issue.hasClass("purchased") ) {
+
+                $issue.addClass( "purchased" );
+                this.renderCreditAmount();
+            }
+        },
+
+        renderCreditAmount: function() {
+            var credit = this.getCredit();
+
+            $("#btn-credit-amount").text("Credit: $" + credit);
+        },
+
         //analyses all evidence stacks and current expenditures and returns the credit available for use
         getCredit: function() {
-            return 100;
+            //available credit will be determined by evidence card stacks persisted by the inventory
+            var availableCredit = 20;
+
+            $("#issues").find(".issue").each(function(index,issue){
+                var $issue = $(issue);
+
+                if ( $issue.hasClass("purchased") )
+                {
+                    availableCredit -= $issue.attr("cost");
+                }
+            });
+
+            return availableCredit;
         }
 
     });
