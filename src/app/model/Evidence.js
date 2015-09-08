@@ -1,13 +1,19 @@
 define(function (require) {
 
-	var Backbone = require('backbone');
+	var _ = require('underscore');
+	var Panel = require('model/Panel');
 
-	return Backbone.RelationalModel.extend({
+	var Evidence = Panel.extend({
 
 		defaults: {
-			content: 'This is evidence'
+			body: 'Evidence'
 		}
 
 	});
 
+	_.extend(Evidence.prototype.defaults, Panel.prototype.defaults);
+
+	return Evidence;
+
 });
+

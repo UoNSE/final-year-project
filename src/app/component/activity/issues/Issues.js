@@ -6,8 +6,9 @@ define(function (require) {
 
     var IssuesCollection = require('collection/Issues');
     var EvidenceCollection = require('collection/Evidence');
+    var IssueModel = require('model/Issue');
+    var EvidenceModel = require('model/Evidence');
     var IssueGroupModel = require('model/IssueGroup');
-    var Panel = require('model/Panel');
 
     var Menu = require('component/activity/issues/menu/Menu');
     var Issue = require('component/activity/issues/card/issue/Issue');
@@ -91,12 +92,12 @@ define(function (require) {
          */
         addIssue: function (model) {
 			var issue = this.add(new Issue({
-                model: new Panel({
+                model: new IssueModel({
+                    width: this.width,
+                    height: this.height,
                     title: 'Issue',
                     body: model.get('content'),
-                    color: 'danger',
-					width: this.width,
-					height: this.height
+                    color: 'danger'
                 })
             }));
             this.bindDraggableEvents(issue);
@@ -111,12 +112,12 @@ define(function (require) {
          */
         addEvidence: function (model) {
 			var evidence = this.add(new Evidence({
-                model: new Panel({
+                model: new EvidenceModel({
+                    width: this.width,
+                    height: this.height,
                     title: 'Evidence',
                     body: model.get('content'),
-                    color: 'info',
-					width: this.width,
-					height: this.height
+                    color: 'info'
                 })
             }));
             this.bindDraggableEvents(evidence);
@@ -164,23 +165,59 @@ define(function (require) {
         },
 
         merge: function (draggable, droppable) {
+
+            var draggableType = this.resolveType(draggable);
+            var droppableType = this.resolveType(droppable);
+
             if (droppable instanceof IssueGroup) {
+
                 // TODO
-                droppable.collection.add(draggable.model);
+                //droppable.collection.add(draggable.model);
                 draggable.remove();
+
             } else {
+
+                var issue = draggableType.issue || droppableType.issue || null;
+
+                // TODO make nicer?
+                var collection = [];
+                if (draggableType.evidence) {collection.push(draggableType.evidence);}
+                if (droppableType.evidence) {collection.push(droppableType.evidence);}
+                var evidence = new Backbone.Collection(collection);
+
                 var issueGroup = this.add(new IssueGroup({
                     model: new IssueGroupModel({
 						width: this.width,
                         title: 'Issues and evidence',
                         color: 'success',
-                        evidence: new Backbone.Collection([draggable.model, droppable.model])
+                        issue: issue,
+                        evidence: evidence
                     })
                 }));
+
                 issueGroup.position.copy(droppable.position);
                 draggable.remove();
                 droppable.remove();
+
             }
+
+        },
+
+        resolveType: function (view) {
+
+            var type = {};
+
+            if (view instanceof Issue) {
+                type['issue'] = view.model;
+            }
+
+            if (view instanceof Evidence) {
+                type['evidence'] = view.model;
+            }
+
+            return type;
+
+
         }
 
     });

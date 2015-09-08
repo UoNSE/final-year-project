@@ -6,7 +6,7 @@
 		</div>
 	{{/if}}
 	<div class="panel-body">
-		{{#if issue}}
+		{{#with issue}}
 			<div class="panel panel-danger">
 				<div class="panel-heading">
 					<h3 class="panel-title">Issue</h3>
@@ -15,9 +15,9 @@
 					{{body}}
 				</div>
 			</div>
-		{{/if}}
+		{{/with}}
 		{{#each evidence}}
-			<div class="panel panel-danger">
+			<div class="panel panel-info">
 				<div class="panel-heading">
 					<h3 class="panel-title">Evidence</h3>
 				</div>
