@@ -139,6 +139,7 @@ define(function (require) {
             issues.each(this.placeCard.bind(this));
             evidence.each(this.placeCard.bind(this));
 
+            this.showTutorial();
         },
 
         placeCard: function (index, card) {
@@ -193,6 +194,8 @@ define(function (require) {
         onDrag: function () {
             this.menu.toggleClass('hidden', false);
             this.dragging = true;
+
+            $("#evidence-brief").fadeOut();
         },
 
         /**
@@ -369,7 +372,27 @@ define(function (require) {
                 "\n</div>"+
                 "\n</div>"+
                 "\n</div>";
-		}
+		},
+
+        showTutorial: function() {
+            var $tutorial = $("#evidence-brief");
+            $tutorial.show();
+
+            var viewport = $(window);
+            var top = viewport.height() * 0.2;
+            var left = viewport.width() * 0.5;
+
+            Animate.scaleIn($tutorial, {
+                css: {
+                    textAlign: 'center',
+                    transform: 'scale(0)',
+                    top:top,
+                    left:left
+                },
+                delay: 500,
+                animate: {transform: 'scale(2)'}
+            });
+        }
 
     });
 
