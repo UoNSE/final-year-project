@@ -101,7 +101,7 @@ define(function (require) {
         },
 
         onReady: function () {
-            setInterval(updateClock, CLOCK_TIMEOUT);
+         setInterval(updateClock, CLOCK_TIMEOUT);
             init();
         },
 

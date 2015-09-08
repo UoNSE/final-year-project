@@ -35,7 +35,6 @@
           "issueId": 2
         }
       ],
-
       "caseinfo": {
         "timer": "00:05:23",
         "issues": [
@@ -64,99 +63,98 @@
             "name": "issue6"
           }
         ],
-        "cards":
-        [
-        {
-          "id": 1,
-          "title": "Information",
-          "items": [
-            {
-              "text": "husband died 10 years ago",
-              "issue": 1
-            },
-            {
-              "text": "found the increasing volume of traffic intimidating and quit driving"
-            },
-            {
-              "text": "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
-              "issue": 1
-            },
-            {
-              "text": "was assessed as competent to administer her own medicines",
-              "issue": 2
-            },
-            {
-              "text": "has found it increasingly difficult to manage at home on her own",
-              "issue": 1
-            },
-            {
-              "text": "especially with the steep steps to her front door and a large garden to maintain",
-              "issue": 5
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "show-threshold": 3,
-          "title": "Medications",
-          "items": [
-            {
-              "text": "alendronate 70 mg, one weekly",
-              "issue": 2
-            },
-            {
-              "text": "calcium carbonate 1500 mg, one daily"
-            },
-            {
-              "text": "cholecalciferol 25 ?g, one daily"
-            },
-            {
-              "text": "paracetamol 500 mg, two every day",
-              "issue": 4
-            }
-          ]
-        },
-        {
-          "id": 3,
-          "image": true,
-          "title": "Image Two",
-          "source": "http://lorempixel.com/360/300/animals",
-          "imgtext": "Another random animal pic",
-          "items": [
-            {
-              "text": "what kind of animal is this?",
-              "issue": 2
-            },
-            {
-              "text": "bad temperament",
-              "issue": 2
-            },
-            {
-              "text": "lives alone",
-              "issue": 2
-            }
-          ]
-        },
-        {
-          "id": 4,
-          "video": true,
-          "show-threshold": 4,
-          "title": "Video Example",
-          "type": "mp4",
-          "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
-          "items": [
-            "A placeholder video card"
-          ]
-        },
-        {
-          "id": 5,
-          "image": true,
-          "show-threshold": 3,
-          "title": "Image One",
-          "source": "http://lorempixel.com/360/300/animals",
-          "imgtext": "A random animal pic"
-        }
-      ]
+        "cards": [
+          {
+            "id": 1,
+            "title": "Information",
+            "items": [
+              {
+                "text": "husband died 10 years ago",
+                "issue": 1
+              },
+              {
+                "text": "found the increasing volume of traffic intimidating and quit driving"
+              },
+              {
+                "text": "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
+                "issue": 1
+              },
+              {
+                "text": "was assessed as competent to administer her own medicines",
+                "issue": 2
+              },
+              {
+                "text": "has found it increasingly difficult to manage at home on her own",
+                "issue": 1
+              },
+              {
+                "text": "especially with the steep steps to her front door and a large garden to maintain",
+                "issue": 5
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "show-threshold": 3,
+            "title": "Medications",
+            "items": [
+              {
+                "text": "alendronate 70 mg, one weekly",
+                "issue": 2
+              },
+              {
+                "text": "calcium carbonate 1500 mg, one daily"
+              },
+              {
+                "text": "cholecalciferol 25 ?g, one daily"
+              },
+              {
+                "text": "paracetamol 500 mg, two every day",
+                "issue": 4
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "image": true,
+            "title": "Image Two",
+            "source": "http://lorempixel.com/360/300/animals",
+            "imgtext": "Another random animal pic",
+            "items": [
+              {
+                "text": "what kind of animal is this?",
+                "issue": 2
+              },
+              {
+                "text": "bad temperament",
+                "issue": 2
+              },
+              {
+                "text": "lives alone",
+                "issue": 2
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "video": true,
+            "show-threshold": 4,
+            "title": "Video Example",
+            "type": "mp4",
+            "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
+            "items": [
+              "A placeholder video card"
+            ]
+          },
+          {
+            "id": 5,
+            "image": true,
+            "show-threshold": 3,
+            "title": "Image One",
+            "source": "http://lorempixel.com/360/300/animals",
+            "imgtext": "A random animal pic"
+          }
+        ]
       }
     },
     {
