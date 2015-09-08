@@ -4,19 +4,27 @@ define(function (require) {
 
 	var ViewController = require('controller/ViewController');
 
+	var template = require('text!shared/navigation/back/BackView.html');
+
 	return ViewController.extend({
 
+		template: template,
 		selector: '#back',
 
 		events: {
-			'click #back': '_onBack'
+			'click #back': 'onBack'
+		},
+
+		initialize: function () {
+			ViewController.prototype.initialize.apply(this, arguments);
+			this.render();
 		},
 
 		onReady: function () {
 			$(this.selector).hide();
 		},
 
-		_onBack: function () {
+		onBack: function () {
 			this.trigger('back');
 		}
 

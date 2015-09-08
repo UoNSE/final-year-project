@@ -14,32 +14,48 @@
 
 define(function(require){
 
-    //TODO: make cards draggable
-    //TODO: make hotspot from data
-
     var $ = require('jquery');
-    var glm = require('glmatrix');
+
+    // the virtual patient view
+    var template = require('text!component/virtualpatient/VirtualPatientView.html');
+
+    // collections
+    var Patients = require('collection/Patients');
+    var Questions = require('collection/TestTypes');
+    var TestTypes = require('collection/TestTypes');
+
+    // controllers
     var ViewController = require('controller/ViewController');
-    var Animate = require('behaviour/Animate');
+    var TestMenuController = require('controller/TestsMenuController');
+    var QuestionsMenuController = require('controller/QuestionsMenuController');
+    var EventFeedController = require('controller/EventFeedController');
+    var PatientsChartController = require('controller/PatientsChartController');
+
+    // behaviours
+    var glm = require('glmatrix');
     var MultiTouchManager = require('behaviour/MultiTouchManager');
-    var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour'); //
+    var DraggableBehaviour = require('behaviour/DraggableBehaviour');
+    var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
+
+    // class variables
     var numEventCardsShowingInFeed = 0;
     var eventCardFeedQueue = ["#observation-card1", "#observation-card2", "#observation-card3", "#speech-card1","#speech-card2"]; // ,"#dummy-card1", "#dummy-card2","#dummy-card3", "#dummy-card4"
     var feedCardSchedule = [1000,2000,3000,4000,5000]; //, 6000, 7000, 8000, 9000
     var cardsDisplayedList = [];
 
 
-    var styles = [
-        'virtual-patient.css'
-    ];
-
     return ViewController.extend({
 
-        elements: $(),
-        multitouch: MultiTouchManager.getInstance(),
-        collection: 'Patients',
-        styles: 'virtual-patient.css', //default styles: styles,
-        selector: '#virtual-patient-img',
+    template: template,
+    collection: {
+        patients: new Patients(),
+        questions: new Questions(),
+        testtypes: new TestTypes(),
+    },
+    multitouch: MultiTouchManager.getInstance(),
+    // collection: 'Patients',
+    styles: 'virtual-patient.css',
+    selector: '#virtual-patient-img',
 
 
     events: {
@@ -62,24 +78,26 @@ define(function(require){
         // 'click .menu-item': '_menuItemSelection'
         },
 
-        // add child views here.
-        onBeforeRender: function(){
+        initialize: function () {
+          ViewController.prototype.initialize.apply(this, arguments);
 
-        },
+          var patients = this.collection.patients;
+          var questions = this.collection.questions;
+          var testtypes = this.collection.testtypes;
 
-        // make any dynamic changes to the DOM here (eg. Animations, etc).
-        onAfterRender: function () {
-            this._transformItems();
-        },
+          this.listenTo(patients, 'sync', this.onSync);
+          patients.fetch();
+          this.listenTo(questions, 'sync', this.onSync);
+          questions.fetch();
+          this.listenTo(testtypes, 'sync', this.onSync);
+          testtypes.fetch();
 
-        // everything should have loaded. Add Model and Collection event handling here.
-        onReady: function () {
-            this.listenTo(this.collection, 'add', this.render);
-            //this.collection.add({name: 'New'});
+          this.addChildView('#query-menu', 'component/virtualpatient/QuestionsMenu');
+          this.addChildView('#test-menu', 'component/virtualpatient/TestsMenu');
+          this.addChildView('#event-feed', 'component/virtualpatient/EventFeed');
+          this.addChildView('#patients-chart-table', 'component/virtualpatient/PatientsChart');
 
-            this._hideElements();
-            this._startEventFeed();
-            this.addHotSpots();
+          this.render();
         },
 
         addHotSpots: function() {
@@ -95,7 +113,18 @@ define(function(require){
                 relY = relY.toFixed(2); //round
                 console.log(relX + '% : ' + relY+'%');
             });
+        onSync: function (collection) {
+          // TODO
         },
+
+        onAfterRender: function () {
+        //   this.listenTo(this.collection, 'add', this.render);
+          //this.collection.add({name: 'New'});
+          this._transformItems();
+          this._hideElements();
+          this._startEventFeed();
+        },
+
 
         _hideElements: function() {
             $('#patients-chart-table').hide();
@@ -257,14 +286,19 @@ define(function(require){
                 element.addClass("abs-center").appendTo(this.$el);
                 element.css('transform', transforms[i]);
 
+                // MultiTouchManager.addElementRTS(element);
+                // var draggableMTelement = MultiTouchManager.addElementDraggable(element);
+                // this.bindDraggableEvents(draggableMTelement);
+
                 var multiTouchElement = this.multitouch.addElement(element);
                 var behaviour = new RotateTranslateScaleBehaviour(multiTouchElement);
                 multiTouchElement.addBehaviour(behaviour);
+
                 glm.vec3.copy(behaviour.translation, transforms[i][0]);
                 glm.vec3.copy(behaviour.scale, transforms[i][1]);
                 glm.vec3.copy(behaviour.rotation, transforms[i][2]);
                 behaviour.needsUpdate();
-                this.elements = this.elements.add(element);
+                // this.elements = this.elements.add(element);
             }
 
 
@@ -287,6 +321,8 @@ define(function(require){
             }
 
         },
+
+
         _showPatientsChart: function () {
             $('#patients-chart-table').show();
             $('#hide-chart-button').show();
