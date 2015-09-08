@@ -8,6 +8,8 @@ define(function (require) {
     var ViewController = require('controller/ViewController');
     var Animate = require('behaviour/Animate');
 
+    //var clockTimeout = 1000;
+    var activityTimer = 0;
     var CLOCK_TIMEOUT = 1000;
     var CLOCK_MID = 600000;
     var CLOCK_LOW = 300000;
@@ -16,9 +18,6 @@ define(function (require) {
     var hiddenCards;
     var sCounter = 0;
 
-    function issueTrack() {
-        //track individual issues that are revealed to pass to Issues/Evidence activity
-    }
 
     function showHidden(text) {
         if ((text.attr('issue')) != null) {
@@ -71,14 +70,25 @@ define(function (require) {
             if (ACTIVITY_TIMER < 0) {
                 ACTIVITY_TIMER = 0;
             }
-            if (ACTIVITY_TIMER < CLOCK_LOW) {
-                $('#activity-clock').addClass('activity-clock-low');
-                CLOCK_LOW = -1;
-            } else if (ACTIVITY_TIMER < CLOCK_MID) {
-                $('#activity-clock').addClass('activity-clock-mid');
-                CLOCK_MID = -1;
+            switch(true){
+                        case (ACTIVITY_TIMER < CLOCK_LOW):
+                                    console.log("HINT");
+                                    $('#infocard-3>.card-content').css('box-shadow', '0 0 50px blue');
+                                    $('#activity-clock').addClass('activity-clock-low').removeClass('activity-clock-mid');
+                                    CLOCK_LOW = -1;
+                                    $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
+                                    break;
+                        case (ACTIVITY_TIMER < CLOCK_MID):
+                                    console.log("HINT");
+                                    $('#infocard-1>.card-content').css('box-shadow', '0 0 50px blue');
+                                    $('#activity-clock').addClass('activity-clock-mid').removeClass('activity-clock-high');
+                                    CLOCK_MID = -1;
+                                    $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
+                                    break;
+                        default:
+                                    $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
+                                    break;
             }
-            $('#activity-clock').text(convertTimer(ACTIVITY_TIMER));
         }
     }
 
@@ -86,19 +96,19 @@ define(function (require) {
         //hide back button
 
         displayBack: false,
-
-        styles: 'case-info.css',
+        multitouch: MultiTouchManager.getInstance(),
+        styles : 'case-info.css',
 
         //model collection - not needed???
         //collection: 'CaseInfos',
 
         //events
         events: {
-            'click .btn-keep': 'keepCard',
-            'click .btn-kept': 'restoreCard',
-            'click .list-item': 'selectListItem'
-            //'click .content-media': 'selectMediaItem'
+            'click .btn-keep':'keepCard',
+            'click .btn-kept':'restoreCard',
+            'click .list-item' : 'selectListItem'
         },
+
 
         onReady: function () {
          setInterval(updateClock, CLOCK_TIMEOUT);
@@ -148,3 +158,46 @@ define(function (require) {
 
     });
 });
+
+/*
+
+var resources = disp( $( ".infocard" ).toArray().reverse() );
+             var transforms = [
+                [glm.vec3.fromValues(300, 100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+                [glm.vec3.fromValues(-300, 0, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+                [glm.vec3.fromValues(0, 100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+                [glm.vec3.fromValues(300, -100, 0), glm.vec3.fromValues(0.5, 0.5, 1), 0],
+                [glm.vec3.fromValues(0, -100, 0), glm.vec3.fromValues(1, 1, 1), 0]
+             ];
+
+            function disp( divs ) {
+              var a = [];
+              for ( var i = 0; i < divs.length; i++ ) {
+                a.push( divs[ i ].innerHTML );
+              }
+              $( "span" ).text( a.join( " " ) );
+              return a;
+            }
+
+
+            	var numItems = resources.length;
+            	//var container = $('.card-content');
+            	var container = $('<div class="abs-center"></div>');
+            	container.appendTo($('.infocard'));
+            	for (var i = 0; i < numItems; i++) {
+            		var element = $(resources[i]);
+            		element.addClass("abs-center").appendTo(container);
+            		element.css('transform', transforms[i]);
+            		//var colors = ['#ff0000', '#ffffff', '#d4ee9f'];
+            		//element.css('backgroundColor', colors[Math.floor(Math.random() * colors.length)]);
+            		var multiTouchElement = this.multitouch.addElement(element);
+            		var behaviour = new RotateTranslateScaleBehaviour(multiTouchElement);
+            		multiTouchElement.addBehaviour(behaviour);
+            		glm.vec3.copy(behaviour.translation, transforms[i][0]);
+            		glm.vec3.copy(behaviour.scale, transforms[i][1]);
+            		glm.vec3.copy(behaviour.rotation, transforms[i][2]);
+            		behaviour.needsUpdate();
+            		this.elements = this.elements.add(element);
+            	}
+            animate.scale(container);
+*/
