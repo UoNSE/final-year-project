@@ -35,8 +35,37 @@
           "issueId": 2
         }
       ],
-      "caseinfo-timer": "00:05:23",
-      "caseinfo": [
+
+      "caseinfo": {
+        "timer": "00:05:23",
+        "issues": [
+          {
+            "id": 1,
+            "name": "issue1"
+          },
+          {
+            "id": 2,
+            "name": "issue2"
+          },
+          {
+            "id": 3,
+            "name": "issue3"
+          },
+          {
+            "id": 4,
+            "name": "issue4"
+          },
+          {
+            "id": 5,
+            "name": "issue5"
+          },
+          {
+            "id": 6,
+            "name": "issue6"
+          }
+        ],
+        "cards":
+        [
         {
           "id": 1,
           "title": "Information",
@@ -128,6 +157,7 @@
           "imgtext": "A random animal pic"
         }
       ]
+      }
     },
     {
       "id": 2,
