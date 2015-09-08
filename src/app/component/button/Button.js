@@ -6,7 +6,16 @@ define(function (require) {
 
 	return Component.extend({
 		template: template,
-		styles: 'component/button/Button.css'
+		styles: 'component/button/Button.css',
+
+		events: {
+			'click .cpn-button': 'onClick'
+		},
+
+		onClick: function (event) {
+			this.trigger('click', event);
+		}
+
 	});
 
 });

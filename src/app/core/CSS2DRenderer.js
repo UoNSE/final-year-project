@@ -59,6 +59,7 @@ define(function (require) {
 				// TODO: remove style sheets
 			});
 		}
+		object.$el.toggle(object.visible);
 		this.applyTransform(object.$el, transform);
 		return element;
 	};

@@ -50,7 +50,7 @@ define(function (require) {
                 delete: this.onDelete.bind(this),
                 split: this.onSplit.bind(this)
             });
-            //this.menu.hide();
+            this.menu.hide();
 
         },
 
@@ -140,7 +140,7 @@ define(function (require) {
          * An event triggered when a card is being dragged.
          */
         onDrag: function () {
-            //this.menu.show();
+            this.menu.show();
         },
 
         /**
@@ -153,7 +153,7 @@ define(function (require) {
             var droppable = event.droppable;
             this.merge(draggable, droppable);
 
-            //menu.hide();
+            this.menu.hide();
         },
 
         onDelete: function (event) {

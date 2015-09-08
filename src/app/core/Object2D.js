@@ -12,6 +12,7 @@ define(function (require) {
 		name: '',
 		tagName: 'section',
 		parent: null,
+		visible: true,
 		initialize: function () {
 			this.id = 'component-' + MathUtil.generateUUID(8);
 			this.children = [];
@@ -139,7 +140,17 @@ define(function (require) {
 			} else {
 				this.worldTransform.copy(this.transform);
 			}
+		},
+		toggle: function () {
+			this.visible = !this.visible;
+		},
+		hide: function () {
+			this.visible = false;
+		},
+		show: function () {
+			this.visible = true;
 		}
+
 	});
 
 	return Object2D;

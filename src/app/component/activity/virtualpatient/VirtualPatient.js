@@ -26,13 +26,15 @@ define(function(require) {
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
+
 			this.addButtons();
-			this.add(new Tests());
+			this.tests = this.add(new Tests());
+
 			this.collection.fetch();
 		},
 
 		onSync: function (collection) {
-			this.listenTo(this.collection, 'add', this.render);
+			this.listenTo(collection, 'add', this.render);
 		},
 
 		addButtons: function () {
@@ -41,12 +43,10 @@ define(function(require) {
 			var offset = 100;
 			texts.forEach(function (text, i) {
 				var button = this.add(new ActionButton({
-					model: new ActionButtonModel({
-						text: text
-					})
+					model: new ActionButtonModel({text: text})
 				}));
 				var scale = i - (n - 1) / 2;
-				button.position.set(scale * (offset + offset * 0.1), -150);
+				button.position.set(scale * (offset + offset * 0.1), -200);
 			}.bind(this));
 		}
 
