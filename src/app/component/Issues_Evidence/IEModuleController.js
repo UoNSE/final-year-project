@@ -339,6 +339,7 @@ define(function (require) {
         onCardMouseOver: function (event) {
             if(this.dragging && this.mergeCard== null){
                 var card = $(event.currentTarget);
+                card.addClass("cardHover");
                 this.mergeCard = card;
             }
         },
@@ -346,6 +347,7 @@ define(function (require) {
         onCardMouseLeave: function (event) {
             if(this.mergeCard != null){
                 var card = $(event.currentTarget);
+                card.removeClass("cardHover");
                 this.mergeCard = null;
             }
         },
