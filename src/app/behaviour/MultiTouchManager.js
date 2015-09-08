@@ -62,7 +62,7 @@ define(function (require) {
 
 	MultiTouchManager.prototype.remove = function (multiTouchComponent) {
 		this.elements.splice(this.elements.indexOf(multiTouchComponent), 1);
-		delete this.elementsHash[multiTouchComponent.component.id];
+		delete this.elementsHash[multiTouchComponent.multiTouchElement.id];
 		this.zIndexManager.removeElement(multiTouchComponent);
 		multiTouchComponent.unbindEvents();
 	};

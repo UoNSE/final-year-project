@@ -49,6 +49,7 @@ define(function (require) {
 			var element = object.render().$el;
 			element.attr('id', object.id);
 			element.addClass(classes.join(' '));
+			element.find('a').attr('draggable', 'false'); // TODO: move to linkify?
 			container.append(element);
 			this.loadStyles(object.styles).then(function () {
 				object.trigger('loaded');

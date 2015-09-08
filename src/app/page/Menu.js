@@ -1,13 +1,13 @@
 define(function (require) {
 	'use strict';
 
-	var Object2D = require('core/Object2D');
+	var Page = require('core/Page');
 	var Circle = require('component/test/circle/Circle');
 	var Rectangle = require('component/test/rectangle/Rectangle');
 
-	return Object2D.extend({
+	return Page.extend({
 		initialize: function () {
-			Object2D.prototype.initialize.call(this);
+			Page.prototype.initialize.call(this);
 
 			this.name = 'menu';
 

@@ -15,7 +15,7 @@ define(function (require) {
 	}
 
 	DraggableBehaviour.prototype.bindEvents = function () {
-		this.multiTouchElement.component.on({
+		this.multiTouchElement.multiTouchElement.on({
 			drag: this.onDrag.bind(this)
 		});
 	};
@@ -23,7 +23,7 @@ define(function (require) {
 	DraggableBehaviour.prototype.onDrag = function () {
 		var opacity = this.options.opacity;
 		if (opacity) {
-			this.multiTouchElement.component.$el.fadeTo('fast', opacity);
+			this.multiTouchElement.multiTouchElement.$el.fadeTo('fast', opacity);
 		}
 	};
 
@@ -55,8 +55,8 @@ define(function (require) {
 	};
 
 	DraggableBehaviour.prototype.drag = function () {
-		this.multiTouchElement.component.trigger('drag', {
-			draggable: this.multiTouchElement.component
+		this.multiTouchElement.multiTouchElement.trigger('drag', {
+			draggable: this.multiTouchElement.multiTouchElement
 		});
 	};
 
@@ -69,7 +69,7 @@ define(function (require) {
 			if ($elements.index(component.$el) === -1) {
 				// Trigger a touchleave event and remove the element from the set.
 				component.trigger('touchleave', {
-					draggable: this.multiTouchElement.component,
+					draggable: this.multiTouchElement.multiTouchElement,
 					droppable: component
 				});
 				delete this.dragging[key];
@@ -82,10 +82,10 @@ define(function (require) {
 			var multiTouchElement = this.multiTouchManager.get(id);
 			// If the multitouch element exists, add the component to the list of components being hovered on and trigger a touch enter event.
 			if (multiTouchElement) {
-				var droppable = multiTouchElement.component;
+				var droppable = multiTouchElement.multiTouchElement;
 				this.dragging[id] = droppable;
-				multiTouchElement.component.trigger('touchenter', {
-					draggable: this.multiTouchElement.component,
+				multiTouchElement.multiTouchElement.trigger('touchenter', {
+					draggable: this.multiTouchElement.multiTouchElement,
 					droppable: droppable
 				});
 			}
@@ -98,17 +98,17 @@ define(function (require) {
 			var id = $(element).attr('id');
 			var multiTouchElement = this.multiTouchManager.get(id);
 			if (multiTouchElement) {
-				multiTouchElement.component.trigger('dragendsink', {
-					draggable: this.multiTouchElement.component,
-					droppable: multiTouchElement.component
+				multiTouchElement.multiTouchElement.trigger('dragendsink', {
+					draggable: this.multiTouchElement.multiTouchElement,
+					droppable: multiTouchElement.multiTouchElement
 				});
 			}
 		}.bind(this));
 
-		var component = this.multiTouchElement.component;
+		var component = this.multiTouchElement.multiTouchElement;
 
 		component.trigger('dragendsource', {
-			draggable: this.multiTouchElement.component
+			draggable: this.multiTouchElement.multiTouchElement
 		});
 
 		component.$el.fadeTo('fast', 1);

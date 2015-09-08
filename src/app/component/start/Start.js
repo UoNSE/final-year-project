@@ -31,9 +31,9 @@ define(function (require) {
 		},
 
 		onStart: function (event) {
-			new TWEEN.Tween(this).to({
-				rotation: this.rotation + Math.TAU
-			}, 2000).repeat(Infinity).start();
+			//new TWEEN.Tween(this).to({
+			//	rotation: this.rotation + Math.TAU
+			//}, 2000).repeat(Infinity).start();
 		}
 
 	});

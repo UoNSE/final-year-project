@@ -29,13 +29,24 @@ define(function (require) {
 		});
 	}
 
-	Transform.prototype.applyTransform = function (transform) {
-		this.position.rotateZ(transform.rotation).multiply(transform.scale).add(transform.position);
-		this.rotation += transform.rotation;
-		this.scale.multiplyVectors(this.scale, transform.scale);
+	Transform.prototype.applyInverseTransform = function (transform) {
+		this.applyTransform(transform.getInverse());
 
 		return this;
 	};
+
+	Transform.prototype.applyTransform = (function () {
+		// pre-allocated for performance purposes
+		var temp = new Vector2();
+
+		return function (transform) {
+			this.position.copy(temp.copy(transform.position).applyTransform(this));
+			this.rotation += transform.rotation;
+			this.scale.multiplyVectors(this.scale, transform.scale);
+
+			return this;
+		}
+	}());
 
 	Transform.prototype.getInverse = function () {
 		var inverse = this.clone();
