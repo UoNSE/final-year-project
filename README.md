@@ -8,12 +8,20 @@ The Project
 
 ### Install ###
 
-* Open a terminal/commandline to project directory.
+* Open a terminal/commandline to project directory. Then run the following to install relevant packages.
 
-> npm install
-> bower install
-> npm start 
+	npm install
+	
+	bower install
+	
+### Running
 
-* (OR run in IntellJ as a NodeJS app, using app.js as main JavaScript file)
+Running the application is initiated with the following command:
+	
+	gulp
+	
+* Take notice of the terminal output for relevant JSHint errors, etc.
+* Goto the following URL in your browser to view the App: 
 
-Caveats: Verify that all .less files in [src/resources/css](https://bitbucket.org/uonse/final-year-project/src/f08ed8bcd438c98e5b0a9886e8ebdb6da700d543/src/resources/css/?at=feature/FYP-139_HTML5_Prototype) have .css counterparts.
+	http://localhost:7575/
+	

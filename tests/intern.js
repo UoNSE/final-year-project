@@ -48,14 +48,17 @@ define({
 	// can be used here
 	loader: {
 		// Packages that should be registered with the loader in each testing environment
+		baseUrl: 'src/app',
 		packages: [
-			{ name: 'app', location: 'src/app/' },
-			{ name: 'tests', location: 'tests/' }
+			{ name: 'tests', location: '../../tests/' }
 		]
 	},
 
 	// Non-functional test suite(s) to run in each browser
-	suites: [ 'tests/unit/FactoryTest' ],
+	suites: [
+		'tests/unit/FactoryTest',
+		'tests/unit/TransformTest'
+	],
 
 	// Functional test suite(s) to run in each browser once non-functional tests are completed
 	functionalSuites: [ /* 'myPackage/tests/functional' */ ],
