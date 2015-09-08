@@ -198,7 +198,7 @@ define(function (require) {
         renderCreditAmount: function() {
             var credit = this.getCredit();
 
-            $("#btn-credit-amount").text("Credit: $" + credit);
+            $(".score-display").text("Credit: $" + credit);
         },
 
         //analyses all evidence stacks and current expenditures and returns the credit available for use

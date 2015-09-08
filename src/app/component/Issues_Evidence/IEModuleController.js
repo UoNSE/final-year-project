@@ -132,7 +132,7 @@ define(function (require) {
         onAfterRender: function () {
 
             this.menu = $('#menu');
-
+            $(".score-display").text("Credit: $" + this.getTotalScore());
             var issues = this.$el.find('#issues').children();
             var evidence = this.$el.find('#evidence').children();
 
@@ -221,10 +221,12 @@ define(function (require) {
             // Check if hovering over another card
             if (this.mergeCard != null) {
                 //merge
+                this.mergeCard.removeClass("cardHover");
                 this.cardMerge(event, this.mergeCard);
             }
             this.menu.toggleClass('hidden', true);
-            console.log(this.getScore($card));
+            //console.log(this.getTotalScore());
+            $(".score-display").text("Credit: $" + this.getTotalScore());
         },
 
         cardSplit: function($card){
@@ -264,9 +266,24 @@ define(function (require) {
 
         },
 
+        getTotalScore: function(){
+            var credit = 0;
+            var issuelist = $("#issues").children();
+            var evidencelist = $("#evidence").children();
+            issuelist.each(function(ind,card){
+
+                credit += this.getScore(card);
+            }.bind(this))
+            evidencelist.each(function(ind,card){
+                credit += this.getScore(card);
+            }.bind(this))
+            return credit;
+        },
+
         getScore: function(card){
             var list=$(card).find(".score");
             var maxlist = $(card).find(".max-score");
+            var cost = $(card).find(".cost");
             var count = 0;
             var max = 0;
             var penalty = 0;
@@ -285,13 +302,16 @@ define(function (require) {
                 }
             })
             if (penalty != 0){
-                console.log("penalty");
                 count -= penalty;
             }
             else if (max != count) {
 
                 count -= 2;
             }
+            if(cost.length > 0) {
+                count -= parseInt(cost.text(),10);
+            }
+
             return count;
         },
 
