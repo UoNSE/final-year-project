@@ -193,6 +193,12 @@ define(function (require) {
                 $issue.addClass( "purchased" );
                 this.renderCreditAmount();
             }
+            else if ( !$issue.hasClass("purchased") ){
+                $(".score-display").each( function (index, display){
+                    var $display = $(display);
+                    $display.fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                } );
+            }
         },
 
         renderCreditAmount: function() {
