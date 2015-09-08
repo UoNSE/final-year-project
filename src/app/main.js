@@ -7,6 +7,7 @@ define(function (require) {
 		paths: {
 			'text': '../lib/text/text',
 			'backbone': '../lib/backbone/backbone',
+			'backbone-relational': '../lib/backbone-relational/backbone-relational',
 			'underscore': '../lib/underscore/underscore',
 			'handlebars': '../lib/handlebars/handlebars',
 			'jquery': '../lib/jquery/dist/jquery',
@@ -43,7 +44,7 @@ define(function (require) {
 		}
 	});
 
-	require(['core/Application', 'addons'], function (Application) {
+	require(['core/Application', 'addons', 'backbone-relational'], function (Application) {
 
 		new Application();
 

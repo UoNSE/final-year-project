@@ -2,7 +2,7 @@ define(function (require) {
 
 	var Backbone = require('backbone');
 
-	return Backbone.Model.extend({
+	return Backbone.RelationalModel.extend({
 
 		defaults: {
 			content: 'This is an Issue'

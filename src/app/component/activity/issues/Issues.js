@@ -169,7 +169,6 @@ define(function (require) {
                 droppable.collection.add(draggable.model);
                 draggable.remove();
             } else {
-				debugger;
                 var issueGroup = this.add(new IssueGroup({
                     model: new IssueGroupModel({
 						width: this.width,

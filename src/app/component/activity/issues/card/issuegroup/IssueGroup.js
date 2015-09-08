@@ -10,7 +10,6 @@ define(function (require) {
 		template: template,
 
 		initialize: function () {
-			debugger;
 			Card.prototype.initialize.apply(this, arguments);
 			this.setDroppable({types: Card});
 		}
