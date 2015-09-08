@@ -14,7 +14,7 @@ define(function(require) {
 	return Component.extend({
 		template: template,
 		classes: 'virtual-patient',
-		styles: ['component/activity/virtual-patient/virtual-patient.css'],
+		styles: 'component/activity/virtual-patient/VirtualPatient.css',
 
 		collection: new Patients(),
 
@@ -37,12 +37,16 @@ define(function(require) {
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
+			this.addButtons();
 			this.collection.fetch();
-			this.render();
 		},
 
 		onSync: function (collection) {
+
+
+
 			this.listenTo(this.collection, 'add', this.render);
+
 		},
 
 		onAfterRender: function () {

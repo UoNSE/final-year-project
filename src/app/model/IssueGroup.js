@@ -15,8 +15,7 @@ define(function (require) {
 		relations: [{
 			type: Backbone.HasOne,
 			key: 'issue',
-			relatedModel: Issue,
-			parse: true
+			relatedModel: Issue
 		}, {
 			type: Backbone.HasMany,
 			key: 'evidence',

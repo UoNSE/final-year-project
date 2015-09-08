@@ -63,7 +63,13 @@ define(function (require) {
             var n = issues.size();
             var distance = 10;
             issues.forEach(function (model, i) {
-                var card = this.addIssue(model);
+                var card = this.addIssue(new IssueModel({
+					width: this.width,
+					height: this.height,
+					title: 'Issue',
+					body: model.get('content'),
+					color: 'danger'
+				}));
                 var scale = i - ((n - 1) / 2);
                 card.position.set(-300, scale * (distance + card.model.get('height')));
             }, this);
@@ -78,7 +84,13 @@ define(function (require) {
             var n = evidence.size();
             var distance = 10;
             evidence.forEach(function (model, i) {
-                var card = this.addEvidence(model);
+                var card = this.addEvidence(new EvidenceModel({
+					width: this.width,
+					height: this.height,
+					title: 'Evidence',
+					body: model.get('content'),
+					color: 'info'
+				}));
                 var scale = i - ((n - 1) / 2);
                 card.position.set(300, scale * (distance + card.model.get('height')));
             }, this);
@@ -92,13 +104,7 @@ define(function (require) {
          */
         addIssue: function (model) {
 			var issue = this.add(new Issue({
-                model: new IssueModel({
-                    width: this.width,
-                    height: this.height,
-                    title: 'Issue',
-                    body: model.get('content'),
-                    color: 'danger'
-                })
+                model: model
             }));
             this.bindDraggableEvents(issue);
             return issue;
@@ -112,13 +118,7 @@ define(function (require) {
          */
         addEvidence: function (model) {
 			var evidence = this.add(new Evidence({
-                model: new EvidenceModel({
-                    width: this.width,
-                    height: this.height,
-                    title: 'Evidence',
-                    body: model.get('content'),
-                    color: 'info'
-                })
+                model: model
             }));
             this.bindDraggableEvents(evidence);
             return evidence;
@@ -161,7 +161,23 @@ define(function (require) {
         },
 
         onSplit: function (event) {
-            // TODO
+
+            var issueGroup = event.draggable;
+            var model = issueGroup.model;
+
+            var issue = model.get('issue');
+            var evidence = model.get('evidence');
+
+            if (issue) {
+                this.addIssue(issue);
+            }
+
+            evidence.each(function (model) {
+                this.addEvidence(model);
+            }, this);
+
+            issueGroup.remove();
+
         },
 
         merge: function (draggable, droppable) {

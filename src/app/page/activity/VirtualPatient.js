@@ -2,7 +2,7 @@ define(function (require) {
 	'use strict';
 
 	var Object2D = require('core/Object2D');
-	var VirtualPatient = require('component/activity/virtual-patient/VirtualPatient');
+	var VirtualPatient = require('component/activity/virtualpatient/VirtualPatient');
 
 	return Object2D.extend({
 		name: 'virtualPatient',

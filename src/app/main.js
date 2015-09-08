@@ -36,7 +36,7 @@ define(function (require) {
 					'start': 'Start',
 					'cases': 'Cases',
 					'cases/:id/overview': 'case/Overview',
-					'cases/:id/information': 'Information',
+					'cases/:id/information': 'case/information/Information',
 					'cases/:id/activity/virtual-patient': 'activity/VirtualPatient',
 					'cases/:id/activity/issues': 'activity/Issues'
 				}
