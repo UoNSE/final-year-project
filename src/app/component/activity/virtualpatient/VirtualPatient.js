@@ -34,9 +34,8 @@ define(function(require) {
 			this.addButtons();
 			this.tests = this.add(new Tests());
 			this.patient = this.add(new Patient());
-			// this.eventfeed = this.add(new EventFeed());
-			// this.chart = this.add(new Chart());
-			this.chart = this.addChart();
+			this.eventFeed = this.addEventFeed();
+			this.chart = this.addPatientsChart();
 			this.collection.fetch();
 		},
 
@@ -52,7 +51,7 @@ define(function(require) {
 				var button = this.add(new ActionButton({
 					model: new ActionButtonModel({
 						text: text,
-						id: text
+						id: text + 'Btn'
 					})
 				}));
 				var scale = i - (n - 1) / 2;
@@ -60,19 +59,40 @@ define(function(require) {
 			}.bind(this));
 		},
 
-		addChart: function () {
+		onToggleTest: function (test, event) {
+			test.toggle();
+		},
 
-			// var button = this.createButton('Urine Analysis', 'info');
-			// button.position.set(-x, y);
-			// var button = $('Chart').get();
+		addEventFeed: function(){
+
+			var eventfeed = this.add(new EventFeed());
+			var posX = -400;
+			var posY = 100;
+			eventfeed.position.set(posX, posY);
+
+			return this.add(eventfeed);
+
+		},
+
+		addPatientsChart: function () {
+
+			// var button = $('ChartBtn');
 			var button = this.createButton('Chart', 'info');
+			// button.position.set(-x, y);
 
-			var chart = new Chart();
+			var chart = this.add(new Chart());
+			// var chart = $('patients-chart-table');
+
 			// chart.position.x = x;
 			chart.hide();
-
 			button.add(chart);
-			button.on('click', this.onToggleTest.bind(this, chart));
+
+			button.on('click', this.onToggleTest.bind(this, chart))
+			// button.on('click', chart.show());
+
+			// $('ChartBtn').click(function(){
+			// 	chart.show();
+			// }).bind();
 
 			return this.add(button);
 
@@ -81,7 +101,8 @@ define(function(require) {
 			return new Button({
 				model: new ButtonModel({
 					text: text,
-					color: color
+					color: color,
+					styles: ["matl-fab", "btn", "btn-fab", "btn-raised"]
 				})
 			});
 		},

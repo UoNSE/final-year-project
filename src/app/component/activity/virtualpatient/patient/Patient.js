@@ -2,12 +2,18 @@ define(function(require) {
 	'use strict';
 
 	var Component = require('core/Component');
-	var template = require('text!component/activity/virtualpatient/tests/patient/Patient.hbs');
+	var template = require('text!component/activity/virtualpatient/patient/Patient.hbs');
 
 	return Component.extend({
 		template: template,
 		classes: 'patient',
-		styles: 'component/activity/virtualpatient/tests/patient/Patient.css'
+		styles: 'component/activity/virtualpatient/patient/Patient.css'
+
+        // initialize: function () {
+        //     Component.prototype.initialize.apply(this, arguments);
+        //
+        //
+        // }
 
         // addHotSpots: function() {
         //     $('#eve').click(function(e) { //e is the event that get passed to anonymous functions by click()
