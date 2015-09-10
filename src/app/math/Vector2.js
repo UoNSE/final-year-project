@@ -59,6 +59,20 @@ define(function (require) {
 
 		},
 
+		applyTransform: function (transform) {
+
+			this.multiply(transform.scale).rotateZ(transform.rotation).add(transform.position);
+
+			return this;
+
+		},
+
+		applyInverseTransform: function (transform) {
+
+			return this.applyTransform(transform.getInverse());
+
+		},
+
 		setX: function (x) {
 
 			this.x = x;

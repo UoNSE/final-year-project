@@ -56,17 +56,6 @@ define(function (require) {
 
 		onSplit: function (event) {
 			this.trigger('split', event);
-		},
-
-		hide: function () {
-			this.delete.$el.hide();
-			this.split.$el.hide();
-		},
-
-		show: function () {
-			this.delete.$el.show();
-			this.split.$el.show();
-
 		}
 
 	});

@@ -4,6 +4,8 @@ define(function (require) {
 
 	var Card = require('component/activity/issues/card/Card');
 	var template = require('text!component/activity/issues/card/issuegroup/IssueGroup.hbs');
+	var Issue = require('component/activity/issues/card/issue/Issue');
+	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 
 	return Card.extend({
 
@@ -11,7 +13,7 @@ define(function (require) {
 
 		initialize: function () {
 			Card.prototype.initialize.apply(this, arguments);
-			this.setDroppable({types: Card});
+			this.setDroppable({types: [Issue, Evidence]});
 		}
 
 	});

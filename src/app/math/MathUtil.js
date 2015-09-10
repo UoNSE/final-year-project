@@ -2,15 +2,23 @@ define(function (require) {
 	'use strict';
 
 	var Vector2 = require('math/Vector2');
+	var Transform = require('math/Transform');
 
 	function MathUtil() {
 	}
 
 	MathUtil.FLIP_Y = new Vector2(1, -1);
 
-	MathUtil.pageToWorld = function (vector) {
+	MathUtil.pageToWorld = function (x, y) {
+		var vector = x instanceof Vector2 ? x : new Vector2(x, y);
 		var client = new Vector2(window.innerWidth, window.innerHeight);
 		return new Vector2().subVectors(vector, client.divideScalar(2)).multiply(MathUtil.FLIP_Y);
+	};
+
+	MathUtil.pageToWorldTransform = function (x, y) {
+		var transform = new Transform();
+		transform.position.copy(MathUtil.pageToWorld(x, y));
+		return transform;
 	};
 
 	MathUtil.generateUUID = (function () {

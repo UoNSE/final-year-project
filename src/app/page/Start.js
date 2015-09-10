@@ -9,7 +9,8 @@ define(function (require) {
 		initialize: function () {
 			Page.prototype.initialize.call(this);
 
-			this.add(new Start());
+			var start = new Start();
+			this.add(start);
 		}
 	});
 });
