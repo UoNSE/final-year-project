@@ -31,9 +31,9 @@ define(function(require) {
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
 
+			this.patient = this.add(new Patient());
 			this.addButtons();
 			this.tests = this.add(new Tests());
-			this.patient = this.add(new Patient());
 			this.eventFeed = this.addEventFeed();
 			this.chart = this.addPatientsChart();
 			this.collection.fetch();

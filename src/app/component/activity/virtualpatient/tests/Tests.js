@@ -19,13 +19,6 @@ define(function(require) {
 
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
-
-			var offset = 0;
-
-			// this.urineAnalysis = this.createUrineAnalysis(offset, 0);
-			// this.bloodTest = this.createBloodTest(offset, 50);
-			// this.xray = this.createXray(offset, 100);
-			// this.ctscan = this.createCTScan(offset, 150);
 			this.createTestMenu();
 
 		},
@@ -46,7 +39,7 @@ define(function(require) {
 		createTestMenu: function(){
 
 			// for all menu items in collection, add menu item
-			this.yOffset = 0;
+			this.yOffset = -150;
 			this.addMenuItem('Blood Test');
 			// this.addMenuItem('Blood Pressure');
 			this.addMenuItem('Xray');
@@ -61,100 +54,32 @@ define(function(require) {
 			console.log(this.yoffset);
 			button.position.set(0, this.yOffset);
 
-			var clickable = null;
+			var target = null;
 
 			console.log(label);
 
 			if(label==='Blood Test'){
-				clickable = new BloodTest();
+				target = new BloodTest();
 			}
 			else if (label==='Blood Pressure') {
-				clickable = new BloodTest();
+				target = new BloodTest();
 			}
 			else if (label==='Xray' || label ==='CTScan') {
-				clickable = new Scan();
+				target = new Scan();
 			}
 			else if (label==='Urine'){
-				clickable = new UrineAnalysis();
+				target = new UrineAnalysis();
 			}
 			else{}
 
-			clickable.position.x = 0;
-			clickable.hide();
+			target.position.x = 0;
+			target.hide();
 
-			button.add(clickable);
-			button.on('click', this.onToggleTest.bind(this, clickable));
+			button.add(target);
+			button.on('click', this.onToggleTest.bind(this, target));
 
 			return this.add(button);
-		},
-
-		// createXray: function (x, y) {
-		//
-		// 	var button = this.createButton('Xray', 'info');
-		// 	button.position.set(-x, y);
-		//
-		// 	var xray = new Scan();
-		//
-		// 	xray.position.x = x;
-		// 	xray.hide();
-		//
-		// 	button.add(xray);
-		// 	button.on('click', this.onToggleTest.bind(this, xray));
-		//
-		// 	return this.add(button);
-		//
-		// },
-		//
-		// createCTScan: function (x, y) {
-		//
-		// 	var button = this.createButton('CTScan', 'info');
-		// 	button.position.set(-x, y);
-		//
-		// 	var ctscan = new Scan();
-		//
-		// 	ctscan.position.x = x;
-		// 	ctscan.hide();
-		//
-		// 	button.add(ctscan);
-		// 	button.on('click', this.onToggleTest.bind(this, ctscan));
-		//
-		// 	return this.add(button);
-		//
-		// },
-		//
-		// createUrineAnalysis: function (x, y) {
-		//
-		// 	var button = this.createButton('Urine', 'info');
-		// 	button.position.set(-x, y);
-		//
-		// 	var urineAnalysis = new UrineAnalysis();
-		//
-		// 	urineAnalysis.position.x = x;
-		// 	urineAnalysis.hide();
-		//
-		// 	button.add(urineAnalysis);
-		// 	button.on('click', this.onToggleTest.bind(this, urineAnalysis));
-		//
-		// 	return this.add(button);
-		//
-		// },
-		//
-		// createBloodTest: function (x, y) {
-		//
-		// 	var button = this.createButton('Blood Test', 'info');
-		// 	button.position.set(-x, y);
-		//
-		// 	var bloodTest = new BloodTest();
-		//
-		// 	bloodTest.position.x = x;
-		// 	bloodTest.hide();
-		//
-		// 	button.add(bloodTest);
-		// 	button.on('click', this.onToggleTest.bind(this, bloodTest));
-		//
-		// 	return this.add(button);
-		//
-		// }
+		}
 
 	});
 
