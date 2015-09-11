@@ -18,11 +18,11 @@ define(function (require) {
 			for (var i = 0, length = children.length; i < length; i++) {
 				var child = children[i];
 				var classes = child.classes || [];
-				this.renderObject(child, container, transform, classes);
+				this.renderObject(child, container, transform, classes, scene.visible);
 			}
 		},
 
-		renderObject: function (object, container, parentTransform, parentClasses) {
+		renderObject: function (object, container, parentTransform, parentClasses, parentVisible) {
 			var transform;
 
 			if (object.needsWorldUpdate) {
@@ -35,16 +35,17 @@ define(function (require) {
 			}
 
 			var classes = (parentClasses || []).slice().concat(object.classes || []);
-			this.renderObjectHTML(object, container, transform, classes);
+			var visible = parentVisible && object.visible;
+			this.renderObjectHTML(object, container, transform, classes, visible);
 			var children = object.children;
 			for (var i = 0, length = children.length; i < length; i++) {
 				var child = children[i];
-				this.renderObject(child, container, transform, classes);
+				this.renderObject(child, container, transform, classes, visible);
 			}
 			object.needsWorldUpdate = true;
 		},
 
-		renderObjectHTML: function (object, container, transform, classes) {
+		renderObjectHTML: function (object, container, transform, classes, visible) {
 			if (!object.added) {
 				var element = object.render().$el;
 				element.attr('id', object.id);
@@ -60,7 +61,7 @@ define(function (require) {
 					// TODO: remove style sheets
 				});
 			}
-			object.$el.toggle(object.visible);
+			object.$el.toggle(visible);
 			this.applyTransform(object.$el, transform);
 			return element;
 		},
