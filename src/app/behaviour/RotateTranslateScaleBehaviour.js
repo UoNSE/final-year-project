@@ -23,7 +23,7 @@ define(function (require) {
 
 		onTouchStart: function (component, event) {
 			var changedTouches = event.originalEvent.changedTouches;
-			changedTouches.forEach(function (touch) {
+			Array.from(changedTouches).forEach(function (touch) {
 				this.component.updateWorld();
 				var startPoint = MathUtil.pageToWorld(touch.pageX, touch.pageY).applyInverseTransform(this.component.worldTransform);
 				this.touches[touch.identifier] = {
@@ -66,7 +66,7 @@ define(function (require) {
 
 		onTouchEnd: function (component, event) {
 			var changedTouches = event.originalEvent.changedTouches;
-			changedTouches.forEach(function (touch) {
+			Array.from(changedTouches).forEach(function (touch) {
 				delete this.touches[touch.identifier];
 			}, this);
 
