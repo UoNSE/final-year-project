@@ -40,23 +40,24 @@ define(function(require) {
 
 			// for all menu items in collection, add menu item
 			this.yOffset = -150;
-			this.addMenuItem('Blood Test');
-			// this.addMenuItem('Blood Pressure');
-			this.addMenuItem('Xray');
-			this.addMenuItem('CTScan');
-			this.addMenuItem('Urine');
+			var testMenu = [];
+			this.createMenuButton('Blood Test');
+			// this.createMenuButton('Blood Pressure');
+			this.createMenuButton('Xray');
+			this.createMenuButton('CTScan');
+			this.createMenuButton('Urine');
 
 		},
 
-		addMenuItem: function(label){
+		createMenuButton: function(label){
 			var button = this.createButton(label, 'info');
 			this.yOffset = this.yOffset+50;
-			console.log(this.yoffset);
+			// console.log(this.yoffset);
 			button.position.set(0, this.yOffset);
 
 			var target = null;
 
-			console.log(label);
+			// console.log(label);
 
 			if(label==='Blood Test'){
 				target = new BloodTest();
