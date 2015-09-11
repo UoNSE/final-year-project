@@ -10,7 +10,7 @@ define(function (require) {
 		this.bindEvents();
 	}
 
-	Object.create( MultiTouchElement.prototype, {
+	Object.assign(MultiTouchElement.prototype, {
 		bindEvents: function () {
 			this.element.on({
 				mouseenter: this.onMouseEnter.bind(this),
