@@ -1,5 +1,4 @@
 define(function (require) {
-
 	'use strict';
 
 	var Backbone = require('backbone');
@@ -17,11 +16,13 @@ define(function (require) {
 		this.animate();
 	}
 
-	Application.prototype.animate = function (time) {
-		requestAnimationFrame(this.animate.bind(this));
-		TWEEN.update(time);
-		this.renderer.render('#content', this.scene, this.camera);
-	};
+	Object.assign(Application.prototype, {
+		animate: function (time) {
+			requestAnimationFrame(this.animate.bind(this));
+			TWEEN.update(time);
+			this.renderer.render('#content', this.scene, this.camera);
+		}
+	});
 
 	return Application;
 });

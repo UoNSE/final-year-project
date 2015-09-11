@@ -1,5 +1,4 @@
 define(function (require) {
-
 	'use strict';
 
 	requirejs.config({
@@ -45,9 +44,6 @@ define(function (require) {
 	});
 
 	require(['core/Application', 'addons', 'backbone-relational'], function (Application) {
-
 		new Application();
-
 	});
-
 });

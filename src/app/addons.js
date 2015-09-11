@@ -25,7 +25,6 @@ define(function (require) {
 	if (!TouchList.prototype.forEach) {
 
 		TouchList.prototype.forEach = function(callback, thisArg) {
-
 			var T, k;
 
 			if (this == null) {
@@ -99,6 +98,5 @@ define(function (require) {
 		}
 		return colour;
 	});
-
 });
 

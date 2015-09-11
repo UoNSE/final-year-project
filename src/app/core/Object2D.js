@@ -1,9 +1,7 @@
 define(function (require) {
-
 	'use strict';
 
 	var Backbone = require('backbone');
-
 	var Vector2 = require('math/Vector2');
 	var Transform = require('math/Transform');
 	var MathUtil = require('math/MathUtil');
@@ -13,6 +11,7 @@ define(function (require) {
 		tagName: 'section',
 		parent: null,
 		visible: true,
+
 		initialize: function () {
 			this.id = 'component-' + MathUtil.generateUUID(8);
 			this.children = [];
@@ -70,9 +69,11 @@ define(function (require) {
 				this.onLoad();
 			}, this);
 		},
+
 		onLoad: function () {
 			// Override in submodule
 		},
+
 		//translateOnRotation: function (value, rotation) {
 		//	var localRotation = this.parent.worldRotation - rotation;
 		//	this.position.set(
@@ -119,12 +120,14 @@ define(function (require) {
 			this.children.push(child);
 			return child;
 		},
+
 		removeAll: function () {
 			this.children.forEach(function (child) {
 				child.trigger('removechild');
 			});
 			this.children.length = 0;
 		},
+
 		updateLocal: function (force) {
 			this.transform.copy(this.worldTransform);
 
@@ -133,6 +136,7 @@ define(function (require) {
 				this.transform.worldToLocal(this.parent.worldTransform)
 			}
 		},
+
 		updateWorld: function (force) {
 			if (this.parent) {
 				this.parent.updateWorld(force);
@@ -141,16 +145,18 @@ define(function (require) {
 				this.worldTransform.copy(this.transform);
 			}
 		},
+
 		toggle: function () {
 			this.visible = !this.visible;
 		},
+
 		hide: function () {
 			this.visible = false;
 		},
+
 		show: function () {
 			this.visible = true;
 		}
-
 	});
 
 	return Object2D;

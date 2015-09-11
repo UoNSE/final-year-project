@@ -1,10 +1,10 @@
 define(function (require, exports, module) {
+	'use strict';
 
 	var Backbone = require('backbone');
 	var $ = require('jquery');
 
 	return Backbone.Router.extend({
-
 		initialize: function (scene) {
 			this.scene = scene;
 
@@ -36,7 +36,6 @@ define(function (require, exports, module) {
 				this.scene.add(new Page(urlParams));
 			}.bind(this));
 		}
-
 	});
 
 });
