@@ -15,6 +15,7 @@ define(function(require) {
 
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
 	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
+
 	var EventFeed = require('component/activity/virtualpatient/eventfeed/EventFeed');
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 
@@ -56,24 +57,29 @@ define(function(require) {
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
-
-			this.patientbody = this.add(new PatientBody());
-			this.tests = this.add(new Tests());
-			this.eventFeed = this.addEventFeed();
-			this.chart = this.add(new Chart());
-			this.addButtons();
-
-			// window.chart = this.chart;
-
-
 			this.collection.fetch();
+
 			//   this._transformItems();
-			  this._hideElements();
 			//   this._startEventFeed();
 		},
 
 		onSync: function (collection) {
-			this.listenTo(collection, 'add', this.render);
+			// get the patient with the case Id.
+			this.patients = this.collection;
+			this.patient = this.patients.get(1); // get id.
+			// this.patient = this.patients.at(0); // at index
+			this.addComponents();
+			this._hideElements();
+		},
+
+		addComponents: function() {
+			// add the components
+			this.patientbody = this.add(new PatientBody());
+			this.tests = this.add(new Tests());
+			// this.tests = this.add(new Tests(this.patient));
+			this.eventFeed = this.addEventFeed();
+			this.chart = this.add(new Chart({model: this.patient}));
+			this.addButtons();
 		},
 
 
@@ -205,7 +211,6 @@ define(function(require) {
 		},
 
 		onToggle: function (toggable, event) {
-			console.log('call');
 			toggable.toggle();
 		},
 
@@ -216,12 +221,10 @@ define(function(require) {
 		addEventFeed: function(){
 
 			var eventfeed = this.add(new EventFeed());
-			var posX = -300;
+			var posX = -250;
 			var posY = 400;
 			eventfeed.position.set(posX, posY);
-
 			return this.add(eventfeed);
-
 		},
 
 		// togglePatientsChart: function () {

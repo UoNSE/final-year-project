@@ -261,10 +261,27 @@
           "answer": "very",
           "patientId": 1
         }
-      ]
+    ],
+        "testresults": [
+            {
+            "id": 1,
+            "name": "UrineAnalysis",
+            "info": [
+              {
+                "Glucose": "100",
+                "Bilirubin": "30",
+                "Ketones": "120",
+                "S.G": "20",
+                "Eryth": "30",
+                "pH": "40",
+                "T.S": "50"
+              }
+            ]
+            }
+        ],
     },
     {
-      "id": 1,
+      "id": 2,
       "firstname": "Gerard",
       "lastname": "Smith",
       "age": "62",

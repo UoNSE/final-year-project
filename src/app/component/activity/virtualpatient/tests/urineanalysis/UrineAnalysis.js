@@ -3,6 +3,7 @@ define(function(require) {
 
 	var Component = require('core/Component');
 	var template = require('text!component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis.hbs');
+	var TestResults = require('collection/TestResults');
 
 	return Component.extend({
 		template: template,
@@ -10,6 +11,10 @@ define(function(require) {
 		styles: 'component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis.css',
 		events:{
 			'click #hide-chart-button': '_onHide'
+		},
+		initialize: function () {
+			Component.prototype.initialize.apply(this, arguments);
+			var UrineAnalysisResult = TestResults[0];
 		},
 		_onHide: function(){
 			this.hide();
