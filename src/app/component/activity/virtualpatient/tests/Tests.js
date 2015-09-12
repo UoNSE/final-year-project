@@ -39,7 +39,7 @@ define(function(require) {
 		createTestMenu: function(){
 
 			// for all menu items in collection, add menu item
-			this.yOffset = -150;
+			this.yOffset = 50;
 			var testMenu = [];
 			this.createMenuButton('Blood Test');
 			// this.createMenuButton('Blood Pressure');

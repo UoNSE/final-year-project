@@ -7,7 +7,7 @@ define(function(require) {
 	return Component.extend({
 		template: template,
 		classes: 'chart',
-		styles: 'component/activity/virtualpatient/tests/patient/Chart.css'
+		styles: 'component/activity/virtualpatient/chart/Chart.css'
 
 	});
 

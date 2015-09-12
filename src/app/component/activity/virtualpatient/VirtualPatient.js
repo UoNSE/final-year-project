@@ -46,7 +46,9 @@ define(function(require) {
 			// 'click .hotspot': '_hotSpotClick'
 			// 'click .menu-item': '_menuItemSelection'
 
-			'click #TestBtn': '_showTestMenu'
+			'click #TestBtn': '_toggleTestMenu',
+			'click #ChartBtn': '_togglePatientsChart'
+
 
 
 			},
@@ -56,12 +58,15 @@ define(function(require) {
 			this.listenTo(this.collection, 'sync', this.onSync);
 
 			this.patient = this.add(new Patient());
-			this.addButtons();
 			this.tests = this.add(new Tests());
 			this.eventFeed = this.addEventFeed();
-			this.chart = this.addPatientsChart();
-			this.collection.fetch();
+			this.chart = this.add(new Chart());
+			this.addButtons();
 
+			// window.chart = this.chart;
+
+
+			this.collection.fetch();
 			//   this._transformItems();
 			  this._hideElements();
 			//   this._startEventFeed();
@@ -73,7 +78,8 @@ define(function(require) {
 
 
 		_hideElements: function() {
-			$('.tests').hide();
+			this.tests.hide();
+			this.chart.hide();
 			// $('#patients-chart-table').hide();
 			// $('#urine-analysis-results').hide();
 			// $('#hide-chart-button').hide();
@@ -87,7 +93,6 @@ define(function(require) {
 			// $('#test-menu').hide();
 			// $('.component virtual-patient tests').hide();
 			// $('.tests').hide();
-
 
 		},
 
@@ -174,15 +179,36 @@ define(function(require) {
 		//
         // },
 
-		_showTestMenu: function() {
-			$('.tests').show();
-		},
+		// _toggleTestMenu: function() {
+		// 	console.log('call');
+		// 	this.tests.toggle();
+		//
+		//
+		// 	// if($('#TestBtn').is(":visible")){
+		// 	// if(this.tests.is(":visible")){
+		// 	// 	this.tests.hide();
+		// 	// }
+		// 	// else{
+		// 	// 	this.tests.show();
+		// 	// }
+		// },
+
+		// _togglePatientsChart: function() {
+		// 	// if(this.chart.is(":visible")){
+		// 	// 	this.chart.hide();
+		// 	// }
+		// 	// else{
+		// 	// 	this.chart.show();
+		// 	// }
+		// },
 
 
 		addButtons: function () {
 			var texts = ['Query', 'Test', 'Chart'];
+			var targets = [this.eventFeed, this.tests, this.chart];
 			var n = texts.length;
 			var offset = 100;
+
 			texts.forEach(function (text, i) {
 				var button = this.add(new ActionButton({
 					model: new ActionButtonModel({
@@ -192,12 +218,23 @@ define(function(require) {
 				}));
 				var scale = i - (n - 1) / 2;
 				button.position.set(scale * (offset + offset * 0.1), -200);
+				var target = targets[i];
+				button.add(target);
+				// button.on('click', target.toggle());
+				// button.on('click', this.onToggle(target));
+				button.on('click', this.onToggle.bind(this,target));
+
 			}.bind(this));
 		},
 
-		onToggleTest: function (test, event) {
-			test.toggle();
+		onToggle: function (toggable, event) {
+			console.log('call');
+			toggable.toggle();
 		},
+
+		// onToggleTest: function (test, event) {
+		// 	test.toggle();
+		// },
 
 		addEventFeed: function(){
 
@@ -210,29 +247,28 @@ define(function(require) {
 
 		},
 
-		addPatientsChart: function () {
-
-			// var button = $('ChartBtn');
-			var button = this.createButton('Chart', 'info');
-			// button.position.set(-x, y);
-
-			var chart = this.add(new Chart());
-			// var chart = $('patients-chart-table');
-
-			// chart.position.x = x;
-			chart.hide();
-			button.add(chart);
-
-			button.on('click', this.onToggleTest.bind(this, chart))
-			// button.on('click', chart.show());
-
-			// $('ChartBtn').click(function(){
-			// 	chart.show();
-			// }).bind();
-
-			return this.add(button);
-
-		},
+		// togglePatientsChart: function () {
+		//
+		// 	var chartBtn = $('ChartBtn');
+		// 	// var button = this.createButton('Chart', 'info');
+		// 	// button.position.set(-x, y);
+		//
+		// 	// var chart = $('patients-chart-table');
+		//
+		// 	// chart.position.x = x;
+		// 	chart.hide();
+		// 	chartBtn.add(chart);
+		//
+		// 	chartBtn.on('click', this.onToggleTest.bind(this, chart))
+		// 	// button.on('click', chart.show());
+		//
+		// 	// $('ChartBtn').click(function(){
+		// 	// 	chart.show();
+		// 	// }).bind();
+		//
+		// 	return this.add(chartBtn);
+		//
+		// },
 		createButton: function (text, color) {
 			return new Button({
 				model: new ButtonModel({
