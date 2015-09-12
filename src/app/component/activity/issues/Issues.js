@@ -132,7 +132,7 @@ define(function (require) {
         bindDraggableEvents: function (component) {
             component.on({
                 drag: this.onDrag.bind(this),
-                dragendsink: this.onDrop.bind(this)
+                dropsink: this.onDrop.bind(this)
             });
         },
 
@@ -184,15 +184,74 @@ define(function (require) {
 
             var draggableType = this.resolveType(draggable);
             var droppableType = this.resolveType(droppable);
+            if(droppable instanceof IssueGroup && draggable instanceof IssueGroup){
+                //TODO merging two stacks
 
-            if (droppable instanceof IssueGroup) {
+                //only 1 issue allowed
+                if(draggable.model.get('issue') != undefined && droppable.model.get('issue') != undefined){
+                    return;
+                }
+                //load old collections
 
-                // TODO
-                //droppable.collection.add(draggable.model);
+                var issue = droppable.model.get('issue') || draggable.model.get('issue') || null ;
+                var evidence = draggable.model.get('evidence');
+                evidence.add(droppable.model.get('evidence').toJSON());
+                //create new card
+                var issueGroup = this.add(new IssueGroup({
+                    model: new IssueGroupModel({
+                        width: this.width,
+                        title: 'Issues and evidence',
+                        color: 'success',
+                        issue: issue,
+                        evidence: evidence
+                    })
+                }));
+                this.bindDraggableEvents(issueGroup);
+                issueGroup.position.copy(droppable.position);
+                //remove old cards
                 draggable.remove();
+                droppable.remove();
+            }
+            else if (droppable instanceof IssueGroup || draggable instanceof IssueGroup) {
+                var group = droppable instanceof IssueGroup ? droppable : draggable;
+                var card = droppable instanceof IssueGroup ? draggable : droppable;
+                var cardType = droppable instanceof IssueGroup ? draggableType : droppableType;
+                //only 1 issue allowed
+                if(card instanceof Issue && group.model.get('issue') != undefined){
+                    return;
+                }
+
+                //load old collections
+
+                var issue = cardType.issue || group.model.get('issue') || null ;
+                var collection = [];
+                var ev = group.model.get('evidence');
+                if (cardType.evidence) {collection.push(cardType.evidence);}
+                var evidence = new Backbone.Collection(collection);
+                evidence.add(ev.toJSON());
+                //create new card
+                var issueGroup = this.add(new IssueGroup({
+                    model: new IssueGroupModel({
+                        width: this.width,
+                        title: 'Issues and evidence',
+                        color: 'success',
+                        issue: issue,
+                        evidence: evidence
+                    })
+                }));
+                this.bindDraggableEvents(issueGroup);
+
+                issueGroup.position.copy(droppable.position);
+
+                //remove old cards
+                draggable.remove();
+                droppable.remove();
 
             } else {
-
+                //only 1 issue allowed
+                if(draggable instanceof Issue && droppable instanceof Issue){
+                    return;
+                }
                 var issue = draggableType.issue || droppableType.issue || null;
 
                 // TODO make nicer?
@@ -210,6 +269,7 @@ define(function (require) {
                         evidence: evidence
                     })
                 }));
+                this.bindDraggableEvents(issueGroup);
 
                 issueGroup.position.copy(droppable.position);
                 draggable.remove();
@@ -229,6 +289,10 @@ define(function (require) {
 
             if (view instanceof Evidence) {
                 type['evidence'] = view.model;
+            }
+
+            if (view instanceof IssueGroup) {
+                type['issuegroup'] = view.model;
             }
 
             return type;

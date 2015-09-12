@@ -40,7 +40,10 @@ define(function (require) {
 	};
 
 	DroppableBehaviour.prototype.drop = function (event, trigger) {
-		if (this.droppableTypes.indexOf(event.draggable.constructor >= 0)) {
+		var valid = this.droppableTypes.some(droppable => {
+			return event.draggable instanceof droppable;
+		});
+		if (valid) {
 			this.component.trigger(trigger, {
 				draggable: event.draggable,
 				droppable: this.component
