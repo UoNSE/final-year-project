@@ -11,17 +11,20 @@
   "private": false,
   "ignore": [],
   "dependencies": {
-    "jquery": "^2.1.4",
-    "requirejs": "^2.1.17",
+    "backbone": "^1.2.0",
+    "backbone-relational": "PaulUithol/Backbone-relational#~0.9.0",
     "bluebird": "^2.9.25",
+    "bootstrap": "^3.3.4",
+    "bootstrap-material-design": "^0.3.0",
+    "es6-shim": "~0.33.3",
     "gl-matrix": "^2.2.1",
     "handlebars": "^3.0.3",
-    "backbone": "^1.2.0",
-    "text": "requirejs/text#~2.0.14",
-    "bootstrap-material-design": "^0.3.0",
-    "bootstrap": "^3.3.4",
+    "jquery": "^2.1.4",
     "jquery-ui": "^1.11.4",
-    "jquery.transform.js": "louisremi/jquery.transform.js"
+    "jquery.transform.js": "louisremi/jquery.transform.js",
+    "requirejs": "^2.1.17",
+    "text": "requirejs/text#~2.0.14",
+    "tweenjs": "*"
   },
   "resolutions": {
     "handlebars": "^3.0.3",

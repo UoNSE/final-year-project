@@ -15,17 +15,28 @@ h1 {
 	margin: 0;
 }
 
-main > div, main > div > div > div {
-	width: 100%;
-	height: 100%;
+main {
+	position: absolute;
+	top: 50%;
+	left: 50%;
 }
 
-main {
-	width: 100%;
-	height: 100%;
+nav {
 	position: absolute;
 	top: 0;
 	left: 0;
+}
+
+main section {
+	//display: inline-block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+
+h3 {
+	margin: 0;
+	padding: 0;
 }
 
 a:hover {
@@ -49,19 +60,26 @@ a:hover {
 	text-align: center;
 }
 
-#btn-start {
-	width: 200px;
-	height: 200px;
+.abs-center:after {
+	background-color: red !important;
+	width: 500px;
+	height: 500px;
+	content: 'DO NOT USE ME'
 }
 
-.abs-center {
-	margin: auto !important;
-	position: absolute !important;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
+button {
+	font-size: 1.2em !important;
+	white-space: normal !important;
 }
+
+//button.mtl-fab {
+//
+//	@size: 100px;
+//
+//	width: @size !important;
+//	height: @size !important;
+//
+//}
 
 button.back {
 	position: relative;

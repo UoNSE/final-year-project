@@ -4,7 +4,7 @@ define(function (require) {
 
 	var bdd = require('intern!bdd');
 	var expect = require('intern/chai!expect');
-	var Factory = require('app/Factory');
+	var Factory = require('Factory');
 
 	bdd.describe('the Factory module', function () {
 

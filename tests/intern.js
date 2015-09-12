@@ -48,14 +48,17 @@ define({
 	// can be used here
 	loader: {
 		// Packages that should be registered with the loader in each testing environment
+		baseUrl: 'src/app',
 		packages: [
-			{ name: 'app', location: 'src/app/' },
-			{ name: 'tests', location: 'tests/' }
+			{ name: 'tests', location: '../../tests/' }
 		]
 	},
 
 	// Non-functional test suite(s) to run in each browser
-	suites: [ 'tests/unit/FactoryTest' ],
+	suites: [
+		'tests/unit/FactoryTest',
+		'tests/unit/TransformTest'
+	],
 
 	// Functional test suite(s) to run in each browser once non-functional tests are completed
 	functionalSuites: [ /* 'myPackage/tests/functional' */ ],
@@ -64,3 +67,46 @@ define({
 	excludeInstrumentation: /^(?:tests|node_modules)/
 });
 
+(function () {
+	// Object.assign polyfill from https://github.com/sindresorhus/object-assign
+	// This is required because nodejs currently does not suppose Object.assign.
+	// Ideally, should be a require, but I could not get it to play nice with intern.
+	'use strict';
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+	function toObject(val) {
+		if (val === null || val === undefined) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+
+		return Object(val);
+	}
+
+	Object.assign = Object.assign || function (target, source) {
+		var from;
+		var to = toObject(target);
+		var symbols;
+
+		for (var s = 1; s < arguments.length; s++) {
+			from = Object(arguments[s]);
+
+			for (var key in from) {
+				if (hasOwnProperty.call(from, key)) {
+					to[key] = from[key];
+				}
+			}
+
+			if (Object.getOwnPropertySymbols) {
+				symbols = Object.getOwnPropertySymbols(from);
+				for (var i = 0; i < symbols.length; i++) {
+					if (propIsEnumerable.call(from, symbols[i])) {
+						to[symbols[i]] = from[symbols[i]];
+					}
+				}
+			}
+		}
+
+		return to;
+	};
+}());
