@@ -6,11 +6,12 @@ define(function (require) {
 
 	return Page.extend({
 		name: 'cases',
+
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
-
 			this.add(new Cases());
 		}
+
 	});
 });
 

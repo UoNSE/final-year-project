@@ -13,6 +13,7 @@ define(function (require) {
 		visible: true,
 		needsWorldUpdate: true,
 		detached: false,
+		opacity: 1,
 
 		initialize: function () {
 			this.id = 'component-' + MathUtil.generateUUID(8);

@@ -6,6 +6,7 @@ define(function (require) {
 
 	return Object2D.extend({
 		back: true,
+
 		initialize: function (router, camera, urlParams) {
 			Object2D.prototype.initialize.apply(this, arguments);
 
@@ -15,6 +16,14 @@ define(function (require) {
 				this.add(new BackButton(router));
 			}
 
+		},
+
+		onPageEnter: function () {
+			// Override in submodule.
+		},
+
+		onPageLeave: function () {
+			// Override in submodule.
 		}
 
 	});

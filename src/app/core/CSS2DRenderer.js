@@ -80,6 +80,7 @@ define(function (require) {
 			if (object.height) {
 				object.$el.height(object.height);
 			}
+			object.$el.css('opacity', object.opacity);
 			return element;
 		},
 
