@@ -3,7 +3,6 @@ define(function (require) {
 
 	var Object2D = require('core/Object2D');
 	var BackButton = require('component/backbutton/BackButton');
-	var Promise = require('bluebird');
 	var Vector2 = require('math/Vector2');
 
 	return Object2D.extend({
@@ -17,12 +16,16 @@ define(function (require) {
 			if (this.back) {
 				this.add(new BackButton(router));
 			}
-
 		},
 
 		onPageEnter: function () {
-			// Override in submodule.
-			return Promise.resolve();
+			this.scale.set(0, 0);
+
+			return new TWEEN.Tween(this.scale)
+				.to(Vector2.ones())
+				.easing(TWEEN.Easing.Elastic.Out)
+				.start()
+				.promise();
 		},
 
 		onPageLeave: function () {

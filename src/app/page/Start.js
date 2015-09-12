@@ -13,16 +13,7 @@ define(function (require) {
 
 		initialize: function () {
 			Page.prototype.initialize.call(this);
-			this.start = this.add(new Start());
-			this.start.scale.set(0, 0);
-		},
-
-		onPageEnter: function () {
-			return new TWEEN.Tween(this.start.scale)
-				.to(Vector2.ones())
-				.easing(TWEEN.Easing.Elastic.Out)
-				.start()
-				.promise();
+			this.add(new Start());
 		}
 	});
 });
