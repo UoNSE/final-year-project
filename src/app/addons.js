@@ -33,7 +33,7 @@ define(function (require) {
 	TWEEN.Tween.prototype.promise = function () {
 		return new Promise(function (resolve) {
 			this.onComplete(() => {
-				resolve();
+				resolve(this);
 			})
 		}.bind(this));
 	};

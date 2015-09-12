@@ -61,16 +61,12 @@ define(function (require, exports, module) {
 		},
 
 		load: function (pageName, urlParams) {
-			require(['page/' + pageName], function (Page) {
+			require(['page/' + pageName], Page => {
 				this.scene.destroyAll();
 				this.pageName = pageName;
 				this.page = this.scene.add(new Page(this, this.camera, urlParams));
-
-				var tween = this.page.onPageEnter();
-				if (tween) {
-					tween.start();
-				}
-			}.bind(this));
+				this.page.onPageEnter();
+			});
 		},
 
 		back: function () {
@@ -81,19 +77,9 @@ define(function (require, exports, module) {
 		},
 
 		navigate: function () {
-
-			var tween = this.page.onPageLeave();
-
-			if (tween) {
-				tween.onComplete(() => {
-					Backbone.Router.prototype.navigate.apply(this, arguments);
-				}).start();
-			} else {
+			this.page.onPageLeave().then(() => {
 				Backbone.Router.prototype.navigate.apply(this, arguments);
-			}
-
+			});
 		}
-
 	});
-
 });

@@ -9,9 +9,8 @@ define(function (require) {
 
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
-			this.add(new Cases());
+			this.cases = this.add(new Cases());
 		}
-
 	});
 });
 

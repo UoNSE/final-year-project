@@ -25,17 +25,21 @@ define(function (require) {
 			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
 
-			this.add(new Hint({
+			this.hint = this.add(new Hint({
 				model: {text: 'Pick a Case'}
 			}));
-
+			this.hint.scale.set(0, 0);
+			new TWEEN.Tween(this.hint.scale)
+				.to(Vector2.ones(), 2000)
+				.easing(TWEEN.Easing.Elastic.Out)
+				.start()
 		},
 
 		onSync: function (collection) {
 			var length = collection.length;
 			var colorClasses = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
 				'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
-			collection.each(function (model, i) {
+			collection.each((model, i) => {
 				var newCase = new Case({
 					model: new ActionButton({
 						text: model.get('name'),
@@ -47,7 +51,7 @@ define(function (require) {
 				newCase.scale.set(0, 0);
 				this.cases.push(newCase);
 				this.add(newCase);
-			}.bind(this));
+			});
 		},
 
 		onLoad: function () {
@@ -55,8 +59,7 @@ define(function (require) {
 			var delay  = 50; // The delay between each case animating, creating the 'spiral' effect
 			var totalTime = 1500; // The total time of each animation
 			var n = this.cases.length;
-			this.cases.forEach(function (theCase, i) {
-
+			this.cases.forEach((theCase, i) => {
 				new TWEEN.Tween(theCase.position)
 					.to(Vector2.fromPolar(radius, i / n * Math.TAU), totalTime)
 					.delay(i * delay)
@@ -68,9 +71,7 @@ define(function (require) {
 					.delay(i * delay)
 					.easing(TWEEN.Easing.Elastic.Out)
 					.start();
-
-			}, this);
+			});
 		}
-
 	});
 });

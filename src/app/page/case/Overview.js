@@ -14,11 +14,11 @@ define(function (require) {
 				data: {
 					id: this.urlParams['case_id']
 				}
-			}).then(function (cases) {
+			}).then(cases => {
 				this.add(new Overview({
 					model: cases[0]
 				}));
-			}.bind(this));
+			});
 
 		}
 	});
