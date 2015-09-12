@@ -13,6 +13,7 @@ define(function (require) {
 		visible: true,
 		needsWorldUpdate: true,
 		detached: false,
+		opacity: 1,
 
 		initialize: function () {
 			this.id = 'component-' + MathUtil.generateUUID(8);
@@ -69,9 +70,17 @@ define(function (require) {
 			this.on('loaded', function () {
 				this.onLoad();
 			}, this);
+
+			this.on('destroy', function () {
+				this.onDestroy();
+			}, this);
 		},
 
 		onLoad: function () {
+			// Override in submodule
+		},
+
+		onDestroy: function () {
 			// Override in submodule
 		},
 
@@ -125,7 +134,16 @@ define(function (require) {
 		removeAll: function () {
 			this.children.forEach(child => {
 				child.removeAll();
-				child.trigger('removechild');
+				child.trigger('remove');
+			});
+			this.children.length = 0;
+		},
+
+		destroyAll: function () {
+			this.children.forEach(child => {
+				child.trigger('remove');
+				child.destroyAll();
+				child.trigger('destroy');
 			});
 			this.children.length = 0;
 		},

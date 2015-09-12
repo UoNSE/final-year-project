@@ -61,11 +61,12 @@ define(function (require, exports, module) {
 		},
 
 		load: function (pageName, urlParams) {
-			require(['page/' + pageName], function (Page) {
-				this.scene.removeAll();
+			require(['page/' + pageName], Page => {
+				this.scene.destroyAll();
 				this.pageName = pageName;
 				this.page = this.scene.add(new Page(this, this.camera, urlParams));
-			}.bind(this));
+				this.page.onPageEnter();
+			});
 		},
 
 		back: function () {
@@ -73,7 +74,12 @@ define(function (require, exports, module) {
 			var route = this.routes[previous];
 			var url = this.resolveRoute(route);
 			this.navigate(url, {trigger: true});
+		},
+
+		navigate: function () {
+			this.page.onPageLeave().then(() => {
+				Backbone.Router.prototype.navigate.apply(this, arguments);
+			});
 		}
 	});
-
 });

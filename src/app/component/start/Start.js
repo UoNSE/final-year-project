@@ -7,15 +7,9 @@ define(function (require) {
 
 	var ActionButton = require('model/ActionButton');
 
-	var TWEEN = require('tweenjs');
-
 	return Component.extend({
 
 		template: template,
-
-		events: {
-			'click .btn-start': 'onStart'
-		},
 
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
@@ -28,12 +22,6 @@ define(function (require) {
 					height: 200
 				}
 			});
-		},
-
-		onStart: function (event) {
-			//new TWEEN.Tween(this).to({
-			//	rotation: this.rotation + Math.TAU
-			//}, 2000).repeat(Infinity).start();
 		}
 
 	});
