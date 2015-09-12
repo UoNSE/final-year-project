@@ -1,4 +1,36 @@
 {
+  "hotspots": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "x": -2,
+      "y": 347
+    },
+    {
+      "id": 2,
+      "patientId": 1,
+      "x": 86,
+      "y": 222
+    },
+    {
+      "id": 3,
+      "patientId": 1,
+      "x": 53,
+      "y": -142
+    },
+    {
+      "id": 4,
+      "patientId": 1,
+      "x": -97,
+      "y": -352
+    },
+    {
+      "id": 5,
+      "patientId": 1,
+      "x": -161,
+      "y": -15
+    }
+  ],
   "cases": [
     {
       "id": 1,
@@ -205,21 +237,7 @@
         {
           "id": 1,
           "codename": "NOF",
-          "description": "neck of femur fracture",
-          "hotspots": [
-            {
-              "id": 1,
-              "side": "front",
-              "top": "53",
-              "left": "34"
-            },
-            {
-              "id": 2,
-              "side": "back",
-              "top": "34",
-              "left": "10"
-            }
-          ]
+          "description": "neck of femur fracture"
         }
       ],
       "observations": [
@@ -289,21 +307,7 @@
         {
           "id": 1,
           "codename": "NOF",
-          "description": "neck of femur fracture",
-          "hotspots": [
-            {
-              "id": 1,
-              "side": "front",
-              "top": "53",
-              "left": "34"
-            },
-            {
-              "id": 2,
-              "side": "back",
-              "top": "34",
-              "left": "10"
-            }
-          ]
+          "description": "neck of femur fracture"
         }
       ],
       "observations": [
@@ -344,26 +348,6 @@
           "question": "thirst",
           "answer": "very",
           "patientId": 1
-        }
-      ],
-      "hotspots": [
-        {
-          "id": 1,
-          "patientId": 1,
-          "x": 40.2,
-          "y": 40.2
-        },
-        {
-          "id": 2,
-          "patientId": 1,
-          "x": 60.2,
-          "y": 60.2
-        },
-        {
-          "id": 3,
-          "patientId": 1,
-          "x": 50.2,
-          "y": 50.2
         }
       ]
     }
