@@ -260,7 +260,7 @@ define(function (require) {
                 var evidence = new Backbone.Collection(collection);
                 evidence.add(ev.toJSON());
 
-                var cardcost = cardType.issue ? card.model.attributes.cost : -1* card.model.get('evidence').score;
+                var cardcost = cardType.issue ? card.model.attributes.cost : -1* card.model.attributes.score;
                 if(!cardType.issue && card.model.attributes.score < card.model.attributes.maxscore){
                     gameCredit -= 2;
                 }
@@ -281,7 +281,7 @@ define(function (require) {
                 if (droppableType.evidence) {collection.push(droppableType.evidence);}
                 var evidence = new Backbone.Collection(collection);
                 if(issue != null){
-                    gameCredit += issue.model.attributes.cost;
+                    gameCredit += issue.attributes.cost;
                 }
                 evidence.each(function(ev){
                     gameCredit -= ev.attributes.score;
