@@ -7,7 +7,14 @@ define(function(require) {
 	return Component.extend({
 		template: template,
 		classes: 'urine-analysis',
-		styles: 'component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis.css'
+		styles: 'component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis.css',
+		events:{
+			'click #hide-chart-button': '_onHide'
+		},
+		_onHide: function(){
+			this.hide();
+		}
+
 	});
 
 });

@@ -7,7 +7,14 @@ define(function(require) {
 	return Component.extend({
 		template: template,
 		classes: 'chart',
-		styles: 'component/activity/virtualpatient/chart/Chart.css'
+		styles: 'component/activity/virtualpatient/chart/Chart.css',
+
+		events:{
+			'click #hide-chart-button': '_onHide'
+		},
+		_onHide: function(){
+			this.hide();
+		}
 
 	});
 
