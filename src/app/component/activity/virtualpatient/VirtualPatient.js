@@ -179,29 +179,6 @@ define(function(require) {
 		//
         // },
 
-		// _toggleTestMenu: function() {
-		// 	console.log('call');
-		// 	this.tests.toggle();
-		//
-		//
-		// 	// if($('#TestBtn').is(":visible")){
-		// 	// if(this.tests.is(":visible")){
-		// 	// 	this.tests.hide();
-		// 	// }
-		// 	// else{
-		// 	// 	this.tests.show();
-		// 	// }
-		// },
-
-		// _togglePatientsChart: function() {
-		// 	// if(this.chart.is(":visible")){
-		// 	// 	this.chart.hide();
-		// 	// }
-		// 	// else{
-		// 	// 	this.chart.show();
-		// 	// }
-		// },
-
 
 		addButtons: function () {
 			var texts = ['Query', 'Test', 'Chart'];
@@ -239,8 +216,8 @@ define(function(require) {
 		addEventFeed: function(){
 
 			var eventfeed = this.add(new EventFeed());
-			var posX = -400;
-			var posY = 100;
+			var posX = -300;
+			var posY = 400;
 			eventfeed.position.set(posX, posY);
 
 			return this.add(eventfeed);

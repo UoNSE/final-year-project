@@ -24,7 +24,7 @@ define(function(require) {
 			var eventcard = this.add(new EventCard(100));
 			// var posX = -400;
 			// var posY = 100;
-			eventcard.position.set(posX, posY);
+			// eventcard.position.set(posX, posY);
 			return this.add(eventcard);
 
 		}
