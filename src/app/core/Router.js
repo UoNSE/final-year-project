@@ -5,9 +5,8 @@ define(function (require, exports, module) {
 	var $ = require('jquery');
 
 	return Backbone.Router.extend({
-		initialize: function (scene, renderer, camera) {
+		initialize: function (scene, camera) {
 			this.scene = scene;
-			this.renderer = renderer;
 			this.camera = camera;
 
 			// Note: add new routes in main.js

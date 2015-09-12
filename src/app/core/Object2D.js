@@ -123,7 +123,8 @@ define(function (require) {
 		},
 
 		removeAll: function () {
-			this.children.forEach(function (child) {
+			this.children.forEach(child => {
+				child.removeAll();
 				child.trigger('removechild');
 			});
 			this.children.length = 0;

@@ -10,9 +10,9 @@ define(function (require) {
 
 	function Application () {
 		this.scene = new Scene();
-		this.renderer = new CSS2DRenderer();
 		this.camera = new Camera();
-		this.router = new Router(this.scene, this.renderer, this.camera);
+		this.router = new Router(this.scene, this.camera);
+		this.renderer = new CSS2DRenderer(this.router);
 		this.animateCallback = this.animate.bind(this);
 		Backbone.history.start({pushState: true});
 		requestAnimationFrame(this.animateCallback);

@@ -7,7 +7,8 @@ define(function (require) {
 	var $ = require('jquery');
 	var Promise = require('bluebird');
 
-	function CSS2DRenderer () {
+	function CSS2DRenderer (router) {
+		this.router = router;
 		this.gui = $('#gui');
 	}
 
@@ -54,7 +55,7 @@ define(function (require) {
 				var element = object.render().$el;
 				element.attr('id', object.id);
 				element.addClass(classes.join(' '));
-				element.find('a').attr('draggable', 'false'); // TODO: move to linkify?
+				this.linkify(element);
 				if (object.detached) {
 					this.gui.append(element);
 				} else {
@@ -65,7 +66,7 @@ define(function (require) {
 				});
 				object.added = true;
 				object.on('removechild', function () {
-					$(object.id).remove();
+					$('#' + object.id).remove();
 					// TODO: remove style sheets
 				});
 			}
@@ -80,6 +81,36 @@ define(function (require) {
 				object.$el.height(object.height);
 			}
 			return element;
+		},
+
+		/**
+		 * Convert all child anchor tags in the given element to use the backbone's router navigate method.
+		 * This means links load partial content dynamically rather than loading entire new pages.
+		 *
+		 * @param element The element to replace anchor tags within.
+		 */
+		linkify: function (element) {
+			// Must use jQuery delegate events so that this function is the last to fire in the event chain.
+			// Otherwise events binded with backbone fire last and animations will not have been triggered yet.
+			// See http://api.jquery.com/on/#direct-and-delegated-events
+			element.find('a').attr('draggable', 'false');
+			element.on('click', 'a', function (e) {
+				var $anchor = $(e.currentTarget);
+
+				if (e.altKey || e.ctrlKey || e.shiftKey) {
+					// Allow special browser functions, open in new tab/window etc.
+					e.stopPropagation();
+					return;
+				}
+				// Prevent page from actually loading a new URL.
+				e.preventDefault();
+
+				//animate.onFinished(function () {
+				//	// Use the router navigation method instead, using the History API to simulate updating the URL.
+				//	this._router.navigate($anchor.attr('href'), {trigger: true});
+				//}.bind(this));
+				this.router.navigate($anchor.attr('href'), {trigger: true});
+			}.bind(this));
 		},
 
 		/**
