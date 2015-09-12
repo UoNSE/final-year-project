@@ -9,6 +9,8 @@ define(function(require) {
 
 	var UrineAnalysis = require('component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis');
 	var BloodTest = require('component/activity/virtualpatient/tests/bloodtest/BloodTest');
+	var Scan = require('component/activity/virtualpatient/tests/scan/Scan');
+
 
 	return Component.extend({
 		template: template,
@@ -17,11 +19,8 @@ define(function(require) {
 
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
+			this.createTestMenu();
 
-			var offset = 300;
-
-			this.urineAnalysis = this.createUrineAnalysis(offset, 0);
-			this.bloodTest = this.createBloodTest(offset, 50);
 		},
 
 		createButton: function (text, color) {
@@ -37,38 +36,50 @@ define(function(require) {
 			test.toggle();
 		},
 
-		createUrineAnalysis: function (x, y) {
+		createTestMenu: function(){
 
-			var button = this.createButton('Urine Analysis', 'info');
-			button.position.set(-x, y);
-
-			var urineAnalysis = new UrineAnalysis();
-
-			urineAnalysis.position.x = x;
-			urineAnalysis.hide();
-
-			button.add(urineAnalysis);
-			button.on('click', this.onToggleTest.bind(this, urineAnalysis));
-
-			return this.add(button);
+			// for all menu items in collection, add menu item
+			this.yOffset = -150;
+			var testMenu = [];
+			this.createMenuButton('Blood Test');
+			// this.createMenuButton('Blood Pressure');
+			this.createMenuButton('Xray');
+			this.createMenuButton('CTScan');
+			this.createMenuButton('Urine');
 
 		},
 
-		createBloodTest: function (x, y) {
+		createMenuButton: function(label){
+			var button = this.createButton(label, 'info');
+			this.yOffset = this.yOffset+50;
+			// console.log(this.yoffset);
+			button.position.set(0, this.yOffset);
 
-			var button = this.createButton('Blood Test', 'info');
-			button.position.set(-x, y);
+			var target = null;
 
-			var bloodTest = new BloodTest();
+			// console.log(label);
 
-			bloodTest.position.x = x;
-			bloodTest.hide();
+			if(label==='Blood Test'){
+				target = new BloodTest();
+			}
+			else if (label==='Blood Pressure') {
+				target = new BloodTest();
+			}
+			else if (label==='Xray' || label ==='CTScan') {
+				target = new Scan();
+			}
+			else if (label==='Urine'){
+				target = new UrineAnalysis();
+			}
+			else{}
 
-			button.add(bloodTest);
-			button.on('click', this.onToggleTest.bind(this, bloodTest));
+			target.position.x = 0;
+			target.hide();
+
+			button.add(target);
+			button.on('click', this.onToggleTest.bind(this, target));
 
 			return this.add(button);
-
 		}
 
 	});

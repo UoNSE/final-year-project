@@ -4,7 +4,8 @@ define(function(require) {
 	//TODO: make cards draggable
 	//TODO: make hotspot from data
 
-
+	var Button = require('component/button/Button');
+	var ButtonModel = require('model/Button');
 
 	var Component = require('core/Component');
 	var template = require('text!component/activity/virtualpatient/VirtualPatient.hbs');
@@ -13,6 +14,9 @@ define(function(require) {
 	var ActionButtonModel = require('model/ActionButton');
 
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
+	var Patient = require('component/activity/virtualpatient/patient/Patient');
+	var EventFeed = require('component/activity/virtualpatient/eventfeed/EventFeed');
+	var Chart = require('component/activity/virtualpatient/chart/Chart');
 
 	var Patients = require('collection/Patients');
 
@@ -23,32 +27,221 @@ define(function(require) {
 
 		collection: new Patients(),
 
+		events: {
+			// 'click #context': '_onContext', /* @TODO: delete most of these (depracated) */
+			// 'click #background': '_onBackground',
+			// 'dblclick #virtual-patient-img-container': '_flipPatient',
+			// 'click #flip-patient-button': '_flipPatient',
+			// 'click #test-results-button': '_testResults',
+			// 'click #hide-chart-button': '_hidePatientsChart',
+			// 'click #query-card': '_queryCard',
+			// 'click #test-card1': '_showUrineAnalysisChart',
+			// 'click #hide-chart-button2': '_hideUrineAnalysisChart',
+			// 'click #button-query': '_queryPatient',
+			// 'click #button-tests': '_testPatient',
+			// 'click #button-chart': '_showPatientsChart',
+			// 'click #test-card3': '_showSubMenu',
+			// 'click #test-card4': '_showTarget',
+			// 'click #test-card5': '_showTarget',
+			// 'click .hotspot': '_hotSpotClick'
+			// 'click .menu-item': '_menuItemSelection'
+
+			'click #TestBtn': '_showTestMenu'
+
+
+			},
+
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
 
+			this.patient = this.add(new Patient());
 			this.addButtons();
 			this.tests = this.add(new Tests());
-
+			this.eventFeed = this.addEventFeed();
+			this.chart = this.addPatientsChart();
 			this.collection.fetch();
+
+			//   this._transformItems();
+			  this._hideElements();
+			//   this._startEventFeed();
 		},
 
 		onSync: function (collection) {
 			this.listenTo(collection, 'add', this.render);
 		},
 
+
+		_hideElements: function() {
+			$('.tests').hide();
+			// $('#patients-chart-table').hide();
+			// $('#urine-analysis-results').hide();
+			// $('#hide-chart-button').hide();
+			// $('.observation-card').hide();
+			// $('.speech-card').hide();
+			// $('#query-menu').hide();
+			// $('.button-menu').hide();
+			// $('#test-menu-container2').hide();
+			// $('#target').hide();
+
+			// $('#test-menu').hide();
+			// $('.component virtual-patient tests').hide();
+			// $('.tests').hide();
+
+
+		},
+
+		// _transformItems: function () {
+        //     //---------------------------------------------
+        //     var transformableResources = [
+        //         //'<div style="background-color:#00f;width:100px;height:100px"></div>',
+        //         $('#speech-card1').get(),
+        //         $('#speech-card2').get(),
+		//
+        //         $('#observation-card1').get(),
+        //         $('#observation-card2').get(),
+        //         $('#observation-card3').get(),
+		//
+        //         //$('#dummy-card1').get(),
+        //         //$('#dummy-card2').get(),
+        //         //$('#dummy-card3').get(),
+        //         //$('#dummy-card4').get(),
+		//
+		//
+        //         // we might need to change it back to this later.
+        //         // atm were translating containers cos i wasnt sure how to
+        //         // transform both the button and menu at once.
+        //         // this is a hack with a bug -
+        //         // ie. you can drag around the container.
+		//
+        //         // $('#button-chart').get(),
+        //         // $('#button-query').get(),
+        //         // $('#button-tests').get(),
+		//
+        //         //$('#virtual-patient-img-container').get(),
+        //         $('#patients-chart-container').get(), // //jquery fetch things
+        //         $('#query-menu-container').get(),
+        //         $('#test-menu-container').get(),
+        //         $('#urine-analysis-results').get()
+        //     ];
+		//
+        //     var transforms = [
+        //         [glm.vec3.fromValues(-420, -300, 0),   glm.vec3.fromValues( .25,.25, 1), 0], //(translate,,) (scale,,)
+        //         [glm.vec3.fromValues(-420, -300, 0),   glm.vec3.fromValues( .25,.25, 1), 0],
+		//
+        //         [glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
+        //         [glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
+        //         [glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
+		//
+        //         //[glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
+        //         //[glm.vec3.fromValues(-420, -300, 0), glm.vec3.fromValues(.25,.25, 1), 0],
+        //         //[glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
+        //         //[glm.vec3.fromValues(-420, -300, 0),glm.vec3.fromValues(.25,.25, 1), 0],
+		//
+		//
+        //         // [glm.vec3.fromValues(-430, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
+        //         // [glm.vec3.fromValues(-330, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
+        //         // [glm.vec3.fromValues(-230, 300, 0),   glm.vec3.fromValues( 1.0,1.0, 1), 0],
+		//
+        //         //[glm.vec3.fromValues(0, 0, 0),glm.vec3.fromValues(2.5,2.5, 1), 0],
+        //         [glm.vec3.fromValues(170, 500, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+        //         [glm.vec3.fromValues(170, 500, 0), glm.vec3.fromValues(1.0, 1.0, 1), 0],
+        //         [glm.vec3.fromValues(170, 500, 0), glm.vec3.fromValues(1.0,1.0, 1), 0],
+        //         [glm.vec3.fromValues(0, 0, 0), glm.vec3.fromValues(1.0,1.0, 1), 0]
+		//
+        //     ];
+        //     var numItems  = transformableResources.length;
+        //     for (var i =0; i<numItems; i++) {
+        //         var element = $(transformableResources[i]);
+        //         element.addClass("abs-center").appendTo(this.$el);
+        //         element.css('transform', transforms[i]);
+		//
+        //         // MultiTouchManager.addElementRTS(element);
+        //         // var draggableMTelement = MultiTouchManager.addElementDraggable(element);
+        //         // this.bindDraggableEvents(draggableMTelement);
+		//
+        //         var multiTouchElement = this.multitouch.addElement(element);
+        //         var behaviour = new RotateTranslateScaleBehaviour(multiTouchElement);
+        //         multiTouchElement.addBehaviour(behaviour);
+		//
+        //         glm.vec3.copy(behaviour.translation, transforms[i][0]);
+        //         glm.vec3.copy(behaviour.scale, transforms[i][1]);
+        //         glm.vec3.copy(behaviour.rotation, transforms[i][2]);
+        //         behaviour.needsUpdate();
+        //         // this.elements = this.elements.add(element);
+        //     }
+		//
+		//
+        // },
+
+		_showTestMenu: function() {
+			$('.tests').show();
+		},
+
+
 		addButtons: function () {
-			var texts = ['Query', 'Tests', 'Chart'];
+			var texts = ['Query', 'Test', 'Chart'];
 			var n = texts.length;
 			var offset = 100;
 			texts.forEach(function (text, i) {
 				var button = this.add(new ActionButton({
-					model: new ActionButtonModel({text: text})
+					model: new ActionButtonModel({
+						text: text,
+						id: text + 'Btn'
+					})
 				}));
 				var scale = i - (n - 1) / 2;
 				button.position.set(scale * (offset + offset * 0.1), -200);
 			}.bind(this));
-		}
+		},
+
+		onToggleTest: function (test, event) {
+			test.toggle();
+		},
+
+		addEventFeed: function(){
+
+			var eventfeed = this.add(new EventFeed());
+			var posX = -400;
+			var posY = 100;
+			eventfeed.position.set(posX, posY);
+
+			return this.add(eventfeed);
+
+		},
+
+		addPatientsChart: function () {
+
+			// var button = $('ChartBtn');
+			var button = this.createButton('Chart', 'info');
+			// button.position.set(-x, y);
+
+			var chart = this.add(new Chart());
+			// var chart = $('patients-chart-table');
+
+			// chart.position.x = x;
+			chart.hide();
+			button.add(chart);
+
+			button.on('click', this.onToggleTest.bind(this, chart))
+			// button.on('click', chart.show());
+
+			// $('ChartBtn').click(function(){
+			// 	chart.show();
+			// }).bind();
+
+			return this.add(button);
+
+		},
+		createButton: function (text, color) {
+			return new Button({
+				model: new ButtonModel({
+					text: text,
+					color: color,
+					styles: ["matl-fab", "btn", "btn-fab", "btn-raised"]
+				})
+			});
+		},
 
 	});
 

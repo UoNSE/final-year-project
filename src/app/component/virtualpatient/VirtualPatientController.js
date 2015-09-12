@@ -100,6 +100,7 @@ define(function(require){
           this.render();
         },
 
+<<<<<<< HEAD
         // onBeforeRender: function() {
         //     console.log('on before render');
         //     this.addChildView('#query-menu', 'component/virtualpatient/QuestionsMenu');
@@ -113,6 +114,8 @@ define(function(require){
             this.addHotSpots();
         },
 
+=======
+>>>>>>> fb01311af92b7bc134bdc1699262959e11ed45d7
         addHotSpots: function() {
             $('#eve').click(function(e) { //e is the event that get passed to anonymous functions by click()
                 var divCoords = $(this).offset();
@@ -126,6 +129,11 @@ define(function(require){
                 relY = relY.toFixed(2); //round
                 console.log(relX + '% : ' + relY+'%');
             });
+<<<<<<< HEAD
+=======
+        },
+
+>>>>>>> fb01311af92b7bc134bdc1699262959e11ed45d7
         onSync: function (collection) {
           // TODO
         },
@@ -136,14 +144,12 @@ define(function(require){
           this._transformItems();
           this._hideElements();
           this._startEventFeed();
+<<<<<<< HEAD
         //   this.setSubView('#query-menu', QuestionsMenuController, this.collection.questions);
+=======
+>>>>>>> fb01311af92b7bc134bdc1699262959e11ed45d7
         },
 
-        // setSubView: function (selector, ViewController, model) {
-        //     this.addNestedView(selector, new ViewController({
-        //         model: model
-        //     }));
-        // },
 
         _hideElements: function() {
             $('#patients-chart-table').hide();
