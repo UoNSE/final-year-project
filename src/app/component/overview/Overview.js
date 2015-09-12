@@ -20,7 +20,7 @@ define(function (require) {
 				collection: new ActionButtons([
 					{text: 'Case Information', href: 'cases/' + this.model.id + '/information'},
 					{text: 'Identify Issues', href: this.getActivityLink('issues'), disabled: true},
-					{text: 'Goals and Actions', href: this.getActivityLink('goals-and-actions'), disabled: true},
+					{text: 'Goals and Actions', href: this.getActivityLink('goals'), disabled: true},
 					{text: 'Reflection', href: this.getActivityLink('reflection'), disabled: true}
 				])
 			}));

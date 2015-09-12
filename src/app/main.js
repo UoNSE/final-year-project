@@ -38,7 +38,8 @@ define(function (require) {
 					'cases/:id/overview': 'case/Overview',
 					'cases/:id/information': 'case/information/Information',
 					'cases/:id/activity/virtual-patient': 'activity/VirtualPatient',
-					'cases/:id/activity/issues': 'activity/Issues'
+					'cases/:id/activity/issues': 'activity/Issues',
+                    'cases/:id/activity/goals': 'activity/Goals'
 				}
 			}
 		}
