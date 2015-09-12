@@ -6,6 +6,7 @@ define(function (require) {
 
 	return Page.extend({
 		name: 'start',
+		back: false,
 		initialize: function () {
 			Page.prototype.initialize.call(this);
 

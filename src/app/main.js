@@ -35,10 +35,22 @@ define(function (require) {
 					'': 'Start',
 					'start': 'Start',
 					'cases': 'Cases',
-					'cases/:id/overview': 'case/Overview',
-					'cases/:id/information': 'case/information/Information',
-					'cases/:id/activity/virtual-patient': 'activity/VirtualPatient',
-					'cases/:id/activity/issues': 'activity/Issues'
+					'cases/:case_id/overview': 'case/Overview',
+					'cases/:case_id/information': 'case/information/Information',
+					'cases/:case_id/activity/virtual-patient': 'activity/VirtualPatient',
+					'cases/:case_id/activity/issues': 'activity/Issues'
+				},
+				sitemap: {
+					'Start': {
+						'Cases': {
+							'case/Overview': {
+								'case/information/Information': {
+									'activity/VirtualPatient': null
+								},
+								'activity/Issues': null
+							}
+						}
+					}
 				}
 			}
 		}
