@@ -16,6 +16,7 @@ define(function (require, exports, module) {
 			// Note: add new routes in main.js
 			this.routes = this.setupRoutes(module.config().routes);
 
+			// Note: update sitemap in main.js
 			this.sitemap = this.setupSitemap(module.config().sitemap, null);
 		},
 
@@ -68,7 +69,6 @@ define(function (require, exports, module) {
 		},
 
 		back: function () {
-			console.log(this.pageName);
 			var previous = this.sitemap[this.pageName];
 			var route = this.routes[previous];
 			var url = this.resolveRoute(route);

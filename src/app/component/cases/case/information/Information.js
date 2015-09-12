@@ -20,11 +20,11 @@ define(function (require) {
 				])
 			}));
 			var hint = this.add(new Hint({model: {text: 'Case Information'}}));
-			hint.position.y = 100;
+			hint.position.y = 120;
 		},
 
 		getLink: function (name) {
-			return 'cases/' + '1' + '/activity/' + name;
+			return 'cases/' + this.model.id + '/activity/' + name;
 		}
 
 	});

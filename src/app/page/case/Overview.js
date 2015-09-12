@@ -15,10 +15,8 @@ define(function (require) {
 					id: this.urlParams['case_id']
 				}
 			}).then(function (cases) {
-				var theCase = cases[0];
-
 				this.add(new Overview({
-					model: theCase
+					model: cases[0]
 				}));
 			}.bind(this));
 

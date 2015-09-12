@@ -14,7 +14,10 @@ define(function (require) {
 			ActionButton.prototype.initialize.apply(this, arguments);
 			this.router = router;
 			this.model = new Model({
-				icon: 'navigation-arrow-back'
+				icon: 'navigation-arrow-back',
+				styles: {
+					margin: 10
+				}
 			});
 		},
 
