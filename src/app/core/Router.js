@@ -62,7 +62,7 @@ define(function (require, exports, module) {
 
 		load: function (pageName, urlParams) {
 			require(['page/' + pageName], function (Page) {
-				this.scene.removeAll();
+				this.scene.destroyAll();
 				this.pageName = pageName;
 				this.page = this.scene.add(new Page(this, this.camera, urlParams));
 			}.bind(this));

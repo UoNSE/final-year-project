@@ -14,6 +14,8 @@ define(function (require) {
 			if (this.back) {
 				this.add(new BackButton(router));
 			}
+
 		}
+
 	});
 });

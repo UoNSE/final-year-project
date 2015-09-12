@@ -65,7 +65,7 @@ define(function (require) {
 					object.trigger('loaded');
 				});
 				object.added = true;
-				object.on('removechild', function () {
+				object.on('remove', function () {
 					$('#' + object.id).remove();
 					// TODO: remove style sheets
 				});
