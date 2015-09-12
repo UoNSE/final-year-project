@@ -2,12 +2,12 @@ define(function(require) {
 	'use strict';
 
 	var Component = require('core/Component');
-	var template = require('text!component/activity/virtualpatient/patient/Patient.hbs');
+	var template = require('text!component/activity/virtualpatient/patientbody/PatientBody.hbs');
 
 	return Component.extend({
 		template: template,
-		classes: 'patient',
-		styles: 'component/activity/virtualpatient/patient/Patient.css'
+		classes: 'patient-body',
+		styles: 'component/activity/virtualpatient/patientbody/PatientBody.css'
 
         // initialize: function () {
         //     Component.prototype.initialize.apply(this, arguments);
