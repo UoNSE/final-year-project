@@ -2,15 +2,15 @@ define(function (require) {
 	'use strict';
 
 	var Page = require('core/Page');
-	var Cases = require('component/cases/Cases');
+	var Inventory = require('component/inventory/Inventory');
 
 	return Page.extend({
-		name: 'cases',
+		name: 'inventory_page',
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
 
-			this.add(new Cases());
+			var inventory = this.add(new Inventory());
+			this.camera.position.x = inventory.width / 2;
 		}
 	});
 });
-

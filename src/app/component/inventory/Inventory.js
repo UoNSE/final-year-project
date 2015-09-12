@@ -8,7 +8,10 @@ define(function (require) {
 
 		template: template,
 		styles: ['component/inventory/Inventory.css'],
-		classes: ['cpn-inventory']
+		classes: ['cpn-inventory'],
+		detached: true,
+		width: 400,
+		height: '100%'
 
 	});
 

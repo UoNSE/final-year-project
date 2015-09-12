@@ -11,11 +11,12 @@ define(function (require) {
 		tagName: 'section',
 		parent: null,
 		visible: true,
+		needsWorldUpdate: true,
+		detached: false,
 
 		initialize: function () {
 			this.id = 'component-' + MathUtil.generateUUID(8);
 			this.children = [];
-			this.needsWorldUpdate = true;
 
 			var transform = new Transform();
 			var worldTransform = new Transform();

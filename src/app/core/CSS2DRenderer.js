@@ -8,6 +8,7 @@ define(function (require) {
 	var Promise = require('bluebird');
 
 	function CSS2DRenderer () {
+		this.gui = $('#gui');
 	}
 
 	Object.assign(CSS2DRenderer.prototype, {
@@ -25,7 +26,10 @@ define(function (require) {
 		renderObject: function (object, container, parentTransform, parentClasses, parentVisible) {
 			var transform;
 
-			if (object.needsWorldUpdate) {
+			if (object.detached) {
+				transform = object.transform;
+			}
+			else if (object.needsWorldUpdate) {
 				transform = object.worldTransform.copy(object.transform).applyTransform(parentTransform)
 			} else {
 				object.transform.copy(object.worldTransform);
@@ -51,7 +55,11 @@ define(function (require) {
 				element.attr('id', object.id);
 				element.addClass(classes.join(' '));
 				element.find('a').attr('draggable', 'false'); // TODO: move to linkify?
-				container.append(element);
+				if (object.detached) {
+					this.gui.append(element);
+				} else {
+					container.append(element);
+				}
 				this.loadStyles(object.styles).then(function () {
 					object.trigger('loaded');
 				});
@@ -62,7 +70,15 @@ define(function (require) {
 				});
 			}
 			object.$el.toggle(visible);
-			this.applyTransform(object.$el, transform);
+			if (!object.detached) {
+				this.applyTransform(object.$el, transform);
+			}
+			if (object.width) {
+				object.$el.width(object.width);
+			}
+			if (object.height) {
+				object.$el.height(object.height);
+			}
 			return element;
 		},
 
