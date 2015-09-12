@@ -14,7 +14,7 @@ define(function(require) {
 	var ActionButtonModel = require('model/ActionButton');
 
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
-	var Patient = require('component/activity/virtualpatient/patient/Patient');
+	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
 	var EventFeed = require('component/activity/virtualpatient/eventfeed/EventFeed');
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 
@@ -57,7 +57,7 @@ define(function(require) {
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
 
-			this.patient = this.add(new Patient());
+			this.patientbody = this.add(new PatientBody());
 			this.tests = this.add(new Tests());
 			this.eventFeed = this.addEventFeed();
 			this.chart = this.add(new Chart());
