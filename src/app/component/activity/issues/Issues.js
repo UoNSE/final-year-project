@@ -14,6 +14,7 @@ define(function (require) {
     var Issue = require('component/activity/issues/card/issue/Issue');
     var Evidence = require('component/activity/issues/card/evidence/Evidence');
     var IssueGroup = require('component/activity/issues/card/issuegroup/IssueGroup');
+    var gameCredit = 0;
 
     return Component.extend({
 
@@ -25,13 +26,13 @@ define(function (require) {
 
         collection: {
             issues: new IssuesCollection(),
-            evidence: new EvidenceCollection()
+            evidence: new EvidenceCollection(),
         },
 
         initialize: function () {
 
             Component.prototype.initialize.apply(this, arguments);
-
+            gameCredit = 0;
 			this.width = 300;
 			this.height = 90;
 
@@ -68,11 +69,14 @@ define(function (require) {
 					height: this.height,
 					title: 'Issue',
 					body: model.get('data'),
+                    cost: model.get('cost'),
 					color: 'danger'
 				}));
                 var scale = i - ((n - 1) / 2);
+                gameCredit -= card.model.attributes.cost;
                 card.position.set(-300, scale * (distance + card.model.get('height')));
             }, this);
+            this.updateScore();
         },
 
         /**
@@ -89,11 +93,18 @@ define(function (require) {
 					height: this.height,
 					title: 'Evidence',
 					body: model.get('data'),
+                    score: model.get('score'),
+                    maxscore: model.get('maxscore'),
 					color: 'info'
 				}));
                 var scale = i - ((n - 1) / 2);
+                gameCredit += card.model.attributes.score;
+                if(card.model.attributes.score < card.model.attributes.maxscore){
+                    gameCredit -= 2;
+                }
                 card.position.set(300, scale * (distance + card.model.get('height')));
             }, this);
+            this.updateScore();
         },
 
         /**
@@ -152,17 +163,41 @@ define(function (require) {
             var draggable = event.draggable;
             var droppable = event.droppable;
             this.merge(draggable, droppable);
-
             this.menu.hide();
+            this.updateScore();
+        },
+
+        updateScore: function(){
+            $(".score-display").text("CREDIT: " + gameCredit);
         },
 
         onDelete: function (event) {
-            event.draggable.remove();
+            //refund score
+            var card = event.draggable;
+            if(this.resolveType(card).issue){
+                gameCredit+= card.model.attributes.cost;
+            }
+            else if(this.resolveType(card).evidence){
+
+                gameCredit -= card.model.attributes.score;
+                if (card.model.attributes.score < card.model.attributes.maxscore){
+                    gameCredit += 2;
+                }
+            }
+            else{
+                gameCredit -= this.getScore(card)
+            }
+
+            card.remove();
+
+            this.updateScore();
         },
 
         onSplit: function (event) {
 
             var issueGroup = event.draggable;
+            var cardcost = this.getScore(issueGroup);
+            gameCredit -= cardcost;
             var model = issueGroup.model;
 
             var issue = model.get('issue');
@@ -170,13 +205,19 @@ define(function (require) {
 
             if (issue) {
                 this.addIssue(issue);
+                gameCredit -= issue.attributes.cost;
             }
 
             evidence.each(function (model) {
                 this.addEvidence(model);
+                gameCredit += model.attributes.score;
+                if(model.attributes.score < model.attributes.maxscore){
+                    gameCredit -= 2;
+                }
             }, this);
 
             issueGroup.remove();
+            this.updateScore();
 
         },
 
@@ -196,21 +237,10 @@ define(function (require) {
                 var issue = droppable.model.get('issue') || draggable.model.get('issue') || null ;
                 var evidence = draggable.model.get('evidence');
                 evidence.add(droppable.model.get('evidence').toJSON());
-                //create new card
-                var issueGroup = this.add(new IssueGroup({
-                    model: new IssueGroupModel({
-                        width: this.width,
-                        title: 'Issues and evidence',
-                        color: 'success',
-                        issue: issue,
-                        evidence: evidence
-                    })
-                }));
-                this.bindDraggableEvents(issueGroup);
-                issueGroup.position.copy(droppable.position);
-                //remove old cards
-                draggable.remove();
-                droppable.remove();
+
+                gameCredit -= this.getScore(draggable);
+                gameCredit -= this.getScore(droppable);
+
             }
             else if (droppable instanceof IssueGroup || draggable instanceof IssueGroup) {
                 var group = droppable instanceof IssueGroup ? droppable : draggable;
@@ -229,23 +259,14 @@ define(function (require) {
                 if (cardType.evidence) {collection.push(cardType.evidence);}
                 var evidence = new Backbone.Collection(collection);
                 evidence.add(ev.toJSON());
-                //create new card
-                var issueGroup = this.add(new IssueGroup({
-                    model: new IssueGroupModel({
-                        width: this.width,
-                        title: 'Issues and evidence',
-                        color: 'success',
-                        issue: issue,
-                        evidence: evidence
-                    })
-                }));
-                this.bindDraggableEvents(issueGroup);
 
-                issueGroup.position.copy(droppable.position);
+                var cardcost = cardType.issue ? card.model.attributes.cost : -1* card.model.get('evidence').score;
+                if(!cardType.issue && card.model.attributes.score < card.model.attributes.maxscore){
+                    gameCredit -= 2;
+                }
+                gameCredit += cardcost;
+                gameCredit -= this.getScore(group);
 
-                //remove old cards
-                draggable.remove();
-                droppable.remove();
 
             } else {
                 //only 1 issue allowed
@@ -259,24 +280,72 @@ define(function (require) {
                 if (draggableType.evidence) {collection.push(draggableType.evidence);}
                 if (droppableType.evidence) {collection.push(droppableType.evidence);}
                 var evidence = new Backbone.Collection(collection);
+                if(issue != null){
+                    gameCredit += issue.model.attributes.cost;
+                }
+                evidence.each(function(ev){
+                    gameCredit -= ev.attributes.score;
+                    if(ev.attributes.score < ev.attributes.maxscore){
+                        gameCredit += 2;
+                    }
+                })
 
-                var issueGroup = this.add(new IssueGroup({
-                    model: new IssueGroupModel({
-						width: this.width,
-                        title: 'Issues and evidence',
-                        color: 'success',
-                        issue: issue,
-                        evidence: evidence
-                    })
-                }));
-                this.bindDraggableEvents(issueGroup);
 
-                issueGroup.position.copy(droppable.position);
-                draggable.remove();
-                droppable.remove();
+
 
             }
+            //create new card
+            var issueGroup = this.add(new IssueGroup({
+                model: new IssueGroupModel({
+                    width: this.width,
+                    title: 'Issues and evidence',
+                    color: 'success',
+                    issue: issue,
+                    evidence: evidence
+                })
+            }));
+            gameCredit += this.getScore(issueGroup);
+            this.bindDraggableEvents(issueGroup);
+            issueGroup.position.copy(droppable.position);
+            //remove old cards
+            draggable.remove();
+            droppable.remove();
 
+        },
+
+         getScore: function(card){
+             var cost = card.model.get('issue') != null ? card.model.get('issue').attributes.cost : 0;
+             var evlist = card.model.get('evidence');
+
+             var count = 0;
+             var max = 0;
+             var penalty = 0;
+
+             evlist.each(function(obj){
+                 count += obj.attributes.score;
+                 if(max==0){
+                     max = obj.attributes.maxscore;
+                 }
+                 else if(max != obj.attributes.maxscore){
+                     penalty += 1;
+                     if(max > obj.attributes.maxscore){
+                         max = obj.attributes.maxscore;
+                     }
+                 }
+             });
+
+            if (penalty != 0){
+                count -= penalty;
+            }
+            else if (max != count) {
+
+                count -= 2;
+            }
+            if(cost > 0) {
+                count -= cost;
+            }
+
+            return count;
         },
 
         resolveType: function (view) {
