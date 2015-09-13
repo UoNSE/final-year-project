@@ -7,6 +7,7 @@ define(function (require) {
 
 	return Object2D.extend({
 		back: true,
+		title: 'Page',
 
 		initialize: function (router, camera, urlParams) {
 			Object2D.prototype.initialize.apply(this, arguments);
