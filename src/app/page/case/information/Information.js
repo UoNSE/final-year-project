@@ -1,14 +1,23 @@
 define(function (require) {
 	'use strict';
 
-	var Object2D = require('core/Object2D');
+	var Page = require('core/Page');
 	var Information = require('component/cases/case/information/Information');
+	var Cases = require('collection/Cases');
 
-	return Object2D.extend({
+	return Page.extend({
 		name: 'information',
 		initialize: function () {
-			Object2D.prototype.initialize.apply(this, arguments);
-			this.add(new Information());
+			Page.prototype.initialize.apply(this, arguments);
+			new Cases().fetch({
+				data: {
+					id: this.urlParams['case_id']
+				}
+			}).then(function (cases) {
+				this.add(new Information({
+					model: cases[0]
+				}));
+			}.bind(this));
 		}
 	});
 });

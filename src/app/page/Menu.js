@@ -7,7 +7,7 @@ define(function (require) {
 
 	return Page.extend({
 		initialize: function () {
-			Page.prototype.initialize.call(this);
+			Page.prototype.initialize.apply(this, arguments);
 
 			this.name = 'menu';
 

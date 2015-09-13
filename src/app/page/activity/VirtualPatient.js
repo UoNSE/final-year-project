@@ -1,13 +1,13 @@
 define(function (require) {
 	'use strict';
 
-	var Object2D = require('core/Object2D');
+	var InventoryPage = require('page/InventoryPage');
 	var VirtualPatient = require('component/activity/virtualpatient/VirtualPatient');
 
-	return Object2D.extend({
+	return InventoryPage.extend({
 		name: 'virtualpatient',
 		initialize: function () {
-			Object2D.prototype.initialize.apply(this, arguments);
+			InventoryPage.prototype.initialize.apply(this, arguments);
 			this.add(new VirtualPatient());
 		}
 	});

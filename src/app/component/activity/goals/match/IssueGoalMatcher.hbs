@@ -1,24 +1,18 @@
-<div class="panel panel-{{mtl-color color}}{{#if classes}}{{ classes}}{{/if}}"
+<div class="panel panel-{{mtl-color color}}"
      style="width: {{units width}}; height: {{units height}}">
-	{{#if title}}
+	{{#if issue}}
         <div class="panel-heading">
-            <h3 class="panel-title">{{title}}</h3>
+            <h3 class="panel-title">{{issue}}</h3>
         </div>
 	{{/if}}
     <div class="panel-body">
 
-        <div class="panel panel-danger">
+		{{#if goal}}
             <div class="panel-heading">
-
-				{{#with issue}}
-                    <h3 class="panel-title">Issue: {{body}}</h3>
-				{{/with}}
-
+                <h3 class="panel-title">{{goal}}</h3>
             </div>
-            <div class="panel-body">
-
-            </div>
-        </div>
+		{{/if}}
 
     </div>
+
 </div>

@@ -13,7 +13,11 @@ define(function (require) {
      * @class IssueGoalMatcher
      */
     return Component.extend({
-        events: {},
+
+        events: {
+
+        },
+
         template: template,
 
         initialize: function () {
@@ -21,7 +25,7 @@ define(function (require) {
             this.setDroppable({types: GoalCard});
         },
 
-        _verifyGoalMatchesIssue() {
+        drop: () => {
 
         }
 

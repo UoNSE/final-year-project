@@ -1,11 +1,11 @@
 define(function (require) {
-
 	'use strict';
 
 	var bdd = require('intern!bdd');
 	var expect = require('intern/chai!expect');
 	var Transform = require('math/Transform');
 	var Vector2 = require('math/Vector2');
+	require('tests/helpers/AlmostEqual');
 
 	bdd.describe('the Transform module', function () {
 
@@ -20,13 +20,7 @@ define(function (require) {
 
 			var result = transform.clone().applyTransform(inverse);
 
-			// TODO
-			var epsilon = 1E-5;
-			expect(result.position.x).to.be.closeTo(0, epsilon);
-			expect(result.position.y).to.be.closeTo(0, epsilon);
-			expect(result.rotation).to.be.closeTo(0, epsilon);
-			expect(result.scale.x).to.be.closeTo(1, epsilon);
-			expect(result.scale.y).to.be.closeTo(1, epsilon);
+			expect(result).to.be.almost.equal(new Transform());
 
 		});
 
@@ -43,11 +37,34 @@ define(function (require) {
 
 			var result = vector.applyTransform(transform).applyTransform(inverse);
 
-			// TODO
-			var epsilon = 1E-5;
-			expect(result.x).to.be.closeTo(3.4, epsilon);
-			expect(result.y).to.be.closeTo(-9.5, epsilon);
+			expect(result).to.be.almost.equal(vector);
 
+		});
+
+		bdd.it('Transforms should be chainable', function () {
+
+			var transformA = new Transform();
+			transformA.position.set(2, 3);
+			transformA.rotation = Math.PI / 2;
+			transformA.scale.set(2, 2);
+
+			var transformB = new Transform();
+			transformB.position.set(3, 4);
+			transformB.rotation = -Math.PI;
+			transformB.scale.set(1.5, 1.5);
+
+			var transformC = new Transform();
+			transformC.position.set(-8, 1);
+			transformC.rotation = Math.PI / 2;
+			transformC.scale.set(0.5, 0.5);
+
+			var result = new Transform()
+				.applyTransform(transformA)
+				.applyTransform(transformB)
+				.applyTransform(transformC);
+
+			console.log(result);
+			console.log(result.rotation);
 		});
 
 	});

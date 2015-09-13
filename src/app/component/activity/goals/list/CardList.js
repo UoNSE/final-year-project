@@ -20,6 +20,7 @@ define(function (require) {
             Card.prototype.initialize.apply(this, arguments);
         }
 
+
     });
 
 });
