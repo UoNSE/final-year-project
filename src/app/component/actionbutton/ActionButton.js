@@ -5,7 +5,14 @@ define(function (require) {
 	var template = require('text!component/actionbutton/ActionButton.hbs');
 
 	return Component.extend({
-		template: template
+		template: template,
+		events: {
+			'click .btn' : 'onClick'
+		},
+
+		onClick:function(event){
+			this.trigger('click');
+		}
 	});
 
 });

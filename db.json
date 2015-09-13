@@ -57,6 +57,20 @@
       "cost": 0
     }
   ],
+  "topics": [
+    {
+      "id": 1,
+      "data": "Lungs"
+    },
+    {
+      "id": 2,
+      "data": "Heart"
+    },
+    {
+      "id": 3,
+      "data": "Kidneys"
+    }
+  ],
   "evidence": [
     {
       "id": 1,

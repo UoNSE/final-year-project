@@ -5,7 +5,8 @@ define(function (require) {
     return Backbone.Model.extend({
 
         defaults: {
-            data: 'This is a topic'
+            data: 'This is a topic',
+            topicId: 0
         }
 
     });

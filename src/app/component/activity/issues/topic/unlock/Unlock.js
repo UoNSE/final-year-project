@@ -2,203 +2,161 @@ define(function (require) {
 
     'use strict';
 
-    var $ = require('jquery');
+    var Component = require('core/Component');
+    var template = require('text!component/activity/issues/topic/unlock/Unlock.hbs');
 
-    var ViewController = require('controller/ViewController');
+    var TWEEN = require('tweenjs');
+    var Vector2 = require('math/Vector2');
 
-    var template = require('text!component/Issues_Evidence/Topic_Unlock/TopicUnlockView.html');
+    var Hint = require('component/hint/Hint');
+    var Topic = require('component/activity/issues/topic/Topic');
+    var Issue = require('component/activity/issues/topic/Issue');
+    var ActionButton = require('component/actionbutton/ActionButton');
 
-    var Animate = require('behaviour/Animate').getInstance();
+    var ActionButtonModel = require('model/ActionButton');
 
-    var Topics = require('collection/Topics');
+    var IssuesCollection = require('collection/Issues');
+    var TopicCollection = require('collection/Topics');
 
-    var Issues = require('collection/Issues');
+    var gameCredit = 0;
 
-    var TopicViewController = require('component/Issues_Evidence/topic/TopicController');
-
-    var IssueViewController = require('component/Issues_evidence/issue/topic/IssueController');
-
-    return ViewController.extend({
+    return Component.extend({
 
         template: template,
-        styles: 'issues-evidence.css',
-        elementSize: '150',
+        styles: 'component/activity/issues/Issues.css',
 
         collection: {
-            topics: new Topics(),
-            issues: new Issues()
+            topics: new TopicCollection(),
+            issues: new IssuesCollection()
         },
-
-        events: {
-            'click #topics .Topic' : 'onTopicClick',
-            'click #issues .issue' : 'onIssueClick'
-        },
-
-        //TODO:Move data such as topic id, cost, etc... out of the DOM(HTML)
 
         initialize: function () {
 
-            ViewController.prototype.initialize.apply(this, arguments);
+            Component.prototype.initialize.apply(this, arguments);
+            gameCredit = 0;
 
-            var topics = this.collection.topics;
+            this.topics = [];
+            this.topicSelected = null;
 
-            var issues = this.collection.issues;
+            var topicCollection = this.collection.topics;
+            var issueCollection = this.collection.issues;
 
-            this.listenTo(topics, 'sync', this.onTopicsSync);
+            // Listen to the sync events on both collections, which waits for the models to be loaded.
+            this.listenTo(topicCollection, 'sync', this.onTopicsSync);
+            this.listenTo(issueCollection, 'sync', this.onIssuesSync);
 
-            this.listenTo(issues, 'sync', this.onIssuesSync);
+            topicCollection.fetch();
 
-            $.when(topics.fetch(),issues.fetch()).done(this.onSync.bind(this));
-        },
+            this.hint = this.add(new Hint({model: {text: 'Select a topic'}}));
 
-        onTopicsSync: function(topic) {
-            this.addTopic(topic);
-            this.listenTo(topic, 'add', this.render);
-        },
-
-        onIssuesSync: function(issue) {
-            this.addIssue(issue);
-        },
-
-        onSync: function () {
-            this.render();
-        },
-
-        addTopic: function(collection) {
-            collection.forEach(function(model) {
-                this.addCard("#topics",TopicViewController, model);
-            }.bind(this));
-        },
-
-        addIssue: function(collection) {
-            collection.forEach(function(model) {
-                this.addCard("#issues",IssueViewController, model);
-            }.bind(this));
-        },
-
-        addCard: function (selector, ViewController, model) {
-            this.addNestedView(selector, new ViewController({
-                model: model
+            this.topicBackButton = this.add(new ActionButton({
+                model: new ActionButtonModel({
+                    text:'Back'
+                })
             }));
+
+            this.topicBackButton.on('click', this.onTopicBack.bind(this));
+
+            this.topicBackButton.hide();
         },
 
-
-        onAfterRender: function () {
-            this.renderCreditAmount();
-            var topics = this.$el.find('#topics').children();
-            this.placeTopics(topics);
-
-            //hide all issues for now
-            this.hideAllIssues();
-
-            Animate.scale($('#btn-select-topic'), {
-                css: {width: 150, height: 100, fontSize: 20},
-                delay: 500,
-                duration: 1000
-            });
+        onLoad: function() {
+            this.placeTopics();
         },
 
-        placeTopics: function ( $topics ) {
-            var distance = 300;
+        onTopicsSync: function(topics) {
+            topics.forEach(function (model, index) {
+                this.addTopic(model);
+            }, this);
 
-            $topics.each( function ( index, topic ) {
-                var $topic = $(topic).find('.Topic');
-
-                var angle = index / $topics.length * Math.PI * 2;
-                var left =  Math.cos( angle ) * distance;
-                var top = Math.sin( angle ) * distance;
-
-                Animate.scale($topic, {
-                    css: {
-                        fontSize:12,
-                        textAlign: 'center',
-                        width: 120,
-                        height: 120
-                    },
-                    delay: index * 50,
-                    animate: {
-                        left: left,
-                        top: top
-                    }
-                });
-            });
+            this.collection.issues.fetch();
         },
 
-        hideAllIssues: function() {
-            var issues = this.$el.find('#issues').children();
-            issues.each( function ( index, issue ){
-                $(issue).find(".issue").hide();
-            });
+        onIssuesSync: function(issues) {
+            issues.forEach(function (model, i) {
+                var issue = this.addIssue(model);
+                issue.hide();
+            }, this);
         },
 
-        showIssues: function( $topic ) {
-            this.hideAllIssues();
+        addTopic: function(model) {
+            var topic = this.add(new Topic({
+                topicId: model.get('id'),
+                name: model.get('data')
+            }));
 
-            $('#btn-select-topic').html ("Select an<br/> Issue");
+            this.topics.push(topic);
 
-            var topicId = $topic.attr('topicid');
+            topic.on('topicSelected', this.onTopicSelected.bind(this));
 
-            var issues = $('#issues').find('[topicid=' + topicId + ']');
-
-            var originX = parseInt($topic.css('left'));
-            var originY = parseInt($topic.css('top'));
-
-            var angleSpan = Math.PI / 2;
-            var baseAngle = this.getAngleBetweenObjects($topic,$("#btn-select-topic")) - angleSpan;
-            var distance = 200 + (issues.length * 100 * ( angleSpan / (Math.PI * 2))) / (Math.PI * 2) * 20;
-
-            issues.each( function( index, issue ) {
-                var $issue = $(issue);
-
-                var angle = baseAngle + (index / issues.length) * angleSpan;
-
-                var left = originX + Math.cos(angle) * distance;
-                var top = originY + Math.sin(angle) * distance;
-
-                $issue.show();
-                Animate.scale($issue, {
-                    css: {
-                        width: 120,
-                        height: 120,
-                        left: originX,
-                        top: originY,
-                        fontSize: 12,
-                        textAlign: 'center'
-                    },
-                    animate: {
-                        left: left,
-                        top: top
-                    }
-                });
-            });
+            return topic;
         },
 
-        onTopicClick: function ( event ) {
-            var $topic = $(event.currentTarget);
-            this.showIssues($topic);
+        addIssue: function(model) {
+            var issue = this.add(new Issue({
+                name: model.get('data'),
+                topicId: model.get('topicId')
+            }));
+
+            this.topics.forEach(function(theTopic,index){
+                if (theTopic.topicId === issue.topicId){
+                    theTopic.addIssue(issue);
+                }
+            },this);
+
+            return issue;
         },
 
-        getAngleBetweenObjects: function ( $obj1, $obj2 ) {
-            var pos1 = $obj1.position();
-            var pos2 = $obj2.position();
+        onTopicSelected: function ( theTopicSelected ) {
+            this.topicSelected = theTopicSelected;
 
-            return (Math.atan2(pos1.left - pos2.left, pos1.top - pos2.top) + Math.PI * 2) % (Math.PI * 2);
+            this.topics.forEach(function(theTopic,index){
+                theTopic.hide();
+            },this);
+
+            this.hint.hide();
+            this.topicBackButton.show();
         },
 
-        onIssueClick: function( event ) {
-            var $issue = $(event.currentTarget);
+        placeTopics: function() {
+            var n = this.topics.length;
+            var radius = 200;
 
-            if ( this.getCredit() >= $issue.attr("cost") && !$issue.hasClass("purchased") ) {
+            this.topics.forEach(function(theTopic,index){
+                theTopic.show();
+                theTopic.position.set(0,0);
 
-                $issue.addClass( "purchased" );
-                this.renderCreditAmount();
-            }
-            else if ( !$issue.hasClass("purchased") ){
-                $(".score-display").each( function (index, display){
-                    var $display = $(display);
-                    $display.fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-                } );
-            }
+                new TWEEN.Tween(theTopic.position)
+                    .to(Vector2.fromPolar(radius, index / n * Math.TAU), 1000)
+                    .easing(TWEEN.Easing.Elastic.Out)
+                    .start();
+            },this);
+        },
+
+        //onIssueClick: function( event ) {
+        //    var $issue = $(event.currentTarget);
+        //
+        //    if ( this.getCredit() >= $issue.attr("cost") && !$issue.hasClass("purchased") ) {
+        //
+        //        $issue.addClass( "purchased" );
+        //        this.renderCreditAmount();
+        //    }
+        //    else if ( !$issue.hasClass("purchased") ){
+        //        $(".score-display").each( function (index, display){
+        //            var $display = $(display);
+        //            $display.fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+        //        } );
+        //    }
+        //},
+
+        onTopicBack: function( event ) {
+            this.topicSelected.hideIssues();
+            this.topicSelected = null;
+
+            this.hint.show();
+            this.topicBackButton.hide();
+
+            this.placeTopics();
         },
 
         renderCreditAmount: function() {
