@@ -9,6 +9,7 @@ define(function (require) {
 
 	return Page.extend({
 		name: 'start',
+		title: 'Start',
 		back: false,
 
 		initialize: function () {

@@ -66,6 +66,7 @@ define(function (require, exports, module) {
 				this.pageName = pageName;
 				this.page = this.scene.add(new Page(this, this.camera, urlParams));
 				this.page.onPageEnter();
+				document.title = this.page.title;
 			});
 		},
 

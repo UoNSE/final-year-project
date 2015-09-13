@@ -7,6 +7,7 @@ define(function (require) {
 
 	return Page.extend({
 		name: 'overview',
+		title: 'Case Overview',
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
 
