@@ -7,6 +7,7 @@ define(function (require) {
 
 	return Page.extend({
 		name: 'overview',
+		title: 'Case Overview',
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
 
@@ -14,11 +15,11 @@ define(function (require) {
 				data: {
 					id: this.urlParams['case_id']
 				}
-			}).then(function (cases) {
+			}).then(cases => {
 				this.add(new Overview({
 					model: cases[0]
 				}));
-			}.bind(this));
+			});
 
 		}
 	});

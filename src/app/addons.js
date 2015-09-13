@@ -1,25 +1,13 @@
 define(function (require) {
 	'use strict';
 
-	var $ = require('jquery');
 	var Handlebars = require('handlebars');
-
-	$.fn.insertAt = function (index, element) {
-		var lastIndex = this.children().size();
-		if (index < 0) {
-			index = Math.max(0, lastIndex + 1 + index)
-		}
-		this.append(element);
-		if (index < lastIndex) {
-			this.children().eq(index).before(this.children().last())
-		}
-		return this;
-	};
+	var TWEEN = require('tweenjs');
+	var Promise = require('bluebird');
 
 	if (Math.TAU === undefined) {
 		Math.TAU = 2 * Math.PI;
 	}
-
 
 	// http://stackoverflow.com/a/12397602/868679
 	Handlebars.registerHelper('breaklines', function (text) {
@@ -41,5 +29,13 @@ define(function (require) {
 		}
 		return colour;
 	});
+
+	TWEEN.Tween.prototype.promise = function () {
+		return new Promise(function (resolve) {
+			this.onComplete(() => {
+				resolve(this);
+			})
+		}.bind(this));
+	};
 });
 

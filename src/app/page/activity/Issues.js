@@ -6,6 +6,7 @@ define(function (require) {
 
 	return InventoryPage.extend({
 		name: 'issues',
+		title: 'Issues & Evidence',
 		initialize: function () {
 			InventoryPage.prototype.initialize.apply(this, arguments);
 			this.add(new Issues());
