@@ -16,6 +16,7 @@ define(function (require) {
 			Component.prototype.initialize.apply(this, arguments);
 			this.add(new Timeline({
 				collection: new ActionButtons([
+					{text: 'Case Information', href: this.getLink('case-information')},
 					{text: 'Virtual Patient', href: this.getLink('virtual-patient')}
 				])
 			}));
