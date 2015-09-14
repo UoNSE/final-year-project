@@ -2,7 +2,7 @@ define(function (require) {
 	'use strict';
 
 	var Page = require('core/Page');
-	var Unlock = require('component/activity/issues/topic/unlock/Unlock');
+	var Unlock = require('component/activity/issues/topic/Unlock');
 
 	return Page.extend({
 		name: 'topic unlock',

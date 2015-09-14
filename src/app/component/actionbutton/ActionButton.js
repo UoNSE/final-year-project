@@ -11,7 +11,7 @@ define(function (require) {
 		},
 
 		onClick:function(event){
-			this.trigger('click');
+			this.trigger('click',event);
 		}
 	});
 

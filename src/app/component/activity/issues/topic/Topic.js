@@ -31,10 +31,10 @@ define(function (require) {
         },
 
         onClick: function( event ){
+            this.trigger('topicSelected',this);
+
             var radius = 200;
             var n = this.issues.length;
-
-            this.trigger('topicSelected',this);
 
             this.issues.forEach(function(theIssue,index){
                 theIssue.show();
