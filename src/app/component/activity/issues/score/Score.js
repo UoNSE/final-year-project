@@ -13,7 +13,7 @@ define(function (require) {
         template : template,
         styles: 'component/activity/issues/score/Score.css',
         originX: -250,
-        originY: -300,
+        originY: -300,//TODO:position in relation to bottom of 'viewport'
 
         initialize: function (params) {
             params = params || {};

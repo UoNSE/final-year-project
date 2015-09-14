@@ -9,11 +9,15 @@ define(function (require) {
     var IssueModel = require('model/Issue');
     var EvidenceModel = require('model/Evidence');
     var IssueGroupModel = require('model/IssueGroup');
+    var ActionButtonModel = require('model/ActionButton');
 
     var Menu = require('component/activity/issues/menu/Menu');
     var Issue = require('component/activity/issues/card/issue/Issue');
     var Evidence = require('component/activity/issues/card/evidence/Evidence');
     var IssueGroup = require('component/activity/issues/card/issuegroup/IssueGroup');
+    var ActionButton = require('component/actionbutton/ActionButton');
+    var Score = require('component/activity/issues/score/Score');
+
     var gameCredit = 0;
 
     return Component.extend({
@@ -53,6 +57,21 @@ define(function (require) {
             });
             this.menu.hide();
 
+            //add the topic unlock button
+            this.add(new ActionButton({
+                model: new ActionButtonModel({
+                    icon: 'action-shopping-cart',
+                    color: 'blue',
+                    href: 'cases/' + 1 + '/activity/issues/topics',//TODO:get case id
+                    //styles: {
+                    //    width:100,
+                    //    height:100,
+                    //    'font-size':40
+                    //}
+                })
+            })).position.set(-400,-300);//TODO:position in relation to bottom left of 'viewport'
+
+            this.scoreContainer = this.add(new Score());
         },
 
         /**
@@ -168,7 +187,8 @@ define(function (require) {
         },
 
         updateScore: function(){
-            $(".score-display").text("CREDIT: " + gameCredit);
+            this.scoreContainer.setScore(gameCredit);
+            //$(".score-display").text("CREDIT: " + gameCredit);
         },
 
         onDelete: function (event) {
