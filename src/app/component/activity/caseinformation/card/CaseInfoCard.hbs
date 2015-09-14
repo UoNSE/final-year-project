@@ -1,0 +1,31 @@
+<div id="infocard-{{onion}}" class="panel panel-{{mtl-color color}}{{#if classes}}{{ classes}}{{/if}}{{#if show-threshold}} hidden-info" threshold="{{show-threshold}}{{/if}}"
+     style="width: {{units width}};">
+    <div class="panel-heading">
+        {{title}}
+    </div>
+    <div class="panel-body">
+        <div class="content-media">
+            {{#if image}}
+                <img src="{{source}}" width="{{mwidth}}">
+            {{/if}}
+            {{#if video}}
+                <video controls width="{{mwidth}}">
+                    <source src="{{source}}" type="video/{{type}}">
+                    browser unsupported for watching video
+                </video>
+            {{/if}}
+            {{#if audio}}
+                <audio controls>
+                    <source src="{{source}}" type="audio/{{type}}">
+                </audio>
+            {{/if}}
+        </div>
+        <div class="content-text">
+            <ul>
+                {{#each items}}
+                    <li id="info-{{../onion}}-{{@index}}" {{#if issue}}issue="{{issue}}" {{/if}} class="list-item">{{text}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>

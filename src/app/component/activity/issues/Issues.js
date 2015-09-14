@@ -78,7 +78,7 @@ define(function (require) {
         /**
          * An event triggered when the evidence collection has synced upon a fetch call.
          *
-         * @param evidence The evidecne collection.
+         * @param evidence The cardinfo collection.
          */
         onEvidenceSync: function (evidence) {
             var n = evidence.size();

@@ -7,6 +7,7 @@ define(function (require) {
     return InventoryPage.extend({
         name: 'caseinfo',
         title: 'Case Information',
+
         initialize: function () {
             InventoryPage.prototype.initialize.apply(this, arguments);
             this.add(new CaseInformation());

@@ -2,20 +2,19 @@ define(function (require) {
 
     var Backbone = require('backbone');
 
-    var CaseInfoCard = require('model/CaseInfoCard');
+    var SelectableText = require('model/SelectableText');
 
     return Backbone.RelationalModel.extend({
 
         defaults: {
-            name: 'CaseInfo',
-            timer: '00:00:00',
-            cards: null
+            title: 'CaseInfoCard',
+            items:null
         },
 
         relations: [{
             type: Backbone.HasMany,
-            key: 'cards',
-            relatedModel: CaseInfoCard
+            key: 'items',
+            relatedModel: SelectableText
         }]
 
     });

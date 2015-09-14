@@ -5,9 +5,11 @@ define(function (require) {
     var template = require('text!component/activity/caseinformation/CaseInformation.hbs');
 
     var CaseInfoCollection = require('collection/CaseInfos');
-    var CaseInfoModel = require('model/CaseInfo');
+    var CaseInfoCardsCollection = require('collection/CaseInfoCards');
+    var CaseInfoCardModel = require('model/CaseInfoCard');
+    var SelectableText = require('model/SelectableText');
 
-    var Card = require('component/activity/caseinformation/card/Card');
+    var Card = /*require('component/activity/issues/card/issue/Issue'); */ require('component/activity/caseinformation/card/CaseInfoCard');
 
     return Component.extend({
 
@@ -16,7 +18,8 @@ define(function (require) {
         styles: 'component/activity/caseinformation/CaseInformation.css',
 
         collection: {
-            caseinfocollection: new CaseInfoCollection()
+            caseinfos: new CaseInfoCollection(),
+            caseinfocards : new CaseInfoCardsCollection()
         },
 
         initialize: function () {
@@ -24,11 +27,10 @@ define(function (require) {
             Component.prototype.initialize.apply(this, arguments);
 
             this.width = 300;
-            this.height = 90;
+            this.height = 200;
 
-            var caseinfos = this.collection.caseinfocollection;
-
-            // Listen to the sync events on both collections, which waits for the models to be loaded.
+            var caseinfos  = this.collection.caseinfos;
+            // Listen to the sync events on caseinfo, which waits for the models to be loaded.
             this.listenTo(caseinfos, 'sync', this.onCaseInfoSync);
 
             caseinfos.fetch();
@@ -37,36 +39,44 @@ define(function (require) {
         /**
          * An event triggered when the evidence collection has synced upon a fetch call.
          *
-         * @param evidence The evidecne collection.
+         * @param evidence The caseinfo collection.
          */
         onCaseInfoSync: function (caseinfo) {
-            var n = caseinfo.size();
-            var distance = 10;
-
-            caseinfo.cards.forEach(function (model, i) {
-                var card = this.addCaseCard(new CaseInfoModel({
+            var caseCards = caseinfo.first().get('cards');
+            var n = caseCards.size();
+            var distance = 100;
+            caseCards.forEach(function (model, i) {
+                var card = this.addCaseCard(new CaseInfoCardModel({
                     width: this.width,
-                    height: this.height,
-                    title: model.get(''),
-                    body: model.get('content'),
+                    /*height: this.height,*/
+                    /* TODO refactor again */
+                    title: model.get('title'),
+                    onion: model.get('id'), /* onion = id, don't ask hard questions*/
+                    'show-threshold': model.get('show-threshold'),
+                    mwidth:(this.width-24),
+                    image: model.get('image'),
+                    video: model.get('video'),
+                    audio: model.get('audio'),
+                    source: model.get('source'),
+                    type: model.get('type'),
+                    items: model.get('items'),
                     color: 'info'
                 }));
                 var scale = i - ((n - 1) / 2);
-                card.position.set(300, scale * (distance + card.model.get('height')));
+                card.position.set(300, scale * (distance));
             }, this);
         },
 
         addCaseCard: function (model) {
-            var issue = this.add(new Issue({
+            var card = this.add(new Card({
                 model: model
             }));
-            this.bindDraggableEvents(issue);
-            return issue;
+            this.bindDraggableEvents(card);
+            return card;
         },
 
          /**
          * Binds the draggable events to the component.
-         *
          * @param component The .
          */
         bindDraggableEvents: function (component) {
@@ -74,8 +84,19 @@ define(function (require) {
                 drag: this.onDrag.bind(this),
                 dragendsink: this.onDrop.bind(this)
             });
-        }
+        },
+        /**
+         * An event triggered when a card is being dragged.
+         */
+        onDrag: function () {
+        },
 
+        /**
+         * An event triggered when a card is being dropped.
+         * @param event
+         */
+        onDrop: function (event) {
+        }
     });
 
 

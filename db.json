@@ -298,7 +298,10 @@
         "type": "mp4",
         "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
         "items": [
-          "A placeholder video card"
+          {
+            "text": "A placeholder video card",
+            "issue": null
+          }
         ]
       },
       {
