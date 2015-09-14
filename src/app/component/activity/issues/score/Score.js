@@ -32,13 +32,8 @@ define(function (require) {
         },
 
         invalidAction: function(){
-            this.position.set(this.originX, this.originY);
-
-            new TWEEN.Tween(this.position)
-                .to({x:[this.originX + 15,this.originX]},100)
-                .easing(TWEEN.Easing.Back.InOut)
-                .repeat(5)
-                .start();
+            this.position.x = this.originX;
+            this.shake();
         }
     });
 });
