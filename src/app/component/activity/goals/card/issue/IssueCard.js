@@ -16,7 +16,7 @@
          *
          * @override
          */
-        initialize: () => {
+        initialize: function () {
             // invoke super(arguments)
             Card.prototype.initialize.apply(this, arguments);
             // allow subtypes of Card to be dropped onto this

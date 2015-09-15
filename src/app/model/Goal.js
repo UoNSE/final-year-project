@@ -1,12 +1,13 @@
 define(function (require) {
     "use strict";
 
-    let Backbone = require('backbone');
+    let _ = require('underscore');
+    let Panel = require('model/Panel');
 
     /**
      * @class Goal
      */
-    return Backbone.Model.extend({
+    let GoalModel = Panel.extend({
 
         defaults: {
             content: 'This is a Goal',
@@ -22,8 +23,23 @@ define(function (require) {
          */
         matchesIssue: function (issue) {
             return issue && issue.id === this.issueId;
+        },
+
+        /**
+         * Verify that an Action matches this Goal.
+         *
+         * @param action the Action to check.
+         * @return true if this goal matches the parameter action.
+         */
+        matchesAction: (action) => {
+            return action && this.actions.filter(action.id).length > 0;
         }
 
     });
+
+    // merge model schemas
+    _.extend(GoalModel.prototype.defaults, Panel.prototype.defaults);
+
+    return GoalModel;
 
 });

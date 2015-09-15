@@ -3,30 +3,20 @@ define(function (require) {
     'use strict';
 
     // templates
-    var template = require('text!component/activity/goals/card/matcher/IssueGoalMatcher.hbs');
-
+    var template = require('text!component/activity/goals/card/matcher/IssueGoalMatch.hbs');
     // components
     var Component = require('core/Component');
-    var GoalCard = require('component/activity/goals/card/goal/GoalCard');
 
     /**
-     * @class IssueGoalMatcher
+     * @class IssueGoalMatch
      */
     return Component.extend({
-
-        events: {
-
-        },
 
         template: template,
 
         initialize: function () {
+            // super(arguments)
             Component.prototype.initialize.apply(this, arguments);
-            this.setDroppable({types: GoalCard});
-        },
-
-        drop: () => {
-
         }
 
     });
