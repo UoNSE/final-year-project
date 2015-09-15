@@ -214,17 +214,14 @@ define(function (require) {
         assignTypes: function (draggable, droppable) {
             let type = {};
 
-            let resolveType = function (card) {
+            [draggable, droppable].map(function (card) {
                 if (card instanceof IssueCard) {
                     type.issue = card.model;
                 }
                 if (card instanceof GoalCard) {
                     type.goal = card.model;
                 }
-            };
-
-            resolveType(draggable);
-            resolveType(droppable);
+            });
 
             return {
                 issue: type.issue,
