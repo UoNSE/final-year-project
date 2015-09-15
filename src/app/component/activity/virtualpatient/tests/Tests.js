@@ -52,9 +52,7 @@ define(function(require) {
 
 			// for all menu items in collection, add menu item
 			this.yOffset = 50;
-			var testMenu = [];
 			this.createMenuButton('Blood Test');
-			// this.createMenuButton('Blood Pressure');
 			this.createMenuButton('Xray');
 			this.createMenuButton('CTScan');
 			this.createMenuButton('Urine');
@@ -73,23 +71,17 @@ define(function(require) {
 
 			if(label==='Blood Test'){
 				target = new BloodTest();
-			}
-			else if (label==='Blood Pressure') {
-				target = new BloodTest();
+				target.position.x = 275;
 			}
 			else if (label==='Xray' || label ==='CTScan') {
 				target = new Scan();
 			}
 			else if (label==='Urine'){
-				// debugger;
 				target = new UrineAnalysis({model: this.UrineAnalysisResult});
-				// target = new UrineAnalysis();
-				// debugger;
-
 			}
 			else{}
 
-			target.position.x = 0;
+			// target.position.x = 0;
 			target.hide();
 
 			button.add(target);
