@@ -9,10 +9,11 @@ define(function(require) {
 		classes: 'Evidence-card',
 		styles: 'component/activity/virtualpatient/evidencefeed/evidencecard/EvidenceCard.css',
 
-        initialize: function (appearSchedule) {
+        initialize: function (dummyData) {
             Component.prototype.initialize.apply(this, arguments);
 
-            this.appearSchedule = appearSchedule;
+            this.dummyData = dummyData;
+			
             this.class = "observation"; // or speech
 
         }

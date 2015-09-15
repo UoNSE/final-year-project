@@ -32,29 +32,10 @@ define(function(require) {
 
 		collection: new Patients(),
 
-		Evidences: {
-			// 'click #context': '_onContext', /* @TODO: delete most of these (depracated) */
-			// 'click #background': '_onBackground',
-			// 'dblclick #virtual-patient-img-container': '_flipPatient',
-			// 'click #flip-patient-button': '_flipPatient',
-			// 'click #test-results-button': '_testResults',
-			// 'click #hide-chart-button': '_hidePatientsChart',
-			// 'click #query-card': '_queryCard',
-			// 'click #test-card1': '_showUrineAnalysisChart',
-			// 'click #hide-chart-button2': '_hideUrineAnalysisChart',
-			// 'click #button-query': '_queryPatient',
-			// 'click #button-tests': '_testPatient',
-			// 'click #button-chart': '_showPatientsChart',
-			// 'click #test-card3': '_showSubMenu',
-			// 'click #test-card4': '_showTarget',
-			// 'click #test-card5': '_showTarget',
-			// 'click .hotspot': '_hotSpotClick'
-			// 'click .menu-item': '_menuItemSelection'
+		Events: {
 
 			'click #TestBtn': '_toggleTestMenu',
 			'click #ChartBtn': '_togglePatientsChart'
-
-
 
 			},
 
@@ -109,8 +90,6 @@ define(function(require) {
 				button.position.set(scale * (offset + offset * 0.1), -200);
 				var target = targets[i];
 				button.add(target);
-				// button.on('click', target.toggle());
-				// button.on('click', this.onToggle(target));
 				button.on('click', this.onToggle.bind(this,target));
 
 			}.bind(this));
@@ -134,49 +113,15 @@ define(function(require) {
 
 		},
 
-		// _testPatient: function () {
-		//
-		// 	if($('#test-menu').is(":visible")){
-		// 		$('#test-menu').hide();
-		//
-		// 	}else{
-		// 		$('#test-menu').show();
-		//
-		// 	}
-		// },
-
-
 		addEvidenceFeed: function(){
 
 			var Evidencefeed = this.add(new EvidenceFeed());
 			var posX = -250;
-			var posY = 400;
+			var posY = 0;
 			Evidencefeed.position.set(posX, posY);
 			return this.add(Evidencefeed);
 		},
 
-		// togglePatientsChart: function () {
-		//
-		// 	var chartBtn = $('ChartBtn');
-		// 	// var button = this.createButton('Chart', 'info');
-		// 	// button.position.set(-x, y);
-		//
-		// 	// var chart = $('patients-chart-table');
-		//
-		// 	// chart.position.x = x;
-		// 	chart.hide();
-		// 	chartBtn.add(chart);
-		//
-		// 	chartBtn.on('click', this.onToggleTest.bind(this, chart))
-		// 	// button.on('click', chart.show());
-		//
-		// 	// $('ChartBtn').click(function(){
-		// 	// 	chart.show();
-		// 	// }).bind();
-		//
-		// 	return this.add(chartBtn);
-		//
-		// },
 		createButton: function (text, color) {
 			return new Button({
 				model: new ButtonModel({

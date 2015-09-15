@@ -8,6 +8,9 @@ define(function(require) {
 	var ButtonModel = require('model/Button');
 
 	var EvidenceCard = require('component/activity/virtualpatient/evidencefeed/evidencecard/EvidenceCard');
+	var Evidence = require('component/activity/issues/card/evidence/Evidence');
+	var EvidenceCollection = require('collection/Evidence');
+	var EvidenceModel = require('model/Evidence');
 
 
 	return Component.extend({
@@ -20,15 +23,15 @@ define(function(require) {
 
 			this.testresults = testresults;
 			this.UrineAnalysisResult = this.testresults.get(1);
-			// debugger;
 			this.createTestMenu();
-			// this.collection = testresults;
-			// this.testresults = this.collection;
-			// this.UrineAnalysisResult = this.testresults.get(1);
 
+		},
 
-			// this.UrineAnalysisResult = this.testresults[0];
-			// debugger;
+		bindDraggableEvents: function (component) {
+			component.on({
+				drag: this.onDrag.bind(this),
+				dragendsink: this.onDrop.bind(this)
+			});
 		},
 
 		createButton: function (text, color) {
@@ -55,6 +58,11 @@ define(function(require) {
 
 		},
 
+		addEvidence: function (model) {
+			var evidence = this.add(new Evidence());
+			return evidence;
+		},
+
 		createMenuButton: function(label){
 			var button = this.createButton(label, 'info');
 			this.yOffset = this.yOffset+50;
@@ -66,14 +74,24 @@ define(function(require) {
 			// console.log(label);
 
 			if(label==='What is the problem?'){
-				target = new EvidenceCard();
+				var dummyData = "I hurt my knee";
+				target = new EvidenceCard(dummyData);
+				// target = this.addEvidence(new EvidenceModel({
+				// 	width: 200,
+				// 	height: 100,
+				// 	title: 'Evidence',
+				// 	color: 'info'
+				// }));
+				// target.position.set(0, 0);
+
 			}
 			else if (label==='Where does it hurt?') {
-				target = new EvidenceCard();
+				var dummyData = "I hurt my knee";
+				target = new EvidenceCard(dummyData);
 			}
 			else if (label==='When did the pain begin?'){
-				// debugger;
-				target = new EvidenceCard();
+				var dummyData = "I hurt my knee";
+				target = new EvidenceCard(dummyData);
 				// target = new EvidenceCard({model: this.UrineAnalysisResult});
 				// target = new UrineAnalysis();
 				// debugger;

@@ -7,7 +7,7 @@ define(function(require) {
 	var Button = require('component/button/Button');
 	var ButtonModel = require('model/Button');
 
-	var UrineAnalysis = require('component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis');
+	var TestResult = require('component/activity/virtualpatient/tests/testresult/TestResult');
 	var BloodTest = require('component/activity/virtualpatient/tests/bloodtest/BloodTest');
 	var Scan = require('component/activity/virtualpatient/tests/scan/Scan');
 	var Patients = require('collection/TestResults');
@@ -24,15 +24,8 @@ define(function(require) {
 
 			this.testresults = testresults;
 			this.UrineAnalysisResult = this.testresults.get(1);
-			// debugger;
 			this.createTestMenu();
-			// this.collection = testresults;
-			// this.testresults = this.collection;
-			// this.UrineAnalysisResult = this.testresults.get(1);
 
-
-			// this.UrineAnalysisResult = this.testresults[0];
-			// debugger;
 		},
 
 		createButton: function (text, color) {
@@ -44,8 +37,13 @@ define(function(require) {
 			});
 		},
 
-		onToggleTest: function (test, event) {
-			test.toggle();
+		onToggleTarget: function (target, event) {
+			target.toggle();
+			
+			if(target != this.bloodtestmenu){
+				this.bloodtestmenu.hide();
+			}
+
 		},
 
 		createTestMenu: function(){
@@ -71,13 +69,15 @@ define(function(require) {
 
 			if(label==='Blood Test'){
 				target = new BloodTest();
+				this.bloodtestmenu = target;
 				target.position.x = 275;
 			}
 			else if (label==='Xray' || label ==='CTScan') {
 				target = new Scan();
 			}
 			else if (label==='Urine'){
-				target = new UrineAnalysis({model: this.UrineAnalysisResult});
+				// target = new TestResult({model: this.UrineAnalysisResult});
+				target = new TestResult(this.UrineAnalysisResult);
 			}
 			else{}
 
@@ -85,7 +85,7 @@ define(function(require) {
 			target.hide();
 
 			button.add(target);
-			button.on('click', this.onToggleTest.bind(this, target));
+			button.on('click', this.onToggleTarget.bind(this, target));
 
 			return this.add(button);
 		}
