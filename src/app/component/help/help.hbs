@@ -1,1 +1,10 @@
-<div class="help-container">{{{helpContent}}}</div>
+<button class="mtl-fab btn btn-primary btn-fab btn-raised mdi-action-help help-btn">
+</button>
+<div class="help-container panel">
+    {{#if title}}
+        <div class="panel-heading">{{title}}:</div>
+    {{else}}
+        <div class="panel-heading">Help: </div>
+    {{/if}}
+    <div class="panel-body"> {{{helpContent}}}</div>
+</div>

@@ -3,7 +3,6 @@ define(function (require) {
 
 	var Object2D = require('core/Object2D');
 	var BackButton = require('component/backbutton/BackButton');
-	var HelpButton = require('component/help/help');
 	var Vector2 = require('math/Vector2');
 
 	return Object2D.extend({
@@ -19,9 +18,7 @@ define(function (require) {
 			if (this.back) {
 				this.add(new BackButton(router));
 			}
-			if (this.help) {
-				this.add(new HelpButton());
-			}
+
 		},
 
 		onPageEnter: function () {

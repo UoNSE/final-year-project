@@ -15,6 +15,8 @@ define(function (require) {
     var Evidence = require('component/activity/issues/card/evidence/Evidence');
     var IssueGroup = require('component/activity/issues/card/issuegroup/IssueGroup');
 
+    var Help = require('component/help/help');
+
     return Component.extend({
 
         template: template,
@@ -52,6 +54,11 @@ define(function (require) {
             });
             this.menu.hide();
 
+           this.add(new Help({
+                model: {
+                    helpContent: '<a>Touch an activity below</a>'
+                }
+            }));
         },
 
         /**

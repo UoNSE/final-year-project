@@ -3,29 +3,24 @@ define(function (require) {
     'use strict';
 
     var Component = require('core/Component');
-    var template = require('text!component/actionbutton/ActionButton.hbs');
-    var ActionButton = require('model/ActionButton');
+    var template = require('text!component/help/help.hbs');
+    var ActionButton = require('component/actionButton/Actionbutton');
 
     return Component.extend({
         detached: true,
         template: template,
+        styles: 'component/help/help.css',
 
         events: {
-            'click': 'onClick'
+            'click .help-btn': 'onHelpClick'
         },
 
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);
-            this.model = new ActionButton({
-                icon: 'action-help',
-                styles: {
-                    margin: 10
-                }
-            });
+            $(".help-container").interactive = true;
         },
 
-        onClick: function (event) {
-            alert("HELP");
+        onHelpClick: function (event) {
             $(".help-container").toggle();
         }
 
