@@ -4,32 +4,31 @@ define(function (require) {
 	var Evidence = require('model/Evidence');
 	var TestResult = require('model/TestResult');
 
-	return Backbone.Model.extend({
+	return Backbone.RelationalModel.extend({
 
 		defaults: {
 			name: 'Patient'
 		},
+
 		relations: [{
 			type: Backbone.HasMany,
 			key: 'evidence',
-			relatedModel: Evidence,
-			autoFetch: true
+			relatedModel: Evidence
 
 		},
 		// {
 		// 	type: Backbone.HasMany,
 		// 	key: 'hotspot',
-		// 	relatedModel: Evidence,
-		// 	autoFetch: true
+		// 	relatedModel: Hotspot
 		//
 		// },
 		{
 			type: Backbone.HasMany,
 			key: 'testresult',
-			relatedModel: TestResult,
-			autoFetch: true
+			relatedModel: TestResult
 
 		}]
+
 	});
 
 });
