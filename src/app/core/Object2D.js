@@ -11,11 +11,13 @@ define(function (require) {
 		tagName: 'section',
 		parent: null,
 		visible: true,
+		needsWorldUpdate: true,
+		detached: false,
+		opacity: 1,
 
 		initialize: function () {
 			this.id = 'component-' + MathUtil.generateUUID(8);
 			this.children = [];
-			this.needsWorldUpdate = true;
 
 			var transform = new Transform();
 			var worldTransform = new Transform();
@@ -68,9 +70,17 @@ define(function (require) {
 			this.on('loaded', function () {
 				this.onLoad();
 			}, this);
+
+			this.on('destroy', function () {
+				this.onDestroy();
+			}, this);
 		},
 
 		onLoad: function () {
+			// Override in submodule
+		},
+
+		onDestroy: function () {
 			// Override in submodule
 		},
 
@@ -122,8 +132,18 @@ define(function (require) {
 		},
 
 		removeAll: function () {
-			this.children.forEach(function (child) {
-				child.trigger('removechild');
+			this.children.forEach(child => {
+				child.removeAll();
+				child.trigger('remove');
+			});
+			this.children.length = 0;
+		},
+
+		destroyAll: function () {
+			this.children.forEach(child => {
+				child.trigger('remove');
+				child.destroyAll();
+				child.trigger('destroy');
 			});
 			this.children.length = 0;
 		},
