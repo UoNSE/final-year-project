@@ -1,3 +1,9 @@
+$(document).ready(function() {
+
+
+
+});
+
 define(function (require) {
     'use strict';
 
@@ -55,8 +61,10 @@ define(function (require) {
 
         onHotspots: function (collection) {
             // this is the callback function
+            // this function scales and positions the hotspots based on db.json data
 
-            collection.each(function (model) {
+
+            collection.each(function (model) { // .each(function, this) <- Need this to this this context!
                 var button = new ActionButton({
                     model: {
                         text: '',
@@ -65,30 +73,47 @@ define(function (require) {
                     }
                 });
 
+                button.on('click', this.activateHotspot.bind(this, model));
+
                 var x = model.get('x');
                 var y = model.get('y');
                 button.position.set(x, y);
                 button.scale.set(.5, .5);
                 this.add(button);
+
             }, this);
 
         },
 
         logPos: function (e) {
-
-            // page basis: *--->
-            //             |
-            //             v
-
             var x = e.pageX; //mouse relative to page
             var y = e.pageY;
             var X = $(window).width(); //total page width/height $(this).width() also works?
             var Y = $(window).height();
             var relX =  x - X/2;
             var relY = -y + Y/2; //because we're flipping the Y vector also
-
-
             console.log(relX + ' ' + relY);
+
+            // page basis: *--->
+            //             |
+            //             v
+
+        },
+
+        activateHotspot: function(model) {
+            //alert('Hotspot activated: #' + model.get('id'));
+
+            var thex = 256 + model.get('x');
+            var they = 384 - model.get('y');
+            var d    = $('.hotspawn'); //the psudothis dialogue
+
+            //d.text('This is hotspot ' + model.get('id'));
+            d.css('left', thex);
+            d.css('top', they);
+            d.is(':visible') ? d.hide() : d.show();
+            d.css('z-index', '1000');
+            //;top:'+model.get('y')+'px');
+
         }
 
 
