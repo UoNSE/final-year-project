@@ -282,7 +282,7 @@ define(function (require) {
 
                 var cardcost = cardType.issue ? card.model.attributes.cost : -1* card.model.attributes.score;
                 if(!cardType.issue && card.model.attributes.score < card.model.attributes.maxscore){
-                    gameCredit -= 2;
+                    gameCredit += 2;
                 }
                 gameCredit += cardcost;
                 gameCredit -= this.getScore(group);
