@@ -2,31 +2,31 @@ define(function(require) {
 	'use strict';
 
 	var Component = require('core/Component');
-	var template = require('text!component/activity/virtualpatient/eventfeed/EventFeed.hbs');
-	var EventCard = require('component/activity/virtualpatient/eventfeed/eventcard/eventCard');
+	var template = require('text!component/activity/virtualpatient/evidencefeed/EvidenceFeed.hbs');
+	var EvidenceCard = require('component/activity/virtualpatient/evidencefeed/evidencecard/EvidenceCard');
 
 	return Component.extend({
 		template: template,
-		classes: 'event-feed',
-		styles: 'component/activity/virtualpatient/eventfeed/EventFeed.css',
+		classes: 'Evidence-feed',
+		styles: 'component/activity/virtualpatient/Evidencefeed/EvidenceFeed.css',
 
-        // perhaps the feed will use a collection of events.
-        // Collection: new Responses(); // these events will include responses
+        // perhaps the feed will use a collection of Evidences.
+        // Collection: new Responses(); // these Evidences will include responses
         initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
-			this.addTestEventCard();
-			// this.startEventFeed();
+			this.addTestEvidenceCard();
+			// this.startEvidenceFeed();
 			// this.collection.fetch();
 		},
-        // add test event card after
-        addTestEventCard: function(){
+        // add test Evidence card after
+        addTestEvidenceCard: function(){
 
-			var eventcard = this.add(new EventCard(100));
+			var Evidencecard = this.add(new EvidenceCard(100));
 			var posX = 0;
 			var posY = 0;
-			eventcard.position.set(posX, posY);
-			return this.add(eventcard);
+			Evidencecard.position.set(posX, posY);
+			return this.add(Evidencecard);
 
 		},
 
@@ -51,30 +51,30 @@ define(function(require) {
 			// here the list is defined
 			console.log("cardsDisplayedList: "+cardsDisplayedList);
 
-			// increment event cards showed counter
-			numEventCardsShowingInFeed++;
+			// increment Evidence cards showed counter
+			numEvidenceCardsShowingInFeed++;
 
 			}, feedCardSchedule[i]);
 
 		},
 
-		_startEventFeed: function() {
+		_startEvidenceFeed: function() {
 
-			var numEventCards = eventCardFeedQueue.length;
-			console.log("num of event cards in queue: "+numEventCards);
+			var numEvidenceCards = EvidenceCardFeedQueue.length;
+			console.log("num of Evidence cards in queue: "+numEvidenceCards);
 
-			// while there are still feed item / event cards unshown,
+			// while there are still feed item / Evidence cards unshown,
 			// progressively show them as per the hardcoded schedule.
-			// will eventually depend on JSON data.
+			// will Evidenceually depend on JSON data.
 			// TODO: replace hardcoded schedule with JSON.
 
-			// while(eventFeedCardQueue.length > 0){
+			// while(EvidenceFeedCardQueue.length > 0){
 
 			// loop through card queue
-			for (var i = 0; i < numEventCards; i++) {
+			for (var i = 0; i < numEvidenceCards; i++) {
 
-				// console.log("#"+eventCardFeedQueue[i]);
-				var thisCardId = eventCardFeedQueue[i];
+				// console.log("#"+EvidenceCardFeedQueue[i]);
+				var thisCardId = EvidenceCardFeedQueue[i];
 				console.log(thisCardId);
 
 				// a reference to the callback
