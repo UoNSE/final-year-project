@@ -21,7 +21,6 @@ define(function (require) {
     var gameCredit = 0;
 
     return Component.extend({
-
         template: template,
         classes: ['issues'],
         styles: 'component/activity/issues/Issues.css',
@@ -33,7 +32,7 @@ define(function (require) {
             evidence: new EvidenceCollection(),
         },
 
-        initialize: function () {
+        initialize: function (params) {
 
             Component.prototype.initialize.apply(this, arguments);
             gameCredit = 0;
@@ -62,7 +61,7 @@ define(function (require) {
                 model: new ActionButtonModel({
                     icon: 'action-shopping-cart',
                     color: 'blue',
-                    href: 'cases/' + 1 + '/activity/issues/topics',//TODO:get case id
+                    href: 'cases/' + params.case_id + '/activity/issues/unlock',
                     //styles: {
                     //    width:100,
                     //    height:100,

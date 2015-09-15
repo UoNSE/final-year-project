@@ -1,9 +1,7 @@
 define(function (require) {
-
 	'use strict';
 
 	var Backbone = require('backbone');
-
 	var Vector2 = require('math/Vector2');
 	var Transform = require('math/Transform');
 	var MathUtil = require('math/MathUtil');
@@ -13,10 +11,13 @@ define(function (require) {
 		tagName: 'section',
 		parent: null,
 		visible: true,
+		needsWorldUpdate: true,
+		detached: false,
+		opacity: 1,
+
 		initialize: function () {
 			this.id = 'component-' + MathUtil.generateUUID(8);
 			this.children = [];
-			this.needsWorldUpdate = true;
 
 			var transform = new Transform();
 			var worldTransform = new Transform();
@@ -69,10 +70,20 @@ define(function (require) {
 			this.on('loaded', function () {
 				this.onLoad();
 			}, this);
+
+			this.on('destroy', function () {
+				this.onDestroy();
+			}, this);
 		},
+
 		onLoad: function () {
 			// Override in submodule
 		},
+
+		onDestroy: function () {
+			// Override in submodule
+		},
+
 		//translateOnRotation: function (value, rotation) {
 		//	var localRotation = this.parent.worldRotation - rotation;
 		//	this.position.set(
@@ -119,12 +130,24 @@ define(function (require) {
 			this.children.push(child);
 			return child;
 		},
+
 		removeAll: function () {
-			this.children.forEach(function (child) {
-				child.trigger('removechild');
+			this.children.forEach(child => {
+				child.removeAll();
+				child.trigger('remove');
 			});
 			this.children.length = 0;
 		},
+
+		destroyAll: function () {
+			this.children.forEach(child => {
+				child.trigger('remove');
+				child.destroyAll();
+				child.trigger('destroy');
+			});
+			this.children.length = 0;
+		},
+
 		updateLocal: function (force) {
 			this.transform.copy(this.worldTransform);
 
@@ -133,6 +156,7 @@ define(function (require) {
 				this.transform.worldToLocal(this.parent.worldTransform)
 			}
 		},
+
 		updateWorld: function (force) {
 			if (this.parent) {
 				this.parent.updateWorld(force);
@@ -141,12 +165,15 @@ define(function (require) {
 				this.worldTransform.copy(this.transform);
 			}
 		},
+
 		toggle: function () {
 			this.visible = !this.visible;
 		},
+
 		hide: function () {
 			this.visible = false;
 		},
+
 		show: function () {
 			this.visible = true;
 		},
@@ -163,7 +190,6 @@ define(function (require) {
 				})
 				.start();
 		}
-
 	});
 
 	return Object2D;

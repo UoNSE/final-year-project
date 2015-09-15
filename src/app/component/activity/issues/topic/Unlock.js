@@ -26,8 +26,7 @@ define(function (require) {
 
         gameCredit: 0,
 
-        initialize: function () {
-
+        initialize: function (params) {
             Component.prototype.initialize.apply(this, arguments);
 
             this.topics = [];
@@ -42,23 +41,13 @@ define(function (require) {
 
             topicCollection.fetch();
 
-            this.hint = this.add(new Hint({model: {text: 'Select a topic'}}));
+            this.topicHint = this.add(new Hint({model: {text: 'Select a topic'}}));
+            this.issueHint = this.add(new Hint({model: {text: 'Select an issue to<br/>purchase it'}}));
+            this.issueHint.hide();
 
             this.scoreContainer = this.add(new Score({title:'Credit'}));
 
-            this.listenTo(this.gameCredit,'change',this.renderScore);
-
             this.updateCredit();
-
-            this.topicBackButton = this.add(new ActionButton({
-                model: new ActionButtonModel({
-                    text:'Back'
-                })
-            }));
-
-            this.topicBackButton.on('click', this.onTopicBack.bind(this));
-
-            this.topicBackButton.hide();
         },
 
         onLoad: function() {
@@ -118,8 +107,8 @@ define(function (require) {
                 theTopic.hide();
             },this);
 
-            this.hint.hide();
-            this.topicBackButton.show();
+            this.topicHint.hide();
+            this.issueHint.show();
         },
 
         onIssueSelected: function( theIssue ) {
@@ -152,8 +141,8 @@ define(function (require) {
             this.topicSelected.hideIssues();
             this.topicSelected = null;
 
-            this.hint.show();
-            this.topicBackButton.hide();
+            this.topicHint.show();
+            this.issueHint.hide();
 
             this.placeTopics();
         },

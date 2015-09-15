@@ -16,7 +16,8 @@ define(function (require) {
 			'jquery.transform2d': '../lib/jquery.transform.js/jquery.transform2d',
 			'jquery-ui': '../lib/jquery-ui/jquery-ui',
 			'tweenjs': '../lib/tweenjs/build/tween.min',
-			'bluebird': '../lib/bluebird/js/browser/bluebird'
+			'bluebird': '../lib/bluebird/js/browser/bluebird',
+			'es6-shim': '../lib/es6-shim/es6-shim'
 		},
 		shim: {
 			'backbone': {
@@ -35,20 +36,33 @@ define(function (require) {
 					'': 'Start',
 					'start': 'Start',
 					'cases': 'Cases',
-					'cases/:id/overview': 'case/Overview',
-					'cases/:id/information': 'case/information/Information',
-					'cases/:id/activity/virtual-patient': 'activity/VirtualPatient',
-					'cases/:id/activity/issues': 'activity/Issues',
-					'cases/:id/activity/issues/topics': 'activity/issues/TopicUnlock'
+					'cases/:case_id/overview': 'case/Overview',
+					'cases/:case_id/information': 'case/information/Information',
+					'cases/:case_id/activity/virtual-patient': 'activity/VirtualPatient',
+					'cases/:case_id/activity/issues': 'activity/Issues',
+					'cases/:case_id/activity/issues/unlock': 'activity/issues/TopicUnlock'
+
+				},
+				sitemap: {
+					'Start': {
+						'Cases': {
+							'case/Overview': {
+								'case/information/Information': {
+									'activity/VirtualPatient': null
+								},
+								'activity/Issues': {
+									'activity/issues/TopicUnlock': null
+								}
+							}
+						}
+					}
 				}
 			}
 		}
 	});
 
-	require(['core/Application', 'addons', 'backbone-relational'], function (Application) {
-
+	require(['core/Application', 'es6-shim', 'addons', 'backbone-relational'], function (Application) {
 		new Application();
-
 	});
 
 });

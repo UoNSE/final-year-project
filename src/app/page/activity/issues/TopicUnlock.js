@@ -8,7 +8,15 @@ define(function (require) {
 		name: 'topic unlock',
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
-			this.add(new Unlock());
+			this.unlock = this.add(new Unlock());
+		},
+
+		onBack: function (event) {
+			if (this.unlock.topicSelected !== null){
+				event.preventDefault();
+				this.unlock.onTopicBack();
+			}
+
 		}
 	});
 });

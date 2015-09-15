@@ -1,14 +1,15 @@
 define(function (require) {
 	'use strict';
 
-	var Page = require('core/Page');
+	var InventoryPage = require('page/InventoryPage');
 	var Issues = require('component/activity/issues/Issues');
 
-	return Page.extend({
+	return InventoryPage.extend({
 		name: 'issues',
+		title: 'Issues & Evidence',
 		initialize: function () {
-			Page.prototype.initialize.apply(this, arguments);
-			this.add(new Issues());
+			InventoryPage.prototype.initialize.apply(this, arguments);
+			this.add(new Issues({case_id:this.urlParams.case_id}));
 		}
 	});
 });

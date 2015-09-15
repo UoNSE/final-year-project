@@ -12,19 +12,21 @@ define(function (require) {
 
 	}
 
-	Vector2.ones = function () {
-		return new Vector2(1, 1);
-	};
+	Object.assign(Vector2, {
+		ones: function () {
+			return new Vector2(1, 1);
+		},
 
-	Vector2.zeros = function () {
-		return new Vector2(0, 0);
-	};
+		zeros: function () {
+			return new Vector2(0, 0);
+		},
 
-	Vector2.fromPolar = function (r, theta) {
-		return new Vector2().setPolar(r, theta);
-	};
+		fromPolar: function (r, theta) {
+			return new Vector2().setPolar(r, theta);
+		}
+	});
 
-	Vector2.prototype = {
+	Object.assign(Vector2.prototype, {
 
 		constructor: Vector2,
 
@@ -502,7 +504,7 @@ define(function (require) {
 
 		}
 
-	};
+	});
 
 	return Vector2;
 });

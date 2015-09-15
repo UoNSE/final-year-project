@@ -1,13 +1,14 @@
 define(function (require) {
 	'use strict';
 
-	var Page = require('core/Page');
+	var InventoryPage = require('page/InventoryPage');
 	var VirtualPatient = require('component/activity/virtualpatient/VirtualPatient');
 
-	return Page.extend({
+	return InventoryPage.extend({
 		name: 'virtualpatient',
+		title: 'Virtual Patient',
 		initialize: function () {
-			Page.prototype.initialize.apply(this, arguments);
+			InventoryPage.prototype.initialize.apply(this, arguments);
 			this.add(new VirtualPatient());
 		}
 	});

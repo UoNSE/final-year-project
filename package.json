@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "start": "node app.js",
+    "start": "node --harmony app.js",
     "postinstall": "node node_modules/bower/bin/bower install",
-    "test": "node node_modules/intern/bin/intern-client config=tests/intern"
+    "test": "node --harmony node_modules/intern/bin/intern-client config=tests/intern"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "intern": "^2.2.2",
     "json-server": "^0.7.25",
-    "less": "^2.5.1"
+    "less": "^2.5.1",
+    "object-assign": "^4.0.1"
   }
 }
