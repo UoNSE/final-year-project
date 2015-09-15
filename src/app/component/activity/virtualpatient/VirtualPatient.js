@@ -4,22 +4,25 @@ define(function(require) {
 	//TODO: make cards draggable
 	//TODO: make hotspot from data
 
-	var Button = require('component/button/Button');
+
+	// models
 	var ButtonModel = require('model/Button');
-
-	var Component = require('core/Component');
-	var template = require('text!component/activity/virtualpatient/VirtualPatient.hbs');
-
-	var ActionButton = require('component/actionbutton/ActionButton');
 	var ActionButtonModel = require('model/ActionButton');
 
+	// collections
+	var Patients = require('collection/Patients');
+
+	// components
+	var Component = require('core/Component');
+	var Button = require('component/button/Button');
+	var ActionButton = require('component/actionbutton/ActionButton');
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
 	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
-
 	var EventFeed = require('component/activity/virtualpatient/eventfeed/EventFeed');
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 
-	var Patients = require('collection/Patients');
+	// handlebars templates
+	var template = require('text!component/activity/virtualpatient/VirtualPatient.hbs');
 
 	return Component.extend({
 		template: template,
@@ -67,6 +70,7 @@ define(function(require) {
 			// get the patient with the case Id.
 			this.patients = this.collection;
 			this.patient = this.patients.get(1); // get id.
+			this.evidences = this.patients.children
 			// this.patient = this.patients.at(0); // at index
 			this.addComponents();
 			this._hideElements();
