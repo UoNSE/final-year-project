@@ -12,6 +12,19 @@ define(function (require) {
 			key: 'evidence',
 			relatedModel: Evidence
 
-	});
+		},
+		{
+			type: Backbone.HasMany,
+			key: 'hotspot',
+			relatedModel: Evidence
+
+		},
+		{
+			type: Backbone.HasMany,
+			key: 'testresult',
+			relatedModel: TestResult
+
+		}
+	);
 
 });
