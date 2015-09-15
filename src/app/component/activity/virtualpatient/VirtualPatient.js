@@ -69,7 +69,7 @@ define(function(require) {
 			// get the patient with the case Id.
 			this.patients = this.collection;
 			this.patient = this.patients.get(1); // get id.
-			// debugger;
+			debugger;
 			// this.patient = this.patients.at(0); // at index
 			this.addComponents();
 			this._hideElements();

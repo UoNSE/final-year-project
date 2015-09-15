@@ -284,17 +284,13 @@
         {
           "id": 1,
           "name": "UrineAnalysis",
-          "attributes": [
-            {
-              "glucose": "100",
-              "bilirubin": "30",
-              "ketones": "120",
-              "sg": "20",
-              "eryth": "30",
-              "ph": "40",
-              "ts": "50"
-            }
-          ]
+          "glucose": "100",
+          "bilirubin": "30",
+          "ketones": "120",
+          "sg": "20",
+          "eryth": "30",
+          "ph": "40",
+          "ts": "50"
         }
       ]
     }

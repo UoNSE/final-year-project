@@ -23,7 +23,6 @@ define(function(require) {
 			Component.prototype.initialize.apply(this, arguments);
 
 			this.testresults = testresults;
-			debugger;
 			this.UrineAnalysisResult = this.testresults.get(1);
 			// debugger;
 			this.createTestMenu();
@@ -82,9 +81,10 @@ define(function(require) {
 				target = new Scan();
 			}
 			else if (label==='Urine'){
+				debugger;
 				target = new UrineAnalysis({model: this.UrineAnalysisResult});
 				// target = new UrineAnalysis();
-				debugger;
+				// debugger;
 
 			}
 			else{}

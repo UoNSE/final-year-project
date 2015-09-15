@@ -13,6 +13,7 @@ define(function(require) {
 			'click #hide-chart-button': '_onHide'
 		},
 		initialize: function(patient){
+			Component.prototype.initialize.apply(this, arguments);
 			// this.collection = patient;
 		},
 		_onHide: function(){
