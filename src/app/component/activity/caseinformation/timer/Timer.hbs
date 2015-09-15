@@ -1,1 +1,9 @@
-<div id='activity-clock' class="activity-clock-high">{{caseinfo.timer}}</div>
+<div id="activity-clock" class="panel panel-{{mtl-color color}}{{#if classes}}{{ classes}}{{/if}}"
+     style="width: {{units width}};">
+    <div class="panel-heading">
+        {{title}}
+    </div>
+    <div class="panel-body">
+        {{timer}}
+    </div>
+</div>

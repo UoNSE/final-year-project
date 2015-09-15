@@ -9,7 +9,8 @@ define(function (require) {
     var CaseInfoCardModel = require('model/CaseInfoCard');
     var SelectableText = require('model/SelectableText');
 
-    var Card = /*require('component/activity/issues/card/issue/Issue'); */ require('component/activity/caseinformation/card/CaseInfoCard');
+    var Timer = require('component/activity/caseinformation/timer/Timer');
+    var Card = require('component/activity/caseinformation/card/CaseInfoCard');
 
     return Component.extend({
 
@@ -37,14 +38,17 @@ define(function (require) {
         },
 
         /**
-         * An event triggered when the evidence collection has synced upon a fetch call.
+         * An event triggered when the collection has synced upon a fetch call.
          *
-         * @param evidence The caseinfo collection.
+         * @param caseinfo The caseinfo collection.
          */
         onCaseInfoSync: function (caseinfo) {
+            debugger;
+            this.addTimer(caseinfo);
             var caseCards = caseinfo.first().get('cards');
             var n = caseCards.size();
-            var distance = 100;
+            var yloc = this.height + 10;
+            var xloc = -400;
             caseCards.forEach(function (model, i) {
                 var card = this.addCaseCard(new CaseInfoCardModel({
                     width: this.width,
@@ -62,9 +66,22 @@ define(function (require) {
                     items: model.get('items'),
                     color: 'info'
                 }));
-                var scale = i - ((n - 1) / 2);
-                card.position.set(300, scale * (distance));
+                card.position.set(xloc, yloc);
+                yloc = -yloc;
+                xloc = ( i == 0     ? xloc
+                        :i % 2 == 0 ? xloc
+                                    : xloc+this.width+10);
             }, this);
+
+        },
+
+        addTimer: function (model) {
+            var timer = this.add(new Timer({
+                title: 'Activity Time',
+                timer: model.get('timer')
+            }));
+            this.bindDraggableEvents(timer);
+            return timer;
         },
 
         addCaseCard: function (model) {
