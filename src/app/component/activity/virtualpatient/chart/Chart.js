@@ -12,7 +12,8 @@ define(function(require) {
 		events:{
 			'click #hide-chart-button': '_onHide'
 		},
-		initialise: function(patient){
+		initialize: function(patient){
+			Component.prototype.initialize.apply(this, arguments);
 			// this.collection = patient;
 		},
 		_onHide: function(){

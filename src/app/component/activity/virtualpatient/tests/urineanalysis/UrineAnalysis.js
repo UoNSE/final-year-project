@@ -3,7 +3,6 @@ define(function(require) {
 
 	var Component = require('core/Component');
 	var template = require('text!component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis.hbs');
-	var TestResults = require('collection/TestResults');
 
 	return Component.extend({
 		template: template,
@@ -14,7 +13,8 @@ define(function(require) {
 		},
 		initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
-			var UrineAnalysisResult = TestResults[0];
+			// debugger;
+			// var UrineAnalysisResult = TestResults[0];
 		},
 		_onHide: function(){
 			this.hide();
