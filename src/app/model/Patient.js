@@ -6,7 +6,11 @@ define(function (require) {
 
 		defaults: {
 			name: 'Patient'
-		}
+		},
+		relations: [{
+			type: Backbone.HasMany,
+			key: 'evidence',
+			relatedModel: Evidence
 
 	});
 
