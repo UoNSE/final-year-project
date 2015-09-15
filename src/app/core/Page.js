@@ -3,10 +3,12 @@ define(function (require) {
 
 	var Object2D = require('core/Object2D');
 	var BackButton = require('component/backbutton/BackButton');
+	var HelpButton = require('component/help/help');
 	var Vector2 = require('math/Vector2');
 
 	return Object2D.extend({
 		back: true,
+		help: true,
 		title: 'Page',
 
 		initialize: function (router, camera, urlParams) {
@@ -16,6 +18,9 @@ define(function (require) {
 			this.urlParams = urlParams;
 			if (this.back) {
 				this.add(new BackButton(router));
+			}
+			if (this.help) {
+				this.add(new HelpButton());
 			}
 		},
 
