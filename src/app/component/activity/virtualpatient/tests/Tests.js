@@ -10,17 +10,30 @@ define(function(require) {
 	var UrineAnalysis = require('component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis');
 	var BloodTest = require('component/activity/virtualpatient/tests/bloodtest/BloodTest');
 	var Scan = require('component/activity/virtualpatient/tests/scan/Scan');
-
+	var Patients = require('collection/TestResults');
 
 	return Component.extend({
 		template: template,
 		classes: 'tests',
 		styles: 'component/activity/virtualpatient/tests/Tests.css',
+		// collection: new TestResults(),
 
-		initialize: function () {
+
+		initialize: function (testresults) {
 			Component.prototype.initialize.apply(this, arguments);
-			this.createTestMenu();
 
+			this.testresults = testresults;
+			debugger;
+			this.UrineAnalysisResult = this.testresults.get(1);
+			// debugger;
+			this.createTestMenu();
+			// this.collection = testresults;
+			// this.testresults = this.collection;
+			// this.UrineAnalysisResult = this.testresults.get(1);
+
+
+			// this.UrineAnalysisResult = this.testresults[0];
+			// debugger;
 		},
 
 		createButton: function (text, color) {
@@ -69,7 +82,10 @@ define(function(require) {
 				target = new Scan();
 			}
 			else if (label==='Urine'){
-				target = new UrineAnalysis();
+				target = new UrineAnalysis({model: this.UrineAnalysisResult});
+				// target = new UrineAnalysis();
+				debugger;
+
 			}
 			else{}
 

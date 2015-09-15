@@ -24,7 +24,7 @@ define(function (require) {
 		// },
 		{
 			type: Backbone.HasMany,
-			key: 'testresult',
+			key: 'testresults',
 			relatedModel: TestResult
 
 		}]

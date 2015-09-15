@@ -69,16 +69,18 @@ define(function(require) {
 			// get the patient with the case Id.
 			this.patients = this.collection;
 			this.patient = this.patients.get(1); // get id.
+			// debugger;
 			// this.patient = this.patients.at(0); // at index
 			this.addComponents();
 			this._hideElements();
-			debugger;
 		},
 
 		addComponents: function() {
 			// add the components
+			this.testresults = this.patient.get('testresults');
 			this.patientbody = this.add(new PatientBody());
-			this.tests = this.add(new Tests());
+			// debugger;
+			this.tests = this.add(new Tests(this.testresults));
 			// this.tests = this.add(new Tests(this.patient));
 			this.eventFeed = this.addEventFeed();
 			this.chart = this.add(new Chart({model: this.patient}));

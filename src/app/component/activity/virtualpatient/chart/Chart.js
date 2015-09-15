@@ -12,7 +12,7 @@ define(function(require) {
 		events:{
 			'click #hide-chart-button': '_onHide'
 		},
-		initialise: function(patient){
+		initialize: function(patient){
 			// this.collection = patient;
 		},
 		_onHide: function(){
