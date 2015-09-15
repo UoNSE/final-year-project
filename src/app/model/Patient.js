@@ -1,6 +1,8 @@
 define(function (require) {
 
 	var Backbone = require('backbone');
+	var Evidence = require('model/Evidence');
+	var TestResult = require('model/TestResult');
 
 	return Backbone.Model.extend({
 
@@ -10,21 +12,24 @@ define(function (require) {
 		relations: [{
 			type: Backbone.HasMany,
 			key: 'evidence',
-			relatedModel: Evidence
+			relatedModel: Evidence,
+			autoFetch: true
 
 		},
-		{
-			type: Backbone.HasMany,
-			key: 'hotspot',
-			relatedModel: Evidence
-
-		},
+		// {
+		// 	type: Backbone.HasMany,
+		// 	key: 'hotspot',
+		// 	relatedModel: Evidence,
+		// 	autoFetch: true
+		//
+		// },
 		{
 			type: Backbone.HasMany,
 			key: 'testresult',
-			relatedModel: TestResult
+			relatedModel: TestResult,
+			autoFetch: true
 
-		}
-	);
+		}]
+	});
 
 });

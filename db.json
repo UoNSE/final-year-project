@@ -197,109 +197,106 @@
       "x": 50.2,
       "y": 50.2
     }
-    ],
-
-        "patients": [
+  ],
+  "patients": [
+    {
+      "id": 1,
+      "firstname": "Cyril",
+      "lastname": "Smith",
+      "age": "99",
+      "dob": "12.05.1916",
+      "sex": "female",
+      "profession": "receptionist",
+      "temperature": "37°C",
+      "pulse": "112bpm",
+      "respiratoryrate": "22breathsperminute",
+      "bloodpressure": "90/50",
+      "pain": "3-4usingVASscale",
+      "oxygensaturationlevel": "97%",
+      "hourlyurineoutput(average)": "26mL/hr",
+      "bgl": "4mmol/L",
+      "hotspots": [
+        {
+          "id": 1,
+          "side": "front",
+          "top": "53",
+          "left": "34"
+        },
+        {
+          "id": 2,
+          "side": "back",
+          "top": "34",
+          "left": "10"
+        }
+      ],
+      "evidence": [
+        {
+          "id": 1,
+          "type": "event",
+          "subtype": "observation",
+          "description": "mucusmouth",
+          "result": "Conditionoforalmucosa;mouthdrytonguefurrowed"
+        },
+        {
+          "id": 2,
+          "type": "event",
+          "subtype": "observation",
+          "description": "Drinking",
+          "result": "Oralintake–sipsonly"
+        },
+        {
+          "id": 3,
+          "type": "event",
+          "subtype": "observation",
+          "description": "cognitivestate",
+          "result": "appearsrestlessandanxious"
+        },
+        {
+          "id": 4,
+          "type": "event",
+          "subtype": "observation",
+          "description": "skin",
+          "result": "pale,clammy"
+        },
+        {
+          "id": 5,
+          "type": "event",
+          "subtype": "response",
+          "question": "appetite",
+          "answer": "notvery"
+        },
+        {
+          "id": 6,
+          "type": "event",
+          "subtype": "response",
+          "question": "thirst",
+          "answer": "very"
+        },
+        {
+          "id": 7,
+          "type": "testresult",
+          "subtype": "urineanalysis",
+          "attribute": "glucose",
+          "problem": "high"
+        }
+      ],
+      "testresults": [
+        {
+          "id": 1,
+          "name": "UrineAnalysis",
+          "attributes": [
             {
-              "id": 1,
-              "firstname": "Cyril",
-              "lastname": "Smith",
-              "age": "99",
-              "dob": "12.05.1916",
-              "sex": "female",
-              "profession": "receptionist",
-              "id": 1,
-              "temperature": "37°C",
-              "pulse": "112bpm",
-              "respiratoryrate": "22breathsperminute",
-              "bloodpressure": "90/50",
-              "pain": "3-4usingVASscale",
-              "oxygensaturationlevel": "97%",
-              "hourlyurineoutput(average)": "26mL/hr",
-              "bgl": "4mmol/L",
-              "hotspots": [
-                    {
-                      "id": 1,
-                      "side": "front",
-                      "top": "53",
-                      "left": "34"
-                    },
-                    {
-                      "id": 2,
-                      "side": "back",
-                      "top": "34",
-                      "left": "10"
-                    }
-                ],
-                "evidence": [
-                    {
-                      "id": 1,
-                      "type": "event",
-                      "subtype": "observation",
-                      "description": "mucusmouth",
-                      "result": "Conditionoforalmucosa;mouthdrytonguefurrowed"
-                    },
-                    {
-                      "id": 2,
-                      "type": "event",
-                      "subtype": "observation",
-                      "description": "Drinking",
-                      "result": "Oralintake–sipsonly"
-                    },
-                    {
-                      "id": 3,
-                      "type": "event",
-                      "subtype": "observation",
-                      "description": "cognitivestate",
-                      "result": "appearsrestlessandanxious"
-                    },
-                    {
-                      "id": 4,
-                      "type": "event",
-                      "subtype": "observation",
-                      "description": "skin",
-                      "result": "pale,clammy"
-                    },
-                    {
-                      "id": 5,
-                      "type": "event",
-                      "subtype": "response",
-                      "question": "appetite",
-                      "answer": "notvery"
-                    },
-                    {
-                      "id": 6,
-                      "type": "event",
-                      "subtype": "response",
-                      "question": "thirst",
-                      "answer": "very"
-                    },
-                    {
-                      "id": 7,
-                      "type": "testresult",
-                      "subtype": "urineanalysis",
-                      "attribute": "glucose",
-                      "problem": "high"
-                    }
-                ],
-                "testresults": [
-                    {
-                    "id": 1,
-                    "name": "UrineAnalysis",
-                    "attributes": [
-                          {
-                            "glucose": "100",
-                            "bilirubin": "30",
-                            "ketones": "120",
-                            "sg": "20",
-                            "eryth": "30",
-                            "ph": "40",
-                            "ts": "50"
-                          }
-                        ]
-                    }
-                ]
+              "glucose": "100",
+              "bilirubin": "30",
+              "ketones": "120",
+              "sg": "20",
+              "eryth": "30",
+              "ph": "40",
+              "ts": "50"
             }
-        ]
-
+          ]
+        }
+      ]
+    }
+  ]
 }

@@ -59,6 +59,8 @@ define(function(require) {
 			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
 
+
+
 			//   this._transformItems();
 			//   this._startEventFeed();
 		},
@@ -70,6 +72,7 @@ define(function(require) {
 			// this.patient = this.patients.at(0); // at index
 			this.addComponents();
 			this._hideElements();
+			debugger;
 		},
 
 		addComponents: function() {
