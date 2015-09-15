@@ -71,7 +71,8 @@ define(function (require) {
                 model: model
             });
             this.add(match);
-            match.position.set(0, 500);
+            match.interactive = true;
+            match.position.set(0, 100);
         },
 
         /**
@@ -231,7 +232,7 @@ define(function (require) {
 
         /**
          * Checks for a match between an issue and a goal. If a match is found,
-         * creates a Match Component and return true; else return false.
+         * creates a IssueGoalPair and return true; else return false.
          *
          * @param models the object containing the
          * required model instances.
@@ -239,10 +240,20 @@ define(function (require) {
          */
         goalMatchesIssue: function (models) {
             if (models.goal.matchesIssue(models.issue)) {
+
+                const idealHeight = (function () {
+                    return this.determineCardHeight(
+                        models.goal.get('body').length +
+                        models.issue.get('body').length
+                    ) + 100;
+                }.bind(this)());
+
                 let match = new IssueGoalPair({
                     issue: models.issue,
                     goal: models.goal,
-                    width: 300
+                    color: 'light-green',
+                    width: width,
+                    height: idealHeight
                 });
                 this.collection.matches.add(match);
                 return true;

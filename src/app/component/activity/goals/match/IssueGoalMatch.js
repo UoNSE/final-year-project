@@ -3,7 +3,7 @@ define(function (require) {
     'use strict';
 
     // templates
-    var template = require('text!component/activity/goals/card/matcher/IssueGoalMatch.hbs');
+    var template = require('text!component/activity/goals/match/IssueGoalMatch.hbs');
     // components
     var Component = require('core/Component');
 

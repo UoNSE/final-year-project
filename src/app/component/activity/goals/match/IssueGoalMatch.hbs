@@ -1,5 +1,5 @@
 <div class="panel panel-{{mtl-color color}}"
-     style="width: 300px; height: 300px">
+     style="width: {{units width}}; height: {{units height}}">
     <div class="panel-heading">
         <h3 class="panel-title">Match</h3>
     </div>
@@ -16,7 +16,7 @@
             <h3 class="panel-title">Goal</h3>
         </div>
         <div class="panel-body">
-			{{goal.content}}
+			{{goal.body}}
         </div>
     </div>
 </div>

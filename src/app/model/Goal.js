@@ -10,7 +10,7 @@ define(function (require) {
     let GoalModel = Panel.extend({
 
         defaults: {
-            content: 'This is a Goal',
+            content: '',
             issueId: '0',
             actions: [1]
         },

@@ -21,7 +21,7 @@ define(function (require) {
             key: 'issue',
             relatedModel: Issue
         }, {
-            type: Backbone.HasMany,
+            type: Backbone.HasOne,
             key: 'goal',
             relatedModel: Goal
         }]
