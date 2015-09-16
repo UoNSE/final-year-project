@@ -12,7 +12,12 @@ define(function (require) {
     let IssueGoalMatch = require('component/activity/goals/match/IssueGoalMatch');
     let Hint = require('component/hint/Hint');
 
+    // help
+    var Help = require('component/activity/goals/help/HelpAlternative');
+    var HelpText = require('text!component/activity/goals/help/helpContent.hbs');
+
     // models
+    var HelpModel = require('model/HelpModel');
     let IssueModel = require('model/Issue');
     let GoalModel = require('model/Goal');
     let IssueGoalPair = require('model/IssueGoalPair');
@@ -40,6 +45,8 @@ define(function (require) {
         height: 100,
         width: 300,
 
+        help: null,
+
         collection: {
             issues: new IssuesCollection(),
             goals: new GoalsCollection(),
@@ -49,8 +56,6 @@ define(function (require) {
         initialize: function () {
             // invoke super(arguments)
             Component.prototype.initialize.apply(this, arguments);
-
-            let hint = new Hint({model: {text: "Match Goals to Issues."}});
 
             let issuesCollection = this.collection.issues;
             let goalsCollection = this.collection.goals;
@@ -63,6 +68,15 @@ define(function (require) {
 
             issuesCollection.fetch();
             goalsCollection.fetch();
+
+            //this.help = this.add(new Help({
+            //    model: new HelpModel({
+            //        title: 'Help',
+            //        width: 400,
+            //        height: 100,
+            //        helpContent:  HelpText
+            //    })
+            //}));
 
         },
 
