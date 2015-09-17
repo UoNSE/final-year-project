@@ -44,6 +44,7 @@ define(function(require) {
 			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
 			this.visiblemenus = [];
+			this.collaborative = true;
 
 		},
 
@@ -59,6 +60,7 @@ define(function(require) {
 			this.testresults = this.patient.get('testresults');
 			this.hotspots = this.patient.get('hotspots');
 			this.patientbody = this.add(new PatientBody());
+			this.patientbody.interactive = true;
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = this.add(new Tests(this.testresults));
 			this.queries = this.add(new Query(this.testresults));
@@ -89,7 +91,7 @@ define(function(require) {
 					})
 				}));
 				var scale = i - (n - 1) / 2;
-				button.position.set(scale * (offset + offset * 0.75), -200);
+				button.position.set(scale * (offset + offset * 0.8), -200);
 				var target = targets[i];
 				button.add(target);
 				button.on('click', this.onToggle.bind(this,target));
@@ -99,17 +101,20 @@ define(function(require) {
 		},
 
 		onToggle: function (toggableTarget) {
-			if(toggableTarget == this.queries){
-				this.tests.hide();
-				this.chart.hide();
-			}
-			else if(toggableTarget == this.tests){
-				this.queries.hide();
-				this.chart.hide();
-			}
-			else if(toggableTarget== this.chart){
-				this.tests.hide();
-				this.chart.hide();
+
+			if(this.collaborative != true){
+				if(toggableTarget == this.queries){
+					this.tests.hide();
+					this.chart.hide();
+				}
+				else if(toggableTarget == this.tests){
+					this.queries.hide();
+					this.chart.hide();
+				}
+				else if(toggableTarget== this.chart){
+					this.tests.hide();
+					this.chart.hide();
+				}
 			}
 
 			toggableTarget.toggle();
