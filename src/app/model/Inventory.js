@@ -10,7 +10,8 @@ define(function (require) {
 
 		defaults: {
 			issues: null,
-			evidence: null
+			evidence: null,
+			issuegroup: null
 		},
 
 		relations: [{

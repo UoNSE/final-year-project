@@ -186,6 +186,19 @@ define(function (require) {
 
 		show: function () {
 			this.visible = true;
+		},
+		shake: function (amp, freq) {
+			if (amp === undefined) {
+				amp = 10;
+			}
+			if (freq === undefined) {
+				freq = 20;
+			}
+			new TWEEN.Tween({obj: this, t: 0}).to({t: 5}, 1000)
+				.onUpdate(function () {
+					this.obj.position.x += amp * Math.sin(freq * this.t) * Math.exp(-this.t);
+				})
+				.start();
 		}
 	});
 

@@ -20,6 +20,9 @@ define(function (require) {
 				sendToBack: this.sendToBack.bind(this, element)
 			});
 
+			multiTouchElement.element.css('zIndex', this.frontIndex);
+			this.frontIndex++;
+
 		},
 
 		removeElement: function (multiTouchElement) {
@@ -39,7 +42,6 @@ define(function (require) {
 					}
 				}
 			}
-
 			return null;
 		},
 

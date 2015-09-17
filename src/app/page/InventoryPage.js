@@ -14,6 +14,7 @@ define(function (require) {
 
 			this.inventory = new Inventory();
 
+			//this.camera.position.x = inventory.width / 2;
 		},
 
 		/**

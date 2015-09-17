@@ -26,7 +26,7 @@ define(function (require) {
 			inventory.add(new Issue({body: 'Something'}));
 			inventory.get('evidence').add(new Evidence({body: 'Something'}));
 
-		},
+		}
 
 	});
 
