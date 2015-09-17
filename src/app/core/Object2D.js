@@ -131,12 +131,22 @@ define(function (require) {
 			return child;
 		},
 
+		remove: function () {
+			this.trigger('remove');
+			Backbone.View.prototype.remove.apply(this, arguments);
+		},
+
 		removeAll: function () {
 			this.children.forEach(child => {
 				child.removeAll();
 				child.trigger('remove');
 			});
 			this.children.length = 0;
+		},
+
+		destroy: function () {
+			this.trigger('destroy');
+			Backbone.View.prototype.destroy.apply(this, arguments);
 		},
 
 		destroyAll: function () {
