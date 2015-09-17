@@ -46,8 +46,13 @@ define(function (require) {
             this.listenTo(issues, 'sync', this.onIssuesSync);
             this.listenTo(evidence, 'sync', this.onEvidenceSync);
 
-            issues.fetch();
-            evidence.fetch();
+            if(this.canLoad()){
+                this.loadCards(issues, evidence);
+            }
+            else{
+                this.fetchCards(issues, evidence);
+            }
+
 
             this.menu = this.add(new Menu());
             this.menu.on({
@@ -71,6 +76,33 @@ define(function (require) {
             })).position.set(-400,-300);//TODO:position in relation to bottom left of 'viewport'
 
             this.scoreContainer = this.add(new Score());
+        },
+
+        /**
+         * Check if there are cards in the inventory
+         * @returns true if the inventory has cards
+         */
+        canLoad: function(){
+            //TODO check if inventory has cards
+            console.log("No loading");
+            return false;
+        },
+
+        /**
+         * Load cards from inventory
+         */
+        loadCards: function(issues, evidence){
+            //TODO load cards from inventory
+            console.log("Load cards");
+        },
+
+        /**
+         * fetch card data from db
+         */
+        fetchCards: function(issues, evidence){
+            console.log("Fetch cards");
+            issues.fetch();
+            evidence.fetch();
         },
 
         /**
