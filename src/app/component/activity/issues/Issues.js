@@ -193,6 +193,7 @@ define(function (require) {
         bindDraggableEvents: function (component) {
             component.on({
                 drag: this.onDrag.bind(this),
+                dragendsource: this.onDragEnd.bind(this),
                 dropsink: this.onDrop.bind(this)
             });
         },
@@ -204,6 +205,10 @@ define(function (require) {
             this.menu.show();
         },
 
+        onDragEnd: function(){
+            this.menu.hide();
+        },
+
         /**
          * An event triggered when a card is being dropped.
          *
@@ -213,7 +218,6 @@ define(function (require) {
             var draggable = event.draggable;
             var droppable = event.droppable;
             this.merge(draggable, droppable);
-            this.menu.hide();
             this.updateScore();
         },
 
