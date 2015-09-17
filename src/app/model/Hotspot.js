@@ -8,7 +8,8 @@ define(function (require) {
 			//name: 'Hotspot',
 			patientId: null,
 			x: 0,
-			y: 0
+			y: 0,
+			data: ''
 		}
 
 	});

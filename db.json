@@ -4,31 +4,36 @@
       "id": 1,
       "patientId": 1,
       "x": -2,
-      "y": 347
+      "y": 347,
+      "data": "Hotspot1"
     },
     {
       "id": 2,
       "patientId": 1,
       "x": 86,
-      "y": 222
+      "y": 222,
+      "data": "Hotspot2"
     },
     {
       "id": 3,
       "patientId": 1,
       "x": 53,
-      "y": -142
+      "y": -142,
+      "data": "<img src=\"/resources/images/nof.jpg\">"
     },
     {
       "id": 4,
       "patientId": 1,
       "x": -97,
-      "y": -352
+      "y": -352,
+      "data": "Hotspot4"
     },
     {
       "id": 5,
       "patientId": 1,
       "x": -161,
-      "y": -15
+      "y": -15,
+      "data": "Hotspot5"
     }
   ],
   "cases": [

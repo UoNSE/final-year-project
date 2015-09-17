@@ -112,6 +112,9 @@ define(function (require) {
             d.css('top', they);
             d.is(':visible') ? d.hide() : d.show();
             d.css('z-index', '1000');
+
+            d.html(model.get('data'));
+
             //;top:'+model.get('y')+'px');
 
         }
