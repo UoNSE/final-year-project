@@ -350,7 +350,7 @@ define(function (require) {
                     if(ev.attributes.score < ev.attributes.maxscore){
                         this.gameCredit += 2;
                     }
-                })
+                },this)
 
 
 
