@@ -50,7 +50,7 @@ define(function(require) {
 		},
 
 		createMenuButton: function(label){
-			var button = this.createButton(label, 'info');
+			var button = this.createButton(label, 'primary');
 			this.yOffset = this.yOffset+50;
 			// console.log(this.yoffset);
 			button.position.set(0, this.yOffset);

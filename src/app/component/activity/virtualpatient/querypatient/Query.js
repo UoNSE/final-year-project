@@ -63,10 +63,13 @@ define(function(require) {
 			var testMenu = [];
 			this.createMenuButton('What is the problem?');
 			this.createMenuButton('Where does it hurt?');
-			this.createMenuButton('Have you noticed any swelling?');
 			this.createMenuButton('When did the pain begin?');
-			this.createMenuButton('Has your skin been dry?');
 
+			this.createMenuButton('Have you noticed any swelling?');
+			this.createMenuButton('Has your skin been dry?');
+			this.createMenuButton('How old are you?');
+			this.createMenuButton('How have you been sleeping?');
+			this.createMenuButton('Do you have family here?');
 		},
 
 		addEvidence: function (model) {
@@ -98,7 +101,7 @@ define(function(require) {
 		},
 
 		createMenuButton: function(label){
-			var button = this.createButton(label, 'info');
+			var button = this.createButton(label, 'primary');
 			this.yOffset = this.yOffset+60;
 			// console.log(this.yoffset);
 			button.position.set(0, this.yOffset);
@@ -128,16 +131,6 @@ define(function(require) {
 					color: 'info'
 				}));
 			}
-			if(label==='Have you noticed any swelling?'){
-				var dummyData = "Yes, in my hand";
-				// target = new EvidenceCard(dummyData);
-				target = this.addEvidence(new EvidenceModel({
-					width: 200,
-					height: 100,
-					title: 'Evidence',
-					color: 'info'
-				}));
-			}
 			else if (label==='When did the pain begin?'){
 				var dummyData = "I hurt my knee";
 				target = this.addEvidence(new EvidenceModel({
@@ -148,6 +141,16 @@ define(function(require) {
 				}));
 
 			}
+			else if(label==='Have you noticed any swelling?'){
+				var dummyData = "Yes, in my hand";
+				// target = new EvidenceCard(dummyData);
+				target = this.addEvidence(new EvidenceModel({
+					width: 200,
+					height: 100,
+					title: 'Evidence',
+					color: 'info'
+				}));
+			}
 			else if (label==='Has your skin been dry?'){
 				var dummyData = "Not really no";
 				target = this.addEvidence(new EvidenceModel({
@@ -156,7 +159,36 @@ define(function(require) {
 					title: 'Evidence',
 					color: 'info'
 				}));
-
+			}
+			else if(label==='How old are you?'){
+				var dummyData = "75";
+				// target = new EvidenceCard(dummyData);
+				target = this.addEvidence(new EvidenceModel({
+					width: 200,
+					height: 100,
+					title: 'Evidence',
+					color: 'info'
+				}));
+			}
+			else if(label==='How have you been sleeping?'){
+				var dummyData = "Not well. Iâ€™ve been waking up frequently.";
+				// target = new EvidenceCard(dummyData);
+				target = this.addEvidence(new EvidenceModel({
+					width: 200,
+					height: 100,
+					title: 'Evidence',
+					color: 'info'
+				}));
+			}
+			else if(label==='Do you have family here?'){
+				var dummyData = "Yes, Toi song voi con gai cua toi";
+				// target = new EvidenceCard(dummyData);
+				target = this.addEvidence(new EvidenceModel({
+					width: 200,
+					height: 100,
+					title: 'Evidence',
+					color: 'info'
+				}));
 			}
 			else{}
 

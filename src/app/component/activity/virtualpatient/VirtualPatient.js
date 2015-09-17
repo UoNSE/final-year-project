@@ -87,7 +87,8 @@ define(function(require) {
 				var button = this.add(new ActionButton({
 					model: new ActionButtonModel({
 						text: text,
-						id: text + 'Btn'
+						id: text + 'Btn',
+						// color: danger
 					})
 				}));
 				var scale = i - (n - 1) / 2;
