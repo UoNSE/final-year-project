@@ -10,7 +10,7 @@ define(function (require) {
 
 		initialize: function (router, camera, urlParams) {
 			Object2D.prototype.initialize.apply(this, arguments);
-
+            this.router = router;
 			this.camera = camera;
 			this.urlParams = urlParams;
 			if (this.back) {
@@ -35,6 +35,11 @@ define(function (require) {
 				.easing(TWEEN.Easing.Back.In)
 				.start()
 				.promise();
-		}
+		},
+
+        navigateTo: function() {
+            this.router.navigate(arguments);
+        }
+
 	});
 });
