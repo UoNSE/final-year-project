@@ -17,6 +17,7 @@ define(function (require) {
         initialize: function () {
             // super(arguments)
             Component.prototype.initialize.apply(this, arguments);
+            this.interactive = true;
         }
 
     });

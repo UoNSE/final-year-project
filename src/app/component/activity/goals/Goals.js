@@ -10,10 +10,9 @@ define(function (require) {
     let GoalCard = require('component/activity/goals/card/goal/GoalCard');
     let IssueCard = require('component/activity/goals/card/issue/IssueCard');
     let IssueGoalMatch = require('component/activity/goals/match/IssueGoalMatch');
-    let Hint = require('component/hint/Hint');
 
     // help
-    var Help = require('component/activity/goals/help/HelpAlternative');
+    var Help = require('component/activity/goals/help/Help');
     var HelpText = require('text!component/activity/goals/help/helpContent.hbs');
 
     // models
@@ -47,6 +46,8 @@ define(function (require) {
 
         help: null,
 
+        matches: [],
+
         collection: {
             issues: new IssuesCollection(),
             goals: new GoalsCollection(),
@@ -69,17 +70,23 @@ define(function (require) {
             issuesCollection.fetch();
             goalsCollection.fetch();
 
-            //this.help = this.add(new Help({
-            //    model: new HelpModel({
-            //        title: 'Help',
-            //        width: 400,
-            //        height: 100,
-            //        helpContent:  HelpText
-            //    })
-            //}));
+            // add help component to the page
+            this.help = this.add(new Help({
+                model: new HelpModel({
+                    title: 'Help',
+                    width: 300,
+                    helpContent: HelpText
+                })
+            }));
 
         },
 
+        /**
+         * When an IssueGoalPair is added to its collection,
+         * this function is called.
+         *
+         * @param model the IssueGoalPair
+         */
         onAddMatch: function (model) {
             let match = new IssueGoalMatch({
                 model: model
@@ -103,13 +110,13 @@ define(function (require) {
                     model.get('content').length
                 );
 
-                var card = this.addIssue(new IssueModel({
+                let card = this.addIssue(new IssueModel({
                     width: width,
                     title: 'Issue',
                     body: model.get('content'),
                     color: 'orange'
                 }));
-                var scale = i - ((n - 1) / 2);
+                let scale = i - ((n - 1) / 2);
                 card.position.set(-300, scale * (distance + cardHeight));
             }, this);
         },
@@ -132,7 +139,6 @@ define(function (require) {
                 // create card
                 var card = this.addGoal(new GoalModel({
                     width: this.width,
-                    height: cardHeight,
                     title: 'Goal',
                     body: model.get('content'),
                     color: 'light-blue'
@@ -257,17 +263,16 @@ define(function (require) {
 
                 const idealHeight = (function () {
                     return this.determineCardHeight(
-                        models.goal.get('body').length +
-                        models.issue.get('body').length
-                    ) + 100;
+                            models.goal.get('body').length +
+                            models.issue.get('body').length
+                        ) + 100;
                 }.bind(this)());
 
                 let match = new IssueGoalPair({
                     issue: models.issue,
                     goal: models.goal,
                     color: 'light-green',
-                    width: width,
-                    height: idealHeight
+                    width: width
                 });
                 this.collection.matches.add(match);
                 return true;
