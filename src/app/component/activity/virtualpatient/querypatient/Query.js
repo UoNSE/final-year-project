@@ -48,9 +48,9 @@ define(function(require) {
 
 		onToggleButton: function (button, event) {
 			if(button.visible){
-				// button.children().foreach() => (child){
-				// 	child.hide();
-				// };
+				button.children().foreach(child => {
+					child.hide();
+				});
 			}
 			// button.children.hide();
 			button.toggle();
@@ -138,7 +138,7 @@ define(function(require) {
 			}
 			else{}
 
-			target.position.x = 100;
+			target.position.x = 200;
 			target.hide();
 
 			button.add(target);
