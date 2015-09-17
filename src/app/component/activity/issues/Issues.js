@@ -56,7 +56,10 @@ define(function (require) {
 
            this.add(new Help({
                 model: {
-                    helpContent: '<a>Touch an activity below</a>'
+                    helpContent: 'Join pieces of evidence together to score points.<br>'+
+                        'Once you have enough points you can unlock issues in the '+
+                        '<button class="mtl-fab btn btn-material-blue btn-fab btn-raised mdi-action-shopping-cart" style="width: 25px;height: 25px;padding: 0px;"> </button> menu<br>'+
+                        'Once all issues are linked with the correct evidence you will be able to continue'
                 }
             }));
         },
