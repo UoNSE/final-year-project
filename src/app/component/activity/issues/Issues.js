@@ -28,9 +28,10 @@ define(function (require) {
             evidence: new EvidenceCollection()
         },
 
-        initialize: function () {
+        initialize: function (inventory) {
 
             Component.prototype.initialize.apply(this, arguments);
+            this.inventory = inventory;
 
 			this.width = 300;
 			this.height = 90;

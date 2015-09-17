@@ -9,7 +9,7 @@ define(function (require) {
 		title: 'Virtual Patient',
 		initialize: function () {
 			InventoryPage.prototype.initialize.apply(this, arguments);
-			this.add(new VirtualPatient());
+			this.add(new VirtualPatient(this.inventory));
 		}
 	});
 });
