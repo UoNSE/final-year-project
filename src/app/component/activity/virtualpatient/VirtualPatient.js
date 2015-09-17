@@ -57,7 +57,9 @@ define(function(require) {
 
 		addComponents: function() {
 			this.testresults = this.patient.get('testresults');
+			this.hotspots = this.patient.get('hotspots');
 			this.patientbody = this.add(new PatientBody());
+			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = this.add(new Tests(this.testresults));
 			this.queries = this.add(new Query(this.testresults));
 			this.EvidenceFeed = this.addEvidenceFeed();
@@ -87,10 +89,11 @@ define(function(require) {
 					})
 				}));
 				var scale = i - (n - 1) / 2;
-				button.position.set(scale * (offset + offset * 0.1), -200);
+				button.position.set(scale * (offset + offset * 0.75), -200);
 				var target = targets[i];
 				button.add(target);
 				button.on('click', this.onToggle.bind(this,target));
+				button.interactive = true;
 
 			}.bind(this));
 		},

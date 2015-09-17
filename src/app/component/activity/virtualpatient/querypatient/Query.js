@@ -63,6 +63,7 @@ define(function(require) {
 			var testMenu = [];
 			this.createMenuButton('What is the problem?');
 			this.createMenuButton('Where does it hurt?');
+			this.createMenuButton('Have you noticed any swelling?');
 			this.createMenuButton('When did the pain begin?');
 
 		},
@@ -119,6 +120,16 @@ define(function(require) {
 			}
 			else if (label==='Where does it hurt?') {
 				var dummyData = "I hurt my knee";
+				target = this.addEvidence(new EvidenceModel({
+					width: 200,
+					height: 100,
+					title: 'Evidence',
+					color: 'info'
+				}));
+			}
+			if(label==='Have you noticed any swelling?'){
+				var dummyData = "Yes, in my hand";
+				// target = new EvidenceCard(dummyData);
 				target = this.addEvidence(new EvidenceModel({
 					width: 200,
 					height: 100,

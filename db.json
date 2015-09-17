@@ -178,55 +178,45 @@
       "text": "ctscan"
     }
   ],
-  "hotspots": [
-    {
-      "id": 1,
-      "patientId": 1,
-      "x": 40.2,
-      "y": 40.2
-    },
-    {
-      "id": 2,
-      "patientId": 1,
-      "x": 60.2,
-      "y": 60.2
-    },
-    {
-      "id": 3,
-      "patientId": 1,
-      "x": 50.2,
-      "y": 50.2
-    }
-  ],
   "patients": [
     {
       "id": 1,
-      "firstname": "Cyril",
+      "firstname": "Gerard",
       "lastname": "Smith",
-      "age": "99",
-      "dob": "12.05.1916",
-      "sex": "female",
-      "profession": "receptionist",
-      "temperature": "37°C",
-      "pulse": "112bpm",
-      "respiratoryrate": "22breathsperminute",
-      "bloodpressure": "90/50",
-      "pain": "3-4usingVASscale",
-      "oxygensaturationlevel": "97%",
-      "hourlyurineoutput(average)": "26mL/hr",
-      "bgl": "4mmol/L",
+      "age": "62",
+      "dob": "1914-05-12",
+      "sex": "Male",
+      "profession": "Physiotherapist",
       "hotspots": [
         {
           "id": 1,
-          "side": "front",
-          "top": "53",
-          "left": "34"
+          "x": -2,
+          "y": 347,
+          "data": "Hotspot1"
         },
         {
           "id": 2,
-          "side": "back",
-          "top": "34",
-          "left": "10"
+          "x": 86,
+          "y": 222,
+          "data": "Hotspot2"
+        },
+        {
+          "id": 3,
+          "x": 53,
+          "y": -142,
+          "data": "<img src=\"/resources/images/nof.jpg\">"
+        },
+        {
+          "id": 4,
+          "x": -97,
+          "y": -352,
+          "data": "Hotspot4"
+        },
+        {
+          "id": 5,
+          "x": -161,
+          "y": -15,
+          "data": "Hotspot5"
         }
       ],
       "evidence": [
@@ -293,6 +283,38 @@
           "ts": "50"
         }
       ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": 1,
+      "x": -2,
+      "y": 347,
+      "data": "Hotspot1"
+    },
+    {
+      "id": 2,
+      "x": 86,
+      "y": 222,
+      "data": "Hotspot2"
+    },
+    {
+      "id": 3,
+      "x": 53,
+      "y": -142,
+      "data": "<img src=\"/resources/images/nof.jpg\">"
+    },
+    {
+      "id": 4,
+      "x": -97,
+      "y": -352,
+      "data": "Hotspot4"
+    },
+    {
+      "id": 5,
+      "x": -161,
+      "y": -15,
+      "data": "Hotspot5"
     }
   ]
 }

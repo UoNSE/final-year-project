@@ -3,7 +3,6 @@ define(function(require) {
 
 	var Component = require('core/Component');
 	var template = require('text!component/activity/virtualpatient/evidencefeed/EvidenceFeed.hbs');
-	// var EvidenceCard = require('component/activity/virtualpatient/evidencefeed/evidencecard/EvidenceCard');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 
 	return Component.extend({
