@@ -19,6 +19,8 @@ define(function (require) {
     var Score = require('component/activity/issues/score/Score');
 
     var gameCredit = 0;
+    //hack to stop duplicating cards
+    var mergedYet= false;
 
     return Component.extend({
         template: template,
@@ -203,6 +205,7 @@ define(function (require) {
          */
         onDrag: function () {
             this.menu.show();
+            mergedYet = false;
         },
 
         onDragEnd: function(){
@@ -215,6 +218,10 @@ define(function (require) {
          * @param event
          */
         onDrop: function (event) {
+            if (mergedYet){
+                return;
+            }
+            mergedYet = true;
             var draggable = event.draggable;
             var droppable = event.droppable;
             this.merge(draggable, droppable);
