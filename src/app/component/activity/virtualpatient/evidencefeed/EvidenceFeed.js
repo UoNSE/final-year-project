@@ -3,7 +3,8 @@ define(function(require) {
 
 	var Component = require('core/Component');
 	var template = require('text!component/activity/virtualpatient/evidencefeed/EvidenceFeed.hbs');
-	var EvidenceCard = require('component/activity/virtualpatient/evidencefeed/evidencecard/EvidenceCard');
+	// var EvidenceCard = require('component/activity/virtualpatient/evidencefeed/evidencecard/EvidenceCard');
+	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 
 	return Component.extend({
 		template: template,
@@ -15,14 +16,14 @@ define(function(require) {
         initialize: function () {
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
-			this.addTestEvidenceCard();
+			// this.addTestEvidenceCard();
 			// this.startEvidenceFeed();
 			// this.collection.fetch();
 		},
         // add test Evidence card after
         addTestEvidenceCard: function(){
 
-			var Evidencecard = this.add(new EvidenceCard(100));
+			var Evidencecard = this.add(new Evidence());
 			var posX = 0;
 			var posY = 0;
 			Evidencecard.position.set(posX, posY);
