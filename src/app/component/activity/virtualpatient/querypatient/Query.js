@@ -7,7 +7,6 @@ define(function(require) {
 	var Button = require('component/button/Button');
 	var ButtonModel = require('model/Button');
 
-	var EvidenceCard = require('component/activity/virtualpatient/evidencefeed/evidencecard/EvidenceCard');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 	var EvidenceCollection = require('collection/Evidence');
 	var EvidenceModel = require('model/Evidence');
@@ -25,8 +24,8 @@ define(function(require) {
 		initialize: function (testresults) {
 			Component.prototype.initialize.apply(this, arguments);
 
-			this.testresults = testresults;
-			this.UrineAnalysisResult = this.testresults.get(1);
+			// this.testresults = testresults;
+			// this.UrineAnalysisResult = this.testresults.get(1);
 			this.createTestMenu();
 
 		},
@@ -48,9 +47,12 @@ define(function(require) {
 		},
 
 		onToggleButton: function (button, event) {
-			// if(button.is(':hidden')){
-			// 	button.children.hide();
-			// }
+			if(button.visible){
+				// button.children().foreach() => (child){
+				// 	child.hide();
+				// };
+			}
+			// button.children.hide();
 			button.toggle();
 		},
 
@@ -113,7 +115,6 @@ define(function(require) {
 					color: 'info'
 				}));
 				// this.Zim.bringToFront(target);
-				// target.position.set(0, 0);
 
 			}
 			else if (label==='Where does it hurt?') {
@@ -123,7 +124,8 @@ define(function(require) {
 					height: 100,
 					title: 'Evidence',
 					color: 'info'
-				}));			}
+				}));
+			}
 			else if (label==='When did the pain begin?'){
 				var dummyData = "I hurt my knee";
 				target = this.addEvidence(new EvidenceModel({
@@ -136,7 +138,7 @@ define(function(require) {
 			}
 			else{}
 
-			target.position.x = 0;
+			target.position.x = 100;
 			target.hide();
 
 			button.add(target);
