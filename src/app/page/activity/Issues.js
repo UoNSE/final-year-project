@@ -9,11 +9,7 @@ define(function (require) {
 		title: 'Issues & Evidence',
 		initialize: function () {
 			InventoryPage.prototype.initialize.apply(this, arguments);
-			this.add(new Issues(this.inventory, {
-				params: {
-					case_id: this.urlParams.case_id
-				}
-			}));
+			this.add(new Issues(this.inventory, {params: this.urlParams}));
 		}
 	});
 });

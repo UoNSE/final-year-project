@@ -23,7 +23,7 @@ define(function (require) {
 
     return Component.extend({
         template: template,
-        classes: ['issues'],
+        classes: 'issues',
         styles: 'component/activity/issues/Issues.css',
 
         menu: null,
@@ -70,7 +70,7 @@ define(function (require) {
                 model: new ActionButtonModel({
                     icon: 'action-shopping-cart',
                     color: 'blue',
-                    href: 'cases/' + params.case_id + '/activity/issues/unlock',
+                    href: 'cases/' + params['case_id'] + '/activity/issues/unlock',
                     //styles: {
                     //    width:100,
                     //    height:100,
@@ -353,9 +353,6 @@ define(function (require) {
                         this.gameCredit += 2;
                     }
                 }, this);
-
-
-
 
             }
             //create new card
