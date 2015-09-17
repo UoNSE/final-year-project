@@ -65,6 +65,7 @@ define(function(require) {
 			this.createMenuButton('Where does it hurt?');
 			this.createMenuButton('Have you noticed any swelling?');
 			this.createMenuButton('When did the pain begin?');
+			this.createMenuButton('Has your skin been dry?');
 
 		},
 
@@ -139,6 +140,16 @@ define(function(require) {
 			}
 			else if (label==='When did the pain begin?'){
 				var dummyData = "I hurt my knee";
+				target = this.addEvidence(new EvidenceModel({
+					width: 200,
+					height: 100,
+					title: 'Evidence',
+					color: 'info'
+				}));
+
+			}
+			else if (label==='Has your skin been dry?'){
+				var dummyData = "Not really no";
 				target = this.addEvidence(new EvidenceModel({
 					width: 200,
 					height: 100,

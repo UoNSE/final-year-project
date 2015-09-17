@@ -91,7 +91,7 @@ define(function(require) {
 					})
 				}));
 				var scale = i - (n - 1) / 2;
-				button.position.set(scale * (offset + offset * 0.8), -200);
+				button.position.set(scale * (offset + offset * 1.0), -200);
 				var target = targets[i];
 				button.add(target);
 				button.on('click', this.onToggle.bind(this,target));
@@ -134,7 +134,7 @@ define(function(require) {
 			return new Button({
 				model: new ButtonModel({
 					text: text,
-					color: color,
+					color: 'color',
 					styles: ["matl-fab", "btn", "btn-fab", "btn-raised"]
 				})
 			});
