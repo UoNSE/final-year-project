@@ -1,53 +1,59 @@
 define(function (require) {
     'use strict';
 
-    var Panel = require('core/Component');
-    var template = require('text!component/timer/Timer.hbs');
-
+    var Panel = require('component/panel/Panel');
+    var template = require('text!component/activity/caseinformation/timer/Timer.hbs');
+    var activityTimer = 0;
+    var period = 0;
     return Panel.extend({
         template: template,
-        styles: 'component/button/Timer.css',
+        styles: 'component/activity/caseinformation/timer/Timer.css',
 
         initialize: function () {
             Panel.prototype.initialize.apply(this, arguments);
             this.interactive = true;
             this.setDraggable({});
-            this.timerInitialize();
-            setInterval(this.updateClock(this['update-period)']), this['update-period)']);
+            this.model.set('color','success');
+            debugger;
+            period = this.model.get('update-period');
+            activityTimer = this.timerInitialize(this.model.get('body'));
+            setInterval(this.updateClock, period);
         },
 
-        timerInitialize: function(){
-            var times = ($('#activity-clock > .panel-body').text()).split(":");
-            this.timer += +times[0] * 60 * 60;
-            this.timer += +times[1] * 60;
-            this.timer += +times[2];
-            this.timer *= 1000;
+        timerInitialize: function(t){
+            var times = t.split(":");
+            t = 0;
+            t += +times[0] * 60 * 60;
+            t += +times[1] * 60;
+            t += +times[2];
+            t *= 1000;
+            return t;
         },
 
-        updateClock: function (period) {
-            if (this.timer !== 0) {
-                this.timer -= period;
-                if (this.timer < 0) {
-                    this.timer = 0;
+        updateClock: function () {
+            if (activityTimer !== 0) {
+                activityTimer -= period;
+                if (activityTimer < 0) {
+                    activityTimer = 0;
                 }
                 switch(true){
-                    case (this.timer < this.low):
+                    case (activityTimer < this.low):
                         $('#activity-clock').addClass('panel-danger').removeClass('panel-warning');
                         this.low = -1;
                         break;
-                    case (this.timer < this.mid):
+                    case (activityTimer < this.mid):
                         $('#activity-clock').addClass('panel-warning').removeClass('panel-success');
                         this.mid = -1;
                         break;
                     default:
                         break;
                 }
-                $('#activity-clock').text(this.convertTimer(this.timer));
+                $('#activity-clock').text(this.convertTimer());
             }
         },
 
-        convertTimer: function(milli) {
-            var milliSecs = milli;
+        convertTimer: function() {
+            var milliSecs = activityTimer;
             var msSecs = (1000);
             var msMins = (msSecs * 60);
             var msHours = (msMins * 60);

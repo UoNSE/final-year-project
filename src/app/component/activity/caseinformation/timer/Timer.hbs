@@ -1,9 +1,9 @@
-<div id="activity-clock" class="panel panel-{{mtl-color color}}{{#if classes}}{{ classes}}{{/if}}"
-     style="width: {{units width}};">
-    <div class="panel-heading">
-        {{title}}
-    </div>
-    <div class="panel-body">
-        {{timer}}
-    </div>
+<div class="panel panel-{{mtl-color color}}{{#if classes}}{{ classes}}{{/if}}"
+     style="width: {{units width}}; height: {{units height}}">
+    {{#if title}}
+        <div class="panel-heading">
+            <h3 class="panel-title">{{title}}</h3>
+        </div>
+    {{/if}}
+    <div id="activity-clock" class="panel-body">{{body}}</div>
 </div>

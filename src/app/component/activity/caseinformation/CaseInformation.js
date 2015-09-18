@@ -7,6 +7,7 @@ define(function (require) {
     var CaseInfoCollection = require('collection/CaseInfos');
     var CaseInfoCardsCollection = require('collection/CaseInfoCards');
     var CaseInfoCardModel = require('model/CaseInfoCard');
+    var TimerModel = require('model/Timer');
     var SelectableText = require('model/SelectableText');
 
     var Timer = require('component/activity/caseinformation/timer/Timer');
@@ -43,10 +44,15 @@ define(function (require) {
          * @param caseinfo The caseinfo collection.
          */
         onCaseInfoSync: function (caseinfo) {
-            debugger;
-            this.addTimer(caseinfo);
+            this.addTimer(new TimerModel({
+                body : caseinfo.first().get('timer'),
+                width: this.width,
+                height: this.height,
+                title : 'Activity Timer',
+                'update-period' : 1000
+            }));
             var caseCards = caseinfo.first().get('cards');
-            var n = caseCards.size();
+//            var n = caseCards.size();
             var yloc = this.height + 10;
             var xloc = -400;
             caseCards.forEach(function (model, i) {
@@ -77,8 +83,7 @@ define(function (require) {
 
         addTimer: function (model) {
             var timer = this.add(new Timer({
-                title: 'Activity Time',
-                timer: model.get('timer')
+                model:model
             }));
             this.bindDraggableEvents(timer);
             return timer;

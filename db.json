@@ -293,7 +293,7 @@
       {
         "id": 4,
         "video": true,
-        "show-threshold": 4,
+        "show-threshold": 5,
         "title": "Video Example",
         "type": "mp4",
         "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
@@ -307,7 +307,7 @@
       {
         "id": 5,
         "image": true,
-        "show-threshold": 3,
+        "show-threshold": 7,
         "title": "Image One",
         "source": "http://lorempixel.com/360/300/animals",
         "imgtext": "A random animal pic"

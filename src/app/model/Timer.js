@@ -5,13 +5,13 @@ define(function (require) {
 
     var Timer = Panel.extend({
         defaults: {
+            'id':'activity-clock',
             'title': 'TimePanel',
             'body': '00:00:00',
             'color': 'success',
             'update-period' : 1000,
             'low': 300000,
             'mid' : 600000,
-            'timer':'00:00:00'
         }
     });
 
