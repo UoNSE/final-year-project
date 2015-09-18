@@ -60,16 +60,37 @@ define(function(require) {
 
 			// for all menu items in collection, add menu item
 			this.yOffset = 50;
-			var testMenu = [];
-			this.createMenuButton('What is the problem?');
-			this.createMenuButton('Where does it hurt?');
-			this.createMenuButton('When did the pain begin?');
 
-			this.createMenuButton('Have you noticed any swelling?');
-			this.createMenuButton('Has your skin been dry?');
-			this.createMenuButton('How old are you?');
-			this.createMenuButton('How have you been sleeping?');
-			this.createMenuButton('Do you have family here?');
+			// for all menu items in JSON make a button with a label
+			// and give it a target
+
+			this.menuBtn1 = this.createMenuButton('What is the problem?')
+
+			this.addEvidenceTarget(this.menuBtn1, "I hurt my knee");
+
+			var menuBtn2 = this.createMenuButton('Where does it hurt?');
+			this.addEvidenceTarget(menuBtn2, "On my knee");
+
+			var menuBtn3 = this.createMenuButton('When did the pain begin?');
+			this.addEvidenceTarget(menuBtn3, "Yesterday");
+
+			var menuBtn4 = this.createMenuButton('Have you noticed any swelling?');
+			this.addEvidenceTarget(menuBtn4, "On my knee");
+
+			var menuBtn5 = this.createMenuButton('Has your skin been dry?');
+			this.addEvidenceTarget(menuBtn5, "No");
+
+			var menuBtn6 = this.createMenuButton('How old are you?');
+			this.addEvidenceTarget(menuBtn6, "Im 75");
+
+			var menuBtn7 = this.createMenuButton('How have you been sleeping?');
+			this.addEvidenceTarget(menuBtn7, "Not well. Iâ€™ve been waking up frequently.");
+
+			var menuBtn8 = this.createMenuButton('Have you noticed any swelling?');
+			this.addEvidenceTarget(menuBtn8, "On my knee");
+
+			var menuBtn9 = this.createMenuButton('Do you have family here?');
+			this.addEvidenceTarget(menuBtn9, "Yes, Toi song voi con gai cua toi");
 		},
 
 		addEvidence: function (model) {
@@ -106,99 +127,23 @@ define(function(require) {
 			// console.log(this.yoffset);
 			button.position.set(0, this.yOffset);
 
-			var target = null;
+			return this.add(button);
+		},
 
-			// console.log(label);
-
-			if(label==='What is the problem?'){
-				var dummyData = "I hurt my knee";
-				// target = new EvidenceCard(dummyData);
-				target = this.addEvidence(new EvidenceModel({
-					width: 200,
-					height: 100,
-					title: 'Evidence',
-					color: 'info'
-				}));
-				// this.Zim.bringToFront(target);
-
-			}
-			else if (label==='Where does it hurt?') {
-				var dummyData = "I hurt my knee";
-				target = this.addEvidence(new EvidenceModel({
-					width: 200,
-					height: 100,
-					title: 'Evidence',
-					color: 'info'
-				}));
-			}
-			else if (label==='When did the pain begin?'){
-				var dummyData = "I hurt my knee";
-				target = this.addEvidence(new EvidenceModel({
-					width: 200,
-					height: 100,
-					title: 'Evidence',
-					color: 'info'
-				}));
-
-			}
-			else if(label==='Have you noticed any swelling?'){
-				var dummyData = "Yes, in my hand";
-				// target = new EvidenceCard(dummyData);
-				target = this.addEvidence(new EvidenceModel({
-					width: 200,
-					height: 100,
-					title: 'Evidence',
-					color: 'info'
-				}));
-			}
-			else if (label==='Has your skin been dry?'){
-				var dummyData = "Not really no";
-				target = this.addEvidence(new EvidenceModel({
-					width: 200,
-					height: 100,
-					title: 'Evidence',
-					color: 'info'
-				}));
-			}
-			else if(label==='How old are you?'){
-				var dummyData = "75";
-				// target = new EvidenceCard(dummyData);
-				target = this.addEvidence(new EvidenceModel({
-					width: 200,
-					height: 100,
-					title: 'Evidence',
-					color: 'info'
-				}));
-			}
-			else if(label==='How have you been sleeping?'){
-				var dummyData = "Not well. Iâ€™ve been waking up frequently.";
-				// target = new EvidenceCard(dummyData);
-				target = this.addEvidence(new EvidenceModel({
-					width: 200,
-					height: 100,
-					title: 'Evidence',
-					color: 'info'
-				}));
-			}
-			else if(label==='Do you have family here?'){
-				var dummyData = "Yes, Toi song voi con gai cua toi";
-				// target = new EvidenceCard(dummyData);
-				target = this.addEvidence(new EvidenceModel({
-					width: 200,
-					height: 100,
-					title: 'Evidence',
-					color: 'info'
-				}));
-			}
-			else{}
-
+		addEvidenceTarget: function(button, dummy){
+			var target = this.addEvidence(new EvidenceModel({
+				width: 200,
+				height: 100,
+				title: 'Evidence',
+				color: 'info',
+				body: button.model.attributes.text + "\n" + "</br>" + dummy
+			}));
+			var yTarget = button.position.y;
+			target.position.y = yTarget;
 			target.position.x = 200;
 			target.hide();
-
 			button.add(target);
 			button.on('click', this.onToggleButton.bind(this, target));
-
-			return this.add(button);
 		}
 
 	});

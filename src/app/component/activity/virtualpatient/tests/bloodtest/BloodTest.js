@@ -61,21 +61,22 @@ define(function(require) {
 
 			// console.log(label);
 
-			if(label==='Blood Test'){
-				target = new BloodTest();
-				target.position.x = 275;
-			}
-			else if (label==='Xray' || label ==='CTScan') {
-				target = new Scan();
-			}
-			else if (label==='Urine'){
-				// target = new TestResult({model: this.UrineAnalysisResult});
-				target = new TestResult(this.UrineAnalysisResult);
-			}
-			else{}
+			// if(label==='Blood Test'){
+			// 	target = new BloodTest();
+			// 	target.position.x = 275;
+			// }
+			// else if (label==='Xray' || label ==='CTScan') {
+			// 	target = new Scan();
+			// }
+			// else if (label==='Urine'){
+			// 	// target = new TestResult({model: this.UrineAnalysisResult});
+			// 	target = new TestResult(this.UrineAnalysisResult);
+			// }
+			// else{}
 
 			// target.position.x = 0;
 			target.hide();
+			target.interactive = true;
 
 			button.add(target);
 			button.on('click', this.onToggleTest.bind(this, target));

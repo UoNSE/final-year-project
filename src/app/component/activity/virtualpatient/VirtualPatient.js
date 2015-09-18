@@ -21,6 +21,8 @@ define(function(require) {
 	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
 	var EvidenceFeed = require('component/activity/virtualpatient/evidencefeed/EvidenceFeed');
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
+	var Hint = require('component/hint/Hint');
+
 
 	// handlebars templates
 	var template = require('text!component/activity/virtualpatient/VirtualPatient.hbs');
@@ -66,6 +68,19 @@ define(function(require) {
 			this.queries = this.add(new Query(this.testresults));
 			this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = this.add(new Chart({model: this.patient}));
+			this.chart.interactive = true;
+			this.hint = this.add(new Hint({
+				model: {text: 'Use the "Query" button </br>\
+				to ask the patient questions. \
+				Use the "Test" button to run blood and other tests on the \
+				patient.<br> \
+				Use the "Chart" button to see the patients details and vital \
+			 	signs.\
+				Click on parts of the body to reveal scans and other  \
+				information related to that body part.'}
+			}));
+			// this.hint.scale.set(0, 0);
+
 			this.addButtons();
 		},
 
