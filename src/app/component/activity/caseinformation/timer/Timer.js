@@ -4,7 +4,8 @@ define(function (require) {
     var Panel = require('component/panel/Panel');
     var template = require('text!component/activity/caseinformation/timer/Timer.hbs');
     var activityTimer = 0;
-    var period = 0;
+    var gModel = null;          //see below, global ref to model
+    var scope3hard5me = null;   //because it is
     return Panel.extend({
         template: template,
         styles: 'component/activity/caseinformation/timer/Timer.css',
@@ -15,9 +16,10 @@ define(function (require) {
             this.setDraggable({});
             this.model.set('color','success');
             debugger;
-            period = this.model.get('update-period');
-            activityTimer = this.timerInitialize(this.model.get('body'));
-            setInterval(this.updateClock, period);
+            scope3hard5me = this.convertTimer;
+            gModel = this.model;
+            activityTimer = this.timerInitialize(gModel.get('body'));
+            setInterval(this.updateClock, gModel.get('update-period'));
         },
 
         timerInitialize: function(t){
@@ -32,28 +34,26 @@ define(function (require) {
 
         updateClock: function () {
             if (activityTimer !== 0) {
-                activityTimer -= period;
+                activityTimer -= gModel.get('update-period');
                 if (activityTimer < 0) {
                     activityTimer = 0;
                 }
                 switch(true){
-                    case (activityTimer < this.low):
-                        $('#activity-clock').addClass('panel-danger').removeClass('panel-warning');
-                        this.low = -1;
+                    case (activityTimer < gModel.get('low')):
+                        gModel.set('color','danger').set('low',-1);
                         break;
-                    case (activityTimer < this.mid):
-                        $('#activity-clock').addClass('panel-warning').removeClass('panel-success');
-                        this.mid = -1;
+                    case (activityTimer < gModel.get('mid')):
+                        gModel.set('color','warning').set('mid',-1);
                         break;
                     default:
                         break;
                 }
-                $('#activity-clock').text(this.convertTimer());
+                $('#activity-clock').text(scope3hard5me(activityTimer));
+                //gModel.set('body',scope3hard5me(activityTimer)); // updating the model here seems to make the webpage unresponsive after about 5 seconds
             }
         },
 
-        convertTimer: function() {
-            var milliSecs = activityTimer;
+        convertTimer: function(milliSecs) {
             var msSecs = (1000);
             var msMins = (msSecs * 60);
             var msHours = (msMins * 60);

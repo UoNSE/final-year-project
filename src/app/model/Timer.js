@@ -5,7 +5,6 @@ define(function (require) {
 
     var Timer = Panel.extend({
         defaults: {
-            'id':'activity-clock',
             'title': 'TimePanel',
             'body': '00:00:00',
             'color': 'success',

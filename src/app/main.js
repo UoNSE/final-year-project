@@ -46,6 +46,7 @@ define(function (require) {
 						'Cases': {
 							'case/Overview': {
 								'case/information/Information': {
+									'activity/CaseInformation':null,
 									'activity/VirtualPatient': null
 								},
 								'activity/Issues': null

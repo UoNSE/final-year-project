@@ -50,7 +50,7 @@ define(function (require) {
                 height: this.height,
                 title : 'Activity Timer',
                 'update-period' : 1000
-            }));
+            })).position.set(500,-300);
             var caseCards = caseinfo.first().get('cards');
 //            var n = caseCards.size();
             var yloc = this.height + 10;
