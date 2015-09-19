@@ -32,16 +32,17 @@ define(function(require) {
 			this.hide();
 		},
 		_addHighEvidenceCard: function(){
-			this._addEvidenceCard("high");
-
-			// this.vproot = this.parent.parent.parent;
 			// debugger;
+			this.result = event.target.parentElement.parentElement.id;
+			this._addEvidenceCard("high");
+			// this.vproot = this.parent.parent.parent;
 			// this.vproot.addEvidenceCard("high");
 			// this.dispatchEvent('createNewEvidenceCard', event);
 
 			// ._addEvidenceCard("high");
 		},
 		_addLowEvidenceCard: function(){
+			this.result = event.target.parentElement.parentElement.id;
 			this._addEvidenceCard("low");
 			// this.parent.parent.parent._addEvidenceCard("low");
 		},
@@ -76,13 +77,13 @@ define(function(require) {
 
 		_addEvidenceCard: function(flag){
 			// console.log(flag);
-			var metric = "Glucose";
+			var metric = this.result;
 			var evidenceCard = this.addEvidence(new EvidenceModel({
 				width: 200,
 				height: 100,
 				title: 'Evidence',
 				color: 'info',
-				body: metric + "is "+flag 
+				body: metric + " is "+flag
 			}));
 
 			evidenceCard.position.x = 200;

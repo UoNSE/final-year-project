@@ -82,6 +82,7 @@ define(function(require) {
 
 			this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = this.add(new Chart({model: this.patient}));
+			this.chart.position.set(0,200);
 			this.chart.interactive = true;
 
 
@@ -130,7 +131,7 @@ define(function(require) {
 					})
 				}));
 				var scale = i - (n - 1) / 2;
-				button.position.set(scale * (offset + offset * 1.0), -300);
+				button.position.set(scale * (offset + offset * 1.1), -300);
 				var target = targets[i];
 				button.add(target);
 				button.on('click', this.onToggle.bind(this,target));

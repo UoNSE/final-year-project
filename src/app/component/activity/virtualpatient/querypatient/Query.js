@@ -143,7 +143,7 @@ define(function(require) {
 			}));
 			var yTarget = button.position.y;
 			target.position.y = yTarget - 310;
-			target.position.x = 100;
+			target.position.x = -200;
 			target.hide();
 			button.add(target);
 			button.on('click', this.onToggleButton.bind(this, target));
