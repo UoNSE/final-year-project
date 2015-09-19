@@ -15,6 +15,8 @@ define(function (require) {
     var Evidence = require('component/activity/issues/card/evidence/Evidence');
     var IssueGroup = require('component/activity/issues/card/issuegroup/IssueGroup');
 
+    var Help = require('component/help/help');
+
     return Component.extend({
 
         template: template,
@@ -52,6 +54,14 @@ define(function (require) {
             });
             this.menu.hide();
 
+           this.add(new Help({
+                model: {
+                    helpContent: 'Join pieces of evidence together to score points.<br>'+
+                        'Once you have enough points you can unlock issues in the '+
+                        '<button class="mtl-fab btn btn-material-blue btn-fab btn-raised mdi-action-shopping-cart" style="width: 25px;height: 25px;padding: 0px;"> </button> menu<br>'+
+                        'Once all issues are linked with the correct evidence you will be able to continue'
+                }
+            }));
         },
 
         /**

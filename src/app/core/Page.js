@@ -7,6 +7,7 @@ define(function (require) {
 
 	return Object2D.extend({
 		back: true,
+		help: true,
 		title: 'Page',
 
 		initialize: function (router, camera, urlParams) {
@@ -17,6 +18,7 @@ define(function (require) {
 			if (this.back) {
 				this.add(new BackButton(router));
 			}
+
 		},
 
 		onPageEnter: function () {
