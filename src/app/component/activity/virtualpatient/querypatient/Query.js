@@ -18,6 +18,7 @@ define(function(require) {
 		classes: 'queries',
 		styles: ['component/activity/virtualpatient/querypatient/Query.css',
 		// 'component/activity/virtualpatient/Panel.css'
+		// 'component/button/Button.css',
 		'component/activity/virtualpatient/VirtualPatient.css'
 		],
 
