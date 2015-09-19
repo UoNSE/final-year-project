@@ -78,23 +78,25 @@ define(function(require) {
 			// });
 
 
-			this.queries = this.add(new Query(this.testresults));
+			this.queries = this.add(new Query(this));
+
 			this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = this.add(new Chart({model: this.patient}));
 			this.chart.interactive = true;
-			this.hint = this.add(new Hint({
-				model: {text: 'Use the "Query" button </br>\
-				to ask the patient questions. \
-				Use the "Test" button to run blood and other tests on the \
-				patient.<br> \
-				Use the "Chart" button to see the patients details and vital \
-			 	signs.\
-				Click on parts of the body to reveal scans and other  \
-				information related to that body part.'}
-			}));
+			// this.hint = this.add(new Hint({
+			// 	model: {text: 'Use the "Query" button </br>\
+			// 	to ask the patient questions. \
+			// 	Use the "Test" button to run blood and other tests on the \
+			// 	patient.<br> \
+			// 	Use the "Chart" button to see the patients details and vital \
+			//  	signs.\
+			// 	Click on parts of the body to reveal scans and other  \
+			// 	information related to that body part.'}
+			// }));
 			// this.hint.scale.set(0, 0);
-
+			// this.buttons = {};
 			this.addButtons();
+			// this.add(this.buttons);
 		},
 
 
@@ -120,11 +122,12 @@ define(function(require) {
 					})
 				}));
 				var scale = i - (n - 1) / 2;
-				button.position.set(scale * (offset + offset * 1.0), -200);
+				button.position.set(scale * (offset + offset * 1.0), -300);
 				var target = targets[i];
 				button.add(target);
 				button.on('click', this.onToggle.bind(this,target));
 				button.interactive = true;
+				// this.buttons.push();
 
 			}.bind(this));
 		},
@@ -159,15 +162,15 @@ define(function(require) {
 			return this.add(Evidencefeed);
 		},
 
-		createButton: function (text, color) {
-			return new Button({
-				model: new ButtonModel({
-					text: text,
-					color: 'color',
-					styles: ["matl-fab", "btn", "btn-fab", "btn-raised"]
-				})
-			});
-		},
+		// createButton: function (text, color) {
+		// 	return new Button({
+		// 		model: new ButtonModel({
+		// 			text: text,
+		// 			color: 'color',
+		// 			styles: ['matl-fab', 'btn', 'btn-fab', 'btn-raised']
+		// 		})
+		// 	});
+		// },
 
 		// addEvidenceCard: function(flag){
 		// 	// console.log(flag);

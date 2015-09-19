@@ -24,6 +24,8 @@ define(function(require) {
 
 			this.testresults = testresults;
 			this.UrineAnalysisResult = this.testresults.get(1);
+			this.vproot = this.parent;
+			// console.log(this.vproot);
 			this.createTestMenu();
 
 		},

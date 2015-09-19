@@ -82,7 +82,7 @@ define(function(require) {
 				height: 100,
 				title: 'Evidence',
 				color: 'info',
-				body: metric + "is "+flag + "\n" + "</br>"
+				body: metric + "is "+flag 
 			}));
 
 			evidenceCard.position.x = 200;
