@@ -23,6 +23,10 @@ define(function(require) {
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Hint = require('component/hint/Hint');
 
+	var Evidence = require('component/activity/issues/card/evidence/Evidence');
+	var EvidenceCollection = require('collection/Evidence');
+	var EvidenceModel = require('model/Evidence');
+
 
 	// handlebars templates
 	var template = require('text!component/activity/virtualpatient/VirtualPatient.hbs');
@@ -65,6 +69,15 @@ define(function(require) {
 			this.patientbody.interactive = true;
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = this.add(new Tests(this.testresults));
+
+			// add this Tests TestResults children to the main component.
+			// Tests -> TestResult -> Evidence
+			// debugger;
+			// this.tests.children().foreach(child => {
+			// 	child.hide();
+			// });
+
+
 			this.queries = this.add(new Query(this.testresults));
 			this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = this.add(new Chart({model: this.patient}));
@@ -155,6 +168,26 @@ define(function(require) {
 				})
 			});
 		},
+
+		// addEvidenceCard: function(flag){
+		// 	// console.log(flag);
+		// 	var metric = "Glucose";
+		// 	var evidenceCard = this.addEvidence(new EvidenceModel({
+		// 		width: 200,
+		// 		height: 100,
+		// 		title: 'Evidence',
+		// 		color: 'info',
+		// 		body: metric + "is "+flag + "\n" + "</br>"
+		// 	}));
+		// 	// var yTarget = button.position.y;
+		// 	// target.position.y = yTarget;
+		// 	evidenceCard.position.x = 200;
+		// 	evidenceCard.hide();
+		// 	// button.add(target);
+		// 	// button.on('click', this.onToggleButton.bind(this, target));
+		// 	evidenceCard.parent.parent.parent.add(evidenceCard);
+		// 	// debugger;
+		// }
 
 	});
 

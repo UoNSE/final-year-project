@@ -25,7 +25,7 @@ define(function(require) {
 		},
 
 		createTestResults: function () {
-			this.add(new EvidenceCard());
+
 		},
 
 		_onHide: function(){
@@ -33,9 +33,17 @@ define(function(require) {
 		},
 		_addHighEvidenceCard: function(){
 			this._addEvidenceCard("high");
+
+			// this.vproot = this.parent.parent.parent;
+			// debugger;
+			// this.vproot.addEvidenceCard("high");
+			// this.dispatchEvent('createNewEvidenceCard', event);
+
+			// ._addEvidenceCard("high");
 		},
 		_addLowEvidenceCard: function(){
 			this._addEvidenceCard("low");
+			// this.parent.parent.parent._addEvidenceCard("low");
 		},
 
 		/**
@@ -45,7 +53,21 @@ define(function(require) {
 		 * @returns {*}
 		 */
 		addEvidence: function (model) {
-			var evidence = this.add(new Evidence({
+
+			// assume root is here
+			this.vproot = this.parent.parent.parent.parent;
+			// console.log(this.vproot);
+			// if a testresult is made in another child component
+			// (eg. in a bloodtest, we can get the root by checking the parent.
+
+			// while(this.vproot.el.className != 'component virtual-patient'){
+			while(this.vproot.cid != 'view7'){	// hack
+
+				this.vproot = this.vproot.parent;
+			}
+
+			// var evidence = this.add(new Evidence({
+			var evidence = this.vproot.add(new Evidence({
 				model: model
 			}));
 			// this.bindDraggableEvents(evidence);
@@ -55,19 +77,16 @@ define(function(require) {
 		_addEvidenceCard: function(flag){
 			// console.log(flag);
 			var metric = "Glucose";
-			var target = this.addEvidence(new EvidenceModel({
+			var evidenceCard = this.addEvidence(new EvidenceModel({
 				width: 200,
 				height: 100,
 				title: 'Evidence',
 				color: 'info',
 				body: metric + "is "+flag + "\n" + "</br>"
 			}));
-			// var yTarget = button.position.y;
-			target.position.y = yTarget;
-			target.position.x = 200;
-			target.hide();
-			// button.add(target);
-			// button.on('click', this.onToggleButton.bind(this, target));
+
+			evidenceCard.position.x = 200;
+
 		}
 
 	});
