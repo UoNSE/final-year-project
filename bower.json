@@ -24,7 +24,9 @@
     "jquery.transform.js": "louisremi/jquery.transform.js",
     "requirejs": "^2.1.17",
     "text": "requirejs/text#~2.0.14",
-    "tweenjs": "*"
+    "tweenjs": "*",
+    "annyang": "^1.0.1",
+    "juliusjs": "~0.0.0-pre"
   },
   "resolutions": {
     "handlebars": "^3.0.3",

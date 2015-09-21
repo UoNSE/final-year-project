@@ -4,6 +4,8 @@ define(function(require) {
 	//TODO: make cards draggable
 	//TODO: make hotspot from data
 
+	var Annyang = require('annyang');
+	var Julius = require('julius');
 
 	// models
 	var ButtonModel = require('model/Button');
@@ -46,6 +48,7 @@ define(function(require) {
 			},
 
 		initialize: function () {
+			// debugger;
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
@@ -69,6 +72,37 @@ define(function(require) {
 			this.patientbody.interactive = true;
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = this.add(new Tests(this.testresults));
+
+			// this.julius = new Julius();
+			// var sentence = "test";
+			// julius.onrecognition = function(sentence) {
+			//     console.log(sentence);
+			// };
+
+			// debugger;
+			// var annyang = new Annyang();
+
+			if (annyang) {
+			  // Let's define a command.
+			  var commands = {
+			    'test': function() {
+					console.log('heard "test"');
+					this.tests.toggle();
+				},
+				'query': function() {
+					console.log('heard "query"');
+					this.query.toggle();
+				},
+				'chart': function() {
+					console.log('heard "chart"');
+					this.chart.toggle();
+				}
+			  };
+			  annyang.addCommands(commands);
+			  annyang.start();
+			}
+
+
 
 			// add this Tests TestResults children to the main component.
 			// Tests -> TestResult -> Evidence
