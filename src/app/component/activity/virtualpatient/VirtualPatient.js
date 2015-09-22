@@ -4,6 +4,12 @@ define(function(require) {
 	//TODO: make cards draggable
 	//TODO: make hotspot from data
 
+	var Annyang = require('annyang');
+    // var meSpeak = require('mespeak');
+	// var Julius = require('julius');
+
+	// debugger;
+
 
 	// models
 	var ButtonModel = require('model/Button');
@@ -46,11 +52,16 @@ define(function(require) {
 			},
 
 		initialize: function () {
+			// debugger;
 			Component.prototype.initialize.apply(this, arguments);
 			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
 			this.visiblemenus = [];
 			this.collaborative = true;
+            // this.voiceintegrated = false;
+            this.voiceintegrated = true;
+			// this.annyang = new Annyang();
+            this.meSpeak = meSpeak;
 
 		},
 
@@ -70,12 +81,11 @@ define(function(require) {
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = this.add(new Tests(this.testresults));
 
-			// add this Tests TestResults children to the main component.
-			// Tests -> TestResult -> Evidence
-			// debugger;
-			// this.tests.children().foreach(child => {
-			// 	child.hide();
-			// });
+			// this.julius = new Julius();
+			// var sentence = "test";
+			// julius.onrecognition = function(sentence) {
+			//     console.log(sentence);
+			// };
 
 
 			this.queries = this.add(new Query(this));
@@ -102,10 +112,116 @@ define(function(require) {
 				information related to the area.'}
 			}));
 
+
+
 			// this.help.scale.set(0.5, 0.5);
 			// this.buttons = {};
 			this.addButtons();
-			// this.add(this.buttons);
+
+            if (this.voiceintegrated){
+                this.initTTS();
+    			this.addVoiceCommands();
+            }
+
+		},
+
+        initTTS: function(){
+            //    console.log("in init functon");
+               if(typeof this.meSpeak !== 'undefined'){
+                //    this.meSpeak.loadConfig('https://localhost:7576/lib/mespeak/mespeak_config.json');
+                   this.meSpeak.loadConfig('../lib/mespeak/mespeak_config.json');
+                   console.log("is mespeak config loaded: "+ this.meSpeak.isConfigLoaded());
+                   this.meSpeak.loadVoice("../lib/mespeak/voices/en/en.json");
+                   console.log("is mespeak voice loaded: "+ this.meSpeak.isVoiceLoaded());
+               }
+
+           },
+
+		addVoiceCommands: function(){
+
+			if (annyang) {
+
+			var that = this;
+
+			  this.commands = {
+
+				'test': function() {
+					// debugger;
+					console.log('heard "test"');
+					that.tests.toggle();
+				},
+				'query': function() {
+					console.log('heard "query"');
+					that.queries.toggle();
+				},
+				'chart': function() {
+					console.log('heard "chart"');
+					that.chart.toggle();
+				},
+				'what is the problem': function(){
+					if(that.queries.visible){
+						console.log('heard "what is the problem"');
+						var button = $('#query-btn1');
+                        debugger;
+                        button.trigger("click");
+                        this.meSpeak.speak(button);
+					}
+				},
+				'Where does it hurt': function(){
+					if(that.queries.visible){
+						console.log('heard "where does it hurt"');
+						$('#query-btn2').trigger("click");
+					}
+				},
+				'When did the pain begin': function(){
+					if(that.queries.visible){
+						console.log('heard "When did the pain begin"');
+						$('#query-btn3').trigger("click");
+					}
+				},
+				'Have you noticed any swelling': function(){
+					if(that.queries.visible){
+						console.log('heard "Have you noticed any swelling"');
+						$('#query-btn4').trigger("click");
+					}
+				},
+				'Has your skin been dry': function(){
+					if(that.queries.visible){
+						console.log('heard "Has your skin been dry"');
+						$('#query-btn5').trigger("click");
+					}
+				},
+				'How old are you': function(){
+					if(that.queries.visible){
+						console.log('heard "How old are you"');
+						$('#query-btn5').trigger("click");
+					}
+				},
+				'How have you been sleeping': function(){
+					if(that.queries.visible){
+						console.log('heard "Have you noticed any swelling"');
+						$('#query-btn7').trigger("click");
+					}
+				},
+				'do you have family here': function(){
+					if(that.queries.visible){
+						console.log('heard "do you have family"');
+						$('#query-btn8').trigger("click");
+					}
+				},
+				'urine': function(){
+					if(that.tests.visible){
+						console.log('heard "urine"');
+						$('#test-btn4').trigger("click");
+					}
+				},
+
+
+		  	};
+			  annyang.addCommands(this.commands);
+			  annyang.start({ autoRestart: true, continuous: true});
+			  console.log('annyang started');
+		  }
 		},
 
 
@@ -170,36 +286,6 @@ define(function(require) {
 			Evidencefeed.position.set(posX, posY);
 			return this.add(Evidencefeed);
 		},
-
-		// createButton: function (text, color) {
-		// 	return new Button({
-		// 		model: new ButtonModel({
-		// 			text: text,
-		// 			color: 'color',
-		// 			styles: ['matl-fab', 'btn', 'btn-fab', 'btn-raised']
-		// 		})
-		// 	});
-		// },
-
-		// addEvidenceCard: function(flag){
-		// 	// console.log(flag);
-		// 	var metric = "Glucose";
-		// 	var evidenceCard = this.addEvidence(new EvidenceModel({
-		// 		width: 200,
-		// 		height: 100,
-		// 		title: 'Evidence',
-		// 		color: 'info',
-		// 		body: metric + "is "+flag + "\n" + "</br>"
-		// 	}));
-		// 	// var yTarget = button.position.y;
-		// 	// target.position.y = yTarget;
-		// 	evidenceCard.position.x = 200;
-		// 	evidenceCard.hide();
-		// 	// button.add(target);
-		// 	// button.on('click', this.onToggleButton.bind(this, target));
-		// 	evidenceCard.parent.parent.parent.add(evidenceCard);
-		// 	// debugger;
-		// }
 
 	});
 

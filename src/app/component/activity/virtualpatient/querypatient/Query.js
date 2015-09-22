@@ -36,6 +36,7 @@ define(function(require) {
 			// this.testresults = testresults;
 			// this.UrineAnalysisResult = this.testresults.get(1);
 			this.vproot = vproot;
+			this.responses = []
 			// console.log(this.vproot);
 			this.createTestMenu();
 
@@ -63,50 +64,44 @@ define(function(require) {
 		},
 
 		createTestMenu: function(){
+			this.queries = [
+				"What is the problem?",
+				'Where does it hurt?',
+				'When did the pain begin?',
+				'Have you noticed any swelling?',
+				"Has your skin been dry?",
+				'How old are you?',
+				"How have you been sleeping?",
+				'Do you have family here?'
+		];
 
-			this.testMenu = [];
-			this.buttoncount = 1;
-			// for all menu items in collection, add menu item
+			this.responses = [
+				"I hurt my knee",
+				"On my knee",
+				"Yesterday",
+				"Yes. On my knee",
+				"No. Not really",
+				"Im 75",
+				"Not well. Iâ€™ve been waking up frequently.",
+				"Yes, Toi song voi con gai cua toi"
+			];
+
+
+			// for all menu items in collection,
+			// add menu item button with a label (the query)
+			// and give it a target (the respective response)
+			// and offset it relative to the previous button
+
 			this.yOffset = 50;
+			this.testMenu = [];
+			var menuSize = this.queries.length;
 
-			// for all menu items in JSON make a button with a label
-			// and give it a target
-			this.menuBtn1 = this.createMenuButton('What is the problem?')
-			// this.testMenu.push(this.menuBtn1);
-			this.addEvidenceTarget(this.menuBtn1, "I hurt my knee");
-			this.buttoncount++;
-			this.menuBtn2 = this.createMenuButton('Where does it hurt?');
-			// this.testMenu.push(this.menuBtn2);
-			this.addEvidenceTarget(this.menuBtn2, "On my knee");
-			this.buttoncount++;
-			this.menuBtn3 = this.createMenuButton('When did the pain begin?');
-			// this.testMenu.push(this.menuBtn3);
-			this.addEvidenceTarget(this.menuBtn3, "Yesterday");
-			this.buttoncount++;
-			this.menuBtn4 = this.createMenuButton('Have you noticed any swelling?');
-			// this.testMenu.push(this.menuBtn4);
-			this.addEvidenceTarget(this.menuBtn4, "On my knee");
-			this.buttoncount++;
-			this.menuBtn5 = this.createMenuButton('Has your skin been dry?');
-			// this.testMenu.push(this.menuBtn5);
-			this.addEvidenceTarget(this.menuBtn5, "No");
-			this.buttoncount++;
-			this.menuBtn6 = this.createMenuButton('How old are you?');
-			// this.testMenu.push(this.menuBtn6);
-			this.addEvidenceTarget(this.menuBtn6, "Im 75");
-			this.buttoncount++;
-			this.menuBtn7 = this.createMenuButton('How have you been sleeping?');
-			// this.testMenu.push(this.menuBtn7);
-			this.addEvidenceTarget(this.menuBtn7, "Not well. Iâ€™ve been waking up frequently.");
-			this.buttoncount++;
-			this.menuBtn8 = this.createMenuButton('Have you noticed any swelling?');
-			// this.testMenu.push(this.menuBtn8);
-			this.addEvidenceTarget(this.menuBtn8, "On my knee");
-			this.buttoncount++;
-			this.menuBtn9 = this.createMenuButton('Do you have family here?');
-			// this.testMenu.push(this.menuBtn9);
-			this.addEvidenceTarget(this.menuBtn9, "Yes, Toi song voi con gai cua toi");
-			this.buttoncount++;
+			for (var i=0; i < menuSize; i++){
+				this.menuBtn = this.createMenuButton(this.queries[i]);
+				// this.testMenu.push(this.menuBtn);
+				this.addEvidenceTarget(this.menuBtn, this.responses[i]);
+			}
+
 			// this.add(testMenu);
 			// debugger;
 
@@ -128,7 +123,7 @@ define(function(require) {
 			this._addEvidenceTarget();
 		},
 
-		addEvidenceTarget: function(button, dummy){
+		addEvidenceTarget: function(button, response){
 
 			// var dummy = "dummy";
 			// debugger;
@@ -138,7 +133,7 @@ define(function(require) {
 				height: 100,
 				title: 'Evidence',
 				color: 'info',
-				body: "Question: "+button.model.attributes.text + "\n" + "Response: "+ dummy
+				body: "Question: "+button.model.attributes.text + "\n" + "Response: "+ response
 				// body: dummy
 			}));
 			var yTarget = button.position.y;
@@ -146,6 +141,8 @@ define(function(require) {
 			target.position.x = -200;
 			target.hide();
 			button.add(target);
+			// var response = document.createElement("response");
+			// x.setAttribute("type", "hidden");
 			button.on('click', this.onToggleButton.bind(this, target));
 		},
 
