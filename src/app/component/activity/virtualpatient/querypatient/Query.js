@@ -33,11 +33,11 @@ define(function(require) {
 		initialize: function (vproot) {
 			Component.prototype.initialize.apply(this, arguments);
 
-			// this.testresults = testresults;
-			// this.UrineAnalysisResult = this.testresults.get(1);
 			this.vproot = vproot;
-			this.responses = []
-			// console.log(this.vproot);
+			this.queries = vproot.queries;
+			this.responses = vproot.responses;
+			// debugger;
+
 			this.createTestMenu();
 
 		},
@@ -64,28 +64,6 @@ define(function(require) {
 		},
 
 		createTestMenu: function(){
-			this.queries = [
-				"What is the problem?",
-				'Where does it hurt?',
-				'When did the pain begin?',
-				'Have you noticed any swelling?',
-				"Has your skin been dry?",
-				'How old are you?',
-				"How have you been sleeping?",
-				'Do you have family here?'
-		];
-
-			this.responses = [
-				"I hurt my knee",
-				"On my knee",
-				"Yesterday",
-				"Yes. On my knee",
-				"No. Not really",
-				"Im 75",
-				"Not well. Iâ€™ve been waking up frequently.",
-				"Yes, Toi song voi con gai cua toi"
-			];
-
 
 			// for all menu items in collection,
 			// add menu item button with a label (the query)
@@ -97,13 +75,12 @@ define(function(require) {
 			var menuSize = this.queries.length;
 
 			for (var i=0; i < menuSize; i++){
-				this.menuBtn = this.createMenuButton(this.queries[i]);
+				this.menuBtn = this.createMenuButton(this.queries[i].text);
 				// this.testMenu.push(this.menuBtn);
-				this.addEvidenceTarget(this.menuBtn, this.responses[i]);
+				this.addEvidenceTarget(this.menuBtn, this.responses[i].text);
 			}
 
 			// this.add(testMenu);
-			// debugger;
 
 		},
 
@@ -125,9 +102,6 @@ define(function(require) {
 
 		addEvidenceTarget: function(button, response){
 
-			// var dummy = "dummy";
-			// debugger;
-
 			var target = this.addEvidence(new EvidenceModel({
 				width: 200,
 				height: 100,
@@ -141,8 +115,6 @@ define(function(require) {
 			target.position.x = -200;
 			target.hide();
 			button.add(target);
-			// var response = document.createElement("response");
-			// x.setAttribute("type", "hidden");
 			button.on('click', this.onToggleButton.bind(this, target));
 		},
 

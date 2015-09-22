@@ -72,13 +72,15 @@ define(function(require) {
 		addComponents: function() {
 			this.testresults = this.patient.get('testresults');
 			this.hotspots = this.patient.get('hotspots');
+
 			this.patientbody = this.add(new PatientBody());
 			this.patientbody.interactive = true;
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = this.add(new Tests(this.testresults));
 
-            // this.queries = this.patient.get('queries');
-			this.queries = this.add(new Query(this));
+            this.queries = this.patient.get('queries');
+            this.responses = this.patient.get('responses');
+			this.querymenu = this.add(new Query(this));
 
 			this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = this.add(new Chart({model: this.patient}));
@@ -142,59 +144,58 @@ define(function(require) {
 				},
 				'query': function() {
 					console.log('heard "query"');
-					that.queries.toggle();
+					that.querymenu.toggle();
 				},
 				'chart': function() {
 					console.log('heard "chart"');
 					that.chart.toggle();
 				},
 				'what is the problem': function(){
-					if(that.queries.visible){
+					if(that.querymenu.visible){
 						console.log('heard "what is the problem"');
 						var button = $('#query-btn1');
-                        debugger;
                         button.trigger("click");
-                        this.meSpeak.speak(button);
+                        this.meSpeak.speak(this.responses[0]);
 					}
 				},
 				'Where does it hurt': function(){
-					if(that.queries.visible){
+					if(that.querymenu.visible){
 						console.log('heard "where does it hurt"');
 						$('#query-btn2').trigger("click");
 					}
 				},
 				'When did the pain begin': function(){
-					if(that.queries.visible){
+					if(that.querymenu.visible){
 						console.log('heard "When did the pain begin"');
 						$('#query-btn3').trigger("click");
 					}
 				},
 				'Have you noticed any swelling': function(){
-					if(that.queries.visible){
+					if(that.querymenu.visible){
 						console.log('heard "Have you noticed any swelling"');
 						$('#query-btn4').trigger("click");
 					}
 				},
 				'Has your skin been dry': function(){
-					if(that.queries.visible){
+					if(that.querymenu.visible){
 						console.log('heard "Has your skin been dry"');
 						$('#query-btn5').trigger("click");
 					}
 				},
 				'How old are you': function(){
-					if(that.queries.visible){
+					if(that.querymenu.visible){
 						console.log('heard "How old are you"');
 						$('#query-btn5').trigger("click");
 					}
 				},
 				'How have you been sleeping': function(){
-					if(that.queries.visible){
+					if(that.querymenu.visible){
 						console.log('heard "Have you noticed any swelling"');
 						$('#query-btn7').trigger("click");
 					}
 				},
 				'do you have family here': function(){
-					if(that.queries.visible){
+					if(that.querymenu.visible){
 						console.log('heard "do you have family"');
 						$('#query-btn8').trigger("click");
 					}
@@ -206,7 +207,6 @@ define(function(require) {
 					}
 				},
 
-
 		  	};
 			  annyang.addCommands(this.commands);
 			  annyang.start({ autoRestart: true, continuous: true});
@@ -217,14 +217,14 @@ define(function(require) {
 
 		_hideElements: function() {
 			this.tests.hide();
-			this.queries.hide();
+			this.querymenu.hide();
 			this.chart.hide();
 
 		},
 
 		addButtons: function () {
 			var texts = ['Query', 'Test', 'Chart'];
-			var targets = [this.queries, this.tests, this.chart];
+			var targets = [this.querymenu, this.tests, this.chart];
 			var n = texts.length;
 			var offset = 100;
 
@@ -250,12 +250,12 @@ define(function(require) {
 		onToggle: function (toggableTarget) {
 
 			if(this.collaborative != true){
-				if(toggableTarget == this.queries){
+				if(toggableTarget == this.querymenu){
 					this.tests.hide();
 					this.chart.hide();
 				}
 				else if(toggableTarget == this.tests){
-					this.queries.hide();
+					this.querymenu.hide();
 					this.chart.hide();
 				}
 				else if(toggableTarget== this.chart){
