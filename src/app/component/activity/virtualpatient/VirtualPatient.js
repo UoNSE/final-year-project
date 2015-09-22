@@ -5,9 +5,9 @@ define(function(require) {
 	//TODO: make hotspot from data
 
 	var Annyang = require('annyang');
-	// var annyang = new Annyang();
+    // var meSpeak = require('mespeak');
 	// var Julius = require('julius');
-	// var julius = new Julius();
+
 	// debugger;
 
 
@@ -59,6 +59,7 @@ define(function(require) {
 			this.visiblemenus = [];
 			this.collaborative = true;
 			// this.annyang = new Annyang();
+            this.meSpeak = meSpeak;
 
 		},
 
@@ -83,19 +84,6 @@ define(function(require) {
 			// julius.onrecognition = function(sentence) {
 			//     console.log(sentence);
 			// };
-
-			// debugger;
-
-
-
-
-
-			// add this Tests TestResults children to the main component.
-			// Tests -> TestResult -> Evidence
-			// debugger;
-			// this.tests.children().foreach(child => {
-			// 	child.hide();
-			// });
 
 
 			this.queries = this.add(new Query(this));
@@ -127,19 +115,28 @@ define(function(require) {
 			// this.help.scale.set(0.5, 0.5);
 			// this.buttons = {};
 			this.addButtons();
-
+            this.initTTS();
 			this.addVoiceCommands();
 
 		},
+
+        initTTS: function(){
+            //    console.log("in init functon");
+               if(typeof this.meSpeak !== 'undefined'){
+                //    this.meSpeak.loadConfig('https://localhost:7576/lib/mespeak/mespeak_config.json');
+                   this.meSpeak.loadConfig('../lib/mespeak/mespeak_config.json');
+                   console.log("is mespeak config loaded: "+ this.meSpeak.isConfigLoaded());
+                   this.meSpeak.loadVoice("../lib/mespeak/voices/en/en.json");
+                   console.log("is mespeak voice loaded: "+ this.meSpeak.isVoiceLoaded());
+               }
+
+           },
 
 		addVoiceCommands: function(){
 
 			if (annyang) {
 
 			var that = this;
-			var test_visible = false;
-			var query_visible = false;
-			var chart_visible = false;
 
 			  this.commands = {
 
@@ -147,22 +144,20 @@ define(function(require) {
 					// debugger;
 					console.log('heard "test"');
 					that.tests.toggle();
-					test_visible = true;
 				},
 				'query': function() {
 					console.log('heard "query"');
 					that.queries.toggle();
-					query_visible = true;
 				},
 				'chart': function() {
 					console.log('heard "chart"');
 					that.chart.toggle();
-					chart_visible = true;
 				},
 				'what is the problem': function(){
 					if(that.queries.visible){
 						console.log('heard "what is the problem"');
 						$('#query-btn1').trigger("click");
+                        this.meSpeak.speak('hello');
 					}
 				},
 				'Where does it hurt': function(){
