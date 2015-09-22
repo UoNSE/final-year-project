@@ -176,6 +176,26 @@ define(function (require) {
 
 		show: function () {
 			this.visible = true;
+		},
+
+		shake: function (duration, amplitude, bounces) {
+			// https://www.desmos.com/calculator/vaxe6wsqg6
+
+			var scale = 7; // approx -ln(1E-3)
+			if (duration === undefined) {
+				duration = 1000;
+			}
+			if (amplitude === undefined) {
+				amplitude = 10;
+			}
+			if (bounces === undefined) {
+				bounces = 20;
+			}
+			new TWEEN.Tween({obj: this, last: 0}).to({}, duration).onUpdate(function (t) {
+				var y = amplitude * Math.sin(bounces * Math.TAU * t) * Math.exp(-scale * t);
+				this.obj.position.x += y - this.last;
+				this.last = y;
+			}).start();
 		}
 	});
 
