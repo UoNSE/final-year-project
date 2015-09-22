@@ -3,6 +3,8 @@ define(function (require) {
 
     var Component = require('core/Component');
     var template = require('text!component/activity/issues/Issues.hbs');
+    var TWEEN = require('tweenjs');
+    var Vector2 = require('math/Vector2');
 
     var IssuesCollection = require('collection/Issues');
     var EvidenceCollection = require('collection/Evidence');
@@ -17,6 +19,7 @@ define(function (require) {
     var IssueGroup = require('component/activity/issues/card/issuegroup/IssueGroup');
     var ActionButton = require('component/actionbutton/ActionButton');
     var Score = require('component/activity/issues/score/Score');
+    var Panel = require('component/panel/Panel');
 
     var Help = require('component/help/help');
 
@@ -74,19 +77,25 @@ define(function (require) {
             }));
             //add the topic unlock button
             this.add(new ActionButton({
+                //detached:true,
                 model: new ActionButtonModel({
                     icon: 'action-shopping-cart',
                     color: 'blue',
                     href: 'cases/' + params.case_id + '/activity/issues/unlock',
-                    //styles: {
-                    //    width:100,
-                    //    height:100,
-                    //    'font-size':40
-                    //}
+                    classes: 'topic-unlock'
                 })
-            })).position.set(-400,-300);//TODO:position in relation to bottom left of 'viewport'
+            })).detached = true;
 
             this.scoreContainer = this.add(new Score());
+
+            this.scoreTrigger = -6;
+            this.scoreHint = this.add(new Panel({
+                model: {
+                    body:'You now have enough credit to purchase issues!',
+                    width:200
+                }
+            }));
+            this.scoreHint.hide();
         },
 
         /**
@@ -239,7 +248,10 @@ define(function (require) {
 
         updateScore: function(){
             this.scoreContainer.setScore(this.gameCredit);
-            //$(".score-display").text("CREDIT: " + this.gameCredit);
+
+            if ( this.gameCredit >= this.scoreTrigger ){
+                this.triggerScoreHint();
+            }
         },
 
         onDelete: function (event) {
@@ -417,6 +429,34 @@ define(function (require) {
             }
 
             return count;
+        },
+
+
+        triggerScoreHint: function() {
+            this.scoreHint.position.copy(this.scoreContainer.position);
+            //this.scoreHint.scale.copy(Vector2.zeros());
+
+            this.scoreHint.show();
+
+            var animationTime = 900;
+            var originalPos = this.scoreContainer.position;
+            var newPos = originalPos.clone().add(new Vector2(0,50));
+
+            var tween = new TWEEN.Tween(this.scoreHint.position)
+                .to(newPos,animationTime)
+                .easing(TWEEN.Easing.Elastic.Out);
+
+            var tweenBack = new TWEEN.Tween(this.scoreHint.position)
+                .to(originalPos,animationTime)
+                .delay(3000)
+                .easing(TWEEN.Easing.Elastic.In)
+                .onComplete(function() {
+                    this.scoreHint.hide();
+                }.bind(this));
+
+            tween.chain(tweenBack);
+
+            tween.start();
         },
 
         resolveType: function (view) {

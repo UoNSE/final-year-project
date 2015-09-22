@@ -12,6 +12,7 @@ define(function (require) {
     var Issue = require('component/activity/issues/topic/issue/Issue');
     var Score = require('component/activity/issues/score/Score');
     var ActionButton = require('component/actionbutton/ActionButton');
+    var Help = require('component/help/help');
 
     var ActionButtonModel = require('model/ActionButton');
 
@@ -48,6 +49,14 @@ define(function (require) {
             this.scoreContainer = this.add(new Score({title:'Credit'}));
 
             this.updateCredit();
+
+            this.add(new Help({
+                model: {
+                    helpContent: 'Click topics to explore issues.<br>'+
+                    'Click issues to purchases them. Once purchased the cost will be<br/>' +
+                    'deducted from your credit tally and the issue will appear red.'
+                }
+            }));
         },
 
         onLoad: function() {
