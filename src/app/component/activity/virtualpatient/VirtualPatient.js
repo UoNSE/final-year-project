@@ -58,6 +58,8 @@ define(function(require) {
 			this.collection.fetch();
 			this.visiblemenus = [];
 			this.collaborative = true;
+            // this.voiceintegrated = false;
+            this.voiceintegrated = true;
 			// this.annyang = new Annyang();
             this.meSpeak = meSpeak;
 
@@ -115,8 +117,11 @@ define(function(require) {
 			// this.help.scale.set(0.5, 0.5);
 			// this.buttons = {};
 			this.addButtons();
-            this.initTTS();
-			this.addVoiceCommands();
+
+            if (this.voiceintegrated){
+                this.initTTS();
+    			this.addVoiceCommands();
+            }
 
 		},
 
@@ -281,36 +286,6 @@ define(function(require) {
 			Evidencefeed.position.set(posX, posY);
 			return this.add(Evidencefeed);
 		},
-
-		// createButton: function (text, color) {
-		// 	return new Button({
-		// 		model: new ButtonModel({
-		// 			text: text,
-		// 			color: 'color',
-		// 			styles: ['matl-fab', 'btn', 'btn-fab', 'btn-raised']
-		// 		})
-		// 	});
-		// },
-
-		// addEvidenceCard: function(flag){
-		// 	// console.log(flag);
-		// 	var metric = "Glucose";
-		// 	var evidenceCard = this.addEvidence(new EvidenceModel({
-		// 		width: 200,
-		// 		height: 100,
-		// 		title: 'Evidence',
-		// 		color: 'info',
-		// 		body: metric + "is "+flag + "\n" + "</br>"
-		// 	}));
-		// 	// var yTarget = button.position.y;
-		// 	// target.position.y = yTarget;
-		// 	evidenceCard.position.x = 200;
-		// 	evidenceCard.hide();
-		// 	// button.add(target);
-		// 	// button.on('click', this.onToggleButton.bind(this, target));
-		// 	evidenceCard.parent.parent.parent.add(evidenceCard);
-		// 	// debugger;
-		// }
 
 	});
 
