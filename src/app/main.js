@@ -38,7 +38,8 @@ define(function (require) {
 					'cases/:case_id/overview': 'case/Overview',
 					'cases/:case_id/information': 'case/information/Information',
 					'cases/:case_id/activity/virtual-patient': 'activity/VirtualPatient',
-					'cases/:case_id/activity/issues': 'activity/Issues'
+					'cases/:case_id/activity/issues': 'activity/Issues',
+                    'cases/:case_id/activity/goals': 'activity/Goals'
 				},
 				sitemap: {
 					'Start': {
@@ -47,7 +48,8 @@ define(function (require) {
 								'case/information/Information': {
 									'activity/VirtualPatient': null
 								},
-								'activity/Issues': null
+								'activity/Issues': null,
+                                'activity/Goals': null
 							}
 						}
 					}
