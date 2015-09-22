@@ -26,6 +26,7 @@ define(function(require) {
 			this.UrineAnalysisResult = this.testresults.get(1);
 			this.vproot = this.parent;
 			// console.log(this.vproot);
+
 			this.createTestMenu();
 
 		},
@@ -34,7 +35,8 @@ define(function(require) {
 			return new Button({
 				model: new ButtonModel({
 					text: text,
-					color: color
+					color: color,
+					id: 'test-btn'+this.testbuttoncount
 				})
 			});
 		},
@@ -49,7 +51,7 @@ define(function(require) {
 		},
 
 		createTestMenu: function(){
-
+			this.testbuttoncount = 1;
 			// for all menu items in collection, add menu item
 			this.yOffset = 50;
 			this.createMenuButton('Blood Test');
@@ -89,7 +91,7 @@ define(function(require) {
 
 			button.add(target);
 			button.on('click', this.onToggleTarget.bind(this, target));
-
+			this.testbuttoncount++;
 			return this.add(button);
 		}
 

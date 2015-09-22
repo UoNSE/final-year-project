@@ -135,24 +135,86 @@ define(function(require) {
 		addVoiceCommands: function(){
 
 			if (annyang) {
-			  // Let's define a command.
-			  var that = this;
-			//   debugger;
+
+			var that = this;
+			var test_visible = false;
+			var query_visible = false;
+			var chart_visible = false;
 
 			  this.commands = {
+
 				'test': function() {
 					// debugger;
 					console.log('heard "test"');
 					that.tests.toggle();
+					test_visible = true;
 				},
 				'query': function() {
 					console.log('heard "query"');
 					that.queries.toggle();
+					query_visible = true;
 				},
 				'chart': function() {
 					console.log('heard "chart"');
 					that.chart.toggle();
-				}
+					chart_visible = true;
+				},
+				'what is the problem': function(){
+					if(that.queries.visible){
+						console.log('heard "what is the problem"');
+						$('#query-btn1').trigger("click");
+					}
+				},
+				'Where does it hurt': function(){
+					if(that.queries.visible){
+						console.log('heard "where does it hurt"');
+						$('#query-btn2').trigger("click");
+					}
+				},
+				'When did the pain begin': function(){
+					if(that.queries.visible){
+						console.log('heard "When did the pain begin"');
+						$('#query-btn3').trigger("click");
+					}
+				},
+				'Have you noticed any swelling': function(){
+					if(that.queries.visible){
+						console.log('heard "Have you noticed any swelling"');
+						$('#query-btn4').trigger("click");
+					}
+				},
+				'Has your skin been dry': function(){
+					if(that.queries.visible){
+						console.log('heard "Has your skin been dry"');
+						$('#query-btn5').trigger("click");
+					}
+				},
+				'How old are you': function(){
+					if(that.queries.visible){
+						console.log('heard "How old are you"');
+						$('#query-btn5').trigger("click");
+					}
+				},
+				'How have you been sleeping': function(){
+					if(that.queries.visible){
+						console.log('heard "Have you noticed any swelling"');
+						$('#query-btn7').trigger("click");
+					}
+				},
+				'do you have family here': function(){
+					if(that.queries.visible){
+						console.log('heard "do you have family"');
+						$('#query-btn8').trigger("click");
+					}
+				},
+				'urine': function(){
+					if(that.tests.visible){
+						console.log('heard "urine"');
+						$('#test-btn4').trigger("click");
+					}
+				},
+
+
 		  	};
 			  annyang.addCommands(this.commands);
 			  annyang.start({ autoRestart: true, continuous: true});

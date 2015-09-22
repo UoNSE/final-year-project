@@ -99,13 +99,11 @@ define(function(require) {
 			// this.testMenu.push(this.menuBtn7);
 			this.addEvidenceTarget(this.menuBtn7, "Not well. Iâ€™ve been waking up frequently.");
 			this.buttoncount++;
-			this.menuBtn8 = this.createMenuButton('Have you noticed any swelling?');
-			// this.testMenu.push(this.menuBtn8);
-			this.addEvidenceTarget(this.menuBtn8, "On my knee");
+
 			this.buttoncount++;
-			this.menuBtn9 = this.createMenuButton('Do you have family here?');
+			this.menuBtn8 = this.createMenuButton('Do you have family here?');
 			// this.testMenu.push(this.menuBtn9);
-			this.addEvidenceTarget(this.menuBtn9, "Yes, Toi song voi con gai cua toi");
+			this.addEvidenceTarget(this.menuBtn8, "Yes, Toi song voi con gai cua toi");
 			this.buttoncount++;
 			// this.add(testMenu);
 			// debugger;
