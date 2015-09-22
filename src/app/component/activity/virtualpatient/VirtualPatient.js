@@ -6,10 +6,6 @@ define(function(require) {
 
 	var Annyang = require('annyang');
     // var meSpeak = require('mespeak');
-	// var Julius = require('julius');
-
-	// debugger;
-
 
 	// models
 	var ButtonModel = require('model/Button');
@@ -81,13 +77,7 @@ define(function(require) {
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = this.add(new Tests(this.testresults));
 
-			// this.julius = new Julius();
-			// var sentence = "test";
-			// julius.onrecognition = function(sentence) {
-			//     console.log(sentence);
-			// };
-
-
+            // this.queries = this.patient.get('queries');
 			this.queries = this.add(new Query(this));
 
 			this.EvidenceFeed = this.addEvidenceFeed();
