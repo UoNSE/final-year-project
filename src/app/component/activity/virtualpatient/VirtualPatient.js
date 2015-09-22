@@ -156,8 +156,10 @@ define(function(require) {
 				'what is the problem': function(){
 					if(that.queries.visible){
 						console.log('heard "what is the problem"');
-						$('#query-btn1').trigger("click");
-                        this.meSpeak.speak('hello');
+						var button = $('#query-btn1');
+                        debugger;
+                        button.trigger("click");
+                        this.meSpeak.speak(button);
 					}
 				},
 				'Where does it hurt': function(){
