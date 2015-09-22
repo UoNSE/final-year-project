@@ -5,7 +5,11 @@ define(function(require) {
 	//TODO: make hotspot from data
 
 	var Annyang = require('annyang');
-	var Julius = require('julius');
+	// var annyang = new Annyang();
+	// var Julius = require('julius');
+	// var julius = new Julius();
+	// debugger;
+
 
 	// models
 	var ButtonModel = require('model/Button');
@@ -54,6 +58,7 @@ define(function(require) {
 			this.collection.fetch();
 			this.visiblemenus = [];
 			this.collaborative = true;
+			// this.annyang = new Annyang();
 
 		},
 
@@ -80,27 +85,8 @@ define(function(require) {
 			// };
 
 			// debugger;
-			// var annyang = new Annyang();
 
-			if (annyang) {
-			  // Let's define a command.
-			  var commands = {
-			    'test': function() {
-					console.log('heard "test"');
-					this.tests.toggle();
-				},
-				'query': function() {
-					console.log('heard "query"');
-					this.query.toggle();
-				},
-				'chart': function() {
-					console.log('heard "chart"');
-					this.chart.toggle();
-				}
-			  };
-			  annyang.addCommands(commands);
-			  annyang.start();
-			}
+
 
 
 
@@ -136,10 +122,42 @@ define(function(require) {
 				information related to the area.'}
 			}));
 
+
+
 			// this.help.scale.set(0.5, 0.5);
 			// this.buttons = {};
 			this.addButtons();
-			// this.add(this.buttons);
+
+			this.addVoiceCommands();
+
+		},
+
+		addVoiceCommands: function(){
+
+			if (annyang) {
+			  // Let's define a command.
+			  var that = this;
+			//   debugger;
+
+			  this.commands = {
+				'test': function() {
+					// debugger;
+					console.log('heard "test"');
+					that.tests.toggle();
+				},
+				'query': function() {
+					console.log('heard "query"');
+					that.queries.toggle();
+				},
+				'chart': function() {
+					console.log('heard "chart"');
+					that.chart.toggle();
+				}
+		  	};
+			  annyang.addCommands(this.commands);
+			  annyang.start({ autoRestart: true, continuous: true});
+			  console.log('annyang started');
+		  }
 		},
 
 
