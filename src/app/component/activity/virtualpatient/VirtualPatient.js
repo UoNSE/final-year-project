@@ -25,6 +25,9 @@ define(function(require) {
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Help = require('component/help/Help');
 
+	var VoiceHud = require('component/voicehud/Voicehud');
+
+
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 	var EvidenceCollection = require('collection/Evidence');
 	var EvidenceModel = require('model/Evidence');
@@ -87,6 +90,8 @@ define(function(require) {
 			this.chart.position.set(0,200);
 			this.chart.interactive = true;
 
+			this.voicehud = this.add(new VoiceHud());
+			this.voicehud.position.set(100,0);
 
 
 			this.help = this.add(new Help({
