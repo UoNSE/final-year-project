@@ -5,7 +5,7 @@ define(function(require) {
 	var template = require('text!component/activity/virtualpatient/tests/bloodtest/BloodTest.hbs');
 	var Button = require('component/button/Button');
 	var ButtonModel = require('model/Button');
-	var TestResult = require('component/activity/virtualpatient/tests/testresult/TestResult');
+	var EmptyTestResult = require('component/activity/virtualpatient/tests/emptytestresult/TestResult');
 	var HormonePanelResult = require('component/activity/virtualpatient/tests/hormonepanel/HormonePanelResult');
 
 	return Component.extend({
@@ -63,7 +63,7 @@ define(function(require) {
 				target = new HormonePanelResult({model:this.hormonepanelresult});
 			}
 			else{
-				target = new TestResult();
+				target = new EmptyTestResult();
 			}
 			// console.log(label);
 
