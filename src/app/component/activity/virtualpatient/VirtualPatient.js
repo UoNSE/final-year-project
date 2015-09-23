@@ -28,7 +28,9 @@ define(function(require) {
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 	var EvidenceCollection = require('collection/Evidence');
 	var EvidenceModel = require('model/Evidence');
+	// var Delete = require('component/activity/issues/menu/actionbutton/delete/Delete');
 
+	var Menu = require('component/activity/issues/menu/Menu');
 
 	// handlebars templates
 	var template = require('text!component/activity/virtualpatient/VirtualPatient.hbs');
@@ -88,27 +90,39 @@ define(function(require) {
 			this.chart.interactive = true;
 
 
-
 			this.help = this.add(new Help({
 				model: {
-				helpContent: 'use the <strong>"Query"</strong> button </br>\
-				to ask the patient questions. </br>\
-				use the <strong>"Test"</strong> button </br>\
+				helpContent: 'Your goal is to collect evidence about the \
+				patients condition.   </br> </br>\
+				Use the <strong>"Query"</strong> button </br>\
+				to ask the patient questions. </br> </br>\
+				Use the <strong>"Test"</strong> button </br>\
 				to run blood/urine/saliva </br>\
-				tests on the patint.</br>\
+				tests on the patint.</br> </br>\
 				Use the <strong>"Chart"</strong> button </br>\
 				to see the patients details </br>\
-				and vital signs.</br>\
-				click on parts of the body </br>\
+				and vital signs.</br></br>\
+				<strong>Inspect</strong> areas of the body </br>\
 				to reveal scans and other  </br>\
-				information related to the area.'}
+				information related to that area. </br></br>\
+				If you no longer need an evidence card, move it to the trash can.'}
 			}));
+			this.help.interactive = true;
 
+			this.menu = this.add(new Menu());
+			this.menu.on({
+				delete: this.onDelete.bind(this),
+			});
+			this.menu.split.hide(); // hack. not sure know how to destroy.
+			// this.menu.delete.detached = true;
+			this.menu.delete.position.set(-370, -300);
+			this.menu.delete.interactive = true;
+			// this.menu.interactive = true;
 
 
 			// this.help.scale.set(0.5, 0.5);
 			// this.buttons = {};
-			this.addButtons();
+			this.addVPButtons();
 
             if (this.voiceintegrated){
                 this.initTTS();
@@ -222,7 +236,7 @@ define(function(require) {
 
 		},
 
-		addButtons: function () {
+		addVPButtons: function () {
 			var texts = ['Query', 'Test', 'Chart'];
 			var targets = [this.querymenu, this.tests, this.chart];
 			var n = texts.length;
@@ -245,6 +259,10 @@ define(function(require) {
 				// this.buttons.push();
 
 			}.bind(this));
+		},
+
+		onDelete: function (event) {
+			event.draggable.remove();
 		},
 
 		onToggle: function (toggableTarget) {
