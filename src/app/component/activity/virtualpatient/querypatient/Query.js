@@ -69,7 +69,7 @@ define(function(require) {
 			// add menu item button with a label (the query)
 			// and give it a target (the respective response)
 			// and offset it relative to the previous button
-
+			this.buttoncount = 1;
 			this.yOffset = 50;
 			this.testMenu = [];
 			var menuSize = this.queries.length;
@@ -78,6 +78,7 @@ define(function(require) {
 				this.menuBtn = this.createMenuButton(this.queries[i].text);
 				// this.testMenu.push(this.menuBtn);
 				this.addEvidenceTarget(this.menuBtn, this.responses[i].text);
+				this.buttoncount++;
 			}
 
 			// this.add(testMenu);

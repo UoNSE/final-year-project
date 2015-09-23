@@ -125,12 +125,12 @@ define(function(require) {
                    console.log("is mespeak config loaded: "+ this.meSpeak.isConfigLoaded());
                    this.meSpeak.loadVoice("../lib/mespeak/voices/en/en.json");
                    console.log("is mespeak voice loaded: "+ this.meSpeak.isVoiceLoaded());
+				   this.meSpeak.speak("hello");
                }
 
            },
 
 		addVoiceCommands: function(){
-
 			if (annyang) {
 
 			var that = this;
@@ -155,50 +155,57 @@ define(function(require) {
 						console.log('heard "what is the problem"');
 						var button = $('#query-btn1');
                         button.trigger("click");
-                        this.meSpeak.speak(this.responses[0]);
+                        that.meSpeak.speak(that.responses[0].text);
 					}
 				},
 				'Where does it hurt': function(){
 					if(that.querymenu.visible){
 						console.log('heard "where does it hurt"');
-						$('#query-btn2').trigger("click");
-					}
+						var button = $('#query-btn2');
+						button.trigger("click");
+						that.meSpeak.speak(that.responses[1].text);					}
 				},
 				'When did the pain begin': function(){
 					if(that.querymenu.visible){
 						console.log('heard "When did the pain begin"');
-						$('#query-btn3').trigger("click");
-					}
+						var button = $('#query-btn3');
+						button.trigger("click");
+						that.meSpeak.speak(that.responses[2].text);					}
 				},
 				'Have you noticed any swelling': function(){
 					if(that.querymenu.visible){
 						console.log('heard "Have you noticed any swelling"');
-						$('#query-btn4').trigger("click");
-					}
+						var button = $('#query-btn4');
+						button.trigger("click");
+						that.meSpeak.speak(that.responses[3].text);					}
 				},
 				'Has your skin been dry': function(){
 					if(that.querymenu.visible){
 						console.log('heard "Has your skin been dry"');
-						$('#query-btn5').trigger("click");
-					}
+						var button = $('#query-btn5');
+						button.trigger("click");
+						that.meSpeak.speak(that.responses[4].text);					}
 				},
 				'How old are you': function(){
 					if(that.querymenu.visible){
 						console.log('heard "How old are you"');
-						$('#query-btn5').trigger("click");
-					}
+						var button = $('#query-btn6');
+						button.trigger("click");
+						that.meSpeak.speak(that.responses[5].text);					}
 				},
 				'How have you been sleeping': function(){
 					if(that.querymenu.visible){
 						console.log('heard "Have you noticed any swelling"');
-						$('#query-btn7').trigger("click");
-					}
+						var button = $('#query-btn7');
+						button.trigger("click");
+						that.meSpeak.speak(that.responses[6].text);					}
 				},
 				'do you have family here': function(){
 					if(that.querymenu.visible){
 						console.log('heard "do you have family"');
-						$('#query-btn8').trigger("click");
-					}
+						var button = $('#query-btn8');
+						button.trigger("click");
+						that.meSpeak.speak(that.responses[7].text);					}
 				},
 				'urine': function(){
 					if(that.tests.visible){
