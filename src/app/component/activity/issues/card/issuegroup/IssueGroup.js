@@ -13,7 +13,7 @@ define(function (require) {
 
 		initialize: function () {
 			Card.prototype.initialize.apply(this, arguments);
-			this.setDroppable({types: [Issue, Evidence]});
+			this.setDroppable({types: [Card]});
 		}
 
 	});
