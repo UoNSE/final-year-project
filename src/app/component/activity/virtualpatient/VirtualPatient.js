@@ -55,7 +55,7 @@ define(function(require) {
 			this.visiblemenus = [];
 			this.collaborative = true;
             // this.voiceintegrated = false;
-            this.voiceintegrated = true;
+            this.voiceintegrated = false;
 			// this.annyang = new Annyang();
             this.meSpeak = meSpeak;
 
