@@ -311,18 +311,18 @@
           "eryth": "30",
           "ph": "40",
           "ts": "50"
-      },
-      {
-        "id": 2,
-        "name": "hormonePanel",
-        "estrone": "100",
-        "estradiol": "30",
-        "estriol": "120",
-        "testosterone": "20",
-        "progesterone": "30",
-        "DHEA": "40",
-        "cortisol": "50"
-    },
+        },
+        {
+          "id": 2,
+          "name": "hormonePanel",
+          "estrone": "100",
+          "estradiol": "30",
+          "estriol": "120",
+          "testosterone": "20",
+          "progesterone": "30",
+          "DHEA": "40",
+          "cortisol": "50"
+        }
       ]
     }
   ],

@@ -15,8 +15,8 @@ var options = {
 };
 
 var app = express();
-// var server = http.Server(app);
-var server = https.createServer(options, app);
+var server = http.Server(app);
+// var server = https.createServer(options, app);
 
 // port for http server
 app.set('port', 7575);
