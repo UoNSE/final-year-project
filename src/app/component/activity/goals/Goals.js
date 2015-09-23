@@ -10,10 +10,14 @@ define(function (require) {
     let GoalCard = require('component/activity/goals/card/goal/GoalCard');
     let IssueCard = require('component/activity/goals/card/issue/IssueCard');
     let IssueGoalMatch = require('component/activity/goals/match/IssueGoalMatch');
+    let ActionButton = require('component/actionbutton/ActionButton');
 
     // help
     var Help = require('component/activity/goals/help/Help');
     var HelpText = require('text!component/activity/goals/help/helpContent.hbs');
+
+    // hint
+    var Hint = require('component/hint/Hint');
 
     // models
     var HelpModel = require('model/HelpModel');
@@ -44,8 +48,12 @@ define(function (require) {
         height: 100,
         width: 300,
 
-        help: null,
-
+        /**
+         * The help component manages the instructions.
+         */
+        help: {},
+        hiddenActionsActivityLink: {},
+        hiddenActionsHint: {},
         matches: [],
 
         collection: {
@@ -54,7 +62,11 @@ define(function (require) {
             matches: new MatchCollection()
         },
 
-        initialize: function () {
+        /**
+         *
+         * @param caseID the id of the selected case, obtained from the URL params.
+         */
+        initialize: function (caseID) {
             // invoke super(arguments)
             Component.prototype.initialize.apply(this, arguments);
 
@@ -79,6 +91,30 @@ define(function (require) {
                 })
             }));
 
+            this.hiddenActionsActivityLink = this.add(new ActionButton({
+                model: {
+                    color: 'light-green',
+                    classes: 'help-btn actions-btn',
+                    icon: 'content-send',
+                    href: 'cases/'.concat(caseID, '/activity/actions')
+                }
+            }));
+            this.hiddenActionsActivityLink.detached = true;
+            this.hiddenActionsActivityLink.toggle();
+
+            this.hiddenActionsHint = this.add(new Hint({model: {text:"Now click the green button"}}));
+            this.hiddenActionsHint.toggle();
+        },
+
+        /**
+         * Check if we have matched all issues and goals.
+         */
+        checkMatches: function () {
+            if (this.collection.matches.length === this.collection.goals.length) {
+                // activate actions activity link
+                this.hiddenActionsActivityLink.toggle();
+                this.hiddenActionsHint.toggle();
+            }
         },
 
         /**
@@ -91,9 +127,20 @@ define(function (require) {
             let match = new IssueGoalMatch({
                 model: model
             });
+
+            // storage
             this.add(match);
+            this.matches.push(match);
+
+            // positioning
             match.interactive = true;
-            match.position.set(0, 100);
+            this.matches.forEach((element, index, array) => {
+                let scale = index - ((array.length - 1) / 2);
+                element.position.set(730, scale * 270);
+            });
+
+            // check if we have matched all goals and issues
+            this.checkMatches();
         },
 
         /**
@@ -147,6 +194,7 @@ define(function (require) {
                 var scale = i - ((n - 1) / 2);
                 card.position.set(300, scale * (distance + cardHeight));
             }, this);
+
         },
 
         /**
@@ -156,29 +204,15 @@ define(function (require) {
          * @returns IssueGoalMatcher
          */
         addIssue: function (model) {
-            return this.createFixedCard(model, IssueCard);
+            return this.createDraggableCard(model, IssueCard);
         },
 
         /**
-         *
          * @param model the Goal model.
          * @returns Card
          */
         addGoal: function (model) {
             return this.createDraggableCard(model, GoalCard);
-        },
-
-        /**
-         * Factory for creating cards.
-         *
-         * @param model
-         * @param CardClass
-         * @returns {*}
-         */
-        createFixedCard: function (model, CardClass) {
-            return this.add(new CardClass({
-                model: model
-            }));
         },
 
         /**
@@ -260,14 +294,6 @@ define(function (require) {
          */
         goalMatchesIssue: function (models) {
             if (models.goal.matchesIssue(models.issue)) {
-
-                const idealHeight = (function () {
-                    return this.determineCardHeight(
-                            models.goal.get('body').length +
-                            models.issue.get('body').length
-                        ) + 100;
-                }.bind(this)());
-
                 let match = new IssueGoalPair({
                     issue: models.issue,
                     goal: models.goal,

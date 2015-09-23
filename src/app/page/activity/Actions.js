@@ -2,24 +2,20 @@ define(function (require) {
     'use strict';
 
     var InventoryPage = require('page/InventoryPage');
-    var Goals = require('component/activity/goals/Goals');
+    var Actions = require('component/activity/goals/actions/Actions');
 
     /**
      * Activity extends from the InventoryPage thereby .
      *
-     * @class Goals
+     * @class Actions
      */
     return InventoryPage.extend({
 
-        name: 'goals',
-
-        title: 'Match Issues and Goals',
+        name: 'actions',
 
         initialize: function () {
             InventoryPage.prototype.initialize.apply(this, arguments);
-            let caseID = this.urlParams['case_id'];
-            let goalsActivity = new Goals(caseID);
-            this.add(goalsActivity);
+            this.add(new Actions());
         }
 
     });

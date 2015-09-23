@@ -2,10 +2,12 @@ define(function (require) {
 
     'use strict';
 
+    var _ = require('underscore');
     var Component = require('core/Component');
     var template = require('text!component/activity/goals/help/help.hbs');
     var ActionButton = require('component/actionbutton/ActionButton');
     var Object2D = require('core/Object2D');
+    var MathUtil = require('math/MathUtil');
 
     /**
      * @class HelpButton
@@ -16,7 +18,7 @@ define(function (require) {
         detached: true,
 
         events: {
-            'click': 'handle'
+            'click .help-btn': 'handle'
         },
 
         model: {
@@ -34,10 +36,10 @@ define(function (require) {
          * Delegates to JQuery and simply toggles the visibility of
          * the help panel.
          */
-        handle: function (event) {
-            event.preventDefault();
+        handle: function () {
             $('.help-container').toggle();
         }
+
     });
 
     /**
@@ -46,9 +48,14 @@ define(function (require) {
     return Component.extend({
         // important for having fixed position near back button
         detached: true,
+
         template: template,
-        helpButton: null,
+
+        helpButton: {},
+
         styles: 'component/activity/goals/help/help.css',
+
+        id: '',
 
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);

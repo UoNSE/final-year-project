@@ -82,5 +82,6 @@ define(function (require, exports, module) {
 				Backbone.Router.prototype.navigate.apply(this, arguments);
 			});
 		}
+
 	});
 });

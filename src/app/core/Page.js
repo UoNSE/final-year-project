@@ -36,11 +36,7 @@ define(function (require) {
 				.easing(TWEEN.Easing.Back.In)
 				.start()
 				.promise();
-		},
-
-        navigateTo: function() {
-            this.router.navigate(arguments);
-        }
+		}
 
 	});
 });

@@ -6,6 +6,7 @@ define(function (require) {
     var HelpModel = Panel.extend({
 
         defaults: {
+            // The HTML content of the help panel
             helpContent: ''
         }
 
