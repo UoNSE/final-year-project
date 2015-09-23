@@ -66,6 +66,7 @@ define(function(require) {
 		onSync: function (collection) {
 			// get the patient with the case Id.
 			this.patients = this.collection;
+			this.evidencecollection = new EvidenceCollection();
 			this.patient = this.patients.get(1); // get id.
 			this.addComponents();
 			this._hideElements();
@@ -92,7 +93,7 @@ define(function(require) {
 
 			this.help = this.add(new Help({
 				model: {
-				helpContent: 'Your goal is to collect evidence about the \
+				helpContent: 'Collect evidence about the \
 				patients condition.   </br> </br>\
 				Use the <strong>"Query"</strong> button </br>\
 				to ask the patient questions. </br> </br>\
@@ -105,7 +106,7 @@ define(function(require) {
 				<strong>Inspect</strong> areas of the body </br>\
 				to reveal scans and other  </br>\
 				information related to that area. </br></br>\
-				If you no longer need an evidence card, move it to the trash can.'}
+				If you no longer need an evidence card,<br> you can drag it to the trash can.'}
 			}));
 			this.help.interactive = true;
 

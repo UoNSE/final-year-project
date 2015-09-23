@@ -102,7 +102,7 @@ define(function(require) {
 
 		addEvidenceTarget: function(button, response){
 
-			var target = this.addEvidence(new EvidenceModel({
+			var evidencetarget = this.addEvidence(new EvidenceModel({
 				width: 200,
 				height: 100,
 				title: 'Evidence',
@@ -110,29 +110,21 @@ define(function(require) {
 				body: "Question: "+button.model.attributes.text + "\n" + "Response: "+ response
 				// body: dummy
 			}));
+
+			// add the evidence to the evidence collection
+			this.vproot.evidencecollection.add(evidencetarget);
+
 			var yTarget = button.position.y;
-			target.position.y = yTarget - 310;
-			target.position.x = -200;
-			target.hide();
-			button.add(target);
-			button.on('click', this.onToggleButton.bind(this, target));
+			evidencetarget.position.y = yTarget - 310;
+			evidencetarget.position.x = -200;
+			evidencetarget.hide();
+			button.add(evidencetarget);
+			button.on('click', this.onToggleButton.bind(this, evidencetarget));
 		},
 
 		addEvidence: function (model) {
 
-			// debugger;
-			// assume root is here
-			// this.vproot = this.parent.parent.parent;
-			// console.log(this.vproot);
-			// if a testresult is made in another child component
-			// (eg. in a bloodtest, we can get the root by checking the parent.
-			// while(this.vproot.el.className != 'component virtual-patient'){
-			// while(this.vproot.cid != 'view7'){	// hack
-			//
-			// 	this.vproot = this.vproot.parent;
-			// }
-
-			// var evidence = this.add(new Evidence({
+			// add the evidence to the root virtual patient component.
 			var evidence = this.vproot.parent.add(new Evidence({
 				model: model
 			}));
