@@ -173,10 +173,11 @@
       "dob": "1914-05-12",
       "sex": "Male",
       "profession": "Physiotherapist",
-      "heartRate": "60-100 beats per minute",
-      "respirations": "12-18 breaths per minute",
-      "bloodPressure": "90/60 to 120/80",
-      "temperature": "38 to 38.5 C",
+      "heartRate": "100",
+      "respirationRate": "12",
+      "systolic": "90",
+      "diastolic": "60",
+      "temperature": "38",
       "hotspots": [
         {
           "id": 1,
@@ -310,7 +311,18 @@
           "eryth": "30",
           "ph": "40",
           "ts": "50"
-        }
+      },
+      {
+        "id": 2,
+        "name": "hormonePanel",
+        "estrone": "100",
+        "estradiol": "30",
+        "estriol": "120",
+        "testosterone": "20",
+        "progesterone": "30",
+        "DHEA": "40",
+        "cortisol": "50"
+    },
       ]
     }
   ],

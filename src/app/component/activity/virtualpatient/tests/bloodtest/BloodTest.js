@@ -6,7 +6,7 @@ define(function(require) {
 	var Button = require('component/button/Button');
 	var ButtonModel = require('model/Button');
 	var TestResult = require('component/activity/virtualpatient/tests/testresult/TestResult');
-
+	var HormonePanelResult = require('component/activity/virtualpatient/tests/hormonepanel/HormonePanelResult');
 
 	return Component.extend({
 		template: template,
@@ -17,6 +17,8 @@ define(function(require) {
 			Component.prototype.initialize.apply(this, arguments);
 			// TODO: pull menu items from json to create menu, and set each button to have target like parent menu.
 			this.createTestMenu();
+			this.testresults = results;
+			this.hormonepanelresult = this.testresults.get(2);
 
 		},
 
@@ -56,9 +58,13 @@ define(function(require) {
 			button.position.set(0, this.yOffset);
 
 			var target = null;
-			var target = new TestResult();
 
-
+			if (label === 'Hormones') {
+				target = new HormonePanelResult({model:this.hormonepanelresult});
+			}
+			else{
+				target = new TestResult();
+			}
 			// console.log(label);
 
 			// if(label==='Blood Test'){
