@@ -28,6 +28,59 @@ define(function (require) {
         model: ActionGroup
     });
 
+    // positioning
+    let Positioning = require('component/activity/goals/Positioning');
+
+    /**
+     * The x and y coordinate positions of the Goal cards is calculated
+     * as a percentage of the screen.
+     *
+     * @type {{x: Function, y: Function}}
+     */
+    let goalCardPositions = {
+
+        x: () => {
+            return -(Positioning.widthLimit() * 0.40);
+        },
+
+        y: () => {
+            return;
+        }
+
+    };
+
+    /**
+     * ActionCards are positioned into two columns. The following functions
+     * help determine the positions of these columns and rows as a percentage
+     * of the screen.
+     *
+     * @type {{firstColumn: number, secondColumn: number, row: number}}
+     */
+    let actionCardPositions = {
+        /**
+         * The x position of the first column.
+         *
+         * @returns {number}
+         */
+        firstColumn: () => {
+            return Positioning.widthLimit() * 0.05
+        },
+        /**
+         * The x position of the second column.
+         *
+         * @returns {number}
+         */
+        secondColumn: () => {
+            return Positioning.widthLimit() * 0.50
+        },
+        /**
+         * The y position.
+         */
+        row: () => {
+            return Positioning.heightLimit() * 0.15;
+        }
+    };
+
     /**
      * @class Actions
      * @classdesc The view class representing the Activity for
@@ -35,8 +88,13 @@ define(function (require) {
      */
     return Component.extend({
 
-        height: 100,
-        width: 300,
+        height: (function () {
+            return Positioning.heightLimit() * 0.05;
+        }()),
+
+        width: (function () {
+            return Positioning.widthLimit() * 0.40;
+        }()),
 
         help: {},
         actionGroups: {},
@@ -48,16 +106,22 @@ define(function (require) {
             actionGroups: new ActionGroupsCollection()
         },
 
+        /**
+         * Constructor.
+         */
         initialize: function () {
             // invoke super(arguments)
             Component.prototype.initialize.apply(this, arguments);
 
             let goalsCollection = this.collection.goals;
             let actionsCollection = this.collection.actions;
+            let actionsGroupsCollection = this.collection.actionGroups;
 
             // setup syncing
+
             this.listenTo(actionsCollection, 'sync', this.onActionsSync);
             this.listenTo(goalsCollection, 'sync', this.onGoalsSync);
+            this.listenTo(actionsGroupsCollection, 'add', this.onAddActionGroup());
 
             // fetch models
             actionsCollection.fetch();
@@ -66,20 +130,34 @@ define(function (require) {
             this.help = this.add(new Help({
                 model: new HelpModel({
                     title: 'Help',
-                    width: 300,
+                    width: this.width,
                     helpContent: HelpText
                 })
             }));
 
         },
 
+        /**
+         * Todo: handle actionGroup display
+         *
+         * @param model
+         */
+        onAddActionGroup: function (model) {
+            // todo
+        },
+
+        /**
+         * Invoked upon the ActionsCollection having loaded
+         * all the models.
+         *
+         * @param actions the ActionsCollection.
+         */
         onActionsSync: function (actions) {
-            var n = actions.size();
-            var distance = 10;
+            // shuffle the collection randomly
+            actions.shuffle();
 
-            let left = actions.partition();
-            let right = actions.partition();
-
+            // create a card component for each and position it
+            // in a sensible location, relative to the other cards.
             actions.forEach(function (model, i) {
                 // create card
                 var card = this.addAction(new ActionModel({
@@ -91,25 +169,44 @@ define(function (require) {
 
                 // determine positioning, by partitioning actions
                 // by odd and even index, into two x coordinate variants
-                let scale = i - ((n - 1) / 2);
-                let isOdd = (number) => {
-                    return number % 2;
-                };
-                let x = () => {
-                    return isOdd(i) ? 30 : 350;
-                };
-                let y = () => {
-                    return scale * (distance + 50)
-                };
+                this.positionActionCard(i, actions.size(), card);
 
-                // assign positions
-                card.position.set(x(), y());
             }, this);
 
         },
 
         /**
-         * An event triggered when the issues collection has synced upon a fetch call.
+         * Determine positioning, by partitioning actions
+         * by odd and even index, into two x coordinate variants
+         *
+         * @param i the index of the actionCard.
+         * @param n the size of the collection to position.
+         * @param actionCard the ActionCard component to calculate position.
+         */
+        positionActionCard: function (i, n, actionCard) {
+            let scale = i - ((n - 1) / 2);
+            let isOdd = (number) => {
+                return number % 2;
+            };
+
+            let x = () => {
+                return isOdd(i) ?
+                    actionCardPositions.firstColumn() :
+                    actionCardPositions.secondColumn();
+            };
+
+            let y = () => {
+                return scale * (actionCardPositions.row())
+            };
+
+            actionCard.position.set(x(), y());
+        },
+
+        /**
+         * An event triggered when the issues collection has synced
+         * upon a fetch call.
+         *
+         * Todo: this can be improved using the Positioning utility.
          *
          * @param goals The issues collection.
          */
@@ -117,11 +214,6 @@ define(function (require) {
             var n = goals.size();
             var distance = 10;
             goals.forEach(function (model, i) {
-
-                // use the String to determine size
-                let cardHeight = this.determineCardHeight(
-                    model.get('content').length
-                );
 
                 // create card
                 var card = this.addGoal(new GoalModel({
@@ -132,11 +224,14 @@ define(function (require) {
                 }));
 
                 var scale = i - ((n - 1) / 2);
-                card.position.set(-300, scale * (distance + cardHeight));
+                card.position.set(goalCardPositions.x(), scale * (distance + this.width));
             }, this);
-
         },
 
+        /**
+         * @param model the Action model.
+         * @returns {*}
+         */
         addAction: function (model) {
             return this.createDraggableCard(model, ActionCard);
         },
@@ -152,9 +247,9 @@ define(function (require) {
         /**
          * Card Creation Factory.
          *
-         * @param model
-         * @param CardClass
-         * @returns {*}
+         * @param model the model instance to assign to the card.
+         * @param CardClass the type of Card to create.
+         * @returns {*} a Card of the CardClass type.
          */
         createDraggableCard: function (model, CardClass) {
             var card = this.add(new CardClass({
@@ -177,7 +272,15 @@ define(function (require) {
 
         /**
          *
-         * @param event
+         *
+         * The logic of this function is as follows:
+         * 1. Evaluate the types of the components involved and
+         * assign them to a known tuple.
+         * 2. establish if a match can be made and handle any
+         * cleanup as necessary.
+         *
+         * @param event the event created by the drag
+         * and drop interaction.
          */
         onDrop: function (event) {
             let draggable = event.draggable;
@@ -194,7 +297,10 @@ define(function (require) {
         },
 
         /**
-         * Resolves the types of the parameters .
+         * Resolves the types of the cards participating in a drag
+         * and drop event.
+         *
+         * todo: handle the case where either parameter is an ActionsGroup.
          *
          * @param draggable the draggable card
          * @param droppable the droppable card
@@ -218,6 +324,21 @@ define(function (require) {
             };
         },
 
+        /**
+         * Goals can match with one or more Actions. This function
+         * determines if a Goal matches an Action. If a match is
+         * found, the action model will be allocated to an existing
+         * group if one exists or else a new group will be created.
+         *
+         * Can be used as a predicate.
+         *
+         * todo: the logic of this function could be improved.
+         *
+         * @param models the object literal with the two objects
+         * participating in a drop event.
+         * @returns {boolean} {@code true} iff the models match
+         * and {@code false} otherwise.
+         */
         goalMatchesAction: function (models) {
             let action = models.action;
             let goal = models.goal;
@@ -246,25 +367,7 @@ define(function (require) {
                 return true;
             }
             return false;
-        },
-
-        /**
-         * Determines the appropriate card height, based on
-         * the length of the content body.
-         *
-         * @param length the number of characters in the
-         * body of the card.
-         * @returns {number} the optimal card height.
-         */
-        determineCardHeight: function (length) {
-            let goalHeight = 100;
-            const scale = 80;
-            if (length > 42) {
-                return goalHeight = this.height * (length / scale);
-            }
-            return goalHeight;
         }
-
 
     });
 
