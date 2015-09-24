@@ -141,7 +141,11 @@ define(function(require) {
 			var that = this;
 
 			  this.commands = {
-
+				'hud': function() {
+  					// debugger;
+  					console.log('heard "hud"');
+  					that.onCall();
+  				},
 				'test': function() {
 					// debugger;
 					console.log('heard "test"');
@@ -231,7 +235,21 @@ define(function(require) {
 			this.tests.hide();
 			this.querymenu.hide();
 			this.chart.hide();
+			this.voicehud.hide();
 
+
+		},
+		onCall: function(){
+			if (this.voicehud.visible){
+				this.voicehud.hide();
+				// $('.cpn-inventory').show();
+				// this.inventory.show();
+			}
+			else{
+				this.voicehud.show();
+				// $('.cpn-inventory').hide();
+				// this.inventory.hide();
+			}
 		},
 
 		addButtons: function () {

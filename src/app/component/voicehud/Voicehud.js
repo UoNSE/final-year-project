@@ -14,37 +14,39 @@ define(function (require) {
 		styles: 'component/voicehud/Voicehud.css',
 		classes: 'voicehud',
 
-		initialize: function () {
+		initialize: function (rootcomponent) {
 			Component.prototype.initialize.apply(this, arguments);
 
-			// var hud = new Panel({
-			// 	class: 'hud'
-			// });
-			// this.add(hud);
+			this.rootcomponent = rootcomponent;
 
 			var numGroups = 5;
 			var timelines = [];
 			for(var i = 0; i<5; i++){
-				var groupProgressTimeline = this.addTimeline();
+				this.groupProgressTimeline = this.addTimeline();
+				this.add(this.groupProgressTimeline);
 				if(i>0){
-					var yPosition = groupProgressTimeline.position.y;
-					groupProgressTimeline.position.set(1,yPosition-i*70);
+					var yPosition = this.groupProgressTimeline.position.y;
+					this.groupProgressTimeline.position.set(1,yPosition-i*70);
 				}
 				// timelines.push(groupProgressTimeline);
 				// timelines.position.set(100,100);
 				// this.add(timelines);
-				var xPosition = groupProgressTimeline.position.x;
-				var yPosition = groupProgressTimeline.position.y;
+				var xPosition = this.groupProgressTimeline.position.x;
+				var yPosition = this.groupProgressTimeline.position.y;
 
-				groupProgressTimeline.position.set(xPosition,yPosition+150);
-				this.add(groupProgressTimeline);
+				this.groupProgressTimeline.position.set(xPosition+100,yPosition+150);
 
+				// this.add(groupProgressTimeline);
+				var groupNum = i+1;
+				var hint = this.add(new Hint({
+					model: {text: 'Group '+ groupNum}
+				}));
+				hint.position.x = -100;
+				hint.position.y = yPosition+150;
 			}
+			this.interactive = true;
 
-			var hint = this.add(new Hint({
-				model: {text: 'Tap an activity below'}
-			}));
-			hint.position.y = 120;
+
 		},
 
 		addTimeline: function(){

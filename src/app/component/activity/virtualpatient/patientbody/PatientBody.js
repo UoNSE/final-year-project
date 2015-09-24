@@ -105,7 +105,7 @@ define(function (require) {
             d.css('left', thex);
             d.css('top', they);
             d.is(':visible') ? d.hide() : d.show();
-            d.css('z-index', '1000');
+            d.css('z-index', '100');
 
             d.html(model.get('data'));
 
