@@ -21,12 +21,7 @@ define(function (require) {
     // collections
     let ActionsCollection = require('collection/Actions');
     let GoalsCollection = require('collection/Goals');
-    /**
-     * Define a new Collection to internally hold matched Issue-Goal paris.
-     */
-    let ActionGroupsCollection = Backbone.Collection.extend({
-        model: ActionGroup
-    });
+    let ActionGroupsCollection = Backbone.Collection.extend({model: ActionModel});
 
     // positioning
     let Positioning = require('component/activity/goals/Positioning');
@@ -159,13 +154,16 @@ define(function (require) {
             // create a card component for each and position it
             // in a sensible location, relative to the other cards.
             actions.forEach(function (model, i) {
-                // create card
-                var card = this.addAction(new ActionModel({
+
+                Object.assign(model.attributes, {
                     width: this.width,
                     title: 'Action',
                     body: model.get('content'),
                     color: 'red'
-                }));
+                });
+
+                // create card
+                var card = this.addAction(model);
 
                 // determine positioning, by partitioning actions
                 // by odd and even index, into two x coordinate variants
@@ -212,19 +210,23 @@ define(function (require) {
          */
         onGoalsSync: function (goals) {
             var n = goals.size();
-            var distance = 10;
+            var distance = this.width / 2;
             goals.forEach(function (model, i) {
 
-                // create card
-                var card = this.addGoal(new GoalModel({
+                // here we assign all these additional attributes to the model,
+                // since this enables us to customise the card rendering for this activity
+                Object.assign(model.attributes, {
                     width: this.width,
                     title: 'Goal',
                     body: model.get('content'),
                     color: 'light-blue'
-                }));
+                });
+
+                // create card
+                var card = this.addGoal(model);
 
                 var scale = i - ((n - 1) / 2);
-                card.position.set(goalCardPositions.x(), scale * (distance + this.width));
+                card.position.set(goalCardPositions.x(), scale * (distance));
             }, this);
         },
 
@@ -291,6 +293,9 @@ define(function (require) {
             let isMatch = this.goalMatchesAction(models);
 
             if (isMatch) {
+
+                // todo: only remove goals / actions and append  actions to the ActionGroup
+
                 draggable.remove();
                 droppable.remove();
             }
@@ -319,7 +324,7 @@ define(function (require) {
             });
 
             return {
-                issue: type.action,
+                action: type.action,
                 goal: type.goal
             };
         },
@@ -354,14 +359,14 @@ define(function (require) {
                     existingGroup.addAction(action);
                 }
                 else {
-                    let actions = new ActionGroupsCollection();
-                    let match = new ActionGroup({
-                        actions: actions,
-                        goal: goal,
-                        color: 'light-green',
-                        width: width
-                    });
+                    let actions = new ActionsCollection();
                     actions.add(action);
+                    let match = new ActionGroup({
+                        goal: goal,
+                        actions: actions,
+                        color: 'light-green',
+                        width: this.width
+                    });
                     actionGroups.add(match);
                 }
                 return true;
