@@ -22,7 +22,7 @@ define(function (require) {
          * @return true if this goal matches the parameter issue.
          */
         matchesIssue: function (issue) {
-            return issue && issue.id === this.issueId;
+            return issue && issue.id === this.get('issueId');
         },
 
         /**
@@ -31,8 +31,10 @@ define(function (require) {
          * @param action the Action to check.
          * @return true if this goal matches the parameter action.
          */
-        matchesAction: (action) => {
-            return action && this.actions.filter(action.id).length > 0;
+        matchesAction: function (action) {
+            return action && this.get('actions')
+                    .filter((actionId) => actionId === action.get('id'))
+                    .length > 0;
         }
 
     });

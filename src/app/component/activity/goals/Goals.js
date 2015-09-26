@@ -35,6 +35,24 @@ define(function (require) {
         model: IssueGoalPair
     });
 
+    // positioning
+    let Positioning = require('component/activity/goals/Positioning');
+
+    let MatchPositioning = {
+        /**
+         * The x position.
+         */
+        x: () => {
+            return Positioning.widthLimit() * 0.99
+        },
+        /**
+         * The y position.
+         */
+        y: () => {
+            return Positioning.heightLimit() * 0.15;
+        }
+    };
+
     // dimensions
     let height = 100;
     let width = 300;
@@ -45,8 +63,13 @@ define(function (require) {
      */
     return Component.extend({
 
-        height: 100,
-        width: 300,
+        height: (function () {
+            return Positioning.heightLimit() * 0.05;
+        }()),
+
+        width: (function () {
+            return Positioning.widthLimit() * 0.40;
+        }()),
 
         /**
          * The help component manages the instructions.
@@ -102,7 +125,7 @@ define(function (require) {
             this.hiddenActionsActivityLink.detached = true;
             this.hiddenActionsActivityLink.toggle();
 
-            this.hiddenActionsHint = this.add(new Hint({model: {text:"Now click the green button"}}));
+            this.hiddenActionsHint = this.add(new Hint({model: {text:"Touch the Green Button to Continue"}}));
             this.hiddenActionsHint.toggle();
         },
 
@@ -136,7 +159,7 @@ define(function (require) {
             match.interactive = true;
             this.matches.forEach((element, index, array) => {
                 let scale = index - ((array.length - 1) / 2);
-                element.position.set(730, scale * 270);
+                element.position.set(MatchPositioning.x(), scale * 270);
             });
 
             // check if we have matched all goals and issues
@@ -164,7 +187,12 @@ define(function (require) {
                     color: 'orange'
                 }));
                 let scale = i - ((n - 1) / 2);
-                card.position.set(-300, scale * (distance + cardHeight));
+
+                let x = () => {
+                    return -(this.width);
+                };
+
+                card.position.set(x(), scale * (distance + cardHeight));
             }, this);
         },
 
@@ -192,7 +220,10 @@ define(function (require) {
                 }));
 
                 var scale = i - ((n - 1) / 2);
-                card.position.set(300, scale * (distance + cardHeight));
+                let x = () => {
+                    return this.width;
+                };
+                card.position.set(x(), scale * (distance + cardHeight));
             }, this);
 
         },
