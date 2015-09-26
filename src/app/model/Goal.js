@@ -15,6 +15,11 @@ define(function (require) {
             actions: [1]
         },
 
+        initialize: function () {
+            // invoke super(arguments)
+            Panel.prototype.initialize.apply(this, arguments);
+        },
+
         /**
          * Verify that this Goal matches an Issue.
          *
@@ -22,7 +27,8 @@ define(function (require) {
          * @return true if this goal matches the parameter issue.
          */
         matchesIssue: function (issue) {
-            return issue && issue.id === this.get('issueId');
+            let issueId = parseInt(this.get('issueId'));
+            return issue && issue.id === issueId;
         },
 
         /**

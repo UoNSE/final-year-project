@@ -125,7 +125,7 @@ define(function (require) {
             this.hiddenActionsActivityLink.detached = true;
             this.hiddenActionsActivityLink.toggle();
 
-            this.hiddenActionsHint = this.add(new Hint({model: {text:"Touch the Green Button to Continue"}}));
+            this.hiddenActionsHint = this.add(new Hint({model: {text: "Touch the Green Button to Continue"}}));
             this.hiddenActionsHint.toggle();
         },
 
@@ -180,12 +180,16 @@ define(function (require) {
                     model.get('content').length
                 );
 
-                let card = this.addIssue(new IssueModel({
-                    width: width,
-                    title: 'Issue',
-                    body: model.get('content'),
-                    color: 'orange'
-                }));
+                Object.assign( model.attributes,
+                    {
+                        width: width,
+                        title: 'Issue',
+                        body: model.get('content'),
+                        color: 'orange'
+                    }
+                );
+
+                let card = this.addIssue(model);
                 let scale = i - ((n - 1) / 2);
 
                 let x = () => {
@@ -211,13 +215,15 @@ define(function (require) {
                     model.get('content').length
                 );
 
-                // create card
-                var card = this.addGoal(new GoalModel({
+                Object.assign(model.attributes, {
                     width: this.width,
                     title: 'Goal',
                     body: model.get('content'),
                     color: 'light-blue'
-                }));
+                });
+
+                // create card
+                var card = this.addGoal(model);
 
                 var scale = i - ((n - 1) / 2);
                 let x = () => {
