@@ -32,7 +32,7 @@ define(function (require) {
          * contains the {@param goal} and {@code false} otherwise.
          */
         containsGoal: function (goal) {
-            return this.goal.id === goal.id;
+            return this.get('goal').get('id') === goal.get('id');
         },
 
         /**
@@ -40,8 +40,8 @@ define(function (require) {
          *
          * @param action the Action model to add.
          */
-        addAction: function(action) {
-            this.actions.add(action);
+        addAction: function (action) {
+            this.get('actions').add(action);
         }
 
     });
