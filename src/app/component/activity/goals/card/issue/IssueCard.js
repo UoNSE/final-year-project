@@ -19,6 +19,7 @@
         initialize: function () {
             // invoke super(arguments)
             Card.prototype.initialize.apply(this, arguments);
+            this.className = 'Issue';
             // allow subtypes of Card to be dropped onto this
             // avoids having a dependency on issues module
             this.setDroppable({types: Card});

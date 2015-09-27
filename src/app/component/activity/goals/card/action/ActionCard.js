@@ -19,6 +19,7 @@
         initialize: function () {
             // invoke super(arguments)
             Card.prototype.initialize.apply(this, arguments);
+            this.className = 'Action';
             this.setDroppable({types: Card});
         }
 
