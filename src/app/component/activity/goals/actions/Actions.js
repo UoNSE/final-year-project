@@ -7,6 +7,7 @@ define(function (require) {
     let Component = require('core/Component');
     let GoalCard = require('component/activity/goals/card/goal/GoalCard');
     let ActionCard = require('component/activity/goals/card/action/ActionCard');
+    let GoalActionsMatch = require('component/activity/goals/card/goalactions/GoalActionsMatch');
 
     // models
     let GoalModel = require('model/Goal');
@@ -26,6 +27,24 @@ define(function (require) {
     // positioning
     let Positioning = require('component/activity/goals/Positioning');
 
+    /**
+     * Defines the positioning for Matches, so that
+     * they align with the inventory.
+     */
+    let MatchPositioning = {
+        /**
+         * The x position.
+         */
+        x: () => {
+            return Positioning.widthLimit() * 0.99
+        },
+        /**
+         * The y position.
+         */
+        y: () => {
+            return Positioning.heightLimit() * 0.15;
+        }
+    };
     /**
      * The x and y coordinate positions of the Goal cards is calculated
      * as a percentage of the screen.
@@ -93,7 +112,7 @@ define(function (require) {
 
         help: {},
         actionGroups: {},
-        matches: {},
+        matches: [],
 
         collection: {
             actions: new ActionsCollection(),
@@ -108,6 +127,8 @@ define(function (require) {
             // invoke super(arguments)
             Component.prototype.initialize.apply(this, arguments);
 
+            this.matches = [];
+
             let goalsCollection = this.collection.goals;
             let actionsCollection = this.collection.actions;
             let actionsGroupsCollection = this.collection.actionGroups;
@@ -116,7 +137,7 @@ define(function (require) {
 
             this.listenTo(actionsCollection, 'sync', this.onActionsSync);
             this.listenTo(goalsCollection, 'sync', this.onGoalsSync);
-            this.listenTo(actionsGroupsCollection, 'add', this.onAddActionGroup());
+            this.listenTo(actionsGroupsCollection, 'add', this.onAddActionGroup);
 
             // fetch models
             actionsCollection.fetch();
@@ -138,7 +159,22 @@ define(function (require) {
          * @param model
          */
         onAddActionGroup: function (model) {
-            // todo
+            let match = new GoalActionsMatch({
+                model: model
+            });
+
+            match.show();
+
+            // storage
+            this.add(match);
+            this.matches.push(match);
+
+            // positioning
+            match.interactive = true;
+            this.matches.forEach((element, index, array) => {
+                let scale = index - ((array.length - 1) / 2);
+                element.position.set(MatchPositioning.x(), scale * 270);
+            });
         },
 
         /**
@@ -290,12 +326,14 @@ define(function (require) {
 
             // check types
             let models = this.assignTypes(draggable, droppable);
+
+            // case: Goal
+
             let isMatch = this.goalMatchesAction(models);
 
             if (isMatch) {
 
                 // todo: only remove goals / actions and append  actions to the ActionGroup
-
                 draggable.remove();
                 droppable.remove();
             }
@@ -312,21 +350,21 @@ define(function (require) {
          * @returns {{issue: *, goal: *}}
          */
         assignTypes: function (draggable, droppable) {
-            let type = {};
+            let types = {};
 
             [draggable, droppable].map(function (card) {
                 if (card instanceof ActionCard) {
-                    type.action = card.model;
+                    types.action = card.model;
                 }
                 if (card instanceof GoalCard) {
-                    type.goal = card.model;
+                    types.goal = card.model;
+                }
+                if (card instanceof ActionGroup) {
+                    types.group = card.model;
                 }
             });
 
-            return {
-                action: type.action,
-                goal: type.goal
-            };
+            return types;
         },
 
         /**
@@ -362,6 +400,7 @@ define(function (require) {
                     let actions = new ActionsCollection();
                     actions.add(action);
                     let match = new ActionGroup({
+                        title: 'Match',
                         goal: goal,
                         actions: actions,
                         color: 'light-green',

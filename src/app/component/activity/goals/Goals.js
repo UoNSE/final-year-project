@@ -9,7 +9,7 @@ define(function (require) {
     let Component = require('core/Component');
     let GoalCard = require('component/activity/goals/card/goal/GoalCard');
     let IssueCard = require('component/activity/goals/card/issue/IssueCard');
-    let IssueGoalMatch = require('component/activity/goals/match/IssueGoalMatch');
+    let IssueGoalMatch = require('component/activity/goals/card/issuegoal/IssueGoalMatch');
     let ActionButton = require('component/actionbutton/ActionButton');
 
     // help
@@ -33,6 +33,10 @@ define(function (require) {
     // positioning
     let Positioning = require('component/activity/goals/Positioning');
 
+    /**
+     * Defines the positioning for Matches, so that
+     * they align with the inventory.
+     */
     let MatchPositioning = {
         /**
          * The x position.
@@ -116,6 +120,7 @@ define(function (require) {
                 })
             }));
 
+            // add a link to the Actions activity
             this.hiddenActionsActivityLink = this.add(new ActionButton({
                 model: {
                     color: 'light-green',
@@ -124,12 +129,16 @@ define(function (require) {
                     href: 'cases/'.concat(caseID, '/activity/actions')
                 }
             }));
+
             this.hiddenActionsActivityLink.position.set(0, 100);
+
             this.hiddenActionsHint = this.add(new Hint({
                 model: {
                     text: "Touch the Green Button to Continue"
                 }
             }));
+
+            // hide these components until matching is completed
             this.hiddenActionsActivityLink.hide();
             this.hiddenActionsHint.hide();
         },
@@ -198,12 +207,19 @@ define(function (require) {
          */
         onIssuesSync: function (issues) {
             let n = issues.size();
-            let distance = 10;
+            let separatorDistance = 10; // 10 px
             let matches = this.collection.matches;
+
+            // first filter any issues that we have already matched
             issues.filter((issue) => {
-                let existingMatch = matches.find((match) => match.get('issue').id === issue.id);
+
+                let existingMatch =
+                    matches.find((match) => match.get('issue').id === issue.id);
                 return !existingMatch;
+
             }).forEach(function (model, i) {
+                // now create Issue Cards for any unmatched issues
+
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
                     model.get('content').length
@@ -225,7 +241,8 @@ define(function (require) {
                     return -(this.width);
                 };
 
-                card.position.set(x(), scale * (distance + cardHeight));
+                card.position.set(x(), scale * (separatorDistance + cardHeight));
+
             }, this);
         },
 
@@ -236,12 +253,18 @@ define(function (require) {
          */
         onGoalsSync: function (goals) {
             var n = goals.size();
-            var distance = 10;
+            let separatorDistance = 10; // 10 px
             let matches = this.collection.matches;
+
+            // first filter any goals that we have already matched
             goals.filter((goal) => {
-                let existingMatch = matches.find((match) => match.get('goal').id === goal.id);
+
+                let existingMatch =
+                    matches.find((match) => match.get('goal').id === goal.id);
                 return !existingMatch;
+
             }).forEach(function (model, i) {
+
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
                     model.get('content').length
@@ -255,13 +278,14 @@ define(function (require) {
                 });
 
                 // create card
-                var card = this.addGoal(model);
+                let card = this.addGoal(model);
 
-                var scale = i - ((n - 1) / 2);
+                let scale = i - ((n - 1) / 2);
                 let x = () => {
                     return this.width;
                 };
-                card.position.set(x(), scale * (distance + cardHeight));
+                card.position.set(x(), scale * (separatorDistance + cardHeight));
+
             }, this);
 
         },

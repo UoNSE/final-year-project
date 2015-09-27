@@ -36,12 +36,26 @@ define(function (require) {
         },
 
         /**
-         * Adds an action to this sub-model collection of Actions.
+         * Adds an action to this sub-model collection of Actions,
+         * iff they match.
          *
          * @param action the Action model to add.
          */
         addAction: function (action) {
-            this.get('actions').add(action);
+            if (this.matchesAction(action)) {
+                this.get('actions').add(action);
+            }
+        },
+
+        /**
+         * Determines if the parameter action is associated with the Goal
+         * model that is stored within this ActionGroup.
+         *
+         * @param action the Action model instance.
+         * @returns {boolean}
+         */
+        matchesAction: function (action) {
+            return this.get('goal').matchesAction(action);
         }
 
     });
