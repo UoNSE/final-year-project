@@ -28,12 +28,7 @@ define(function (require) {
     // collections
     let IssuesCollection = require('collection/Issues');
     let GoalsCollection = require('collection/Goals');
-    /**
-     * Define a new Collection to internally hold matched Issue-Goal paris.
-     */
-    let MatchCollection = Backbone.Collection.extend({
-        model: IssueGoalPair
-    });
+    let MatchCollection = require('collection/IssueGoalMatches');
 
     // positioning
     let Positioning = require('component/activity/goals/Positioning');
@@ -93,17 +88,7 @@ define(function (require) {
             // invoke super(arguments)
             Component.prototype.initialize.apply(this, arguments);
 
-            let issuesCollection = this.collection.issues;
-            let goalsCollection = this.collection.goals;
             let matchesCollection = this.collection.matches;
-
-            // Listen to the sync events on both collections, which waits for the models to be loaded.
-            this.listenTo(issuesCollection, 'sync', this.onIssuesSync);
-            this.listenTo(goalsCollection, 'sync', this.onGoalsSync);
-            this.listenTo(matchesCollection, 'add', this.onAddMatch);
-
-            issuesCollection.fetch();
-            goalsCollection.fetch();
 
             // add help component to the page
             this.help = this.add(new Help({
@@ -123,10 +108,42 @@ define(function (require) {
                 }
             }));
             this.hiddenActionsActivityLink.detached = true;
-            this.hiddenActionsActivityLink.toggle();
-
             this.hiddenActionsHint = this.add(new Hint({model: {text: "Touch the Green Button to Continue"}}));
-            this.hiddenActionsHint.toggle();
+
+            if (matchesCollection.size() == 0) {
+                // if we are arriving at this activity via the timeline then we must
+                // setup the activity for students to begin matching,
+                this.setupMatching();
+                this.hiddenActionsActivityLink.toggle();
+                this.hiddenActionsHint.toggle();
+            }
+            else {
+                // else the matching activity must have been performed already, in which
+                // case we have arrived here via the back-button from the Actions activity.
+                this.populateInventoryMatches();
+            }
+        },
+
+        populateInventoryMatches: function () {
+            this.matches = [];
+            this.collection.matches.map((model)=> this.onAddMatch(model));
+        },
+
+        setupMatching: function () {
+            // setup syncing
+            let issuesCollection = this.collection.issues;
+            let goalsCollection = this.collection.goals;
+
+            // Listen to the sync events on both collections, which waits for the models to be loaded.
+            this.listenTo(issuesCollection, 'sync', this.onIssuesSync);
+            this.listenTo(goalsCollection, 'sync', this.onGoalsSync);
+            this.listenTo(this.collection.matches, 'add', this.onAddMatch);
+
+            // fetch issues and goals ready for matching to begin
+
+            issuesCollection.fetch();
+            goalsCollection.fetch();
+
         },
 
         /**
@@ -180,7 +197,7 @@ define(function (require) {
                     model.get('content').length
                 );
 
-                Object.assign( model.attributes,
+                Object.assign(model.attributes,
                     {
                         width: width,
                         title: 'Issue',
@@ -304,21 +321,18 @@ define(function (require) {
          * @returns {{issue: *, goal: *}}
          */
         assignTypes: function (draggable, droppable) {
-            let type = {};
+            let types = {};
 
             [draggable, droppable].map(function (card) {
                 if (card instanceof IssueCard) {
-                    type.issue = card.model;
+                    types.issue = card.model;
                 }
                 if (card instanceof GoalCard) {
-                    type.goal = card.model;
+                    types.goal = card.model;
                 }
             });
 
-            return {
-                issue: type.issue,
-                goal: type.goal
-            };
+            return types;
         },
 
         /**
