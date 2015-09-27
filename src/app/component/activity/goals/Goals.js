@@ -81,6 +81,7 @@ define(function (require) {
         },
 
         /**
+         * Initialise the Activity.
          *
          * @param caseID the id of the selected case, obtained from the URL params.
          */
@@ -89,6 +90,22 @@ define(function (require) {
             Component.prototype.initialize.apply(this, arguments);
 
             let matchesCollection = this.collection.matches;
+
+            this.setupFixedComponents(caseID);
+
+            this.setupActivityStartState();
+
+            this.matches = [];
+            matchesCollection.map((model) => this.onAddMatch(model));
+
+        },
+
+        /**
+         * This sets up the components that are state-invariant.
+         *
+         * @param caseID the id of the current case.
+         */
+        setupFixedComponents: function (caseID) {
 
             // add help component to the page
             this.help = this.add(new Help({
@@ -107,40 +124,31 @@ define(function (require) {
                     href: 'cases/'.concat(caseID, '/activity/actions')
                 }
             }));
-            this.hiddenActionsActivityLink.detached = true;
-            this.hiddenActionsHint = this.add(new Hint({model: {text: "Touch the Green Button to Continue"}}));
-
-            if (matchesCollection.size() == 0) {
-                // if we are arriving at this activity via the timeline then we must
-                // setup the activity for students to begin matching,
-                this.setupMatching();
-                this.hiddenActionsActivityLink.toggle();
-                this.hiddenActionsHint.toggle();
-            }
-            else {
-                // else the matching activity must have been performed already, in which
-                // case we have arrived here via the back-button from the Actions activity.
-                this.populateInventoryMatches();
-            }
+            this.hiddenActionsActivityLink.position.set(0, 100);
+            this.hiddenActionsHint = this.add(new Hint({
+                model: {
+                    text: "Touch the Green Button to Continue"
+                }
+            }));
+            this.hiddenActionsActivityLink.hide();
+            this.hiddenActionsHint.hide();
         },
 
-        populateInventoryMatches: function () {
-            this.matches = [];
-            this.collection.matches.map((model)=> this.onAddMatch(model));
-        },
-
-        setupMatching: function () {
+        /**
+         * Invoked the first time the activity is loaded
+         */
+        setupActivityStartState: function () {
             // setup syncing
             let issuesCollection = this.collection.issues;
             let goalsCollection = this.collection.goals;
 
-            // Listen to the sync events on both collections, which waits for the models to be loaded.
+            // Listen to the sync events on both collections, which waits for
+            // the models to be loaded.
             this.listenTo(issuesCollection, 'sync', this.onIssuesSync);
             this.listenTo(goalsCollection, 'sync', this.onGoalsSync);
             this.listenTo(this.collection.matches, 'add', this.onAddMatch);
 
             // fetch issues and goals ready for matching to begin
-
             issuesCollection.fetch();
             goalsCollection.fetch();
 
@@ -152,8 +160,8 @@ define(function (require) {
         checkMatches: function () {
             if (this.collection.matches.length === this.collection.goals.length) {
                 // activate actions activity link
-                this.hiddenActionsActivityLink.toggle();
-                this.hiddenActionsHint.toggle();
+                this.hiddenActionsActivityLink.show();
+                this.hiddenActionsHint.show();
             }
         },
 
@@ -189,9 +197,13 @@ define(function (require) {
          * @param issues The issues collection.
          */
         onIssuesSync: function (issues) {
-            var n = issues.size();
-            var distance = 10;
-            issues.forEach(function (model, i) {
+            let n = issues.size();
+            let distance = 10;
+            let matches = this.collection.matches;
+            issues.filter((issue) => {
+                let existingMatch = matches.find((match) => match.get('issue').id === issue.id);
+                return !existingMatch;
+            }).forEach(function (model, i) {
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
                     model.get('content').length
@@ -225,8 +237,11 @@ define(function (require) {
         onGoalsSync: function (goals) {
             var n = goals.size();
             var distance = 10;
-            goals.forEach(function (model, i) {
-
+            let matches = this.collection.matches;
+            goals.filter((goal) => {
+                let existingMatch = matches.find((match) => match.get('goal').id === goal.id);
+                return !existingMatch;
+            }).forEach(function (model, i) {
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
                     model.get('content').length
