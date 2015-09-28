@@ -288,7 +288,7 @@ define(function (require) {
 
                 Object.assign(model.attributes,
                     {
-                        width: width,
+                        width: this.width,
                         title: 'Issue',
                         body: model.get('content'),
                         color: 'orange'
