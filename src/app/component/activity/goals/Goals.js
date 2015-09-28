@@ -1,10 +1,6 @@
 define(function (require) {
     'use strict';
 
-    // lib
-    let Backbone = require('backbone');
-    let _ = require('underscore');
-
     // components
     let Component = require('core/Component');
     let GoalCard = require('component/activity/goals/card/goal/GoalCard');
@@ -21,8 +17,6 @@ define(function (require) {
 
     // models
     var HelpModel = require('model/HelpModel');
-    let IssueModel = require('model/Issue');
-    let GoalModel = require('model/Goal');
     let IssueGoalPair = require('model/IssueGoalPair');
 
     // collections
@@ -32,6 +26,10 @@ define(function (require) {
 
     // positioning
     let Positioning = require('component/activity/goals/Positioning');
+
+    // rule based matching
+    let CardMatcher = require('component/activity/goals/match/CardMatcher');
+    let Rule = require('component/activity/goals/match/Rule');
 
     /**
      * Defines the positioning for Matches, so that
@@ -52,10 +50,6 @@ define(function (require) {
         }
     };
 
-    // dimensions
-    let height = 100;
-    let width = 300;
-
     /**
      * @class Goals
      * @classdesc The view class for Goals Action Activity.
@@ -74,15 +68,34 @@ define(function (require) {
          * The help component manages the instructions.
          */
         help: {},
+        /**
+         * This provides the link to move forward to the Actions activity,
+         * after all cards have been matched.
+         */
         hiddenActionsActivityLink: {},
+        /**
+         * This provides a hint to click / touch the activity link.
+         */
         hiddenActionsHint: {},
+        /**
+         * An array of references to the Match components is kept to
+         * rearrange these upon new Matches being made.
+         */
         matches: [],
 
+        /**
+         * The collections managed by this activity.
+         */
         collection: {
             issues: new IssuesCollection(),
             goals: new GoalsCollection(),
             matches: new MatchCollection()
         },
+
+        /**
+         * Rules based card matching.
+         */
+        cardMatcher: new CardMatcher(),
 
         /**
          * Initialise the Activity.
@@ -93,6 +106,8 @@ define(function (require) {
             // invoke super(arguments)
             Component.prototype.initialize.apply(this, arguments);
 
+            this.registerRules();
+
             let matchesCollection = this.collection.matches;
 
             this.setupFixedComponents(caseID);
@@ -102,6 +117,53 @@ define(function (require) {
             this.matches = [];
             matchesCollection.map((model) => this.onAddMatch(model));
 
+        },
+
+        /**
+         * Register rules for matching with the CardMatcher.
+         */
+        registerRules: function () {
+
+            /**
+             * Goal => Issue : IssueGoalPair
+             *
+             * @type {Rule}
+             */
+            let IssueGoalMatchRule = new Rule(function (goalCard, issueCard) {
+
+                let goal = goalCard.model;
+                let issue = issueCard.model;
+
+                if (goal.matchesIssue(issue)) {
+
+                    let match = new IssueGoalPair({
+                        issue: issue,
+                        goal: goal,
+                        color: 'light-green',
+                        width: this.width
+                    });
+
+                    this.collection.matches.add(match);
+
+                    // remove cards components as they will be
+                    // replaced by match components
+                    goalCard.remove();
+                    issueCard.remove();
+                }
+
+            }.bind(this));
+
+            /**
+             * Handles other direction: Issue => Goal : IssueGoalPair
+             *
+             * @type {Rule}
+             */
+            let IssueGoalMatchRule2 = new Rule((issueCard, goalCard) => {
+                return IssueGoalMatchRule.execute(goalCard, issueCard);
+            });
+
+            this.cardMatcher.addRule('Goal => Issue', IssueGoalMatchRule);
+            this.cardMatcher.addRule('Issue => Goal', IssueGoalMatchRule2);
         },
 
         /**
@@ -160,7 +222,6 @@ define(function (require) {
             // fetch issues and goals ready for matching to begin
             issuesCollection.fetch();
             goalsCollection.fetch();
-
         },
 
         /**
@@ -330,70 +391,8 @@ define(function (require) {
          */
         bindDraggableEvents: function (component) {
             component.on({
-                dragendsink: this.onDrop.bind(this)
+                dragendsink: this.cardMatcher.matchCards.bind(this.cardMatcher)
             });
-        },
-
-        /**
-         *
-         * @param event
-         */
-        onDrop: function (event) {
-            let draggable = event.draggable;
-            let droppable = event.droppable;
-
-            // check types
-            let models = this.assignTypes(draggable, droppable);
-            let isMatch = this.goalMatchesIssue(models);
-
-            if (isMatch) {
-                draggable.remove();
-                droppable.remove();
-            }
-        },
-
-        /**
-         * Resolves the types of the parameters .
-         *
-         * @param draggable the draggable card
-         * @param droppable the droppable card
-         * @returns {{issue: *, goal: *}}
-         */
-        assignTypes: function (draggable, droppable) {
-            let types = {};
-
-            [draggable, droppable].map(function (card) {
-                if (card instanceof IssueCard) {
-                    types.issue = card.model;
-                }
-                if (card instanceof GoalCard) {
-                    types.goal = card.model;
-                }
-            });
-
-            return types;
-        },
-
-        /**
-         * Checks for a match between an issue and a goal. If a match is found,
-         * creates a IssueGoalPair and return true; else return false.
-         *
-         * @param models the object containing the
-         * required model instances.
-         * @returns {boolean}
-         */
-        goalMatchesIssue: function (models) {
-            if (models.goal.matchesIssue(models.issue)) {
-                let match = new IssueGoalPair({
-                    issue: models.issue,
-                    goal: models.goal,
-                    color: 'light-green',
-                    width: width
-                });
-                this.collection.matches.add(match);
-                return true;
-            }
-            return false;
         },
 
         /**
@@ -405,7 +404,10 @@ define(function (require) {
          * @returns {number} the optimal card height.
          */
         determineCardHeight: function (length) {
+            // dimensions
+            let height = 100;
             let goalHeight = 100;
+
             const scale = 80;
             if (length > 42) {
                 return goalHeight = height * (length / scale);
