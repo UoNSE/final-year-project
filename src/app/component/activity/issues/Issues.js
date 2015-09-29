@@ -138,6 +138,7 @@ define(function (require) {
 					width: this.width,
 					height: this.height,
 					title: 'Issue',
+                    issueid: model.get('id'),
 					body: model.get('data'),
                     cost: model.get('cost'),
 					color: 'danger'
@@ -165,6 +166,7 @@ define(function (require) {
 					body: model.get('data'),
                     score: model.get('score'),
                     maxscore: model.get('maxscore'),
+                    issueid: model.get('issueId'),
 					color: 'info'
 				}));
                 var scale = i - ((n - 1) / 2);
@@ -309,16 +311,34 @@ define(function (require) {
             var draggableType = this.resolveType(draggable);
             var droppableType = this.resolveType(droppable);
             if(droppable instanceof IssueGroup && draggable instanceof IssueGroup){
-                //TODO merging two stacks
 
                 //only 1 issue allowed
                 if(draggable.model.get('issue') != undefined && droppable.model.get('issue') != undefined){
+                    draggable.shake()
                     return;
                 }
                 //load old collections
 
                 var issue = droppable.model.get('issue') || draggable.model.get('issue') || null ;
                 var evidence = draggable.model.get('evidence');
+
+                //TODO only correct issue joining
+                if(issue != null){
+                    var issueID = issue.attributes.issueid;
+                    var correctmerge = true;
+                    evidence.each(function (model) {
+                        if(issueID != model.attributes.issueid){
+                            correctmerge = false
+                        }
+                    });
+                    if (correctmerge == false){
+                        draggable.shake()
+                        return;
+                    }
+                }
+
+
+
                 evidence.add(droppable.model.get('evidence').toJSON());
 
                 this.gameCredit -= this.getScore(draggable);
@@ -331,6 +351,7 @@ define(function (require) {
                 var cardType = droppable instanceof IssueGroup ? draggableType : droppableType;
                 //only 1 issue allowed
                 if(card instanceof Issue && group.model.get('issue') != undefined){
+                    draggable.shake()
                     return;
                 }
 
@@ -343,6 +364,21 @@ define(function (require) {
                 var evidence = new Backbone.Collection(collection);
                 evidence.add(ev.toJSON());
 
+                //TODO only correct issue joining
+                if(issue != null){
+                    var issueID = issue.attributes.issueid;
+                    var correctmerge = true;
+                    evidence.each(function (model) {
+                        if(issueID != model.attributes.issueid){
+                            correctmerge = false
+                        }
+                    });
+                    if (correctmerge == false){
+                        draggable.shake()
+                        return;
+                    }
+                }
+
                 var cardcost = cardType.issue ? card.model.attributes.cost : -1* card.model.attributes.score;
                 if(!cardType.issue && card.model.attributes.score < card.model.attributes.maxscore){
                     this.gameCredit += 2;
@@ -354,15 +390,35 @@ define(function (require) {
             } else {
                 //only 1 issue allowed
                 if(draggable instanceof Issue && droppable instanceof Issue){
+                    draggable.shake()
                     return;
                 }
+
+                //TODO only correct issue joining
+
                 var issue = draggableType.issue || droppableType.issue || null;
+
+
 
                 // TODO make nicer?
                 var collection = [];
                 if (draggableType.evidence) {collection.push(draggableType.evidence);}
                 if (droppableType.evidence) {collection.push(droppableType.evidence);}
                 var evidence = new Backbone.Collection(collection);
+                //TODO only correct issue joining
+                if(issue != null){
+                    var issueID = issue.attributes.issueid;
+                    var correctmerge = true;
+                    evidence.each(function (model) {
+                        if(issueID != model.attributes.issueid){
+                            correctmerge = false
+                        }
+                    });
+                    if (correctmerge == false){
+                        draggable.shake()
+                        return;
+                    }
+                }
                 if(issue != null){
                     this.gameCredit += issue.attributes.cost;
                 }

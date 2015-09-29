@@ -8,7 +8,8 @@ define(function (require) {
 		defaults: {
 			body: 'Evidence',
 			score: 0,
-			maxscore: 0
+			maxscore: 0,
+			issueid: 0
 		}
 
 	});
