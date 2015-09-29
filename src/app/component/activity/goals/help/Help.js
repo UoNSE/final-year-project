@@ -18,7 +18,8 @@ define(function (require) {
         detached: true,
 
         events: {
-            'click .help-btn': 'handle'
+            'click .help-btn': 'help',
+            'click .help-close': 'close'
         },
 
         model: {
@@ -31,16 +32,13 @@ define(function (require) {
             Component.prototype.initialize.apply(this, arguments);
         },
 
-        /**
-         * When the HelpButton is clicked, this method is invoked.
-         * Delegates to JQuery and simply toggles the visibility of
-         * the help panel.
-         */
-        handle: function () {
-            $('.help-container').toggle();
+        help: function () {
+            $('.help-container').show();
+            $('.help-btn').hide();
         }
 
     });
+
 
     /**
      * @class Help
@@ -49,19 +47,22 @@ define(function (require) {
         // important for having fixed position near back button
         detached: true,
 
-        template: template,
+        events: {
+            'click .help-close': 'close'
+        },
 
-        helpButton: {},
+        template: template,
 
         styles: 'component/activity/goals/help/help.css',
 
-        id: '',
-
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);
-            // add the help button as a child; so that we manage both
-            // components from the same module
             this.helpButton = this.add(new HelpButton());
+        },
+
+        close: function () {
+            $('.help-btn').show();
+            $('.help-container').hide();
         }
 
     });
