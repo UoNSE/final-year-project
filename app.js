@@ -18,11 +18,11 @@ var app = express();
 var server = http.Server(app);
 // var server = https.createServer(options, app);
 
-// port for http server
-app.set('port', 7575);
+// // port for http server
+// app.set('port', 7575);
 
 // port for https server
-// app.set('port', 7576);
+app.set('port', 7576);
 
 app.use(favicon(__dirname + '/src/favicon.ico'));
 
