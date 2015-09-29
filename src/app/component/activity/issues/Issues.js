@@ -84,7 +84,7 @@ define(function (require) {
                 model: new ActionButtonModel({
                     icon: 'action-shopping-cart',
                     color: 'blue',
-                    href: 'cases/' + params.params.case_id + '/activity/issues/unlock',
+                    href: 'cases/' + params['case_id'] + '/activity/issues/unlock',
                     classes: 'topic-unlock'
                     //styles: {
                     //    width:100,
