@@ -59,26 +59,30 @@ define(function (require) {
             }));
         },
 
-        onLoad: function() {
+        onLoad: function () {
             this.placeTopics();
         },
 
-        onTopicsSync: function(topics) {
-            topics.forEach(function (model, index) {
-                this.addTopic(model);
-            }, this);
-
+        onTopicsSync: function (topics) {
+            this.addTopics(topics);
             this.collection.issues.fetch();
         },
 
-        onIssuesSync: function(issues) {
-            issues.forEach(function (model, i) {
+        onIssuesSync: function (issues) {
+            issues.forEach(model => {
                 var issue = this.addIssue(model);
                 issue.hide();
-            }, this);
+            });
         },
 
-        addTopic: function(model) {
+        addTopics: function (topics) {
+            topics.forEach(model => {
+                this.addTopic(model);
+            });
+            this.placeTopics();
+        },
+
+        addTopic: function (model) {
             var topic = this.add(new Topic({
                 topicId: model.get('id'),
                 name: model.get('data')
@@ -100,30 +104,29 @@ define(function (require) {
 
             issue.on('issueSelected', this.onIssueSelected.bind(this));
 
-            this.topics.forEach(function(theTopic,index){
-                if (theTopic.topicId === issue.topicId){
-                    theTopic.addIssue(issue);
+            this.topics.forEach(topic => {
+                if (topic.topicId === issue.topicId){
+                    topic.addIssue(issue);
                 }
-            },this);
+            });
 
             return issue;
         },
 
-        onTopicSelected: function ( theTopicSelected ) {
-            this.topicSelected = theTopicSelected;
+        onTopicSelected: function (topicSelected) {
+            this.topicSelected = topicSelected;
 
-            this.topics.forEach(function(theTopic,index){
-                theTopic.hide();
-            },this);
+            this.topics.forEach(topic => {
+                topic.hide();
+            });
 
             this.topicHint.hide();
             this.issueHint.show();
         },
 
-        onIssueSelected: function( theIssue ) {
-
-            if (theIssue.canPurchase(this.gameCredit)){
-                theIssue.purchase();
+        onIssueSelected: function (issue) {
+            if (issue.canPurchase(this.gameCredit)){
+                issue.purchase();
                 this.updateCredit();
             }
             else {
@@ -135,18 +138,18 @@ define(function (require) {
             var n = this.topics.length;
             var radius = 200;
 
-            this.topics.forEach(function(theTopic,index){
-                theTopic.show();
-                theTopic.position.set(0,0);
+            this.topics.forEach((topic, index) => {
+                topic.show();
+                topic.position.set(0,0);
 
-                new TWEEN.Tween(theTopic.position)
+                new TWEEN.Tween(topic.position)
                     .to(Vector2.fromPolar(radius, index / n * Math.TAU), 1000)
                     .easing(TWEEN.Easing.Elastic.Out)
                     .start();
-            },this);
+            });
         },
 
-        onTopicBack: function( event ) {
+        onTopicBack: function (event) {
             this.topicSelected.hideIssues();
             this.topicSelected = null;
 
@@ -157,17 +160,17 @@ define(function (require) {
         },
 
         //analyses all evidence stacks and current expenditures and returns the credit available for use
-        updateCredit: function() {
+        updateCredit: function () {
             //available credit will be determined by evidence card stacks persisted by the inventory
             var availableCredit = 20;
 
-            this.topics.forEach(function(theTopic,index){
-                theTopic.issues.forEach(function(theIssue,index){
-                    if ( theIssue.purchased ){
-                        availableCredit -= theIssue.getCost();
+            this.topics.forEach(topic => {
+                topic.issues.forEach(issue => {
+                    if (issue.purchased) {
+                        availableCredit -= issue.getCost();
                     }
-                },this);
-            },this);
+                });
+            });
 
             if (this.gameCredit !== availableCredit){
                 this.scoreContainer.setScore(availableCredit);
