@@ -15,5 +15,6 @@ define(function (require) {
 			Page.prototype.initialize.apply(this, arguments);
 			this.add(new Start());
 		}
+
 	});
 });

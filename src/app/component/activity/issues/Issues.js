@@ -24,24 +24,28 @@ define(function (require) {
     var Help = require('component/help/help');
 
     return Component.extend({
-        gameCredit: 0,
         //hack to stop duplicating cards
         mergedYet: false,
         template: template,
-        classes: ['issues'],
+        classes: 'issues',
         styles: 'component/activity/issues/Issues.css',
 
         menu: null,
+        gameCredit: 0,
 
         collection: {
             issues: new IssuesCollection(),
-            evidence: new EvidenceCollection(),
+            evidence: new EvidenceCollection()
         },
 
-        initialize: function (params) {
+        initialize: function (inventory, params) {
 
             Component.prototype.initialize.apply(this, arguments);
             this.gameCredit = 0;
+
+            this.inventory = inventory;
+            this.params = params;
+
 			this.width = 300;
 			this.height = 90;
 
@@ -58,7 +62,6 @@ define(function (require) {
             else{
                 this.fetchCards(issues, evidence);
             }
-
 
             this.menu = this.add(new Menu());
             this.menu.on({
@@ -81,8 +84,13 @@ define(function (require) {
                 model: new ActionButtonModel({
                     icon: 'action-shopping-cart',
                     color: 'blue',
-                    href: 'cases/' + params.case_id + '/activity/issues/unlock',
+                    href: 'cases/' + params['case_id'] + '/activity/issues/unlock',
                     classes: 'topic-unlock'
+                    //styles: {
+                    //    width:100,
+                    //    height:100,
+                    //    'font-size':40
+                    //}
                 })
             })).detached = true;
 
@@ -251,9 +259,10 @@ define(function (require) {
         updateScore: function(){
             this.scoreContainer.setScore(this.gameCredit);
 
-            if ( this.gameCredit >= this.scoreTrigger ){
+            if (this.gameCredit >= this.scoreTrigger) {
                 this.triggerScoreHint();
             }
+            //$(".score-display").text("CREDIT: " + gameCredit);
         },
 
         onDelete: function (event) {
@@ -433,11 +442,7 @@ define(function (require) {
                     if(ev.attributes.score < ev.attributes.maxscore){
                         this.gameCredit += 2;
                     }
-                },this)
-
-
-
-
+                }, this);
             }
             //create new card
             var issueGroup = this.add(new IssueGroup({

@@ -10,8 +10,19 @@ define(function (require) {
 	Object.assign(ZIndexManager.prototype, {
 		registerElement: function (multiTouchElement) {
 			this.elements[this.frontIndex] = multiTouchElement;
+
+			var element = multiTouchElement.element;
+			element.css('zIndex', this.frontIndex);
+			this.frontIndex++;
+
+			multiTouchElement.component.on({
+				bringToFront: this.bringToFront.bind(this, element),
+				sendToBack: this.sendToBack.bind(this, element)
+			});
+
 			multiTouchElement.element.css('zIndex', this.frontIndex);
 			this.frontIndex++;
+
 		},
 
 		removeElement: function (multiTouchElement) {
@@ -31,7 +42,6 @@ define(function (require) {
 					}
 				}
 			}
-
 			return null;
 		},
 

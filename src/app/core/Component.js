@@ -134,7 +134,16 @@ define(function (require) {
 		setDroppable: function (options) {
 			// TODO: handle remove
 			multiTouchManager.makeDroppable(this.getMultiTouchElement(), options);
+		},
+
+		bringToFront: function () {
+			this.trigger('bringToFront');
+		},
+
+		sendToBack: function () {
+			this.trigger('sendToBack');
 		}
+
 	});
 });
 
