@@ -8,7 +8,6 @@ define(function (require) {
 	return Object2D.extend({
 		showBackButton: true,
 		title: 'Page',
-
 		initialize: function (router, camera, urlParams) {
 			Object2D.prototype.initialize.apply(this, arguments);
             this.router = router;

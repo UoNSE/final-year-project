@@ -22,7 +22,8 @@ define(function (require) {
 		onDrag: function () {
 			var opacity = this.options.opacity;
 			if (opacity) {
-				this.component.$el.fadeTo('fast', opacity);
+				new TWEEN.Tween(this.component).to({opacity: opacity}, 300).start();
+				//this.component.$el.fadeTo('fast', opacity);
 			}
 		},
 
@@ -107,7 +108,7 @@ define(function (require) {
 				draggable: this.component
 			});
 
-			this.component.$el.fadeTo('fast', 1);
+			new TWEEN.Tween(this.component).to({opacity: 1}, 200).start();
 
 		}
 	});
