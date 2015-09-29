@@ -4,9 +4,6 @@ define(function(require) {
 	//TODO: make cards draggable
 	//TODO: make hotspot from data
 
-	var Annyang = require('annyang');
-    // var meSpeak = require('mespeak');
-
 	// models
 	var ButtonModel = require('model/Button');
 	var ActionButtonModel = require('model/ActionButton');
@@ -28,7 +25,7 @@ define(function(require) {
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 	var EvidenceCollection = require('collection/Evidence');
 	var EvidenceModel = require('model/Evidence');
-	// var Delete = require('component/activity/issues/menu/actionbutton/delete/Delete');
+	var Delete = require('component/activity/issues/menu/actionbutton/delete/Delete');
 
 	var Menu = require('component/activity/issues/menu/Menu');
 
@@ -56,10 +53,6 @@ define(function(require) {
 			this.collection.fetch();
 			this.visiblemenus = [];
 			this.collaborative = true;
-            // this.voiceintegrated = false;
-            this.voiceintegrated = false;
-			// this.annyang = new Annyang();
-            this.meSpeak = meSpeak;
 
 		},
 
@@ -125,108 +118,7 @@ define(function(require) {
 			// this.buttons = {};
 			this.addVPButtons();
 
-            if (this.voiceintegrated){
-                this.initTTS();
-    			this.addVoiceCommands();
-            }
 
-		},
-
-        initTTS: function(){
-            //    console.log("in init functon");
-               if(typeof this.meSpeak !== 'undefined'){
-                //    this.meSpeak.loadConfig('https://localhost:7576/lib/mespeak/mespeak_config.json');
-                   this.meSpeak.loadConfig('../lib/mespeak/mespeak_config.json');
-                   console.log("is mespeak config loaded: "+ this.meSpeak.isConfigLoaded());
-                   this.meSpeak.loadVoice("../lib/mespeak/voices/en/en.json");
-                   console.log("is mespeak voice loaded: "+ this.meSpeak.isVoiceLoaded());
-               }
-
-           },
-
-		addVoiceCommands: function(){
-
-			if (annyang) {
-
-			var that = this;
-
-			  this.commands = {
-
-				'test': function() {
-					// debugger;
-					console.log('heard "test"');
-					that.tests.toggle();
-				},
-				'query': function() {
-					console.log('heard "query"');
-					that.querymenu.toggle();
-				},
-				'chart': function() {
-					console.log('heard "chart"');
-					that.chart.toggle();
-				},
-				'what is the problem': function(){
-					if(that.querymenu.visible){
-						console.log('heard "what is the problem"');
-						var button = $('#query-btn1');
-                        button.trigger("click");
-                        this.meSpeak.speak(this.responses[0]);
-					}
-				},
-				'Where does it hurt': function(){
-					if(that.querymenu.visible){
-						console.log('heard "where does it hurt"');
-						$('#query-btn2').trigger("click");
-					}
-				},
-				'When did the pain begin': function(){
-					if(that.querymenu.visible){
-						console.log('heard "When did the pain begin"');
-						$('#query-btn3').trigger("click");
-					}
-				},
-				'Have you noticed any swelling': function(){
-					if(that.querymenu.visible){
-						console.log('heard "Have you noticed any swelling"');
-						$('#query-btn4').trigger("click");
-					}
-				},
-				'Has your skin been dry': function(){
-					if(that.querymenu.visible){
-						console.log('heard "Has your skin been dry"');
-						$('#query-btn5').trigger("click");
-					}
-				},
-				'How old are you': function(){
-					if(that.querymenu.visible){
-						console.log('heard "How old are you"');
-						$('#query-btn5').trigger("click");
-					}
-				},
-				'How have you been sleeping': function(){
-					if(that.querymenu.visible){
-						console.log('heard "Have you noticed any swelling"');
-						$('#query-btn7').trigger("click");
-					}
-				},
-				'do you have family here': function(){
-					if(that.querymenu.visible){
-						console.log('heard "do you have family"');
-						$('#query-btn8').trigger("click");
-					}
-				},
-				'urine': function(){
-					if(that.tests.visible){
-						console.log('heard "urine"');
-						$('#test-btn4').trigger("click");
-					}
-				},
-
-		  	};
-			  annyang.addCommands(this.commands);
-			  annyang.start({ autoRestart: true, continuous: true});
-			  console.log('annyang started');
-		  }
 		},
 
 

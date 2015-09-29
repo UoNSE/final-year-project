@@ -69,7 +69,7 @@ define(function (require) {
 	});
 
 	// require(['core/Application', 'es6-shim', 'addons', 'backbone-relational'], function (Application) {
-	require(['core/Application', 'es6-shim', 'addons', 'backbone-relational', 'annyang', 'mespeak'], function (Application) {
+	require(['core/Application', 'es6-shim', 'addons', 'backbone-relational'], function (Application) {
 		new Application();
 	});
 
