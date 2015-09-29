@@ -14,8 +14,11 @@ define(function (require) {
 		needsWorldUpdate: true,
 		detached: false,
 		opacity: 1,
+		origin: 'center',
+		detachedPageOrigin: 'top left',
 
 		initialize: function () {
+
 			this.id = 'component-' + MathUtil.generateUUID(8);
 			this.children = [];
 

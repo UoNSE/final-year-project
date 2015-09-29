@@ -6,6 +6,8 @@ define(function (require) {
 
 	return ActionButton.extend({
 		detached: true,
+		origin: 'top left',
+		detachedPageOrigin: 'top left',
 		events: {
 			'click': 'onClick'
 		},

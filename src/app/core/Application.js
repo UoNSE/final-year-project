@@ -15,13 +15,24 @@ define(function (require) {
 		this.router = new Router(this.scene, this.camera, this.session);
 		this.renderer = new CSS2DRenderer(this.router);
 		this.animateCallback = this.animate.bind(this);
+		this.rendering = true;
+		this.requestId = null;
 		Backbone.history.start({pushState: true});
-		requestAnimationFrame(this.animateCallback);
+		this.startRendering();
 	}
-
 	Object.assign(Application.prototype, {
+		startRendering: function () {
+			this.rendering = true;
+			this.requestId = requestAnimationFrame(this.animateCallback);
+		},
+
+		stopRendering: function () {
+			this.rendering = false;
+			cancelAnimationFrame(this.requestId);
+		},
+
 		animate: function (time) {
-			requestAnimationFrame(this.animateCallback);
+			this.requestId = requestAnimationFrame(this.animateCallback);
 			TWEEN.update(time);
 			this.renderer.render('#content', this.scene, this.camera);
 		}
