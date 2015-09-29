@@ -2,19 +2,20 @@ define(function (require) {
 	'use strict';
 
 	var Page = require('core/Page');
-	var Inventory = require('model/Inventory');
+    let Inventory = require('component/inventory/Inventory');
+	var InventoryModel = require('model/Inventory');
 
 	return Page.extend({
 		name: 'inventory_page',
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
 
-			//var inventory = this.add(new Inventory());
+			var inventory = this.add(new Inventory());
 			//this.position.x = -inventory.width / 2;
 
-			this.inventory = new Inventory();
+			this.inventory = new InventoryModel();
 
-			//this.camera.position.x = inventory.width / 2;
+			this.camera.position.x = inventory.width / 2;
 		},
 
 		/**
@@ -22,7 +23,7 @@ define(function (require) {
 		 * for the offset applied in the constructor.
 		 */
 		onDestroy: function () {
-			//this.camera.position.set(0, 0);
+			this.camera.position.set(0, 0);
 		}
 
 	});

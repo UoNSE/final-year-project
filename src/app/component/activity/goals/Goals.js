@@ -283,14 +283,14 @@ define(function (require) {
 
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
-                    model.get('content').length
+                    model.get('data').length
                 );
 
                 Object.assign(model.attributes,
                     {
                         width: this.width,
                         title: 'Issue',
-                        body: model.get('content'),
+                        body: model.get('data'),
                         color: 'orange'
                     }
                 );
