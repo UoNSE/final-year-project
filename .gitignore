@@ -3,3 +3,4 @@
 /src/lib/
 *.orig
 *.css
+node_modules2/

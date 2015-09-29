@@ -22,9 +22,16 @@ define(function (require) {
 		},
 
 		onClick: function () {
-			this.router.back();
+			var goBack = true;
+			var event = {
+				preventDefault: function () {
+					goBack = false;
+				}
+			};
+			this.trigger('back', event);
+			if (goBack) {
+				this.router.back();
+			}
 		}
-
 	});
-
 });

@@ -1,18 +1,21 @@
 define(function (require) {
+    'use strict';
 
-    var Backbone = require('backbone');
+    let _ = require('underscore');
+    let Panel = require('model/Panel');
 
-    return Backbone.Model.extend({
+    let Action = Panel.extend({
 
         defaults: {
             content: "This is an action",
             goalId: 1
-        },
-
-        isValid: function (content) {
-            return $.trim(content);
         }
 
     });
+
+    // merge model schemas
+    _.extend(Action.prototype.defaults, Panel.prototype.defaults);
+
+    return Action;
 
 });

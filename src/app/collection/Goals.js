@@ -5,15 +5,7 @@ define(function (require) {
 
     return Collection.extend({
         model: Goal,
-        urlFragment: '/goals',
-
-        search: function(letters) {
-            var pattern = new RegExp(letters,"gi");
-            return (this.filter(function(goal) {
-                return pattern.test(goal.get("content"));
-            }));
-        }
-
+        urlFragment: '/goals'
     });
 
 });
