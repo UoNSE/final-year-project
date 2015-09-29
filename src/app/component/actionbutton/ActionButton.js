@@ -6,8 +6,10 @@ define(function (require) {
 
 	return Component.extend({
 		template: template,
+		classes: ['cpn-actionbutton'],
+
 		events: {
-			'click .btn' : 'onClick'
+			'click .cpn-actionbutton': 'onClick'
 		},
 
 		onClick:function(event){
@@ -15,5 +17,5 @@ define(function (require) {
 		}
 	});
 
-});
 
+});

@@ -1,0 +1,29 @@
+.patient-body {
+    z-index: 0;
+
+    .vpb {
+        /*virtual patient body*/
+        width: 512px;
+        height: 768px;
+        background: transparent url("/resources/images/human.png") no-repeat center center;
+    }
+
+    .hotspotbutton {
+        /*the button itself*/
+        opacity: 0.5;
+        transform: scale(0.5,0.5);
+    }
+
+    .hotspawn {
+        /*spawn on hotspot interaction*/
+        position: absolute;
+        left:0;
+        top:0;
+        background-color: #fff;
+        border: 1px solid #000;
+        border-radius:5px;
+        display: none;
+        z-index:999;
+        padding:10px;
+    }
+}

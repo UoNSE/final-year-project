@@ -17,7 +17,10 @@ define(function (require) {
 			'jquery-ui': '../lib/jquery-ui/jquery-ui',
 			'tweenjs': '../lib/tweenjs/build/tween.min',
 			'bluebird': '../lib/bluebird/js/browser/bluebird',
-			'es6-shim': '../lib/es6-shim/es6-shim'
+			'es6-shim': '../lib/es6-shim/es6-shim',
+			'annyang': '../lib/annyang/annyang',
+			'mespeak': '../lib/mespeak/mespeak'
+
 		},
 		shim: {
 			'backbone': {
@@ -65,7 +68,8 @@ define(function (require) {
 		}
 	});
 
-	require(['core/Application', 'es6-shim', 'addons', 'backbone-relational'], function (Application) {
+	// require(['core/Application', 'es6-shim', 'addons', 'backbone-relational'], function (Application) {
+	require(['core/Application', 'es6-shim', 'addons', 'backbone-relational', 'annyang', 'mespeak'], function (Application) {
 		new Application();
 	});
 

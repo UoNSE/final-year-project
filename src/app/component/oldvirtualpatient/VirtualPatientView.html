@@ -1,0 +1,225 @@
+<div class="virtual-patient-component-container">
+    <!-- Virtual patient---------------------------------------------------------------------->
+    <div id="eveshade"></div>
+    <div id="eve"> <!--it must be the first and last - thats how this works -->
+        <input type="button" class="hotspot" style="left:50%;top:0%">
+        <input type="button" class="hotspot" style="left:50%;top:50%">
+        <input type="button" class="hotspot" style="left:50%;top:100%">
+    </div>
+
+    <div id="urine-analysis-results" class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Urine Analysis Results</h3>
+        </div>
+        <table>
+            <tr>
+                <td>Glucose</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>Bilirubin</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>Ketones</td>
+                <td>120</td>
+            </tr>
+            <tr>
+                <td>S.G</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>Eryth</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>pH</td>
+                <td>40</td>
+            </tr>
+            <tr>
+                <td>T.S(g/dL)</td>
+                <td>50</td>
+            </tr>
+        </table>
+        <button id="hide-chart-button2" class="btn btn-primary btn-raised hide-chart-button">Hide</button>
+    </div>
+
+
+
+<!-- query patient chart -------------------------------------->
+
+    <div id="query-menu-container" class="menu-container">
+        <button id="button-query" class="btn btn-material-indigo btn-fab btn-raised">Query</button>
+        <div id = "query-menu" class="button-menu">
+        <br><br>
+        <ul>
+            <li>
+                <button id="query-card1" class="btn btn-material-blue btn-raised query-card menu-item">Where does it hurt?</button>
+            </li>
+            <li>
+                <button id="query-card2" class="btn btn-material-blue btn-raised query-card menu-item">When did the pain begin?</button>
+            </li>
+            <li>
+                <button id="query-card3" class="btn btn-material-blue btn-raised query-card menu-item">Are you hungry?</button>
+            </li>
+            <li>
+                <button id="query-card4" class="btn btn-material-blue btn-raised query-card menu-item">Are you thirsty?</button>
+            </li>
+        </ul>
+    </div>
+    </div>
+
+<!-- test menu ------------------------------------------------>
+    <div id="test-menu-container" class="menu-container">
+        <button id="button-tests" class="btn btn-material-indigo btn-fab btn-raised">Tests</button>
+        <div id = "test-menu" class="button-menu">
+        <ul>
+            <li>
+                <button id="test-card1" class="btn btn-material-blue btn-raised results-card"
+                style="background-color:green">Urine Analysis</button>
+            </li>
+            <li>
+                <button id="test-card2" class="btn btn-material-blue btn-raised test-card"
+                style="background-color:orange">Blood Test - CBC (2mins)</button>
+            </li>
+            <li>
+                <button id="test-card3" class="btn btn-material-blue btn-raised test-card">Blood Test</button>
+
+                <!-- blood test sub-menu ------------------------------------------------>
+                <div id="test-menu-container2" class="menu-container sub-menu-container">
+                    <div id = "test-menu2" class="button-menu">
+                    <ul>
+                        <li>
+                            <button id="blood-test-card1" class="btn btn-material-blue btn-raised results-card">CBC</button>
+                        </li>
+                        <li>
+                            <button id="blood-test-card2" class="btn btn-material-blue btn-raised test-card">ESR</button>
+                        </li>
+                        <li>
+                            <button id="blood-test-card4" class="btn btn-material-blue btn-raised test-card">Glucose</button>
+                        </li>
+                        <li>
+                            <button id="blood-test-card5" class="btn btn-material-blue btn-raised test-card">Lipoprotein</button>
+                        </li>
+                        <li>
+                            <button id="blood-test-card5" class="btn btn-material-blue btn-raised test-card">ELISA</button>
+                        </li>
+                        <li>
+                            <button id="blood-test-card5" class="btn btn-material-blue btn-raised test-card">STD</button>
+                        </li>
+                        <li>
+                            <button id="blood-test-card5" class="btn btn-material-blue btn-raised test-card">Western Blot</button>
+                        </li>
+                        <li>
+                            <button id="blood-test-card5" class="btn btn-material-blue btn-raised test-card">Liver Function</button>
+                        </li>
+                        <li>
+                            <button id="blood-test-card5" class="btn btn-material-blue btn-raised test-card">Hormones</button>
+                        </li>
+                    </div>
+                </div>
+                <!-- end blood test sub-menu ------------------------------------------------>
+            </li>
+            <li>
+                <button id="test-card4" class="btn btn-material-blue btn-raised test-card">XRAY</button>
+            </li>
+            <li>
+                <button id="test-card5" class="btn btn-material-blue btn-raised test-card">CTSCAN</button>
+            </li>
+        </div>
+    </div>
+
+<!--patients chartcharts: hidden by default in controller----------------------------------------------->
+<div id = "patients-chart-container" class="menu-container">
+<button id="button-chart" class="btn btn-material-indigo btn-fab btn-raised">Chart</button>
+
+    <div id="patients-chart-table" class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Patients Chart</h3>
+        </div>
+        {{#each []}}
+        <table>
+            <tr>
+                <td>First Name</td>
+                <td>{{this.firstname}}</td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>{{this.lastname}}</td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>{{this.sex}}</td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td>{{this.age}}</td>
+            </tr>
+            <tr>
+                <td>DOB</td>
+                <td>{{this.dob}}</td>
+            </tr>
+            <tr>
+                <td>Occupation</td>
+                <td>{{this.profession}}</td>
+            </tr>
+
+            <tr>
+                <td>Current medication:</td>
+                <td>Insulin</td>
+            </tr>
+        </table>
+        {{/each}}
+        <button id="hide-chart-button" class="btn btn-primary btn-raised hide-chart-button">Hide</button>
+    </div>
+</div>
+
+    <div id="speech-card1" class="generic-card speech-card card">
+        I'm cold
+    </div>
+    <div id="speech-card2" class="generic-card speech-card card">
+        My head hurts
+    </div>
+    <br><br>
+
+
+    <div id="speech-card3" class="generic-card speech-card card">
+
+        <!--<img class="speech-icon" src="resources/images/speech.png"/>-->
+        <div class = "card-text" style="margin-top:-1em">
+            <p>
+                <b>query:</b> Are you hungry?<br>
+                <b>Response:</b> Yes."
+            </p>
+        </div>
+    </div>
+
+    <div id="observation-card1" class="generic-card observation-card card">
+        Patient is elderly man.
+    </div>
+
+    <div id="observation-card2" class="generic-card observation-card card">
+        Patient is itchy all over.
+    </div>
+
+    <div id="observation-card3" class="generic-card observation-card card">
+        Patient has a rash.
+    </div>
+    <div id="dummy-card1" class="generic-card observation-card card">
+        the fire
+    </div>
+    <div id="dummy-card2" class="generic-card observation-card card">
+        and the flood.
+    </div>
+    <div id="dummy-card3" class="generic-card observation-card card">
+        And i always feel.
+    </div>
+    <div id="dummy-card4" class="generic-card observation-card card">
+        You in my blood.
+    </div>
+
+
+
+    <div id ="dummy-collection-box">Dummy Evidence Box</div>
+
+</div> <!-- end the component container -->
