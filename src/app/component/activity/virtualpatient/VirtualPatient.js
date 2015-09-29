@@ -80,8 +80,8 @@ define(function(require) {
 
 			this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = this.add(new Chart({model: this.patient}));
-			this.chart.position.set(0,200);
-			this.chart.interactive = true;
+			this.chart.position.set(0,300);
+			// this.chart.interactive = true;
 
 
 			this.help = this.add(new Help({

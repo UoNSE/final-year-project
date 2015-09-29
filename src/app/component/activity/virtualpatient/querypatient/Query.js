@@ -54,11 +54,11 @@ define(function(require) {
 		},
 
 		onToggleButton: function (button, event) {
-			if(button.visible){
-				button.children().forEach(child => {
-					child.hide();
-				});
-			}
+			// if(button.visible){
+			// 	button.children().forEach(child => {
+			// 		child.hide();
+			// 	});
+			// }
 			// button.children.hide();
 			button.toggle();
 		},
