@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var InventoryPage = require('page/InventoryPage');
+    var Page = require('core/Page');
     var Actions = require('component/activity/goals/actions/Actions');
 
     /**
@@ -9,12 +9,12 @@ define(function (require) {
      *
      * @class Actions
      */
-    return InventoryPage.extend({
+    return Page.extend({
 
         name: 'actions',
 
         initialize: function () {
-            InventoryPage.prototype.initialize.apply(this, arguments);
+            Page.prototype.initialize.apply(this, arguments);
             let goalID = this.urlParams['goal_id'];
             this.add(new Actions(goalID));
         }

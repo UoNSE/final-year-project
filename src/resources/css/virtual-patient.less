@@ -8,28 +8,42 @@
 @button-size: 7em;
 
 //-----------------------------------vp+hotspots
-#vp-container{
-  display:block;
-  position: absolute; //absolute;
-  right:20%;
-  margin-left:0px; //right:0 no
-  margin-top:-82px;
-  background-image: url("../images/vp-outline.png");
-  background-repeat:no-repeat;
-  background-position: top right;
-  min-width:768px; //614 is 60% of the screen with the other 410 reserved for left+right menu 512px;
-  min-height:768px;
-  height:100%;
-  width:auto;
-  //background-color:black;
+
+#eve {
+    width: 50vw;
+    height: 75vw;
+    max-height: 100vh;
+    max-width: 66.66vh;
+    margin:auto;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+
+    background: transparent url("../images/human.png") no-repeat center center;
+    background-size:100% 100%;
+    color:#fff;
+}
+
+#eveshade {
+    position:absolute;
+    left:25%;
+    width:50%;
+    height:100%;
+    top:0;  /*This should not be neccesary!, yet theres a 83px margin...*/
+    background-color:#333;
 }
 
 .hotspot {
-  width:56px;
-  height:56px;
-  background-color:rgba(255,0,0,0.5);
-  border-radius:50%;
-  border:none;
+    width:10%;
+    height:6.66%;
+    margin-left:-5%;
+    margin-top:-5%; /*CAVEART! - thanks to the sweet aspect-ratio-locking code, this will be the true 50% of the hotspot height (not 3.33)*/
+    background-color:rgba(255,0,0,0.5);
+    border-radius:50%;
+    border:none;
+    position:absolute;
 }
 //-----------------------------------
 
@@ -250,14 +264,9 @@
   background-image: url("../images/observe.png");
 }
 
+/* Careful! - addding fixed widths/heights BREAKS THE MENU WHEN YOU EXIT THE PAGE (unnaceptable)! */
 .menu-item{
-    // .generic-card;
-    font-size: 8pt;
-    width: 250px;
-    text-align: left;
-    height:50px;
     font-size:1em;
-
 }
 
 .test-card {

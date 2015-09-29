@@ -6,7 +6,10 @@ define(function (require) {
 	var Evidence = Panel.extend({
 
 		defaults: {
-			body: 'Evidence'
+			body: 'Evidence',
+			score: 0,
+			maxscore: 0,
+			issueid: 0
 		}
 
 	});

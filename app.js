@@ -1,14 +1,20 @@
 var express = require('express');
 var http = require('http');
+var https = require('https');
+var fs = require('fs');
 var favicon = require('serve-favicon');
 var compression = require('compression');
 var jsonServer = require('json-server');
 var lessMiddleware = require('less-middleware');
 
+
 var app = express();
 var server = http.Server(app);
 
+// port for http server
 app.set('port', 7575);
+
+
 app.use(favicon(__dirname + '/src/favicon.ico'));
 
 // Enable compression of responses

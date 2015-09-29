@@ -5,8 +5,17 @@ define(function (require) {
 	var template = require('text!component/actionbutton/ActionButton.hbs');
 
 	return Component.extend({
-		template: template
+		template: template,
+		classes: ['cpn-actionbutton'],
+
+		events: {
+			'click .cpn-actionbutton': 'onClick'
+		},
+
+		onClick:function(event){
+			this.trigger('click',event);
+		}
 	});
 
-});
 
+});

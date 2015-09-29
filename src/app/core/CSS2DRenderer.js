@@ -1,15 +1,18 @@
 define(function (require) {
 	'use strict';
 
+	var $ = require('jquery');
+
 	var Scene = require('core/Scene');
 	var Camera = require('core/Camera');
 	var Transform = require('math/Transform');
-	var $ = require('jquery');
+	var MathUtil = require('math/MathUtil');
 	var Promise = require('bluebird');
 
 	function CSS2DRenderer (router) {
 		this.router = router;
 		this.gui = $('#gui');
+		this.styles = {};
 	}
 
 	Object.assign(CSS2DRenderer.prototype, {
@@ -31,7 +34,7 @@ define(function (require) {
 				transform = object.transform;
 			}
 			else if (object.needsWorldUpdate) {
-				transform = object.worldTransform.copy(object.transform).applyTransform(parentTransform)
+				transform = object.worldTransform.copy(parentTransform).applyTransform(object.transform)
 			} else {
 				object.transform.copy(object.worldTransform);
 				if (object.parent) {
@@ -124,21 +127,25 @@ define(function (require) {
 			var promises = [];
 			styles = styles ? Array.isArray(styles) ? styles : [styles] : [];
 			// Get the head from the HTML page.
-			var head = $('head');
+			var $head = $('head');
 			// Load necessary CSS files.
-			for (var i = 0, len = styles.length; i < len; i++) {
+			styles.forEach(style => {
 				promises.push(new Promise(function (resolve) {
-					var path = require.toUrl(styles[i]);
-					var css = $('<link rel="stylesheet" type="text/css" href="' + path + '">');
-					head.append(css);
-					var img = $('<img>', {
-						src: path
-					});
-					img.on('error', function () {
+					var path = require.toUrl(style);
+					var $css = $('<link rel="stylesheet" type="text/css" href="' + path + '">');
+					if (this.styles[path]) {
 						resolve();
-					});
+					} else {
+						console.log('Loading', path);
+						$head.append($css);
+						this.styles[path] = MathUtil.generateUUID(8);
+						var img = $('<img>', {src: path});
+						img.on('error', function () {
+							resolve();
+						});
+					}
 				}.bind(this)));
-			}
+			});
 			return Promise.all(promises);
 		},
 

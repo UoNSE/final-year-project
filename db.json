@@ -197,120 +197,68 @@
   "issues": [
     {
       "id": 1,
-      "content": "Dehydration"
+      "data": "Dehydration",
+      "topicId": 1,
+      "cost": 20
     },
     {
       "id": 2,
-      "content": "Hypovolaemia"
+      "data": "Hypovolaemia",
+      "topicId": 2,
+      "cost": 4
+    },
+    {
+      "id": 3,
+      "data": "Nausea",
+      "topicId": 1,
+      "cost": 0
+    }
+  ],
+  "topics": [
+    {
+      "id": 1,
+      "data": "Lungs"
+    },
+    {
+      "id": 2,
+      "data": "Heart"
+    },
+    {
+      "id": 3,
+      "data": "Kidneys"
     }
   ],
   "evidence": [
     {
       "id": 1,
-      "content": "Condition of oral mucosa",
+      "data": "Condition of oral mucosa",
+      "score": 10,
+      "maxscore": 20,
       "issueId": 1
     },
     {
       "id": 2,
-      "content": "Level of thirst",
+      "data": "Level of thirst",
+      "score": 10,
+      "maxscore": 20,
       "issueId": 1
     },
     {
       "id": 3,
-      "content": "Pale colour",
+      "data": "Pale colour",
+      "score": 2,
+      "maxscore": 4,
       "issueId": 2
     },
     {
       "id": 4,
-      "content": "Pulse rate very high (120 bpm)",
+      "data": "Pulse rate very high (120 bpm)",
+      "score": 2,
+      "maxscore": 4,
       "issueId": 2
     }
   ],
   "patients": [
-    {
-      "id": 1,
-      "firstname": "Cyril",
-      "lastname": "Smith",
-      "age": "99",
-      "dob": "12.05.1916",
-      "sex": "female",
-      "profession": "receptionist",
-      "metrics": [
-        {
-          "id": 1,
-          "temperature": "37°C",
-          "pulse": "112 bpm",
-          "respiratory rate": "22 breaths per minute",
-          "blood pressure": "90/50",
-          "pain": "3-4 using VAS scale",
-          "oxygen saturation level": "97%",
-          "hourly urine output (average)": "26mL/hr",
-          "bgl": "4mmol/L",
-          "patientId": 1
-        }
-      ],
-      "problems": [
-        {
-          "id": 1,
-          "codename": "NOF",
-          "description": "neck of femur fracture",
-          "hotspots": [
-            {
-              "id": 1,
-              "side": "front",
-              "top": "53",
-              "left": "34"
-            },
-            {
-              "id": 2,
-              "side": "back",
-              "top": "34",
-              "left": "10"
-            }
-          ]
-        }
-      ],
-      "observations": [
-        {
-          "id": 1,
-          "observation": "mouth",
-          "result": "Condition of oral mucosa; mouth dry tongue furrowed",
-          "patientId": 1
-        },
-        {
-          "id": 2,
-          "observation": "Drinking",
-          "result": "Oral intake–sips only",
-          "patientId": 1
-        },
-        {
-          "id": 3,
-          "observation": "cognitive state",
-          "result": "appears restless and anxious",
-          "patientId": 1
-        },
-        {
-          "id": 4,
-          "observation": "skin",
-          "result": "pale, clammy",
-          "patientId": 1
-        }
-      ],
-      "responses": [
-        {
-          "id": 1,
-          "question": "appetite",
-          "answer": "not very",
-          "patientId": 1
-        },
-        {
-          "id": 2,
-          "question": "thirst",
-          "answer": "very",
-          "patientId": 1
-        }
-      ]
-    },
     {
       "id": 1,
       "firstname": "Gerard",
@@ -319,81 +267,189 @@
       "dob": "1914-05-12",
       "sex": "Male",
       "profession": "Physiotherapist",
-      "metrics": [
+      "heartRate": "100",
+      "respirationRate": "12",
+      "systolic": "90",
+      "diastolic": "60",
+      "temperature": "38",
+      "hotspots": [
         {
           "id": 1,
-          "temperature": "37°C",
-          "pulse": "112 bpm",
-          "respiratory rate": "22 breaths per minute",
-          "blood pressure": "90/50",
-          "pain": "3-4 using VAS scale",
-          "oxygen saturation level": "97%",
-          "hourly urine output (average)": "26mL/hr",
-          "bgl": "4mmol/L",
-          "patientId": 1
-        }
-      ],
-      "problems": [
+          "x": -2,
+          "y": 347,
+          "data": "Hotspot1"
+        },
         {
-          "id": 1,
-          "codename": "NOF",
-          "description": "neck of femur fracture",
-          "hotspots": [
-            {
-              "id": 1,
-              "side": "front",
-              "top": "53",
-              "left": "34"
-            },
-            {
-              "id": 2,
-              "side": "back",
-              "top": "34",
-              "left": "10"
-            }
-          ]
+          "id": 2,
+          "x": 86,
+          "y": 222,
+          "data": "Hotspot2"
+        },
+        {
+          "id": 3,
+          "x": 53,
+          "y": -142,
+          "data": "<img src=\"/resources/images/nof.jpg\">"
+        },
+        {
+          "id": 4,
+          "x": -97,
+          "y": -352,
+          "data": "Hotspot4"
+        },
+        {
+          "id": 5,
+          "x": -161,
+          "y": -15,
+          "data": "Hotspot5"
         }
       ],
       "observations": [
         {
           "id": 1,
-          "observation": "mouth",
-          "result": "Condition of oral mucosa; mouth dry tongue furrowed",
-          "patientId": 1
+          "description": "mucusmouth",
+          "result": "Conditionoforalmucosa;mouthdrytonguefurrowed"
         },
         {
           "id": 2,
-          "observation": "Drinking",
-          "result": "Oral intake–sips only",
-          "patientId": 1
+          "description": "Drinking",
+          "result": "Oralintake–sipsonly"
         },
         {
           "id": 3,
-          "observation": "cognitive state",
-          "result": "appears restless and anxious",
-          "patientId": 1
+          "description": "cognitivestate",
+          "result": "appearsrestlessandanxious"
         },
         {
           "id": 4,
-          "observation": "skin",
-          "result": "pale, clammy",
-          "patientId": 1
+          "description": "skin",
+          "result": "pale,clammy"
+        }
+      ],
+      "queries": [
+        {
+          "id": 1,
+          "text": "What is the problem?"
+        },
+        {
+          "id": 2,
+          "text": "Where does it hurt?"
+        },
+        {
+          "id": 3,
+          "text": "When did the pain begin?"
+        },
+        {
+          "id": 4,
+          "text": "Have you noticed any swelling?"
+        },
+        {
+          "id": 5,
+          "text": "Has your skin been dry?"
+        },
+        {
+          "id": 6,
+          "text": "How old are you?"
+        },
+        {
+          "id": 7,
+          "text": "How have you been sleeping?"
+        },
+        {
+          "id": 8,
+          "text": "Do you have family here?"
         }
       ],
       "responses": [
         {
           "id": 1,
-          "question": "appetite",
-          "answer": "not very",
-          "patientId": 1
+          "text": "I hurt my knee"
         },
         {
           "id": 2,
-          "question": "thirst",
-          "answer": "very",
-          "patientId": 1
+          "text": "On my knee"
+        },
+        {
+          "id": 3,
+          "text": "Yesterday"
+        },
+        {
+          "id": 4,
+          "text": "Yes. On my knee"
+        },
+        {
+          "id": 5,
+          "text": "No. Not really"
+        },
+        {
+          "id": 6,
+          "text": "Im 75"
+        },
+        {
+          "id": 7,
+          "text": "Not well. Iâ€™ve been waking up frequently."
+        },
+        {
+          "id": 8,
+          "text": "Yes, Toi song voi con gai cua toi"
+        }
+      ],
+      "testresults": [
+        {
+          "id": 1,
+          "name": "UrineAnalysis",
+          "glucose": "100",
+          "bilirubin": "30",
+          "ketones": "120",
+          "sg": "20",
+          "eryth": "30",
+          "ph": "40",
+          "ts": "50"
+        },
+        {
+          "id": 2,
+          "name": "hormonePanel",
+          "estrone": "100",
+          "estradiol": "30",
+          "estriol": "120",
+          "testosterone": "20",
+          "progesterone": "30",
+          "DHEA": "40",
+          "cortisol": "50"
         }
       ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": 1,
+      "x": -2,
+      "y": 347,
+      "data": "Hotspot1"
+    },
+    {
+      "id": 2,
+      "x": 86,
+      "y": 222,
+      "data": "Hotspot2"
+    },
+    {
+      "id": 3,
+      "x": 53,
+      "y": -142,
+      "data": "<img src=\"/resources/images/nof.jpg\">"
+    },
+    {
+      "id": 4,
+      "x": -97,
+      "y": -352,
+      "data": "Hotspot4"
+    },
+    {
+      "id": 5,
+      "x": -161,
+      "y": -15,
+      "data": "Hotspot5"
     }
   ]
 }

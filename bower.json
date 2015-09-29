@@ -29,5 +29,7 @@
   "resolutions": {
     "handlebars": "^3.0.3",
     "jquery": "^2.1.4"
+  },
+  "devDependencies": {
   }
 }
