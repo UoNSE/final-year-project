@@ -3,6 +3,7 @@
         <h3 class="panel-title">Patients Chart</h3>
     </div>
     <table>
+        <th>Details</th>
         <tr>
             <td>First Name</td>
             <td>{{firstname}}</td>
@@ -31,6 +32,27 @@
         <tr>
             <td>Current medication</td>
             <td>Insulin</td>
+        </tr>
+        <th>Vitals</th>
+        <!-- "heartRate": "60-100 beats per minute",
+        "respirations": "12-18 breaths per minute",
+        "bloodPressure": "90/60 to 120/80",
+        "temperature": "38 to 38.5 C", -->
+        <tr>
+            <td>Heart Rate</td>
+            <td>{{heartRate}}BPM</td>
+        </tr>
+        <tr>
+            <td>Respiration Rate</td>
+            <td>{{respirationRate}}Br/min</td>
+        </tr>
+        <tr>
+            <td>Blood Pressure</td>
+            <td>{{systolic}}/{{diastolic}} mm Hg</td>
+        </tr>
+        <tr>
+            <td>Temperature</td>
+            <td>{{temperature}}</td>
         </tr>
     </table>
     <div class= "centerize">

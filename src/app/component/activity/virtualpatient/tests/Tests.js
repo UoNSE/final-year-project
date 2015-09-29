@@ -72,7 +72,7 @@ define(function(require) {
 			// console.log(label);
 
 			if(label==='Blood Test'){
-				target = new BloodTest();
+				target = new BloodTest(this.testresults);
 				this.bloodtestmenu = target;
 				target.position.x = 275;
 			}
@@ -80,8 +80,8 @@ define(function(require) {
 				target = new Scan();
 			}
 			else if (label==='Urine'){
-				// target = new TestResult({model: this.UrineAnalysisResult});
-				target = new TestResult(this.UrineAnalysisResult);
+				target = new TestResult({model: this.UrineAnalysisResult});
+				// target = new TestResult(this.UrineAnalysisResult);
 			}
 			else{}
 
