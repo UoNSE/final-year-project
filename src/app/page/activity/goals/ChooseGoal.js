@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var InventoryPage = require('page/InventoryPage');
+    var Page = require('core/Page');
     var ChooseGoal = require('component/activity/goals/chooseGoal/ChooseGoal');
 
     /**
@@ -9,14 +9,14 @@ define(function (require) {
      *
      * @class ChooseGoal
      */
-    return InventoryPage.extend({
+    return Page.extend({
 
         name: 'ChooseGoal',
 
         title: 'Choose a Goal',
 
         initialize: function () {
-            InventoryPage.prototype.initialize.apply(this, arguments);
+            Page.prototype.initialize.apply(this, arguments);
             let caseID = this.urlParams['case_id'];
             let chooseGoalsActivity = new ChooseGoal(caseID);
             this.add(chooseGoalsActivity);

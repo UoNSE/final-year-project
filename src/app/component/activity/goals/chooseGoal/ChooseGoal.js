@@ -135,6 +135,12 @@ define(function (require) {
                 })
             }));
 
+            this.hint = this.add(new Hint({
+                model: {text: 'Choose a Goal to assign Actions'}
+            }));
+
+            this.hint.position.set(-50, Positioning.heightLimit() - 100);
+
         },
 
         /**
@@ -179,7 +185,7 @@ define(function (require) {
 
                 let scale = i - ((n - 1) / 2);
                 let x = () => {
-                    return this.width;
+                    return -50;
                 };
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
 
@@ -192,7 +198,7 @@ define(function (require) {
          * @returns {Card}
          */
         addGoal: function (model) {
-            return this.createCard(model, GoalCard);
+            return this.createCard(model);
         },
 
         /**
@@ -202,30 +208,21 @@ define(function (require) {
          * @param CardClass
          * @returns {*}
          */
-        createCard: function (model, CardClass) {
-            let modelId = model.id;
-            let card = new CardClass({
+        createCard: function (model) {
+
+            let activityURL = 'cases/'.concat(this.caseID, '/activity/goals/choose/', model.id, '/actions');
+
+            Object.assign(model.attributes, {
+                href: activityURL
+            });
+
+            let link = new ActionsActivityLink({
                 model: model
             });
-            return this.attachLinks(modelId, card);
+            return this.add(link);
+
         },
 
-        /**
-         * Binds the draggable events to the component.
-         *
-         * @param modelId The id of the model.
-         * @param component The component to setup.
-         */
-        attachLinks: function (modelId, component) {
-            let activityURL = 'cases/'.concat(this.caseID, '/activity/goals/choose/', modelId, '/actions');
-            let link = new ActionsActivityLink({
-                model: {
-                    href: activityURL,
-                    component: component
-                }
-            });
-            return this.add(link);
-        },
 
         /**
          * Determines the appropriate card height, based on
