@@ -11,7 +11,7 @@ define(function (require) {
 
 		initialize: function (router, camera, urlParams) {
 			Object2D.prototype.initialize.apply(this, arguments);
-
+            this.router = router;
 			this.camera = camera;
 			this.urlParams = urlParams;
 			if (this.showBackButton) {
@@ -43,5 +43,6 @@ define(function (require) {
 				.start()
 				.promise();
 		}
+
 	});
 });
