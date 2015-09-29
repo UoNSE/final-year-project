@@ -322,11 +322,17 @@ define(function (require) {
                 var issue = droppable.model.get('issue') || draggable.model.get('issue') || null ;
                 var evidence = draggable.model.get('evidence');
 
-                //TODO only correct issue joining
+
                 if(issue != null){
                     var issueID = issue.attributes.issueid;
                     var correctmerge = true;
+                    var Ielist = droppable.model.get('evidence');
                     evidence.each(function (model) {
+                        if(issueID != model.attributes.issueid){
+                            correctmerge = false
+                        }
+                    });
+                    Ielist.each(function (model) {
                         if(issueID != model.attributes.issueid){
                             correctmerge = false
                         }
@@ -364,7 +370,7 @@ define(function (require) {
                 var evidence = new Backbone.Collection(collection);
                 evidence.add(ev.toJSON());
 
-                //TODO only correct issue joining
+
                 if(issue != null){
                     var issueID = issue.attributes.issueid;
                     var correctmerge = true;
@@ -394,18 +400,18 @@ define(function (require) {
                     return;
                 }
 
-                //TODO only correct issue joining
+
 
                 var issue = draggableType.issue || droppableType.issue || null;
 
 
 
-                // TODO make nicer?
+
                 var collection = [];
                 if (draggableType.evidence) {collection.push(draggableType.evidence);}
                 if (droppableType.evidence) {collection.push(droppableType.evidence);}
                 var evidence = new Backbone.Collection(collection);
-                //TODO only correct issue joining
+
                 if(issue != null){
                     var issueID = issue.attributes.issueid;
                     var correctmerge = true;
