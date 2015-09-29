@@ -15,7 +15,8 @@ define(function (require) {
 
         initialize: function () {
             InventoryPage.prototype.initialize.apply(this, arguments);
-            this.add(new Actions());
+            let goalID = this.urlParams['goal_id'];
+            this.add(new Actions(goalID));
         }
 
     });

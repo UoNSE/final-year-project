@@ -62,6 +62,7 @@ define(function (require) {
             // add the help button as a child; so that we manage both
             // components from the same module
             this.helpButton = this.add(new HelpButton());
+            this.show();
         }
 
     });

@@ -188,7 +188,7 @@ define(function (require) {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
                     icon: 'content-send',
-                    href: 'cases/'.concat(caseID, '/activity/actions')
+                    href: 'cases/'.concat(caseID, '/activity/goals/choose')
                 }
             }));
 
