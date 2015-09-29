@@ -3,6 +3,7 @@ define(function (require) {
 
 	var Page = require('core/Page');
 	var Start = require('component/start/Start');
+
 	var Vector2 = require('math/Vector2');
 
 	return Page.extend({
