@@ -3,16 +3,19 @@ define(function (require) {
 
 	var Page = require('core/Page');
 	var Start = require('component/start/Start');
+	var TWEEN = require('tweenjs');
+
 	var Vector2 = require('math/Vector2');
 
 	return Page.extend({
-		name: 'startpage',
+		name: 'start',
 		title: 'Start',
-		showBackButton: false,
+		back: false,
 
 		initialize: function () {
-			Page.prototype.initialize.apply(this, arguments);
+			Page.prototype.initialize.call(this);
 			this.add(new Start());
 		}
 	});
 });
+

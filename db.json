@@ -2,7 +2,39 @@
   "cases": [
     {
       "id": 1,
-      "name": "Dang Tien"
+      "name": "Dang Tien",
+      "issues": [
+        {
+          "id": 1,
+          "content": "Dehydration"
+        },
+        {
+          "id": 2,
+          "content": "Hypovolaemia"
+        }
+      ],
+      "evidence": [
+        {
+          "id": 1,
+          "content": "Condition of oral mucosa",
+          "issueId": 1
+        },
+        {
+          "id": 2,
+          "content": "Level of thirst",
+          "issueId": 1
+        },
+        {
+          "id": 3,
+          "content": "Pale colour",
+          "issueId": 2
+        },
+        {
+          "id": 4,
+          "content": "Pulse rate very high (120 bpm)",
+          "issueId": 2
+        }
+      ]
     },
     {
       "id": 2,
@@ -40,64 +72,32 @@
   "issues": [
     {
       "id": 1,
-      "data": "Dehydration",
-      "topicId": 1,
-      "cost": 20
+      "content": "Dehydration"
     },
     {
       "id": 2,
-      "data": "Hypovolaemia",
-      "topicId": 2,
-      "cost": 4
-    },
-    {
-      "id": 3,
-      "data": "Nausea",
-      "topicId": 1,
-      "cost": 0
-    }
-  ],
-  "topics": [
-    {
-      "id": 1,
-      "data": "Lungs"
-    },
-    {
-      "id": 2,
-      "data": "Heart"
-    },
-    {
-      "id": 3,
-      "data": "Kidneys"
+      "content": "Hypovolaemia"
     }
   ],
   "evidence": [
     {
       "id": 1,
-      "data": "Condition of oral mucosa",
-      "score": 10,
-      "maxscore": 20,
+      "content": "Condition of oral mucosa",
       "issueId": 1
     },
     {
       "id": 2,
-      "data": "Level of thirst",
-      "score": 10,
-      "maxscore": 20,
+      "content": "Level of thirst",
       "issueId": 1
     },
     {
       "id": 3,
-      "data": "Pale colour",
-      "score": 2,
-      "maxscore": 4,
+      "content": "Pale colour",
       "issueId": 2
     },
     {
       "id": 4,
-      "data": "Pulse rate very high (120 bpm)",
-      "score": 2,
-      "maxscore": 4,
+      "content": "Pulse rate very high (120 bpm)",
       "issueId": 2
     }
   ],

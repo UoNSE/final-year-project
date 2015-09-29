@@ -10,8 +10,7 @@ define(function (require) {
 			Page.prototype.initialize.apply(this, arguments);
 
 			var inventory = this.add(new Inventory());
-			this.position.x = -inventory.width / 2;
-			//this.camera.position.x = inventory.width / 2;
+			this.camera.position.x = inventory.width / 2;
 		},
 
 		/**

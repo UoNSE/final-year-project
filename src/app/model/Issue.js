@@ -6,9 +6,7 @@ define(function (require) {
 	var Issue = Panel.extend({
 
 		defaults: {
-			body: 'Issue',
-			cost: 0,
-			topicId: 0
+			body: 'Issue'
 		}
 
 	});

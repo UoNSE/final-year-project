@@ -23,13 +23,13 @@ define(function (require) {
 		},
 
 		onEnter: function (event) {
-			this.$el.find('button').addClass('btn-material-amber');
-			//this.model.set('color', 'amber');
+			//this.$el.find('button').addClass('btn-material-amber');
+			this.model.set('color', 'amber');
 		},
 
 		onLeave: function (event) {
-			this.$el.find('button').removeClass('btn-material-amber');
-			//this.model.set('color', this.originalModel.get('color'));
+			//this.$el.find('button').removeClass('btn-material-amber');
+			this.model.set('color', this.originalModel.get('color'));
 		}
 
 	});

@@ -12,12 +12,8 @@ define(function (require) {
 			'click .cpn-actionbutton': 'onClick'
 		},
 
-		// events: {
-		// 	'click .btn' : 'onClick'
-		// },
-
-		onClick:function(event){
-			this.trigger('click',event);
+		onClick: function (event) {
+			this.trigger('click', event);
 		}
 	});
 
