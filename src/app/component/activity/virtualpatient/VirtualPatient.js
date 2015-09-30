@@ -190,7 +190,7 @@ define(function(require) {
 				}
 				else if(toggableTarget== this.chart){
 					this.tests.hide();
-					this.chart.hide();
+					this.querymenu.hide();
 				}
 			}
 
