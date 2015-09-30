@@ -31,25 +31,25 @@ define(function(require) {
 			this.hide();
 		},
 		_addHighEvidenceCard: function(){
-			var clicked = event.target.parentElement.parentElement;
-			this.metric = clicked.id;
-			this._addEvidenceCard(clicked,"high");
-
+			var attribute = event.target.parentElement.parentElement;
+			// debugger;
+			var value = attribute.children.namedItem("value").innerHTML;
+			// debugger;
+			this._addEvidenceCard("high", attribute, value);
 		},
 		_addLowEvidenceCard: function(){
-			var clicked = event.target.parentElement.parentElement;
-			this.metric = clicked.id;
-			this._addEvidenceCard(clicked,"low");
+			var attribute = event.target.parentElement.parentElement;
+			var value = attribute.children.namedItem("value").innerHTML;
+			this._addEvidenceCard("low", attribute, value);
 		},
 
-		_addEvidenceCard: function(clicked, flag){
-			// var metric = this.result;
+		_addEvidenceCard: function(flag, attribute, value){
 			var evidenceCard = this.addEvidence(new EvidenceModel({
 				width: 200,
 				height: 100,
 				title: 'Evidence',
 				color: 'info',
-				body: clicked.id + " is "+flag
+				body: attribute.id + " is "+flag + " ("+value + ")"
 			}));
 
 			evidenceCard.position.x = 200;

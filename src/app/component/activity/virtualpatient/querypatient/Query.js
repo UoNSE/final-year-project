@@ -246,11 +246,11 @@ define(function(require) {
 			return this.add(button);
 		},
 
-		_addEvidenceCard: function(){
-			console.log('clicked');
-			alert('event');
-			this._addEvidenceTarget();
-		},
+		// _addEvidenceCard: function(){
+		// 	console.log('clicked');
+		// 	alert('event');
+		// 	this._addEvidenceTarget();
+		// },
 
 		addEvidenceTarget: function(button, response){
 

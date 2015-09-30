@@ -34,25 +34,24 @@ define(function(require) {
 			this.hide();
 		},
 		_addHighEvidenceCard: function(){
-			// debugger;
-			this.result = event.target.parentElement.parentElement.id;
-			this._addEvidenceCard("high");
+			var attribute = event.target.parentElement.parentElement;
+			var value = attribute.children.namedItem("value").innerHTML;
+			debugger;
+			this._addEvidenceCard("high", attribute, value);
 		},
 		_addLowEvidenceCard: function(){
-			this.result = event.target.parentElement.parentElement.id;
-			this._addEvidenceCard("low");
-			// this.parent.parent.parent._addEvidenceCard("low");
+			var attribute = event.target.parentElement.parentElement;
+			var value = attribute.children.namedItem("value").innerHTML;
+			this._addEvidenceCard("low", attribute, value);
 		},
 
-		_addEvidenceCard: function(flag){
-			// console.log(flag);
-			var metric = this.result;
+		_addEvidenceCard: function(flag, attribute, value){
 			var evidenceCard = this.addEvidence(new EvidenceModel({
 				width: 200,
 				height: 100,
 				title: 'Evidence',
 				color: 'info',
-				body: metric + " is "+flag
+				body: attribute + " is "+flag + "("+value + ")"
 			}));
 
 			evidenceCard.position.x = 200;

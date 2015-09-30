@@ -54,7 +54,7 @@ define(function(require) {
 			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
 			this.visiblemenus = [];
-			this.collaborative = true;
+			this.collaborative = false;
 
 		},
 
@@ -72,7 +72,10 @@ define(function(require) {
 			this.hotspots = this.patient.get('hotspots');
 
 			this.patientbody = this.add(new PatientBody());
-			this.patientbody.interactive = true;
+
+			if(this.collaborative){
+				this.patientbody.interactive = true;
+			}
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = new Tests(this.vproot,this.testresults);
 

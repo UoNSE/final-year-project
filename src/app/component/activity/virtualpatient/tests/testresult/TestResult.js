@@ -32,27 +32,25 @@ define(function(require) {
 			this.hide();
 		},
 		_addHighEvidenceCard: function(){
+			var attribute = event.target.parentElement.parentElement;
 			// debugger;
-			this.result = event.target.parentElement.parentElement.id;
+			var value = attribute.children.namedItem("value").innerHTML;
 			// debugger;
-			this._addEvidenceCard("high");
-
+			this._addEvidenceCard("high", attribute, value);
 		},
 		_addLowEvidenceCard: function(){
-			this.result = event.target.parentElement.parentElement.id;
-			this._addEvidenceCard("low");
+			var attribute = event.target.parentElement.parentElement;
+			var value = attribute.children.namedItem("value").innerHTML;
+			this._addEvidenceCard("low", attribute, value);
 		},
 
-
-		// adds an evidence card to the vproot
-		_addEvidenceCard: function(flag){
-			var metric = this.result;
+		_addEvidenceCard: function(flag, attribute, value){
 			var evidenceCard = this.addEvidence(new EvidenceModel({
 				width: 200,
 				height: 100,
 				title: 'Evidence',
 				color: 'info',
-				body: metric + " is "+flag
+				body: attribute.id + " is "+flag + " ("+value + ")"
 			}));
 
 			evidenceCard.position.x = 200;
