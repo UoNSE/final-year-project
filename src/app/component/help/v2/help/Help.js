@@ -40,6 +40,32 @@ define(function (require) {
 
     /**
      * @class Help
+     *
+     * @classdesc A component that provides a detached panel and associated buttons,
+     * which float to the top LHS of the screen. Help can be used to provide the user
+     * a list of instructions to follow.
+     *
+     * @example
+     * let Help = require('component/help/v2/help/Help');
+     * // include html, such as an unordered list, in an external handlebars file
+     * let HelpText = require('text!component/activity/goals/help/helpContent.hbs');
+     *
+     * return Component.extend({
+     *
+     *  // in your initialize function
+     *  initialize: function () {
+     *      Component.prototype.initialize.apply(this, arguments);
+     *
+     *      // add help component to the page
+     *       this.help = this.add(new Help({
+     *           model: new HelpModel({
+     *               title: 'Help',
+     *               width: 300,
+     *               helpContent: HelpText
+     *           })
+     *       }));
+     *  },
+     *
      */
     return Component.extend({
         // important for having fixed position near back button
