@@ -4,10 +4,8 @@ define(function (require) {
 
     var _ = require('underscore');
     var Component = require('core/Component');
-    var template = require('text!component/activity/goals/help/help.hbs');
+    var template = require('text!component/help/v2/help/help.hbs');
     var ActionButton = require('component/actionbutton/ActionButton');
-    var Object2D = require('core/Object2D');
-    var MathUtil = require('math/MathUtil');
 
     /**
      * @class HelpButton
@@ -18,7 +16,8 @@ define(function (require) {
         detached: true,
 
         events: {
-            'click .help-btn': 'handle'
+            'click .help-btn': 'help',
+            'click .help-close': 'close'
         },
 
         model: {
@@ -31,16 +30,13 @@ define(function (require) {
             Component.prototype.initialize.apply(this, arguments);
         },
 
-        /**
-         * When the HelpButton is clicked, this method is invoked.
-         * Delegates to JQuery and simply toggles the visibility of
-         * the help panel.
-         */
-        handle: function () {
-            $('.help-container').toggle();
+        help: function () {
+            $('.help-container').show();
+            $('.help-btn').hide();
         }
 
     });
+
 
     /**
      * @class Help
@@ -49,20 +45,22 @@ define(function (require) {
         // important for having fixed position near back button
         detached: true,
 
+        events: {
+            'click .help-close': 'close'
+        },
+
         template: template,
 
-        helpButton: {},
-
-        styles: 'component/activity/goals/help/help.css',
-
-        id: '',
+        styles: 'component/help/v2/help/help.css',
 
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);
-            // add the help button as a child; so that we manage both
-            // components from the same module
             this.helpButton = this.add(new HelpButton());
-            this.show();
+        },
+
+        close: function () {
+            $('.help-btn').show();
+            $('.help-container').hide();
         }
 
     });
