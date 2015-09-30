@@ -40,7 +40,7 @@ define(function (require) {
          * The x position.
          */
         x: () => {
-            return Positioning.widthLimit() * 0.99
+            return Positioning.widthLimit() * 0.70
         },
         /**
          * The y position.
@@ -188,7 +188,7 @@ define(function (require) {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
                     icon: 'content-send',
-                    href: 'cases/'.concat(caseID, '/activity/actions')
+                    href: 'cases/'.concat(caseID, '/activity/goals/choose')
                 }
             }));
 
@@ -283,14 +283,14 @@ define(function (require) {
 
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
-                    model.get('content').length
+                    model.get('data').length
                 );
 
                 Object.assign(model.attributes,
                     {
                         width: this.width,
                         title: 'Issue',
-                        body: model.get('content'),
+                        body: model.get('data'),
                         color: 'orange'
                     }
                 );
@@ -299,7 +299,7 @@ define(function (require) {
                 let scale = i - ((n - 1) / 2);
 
                 let x = () => {
-                    return -(this.width);
+                    return -(this.width) -100;
                 };
 
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
@@ -343,7 +343,7 @@ define(function (require) {
 
                 let scale = i - ((n - 1) / 2);
                 let x = () => {
-                    return this.width;
+                    return this.width - 200;
                 };
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
 

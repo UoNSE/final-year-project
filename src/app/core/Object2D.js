@@ -126,9 +126,17 @@ define(function (require) {
 			if (!(child instanceof Object2D)) {
 				throw new Error('Object2D: Cannot add child which is not of type Object2D');
 			}
+			if (child.parent) {
+				throw new Error('Object2D: Child already has parent, remove object from parent first');
+			}
 			child.parent = this;
 			this.children.push(child);
 			return child;
+		},
+
+		remove: function () {
+			this.trigger('remove');
+			Backbone.View.prototype.remove.apply(this, arguments);
 		},
 
 		removeAll: function () {
@@ -137,6 +145,11 @@ define(function (require) {
 				child.trigger('remove');
 			});
 			this.children.length = 0;
+		},
+
+		destroy: function () {
+			this.trigger('destroy');
+			Backbone.View.prototype.destroy.apply(this, arguments);
 		},
 
 		destroyAll: function () {

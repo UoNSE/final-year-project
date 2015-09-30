@@ -123,7 +123,7 @@ define(function (require) {
         /**
          * Constructor.
          */
-        initialize: function () {
+        initialize: function (caseID, goalID) {
             // invoke super(arguments)
             Component.prototype.initialize.apply(this, arguments);
 
