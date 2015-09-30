@@ -126,6 +126,9 @@ define(function (require) {
 			if (!(child instanceof Object2D)) {
 				throw new Error('Object2D: Cannot add child which is not of type Object2D');
 			}
+			if (child.parent) {
+				throw new Error('Object2D: Child already has parent, remove object from parent first');
+			}
 			child.parent = this;
 			this.children.push(child);
 			return child;
