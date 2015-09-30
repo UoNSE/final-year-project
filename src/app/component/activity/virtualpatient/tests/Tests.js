@@ -19,12 +19,12 @@ define(function(require) {
 		// collection: new TestResults(),
 
 
-		initialize: function (testresults) {
+		initialize: function (vproot,testresults) {
 			Component.prototype.initialize.apply(this, arguments);
 
 			this.testresults = testresults;
 			this.UrineAnalysisResult = this.testresults.get(1);
-			this.vproot = this.parent;
+			this.vproot = vproot;
 			// console.log(this.vproot);
 
 			this.createTestMenu();
@@ -72,7 +72,7 @@ define(function(require) {
 			// console.log(label);
 
 			if(label==='Blood Test'){
-				target = new BloodTest(this.testresults);
+				target = new BloodTest(this.vproot, this.testresults);
 				this.bloodtestmenu = target;
 				target.position.x = 275;
 			}
@@ -80,7 +80,10 @@ define(function(require) {
 				target = new Scan();
 			}
 			else if (label==='Urine'){
-				target = new TestResult({model: this.UrineAnalysisResult});
+				target = new TestResult({vproot: this.vproot, model:this.UrineAnalysisResult});
+				// target = new TestResult(this.vproot,{model:this.UrineAnalysisResult});
+				// target = new TestResult(this.vproot,{model: this.UrineAnalysisResult});
+				// target = new TestResult({model:this.UrineAnalysisResult});
 				// target = new TestResult(this.UrineAnalysisResult);
 			}
 			else{}

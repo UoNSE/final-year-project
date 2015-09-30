@@ -15,6 +15,7 @@ define(function(require) {
 	var Component = require('core/Component');
 	var Button = require('component/button/Button');
 	var ActionButton = require('component/actionbutton/ActionButton');
+	var ActionButtonHandle = require('component/actionbuttonhandle/ActionButtonHandle');
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
 	var Query = require('component/activity/virtualpatient/querypatient/Query');
 	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
@@ -49,10 +50,11 @@ define(function(require) {
 		initialize: function () {
 			// debugger;
 			Component.prototype.initialize.apply(this, arguments);
+			this.vproot = this;
 			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
 			this.visiblemenus = [];
-			this.collaborative = true;
+			this.collaborative = false;
 
 		},
 
@@ -70,23 +72,27 @@ define(function(require) {
 			this.hotspots = this.patient.get('hotspots');
 
 			this.patientbody = this.add(new PatientBody());
-			this.patientbody.interactive = true;
+
+			if(this.collaborative){
+				this.patientbody.interactive = true;
+			}
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
-			this.tests = this.add(new Tests(this.testresults));
+			this.tests = new Tests(this.vproot,this.testresults);
 
             this.queries = this.patient.get('queries');
             this.responses = this.patient.get('responses');
-			this.querymenu = this.add(new Query(this));
+			this.querymenu = new Query(this);
 
-			this.EvidenceFeed = this.addEvidenceFeed();
-			this.chart = this.add(new Chart({model: this.patient}));
-			this.chart.position.set(0,200);
-			this.chart.interactive = true;
+			// this.EvidenceFeed = this.addEvidenceFeed();
+			this.chart = new Chart({vproot:this.vproot, model: this.patient});
+			this.chart.position.set(0,275);
 
 
 			this.help = this.add(new Help({
 				model: {
-				helpContent: 'Collect evidence about the \
+				helpContent:
+				'Players take turns at gathering evidence.</br> \
+				Collect evidence about the \
 				patients condition.   </br> </br>\
 				Use the <strong>"Query"</strong> button </br>\
 				to ask the patient questions. </br> </br>\
@@ -111,14 +117,7 @@ define(function(require) {
 			// this.menu.delete.detached = true;
 			this.menu.delete.position.set(-370, -300);
 			this.menu.delete.interactive = true;
-			// this.menu.interactive = true;
-
-
-			// this.help.scale.set(0.5, 0.5);
-			// this.buttons = {};
 			this.addVPButtons();
-
-
 		},
 
 
@@ -136,23 +135,43 @@ define(function(require) {
 			var offset = 100;
 
 			texts.forEach(function (text, i) {
-				var button = this.add(new ActionButton({
+				var buttonhandle = this.add(new ActionButtonHandle());
+				var button = buttonhandle.add(new ActionButton({
 					model: new ActionButtonModel({
 						text: text,
 						id: text + 'Btn',
 						// color: danger
 					})
 				}));
+				// buttons x position
+				var buttonXPos = button.position.x;
+				//
+				// button.position.set(buttonXPos, 100);
 				var scale = i - (n - 1) / 2;
-				button.position.set(scale * (offset + offset * 1.1), -300);
+				buttonhandle.position.set(0, -250);
+				var buttonhandleXPos = buttonhandle.position.x;
+				var buttonhandleYPos = buttonhandle.position.y;
+				buttonhandle.position.set(scale * (offset + offset * 1), -300);
+				button.position.set(buttonhandleXPos, buttonhandleYPos+350);
+
+				// buttonhandle.position.set(buttonXPos, -250);
 				var target = targets[i];
-				button.add(target);
+				// if(button.text == "Query"|| button.text == "Test"){
+					button.add(target);
+				// }
+				// else{
+				// 	this.vproot.add(target);
+				// }
 				button.on('click', this.onToggle.bind(this,target));
-				button.interactive = true;
+				// this.bindDraggableEvents(button);
+				button.interactive = false;
+				buttonhandle.interactive = true;
+
 				// this.buttons.push();
 
 			}.bind(this));
 		},
+
 
 		onDelete: function (event) {
 			event.draggable.remove();
@@ -171,7 +190,7 @@ define(function(require) {
 				}
 				else if(toggableTarget== this.chart){
 					this.tests.hide();
-					this.chart.hide();
+					this.querymenu.hide();
 				}
 			}
 
