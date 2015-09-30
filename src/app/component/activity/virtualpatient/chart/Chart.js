@@ -10,8 +10,12 @@ define(function(require) {
 		styles: 'component/activity/virtualpatient/chart/Chart.css',
 
 		events:{
-			'click #hide-chart-button': '_onHide'
+			'click #hide-chart-button': '_onHide',
+			'click .flag-btn-high': '_addHighEvidenceCard',
+			'click .flag-btn-low': '_addLowEvidenceCard',
+
 		},
+
 		initialize: function(patient){
 			Component.prototype.initialize.apply(this, arguments);
 

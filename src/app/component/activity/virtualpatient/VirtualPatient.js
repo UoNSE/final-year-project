@@ -15,6 +15,7 @@ define(function(require) {
 	var Component = require('core/Component');
 	var Button = require('component/button/Button');
 	var ActionButton = require('component/actionbutton/ActionButton');
+	var ActionButtonHandle = require('component/actionbuttonhandle/ActionButtonHandle');
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
 	var Query = require('component/activity/virtualpatient/querypatient/Query');
 	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
@@ -49,6 +50,7 @@ define(function(require) {
 		initialize: function () {
 			// debugger;
 			Component.prototype.initialize.apply(this, arguments);
+			this.vproot = this;
 			this.listenTo(this.collection, 'sync', this.onSync);
 			this.collection.fetch();
 			this.visiblemenus = [];
@@ -80,13 +82,14 @@ define(function(require) {
 
 			this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = this.add(new Chart({model: this.patient}));
-			this.chart.position.set(0,300);
-			// this.chart.interactive = true;
+			this.chart.position.set(0,275);
 
 
 			this.help = this.add(new Help({
 				model: {
-				helpContent: 'Collect evidence about the \
+				helpContent:
+				'Players take turns at gathering evidence.</br> \
+				Collect evidence about the \
 				patients condition.   </br> </br>\
 				Use the <strong>"Query"</strong> button </br>\
 				to ask the patient questions. </br> </br>\
@@ -136,23 +139,73 @@ define(function(require) {
 			var offset = 100;
 
 			texts.forEach(function (text, i) {
-				var button = this.add(new ActionButton({
+				var buttonhandle = this.add(new ActionButtonHandle());
+				var button = buttonhandle.add(new ActionButton({
 					model: new ActionButtonModel({
 						text: text,
 						id: text + 'Btn',
 						// color: danger
 					})
 				}));
+				// buttons x position
+				var buttonXPos = button.position.x;
+				//
+				// button.position.set(buttonXPos, 100);
 				var scale = i - (n - 1) / 2;
-				button.position.set(scale * (offset + offset * 1.1), -300);
+				buttonhandle.position.set(0, -250);
+				var buttonhandleXPos = buttonhandle.position.x;
+				var buttonhandleYPos = buttonhandle.position.y;
+				buttonhandle.position.set(scale * (offset + offset * 1), -300);
+				button.position.set(buttonhandleXPos, buttonhandleYPos+350);
+
+				// buttonhandle.position.set(buttonXPos, -250);
 				var target = targets[i];
-				button.add(target);
+				// if(button.text == "Query"|| button.text == "Test"){
+					button.add(target);
+				// }
+				// else{
+				// 	this.vproot.add(target);
+				// }
 				button.on('click', this.onToggle.bind(this,target));
-				button.interactive = true;
+				// this.bindDraggableEvents(button);
+				button.interactive = false;
+				buttonhandle.interactive = true;
+
 				// this.buttons.push();
 
 			}.bind(this));
 		},
+
+
+		/**
+		 * An event triggered when an action-button is being dragged.
+		 */
+		// onDrag: function () {
+		//
+		// },
+
+		/**
+		 * An event triggered at the end of an action-button drag event.
+		 */
+		// onDragEnd: function(){
+		// 	// debugger;
+		// 	// if(this.children !== null && !this.children.visible){
+		// 	// 	this.children.show();
+		// 	// }
+		// },
+
+		/**
+		 * Binds the draggable events to the component.
+		 *
+		 * @param component The .
+		 */
+		// bindDraggableEvents: function (component) {
+		// 	component.on({
+		// 		drag: this.onDrag.bind(this),
+		// 		dragendsource: this.onDragEnd.bind(this),
+		// 	});
+		// },
+
 
 		onDelete: function (event) {
 			event.draggable.remove();
