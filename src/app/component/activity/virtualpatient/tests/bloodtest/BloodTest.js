@@ -13,13 +13,13 @@ define(function(require) {
 		classes: 'blood-test',
 		styles: 'component/activity/virtualpatient/tests/bloodtest/BloodTest.css',
 
-		initialize: function (results) {
+		initialize: function (vproot,results) {
 			Component.prototype.initialize.apply(this, arguments);
 			// TODO: pull menu items from json to create menu, and set each button to have target like parent menu.
-			this.createTestMenu();
+			this.vproot = vproot;
 			this.testresults = results;
 			this.hormonepanelresult = this.testresults.get(2);
-
+			this.createTestMenu();
 		},
 
 		createButton: function (text, color) {
@@ -31,8 +31,15 @@ define(function(require) {
 			});
 		},
 
-		onToggleTest: function (test, event) {
-			test.toggle();
+		// onToggleTest: function (test, event) {
+		// 	test.toggle();
+		//
+		// },
+
+		onToggleButton: function (button, event) {
+
+			button.toggle();
+			// button.children.detached = true;
 		},
 
 		createTestMenu: function(){
@@ -60,32 +67,17 @@ define(function(require) {
 			var target = null;
 
 			if (label === 'Hormones') {
-				target = new HormonePanelResult({model:this.hormonepanelresult});
+				// target = new HormonePanelResult(this.vproot, this.hormonepanelresult);
+				target = new HormonePanelResult({vproot: this.vproot, model:this.hormonepanelresult});
 			}
 			else{
 				target = new EmptyTestResult();
 			}
-			// console.log(label);
 
-			// if(label==='Blood Test'){
-			// 	target = new BloodTest();
-			// 	target.position.x = 275;
-			// }
-			// else if (label==='Xray' || label ==='CTScan') {
-			// 	target = new Scan();
-			// }
-			// else if (label==='Urine'){
-			// 	// target = new TestResult({model: this.UrineAnalysisResult});
-			// 	target = new TestResult(this.UrineAnalysisResult);
-			// }
-			// else{}
-
-			// target.position.x = 0;
 			target.hide();
 			target.interactive = true;
-
 			button.add(target);
-			button.on('click', this.onToggleTest.bind(this, target));
+			button.on('click', this.onToggleButton.bind(this, target));
 
 			return this.add(button);
 		}

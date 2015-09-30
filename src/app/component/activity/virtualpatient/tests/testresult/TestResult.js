@@ -17,11 +17,11 @@ define(function(require) {
 			'click .flag-btn-low': '_addLowEvidenceCard',
 
 		},
-		initialize: function (results) {
+		initialize: function (params) {
 			Component.prototype.initialize.apply(this, arguments);
-			this.results = results;
-			// debugger;
-			// var TestResultResult = TestResults[0];
+			this.model = params.model;
+			this.results = this.model;
+			this.vproot = params.vproot;
 		},
 
 		createTestResults: function () {
@@ -34,49 +34,18 @@ define(function(require) {
 		_addHighEvidenceCard: function(){
 			// debugger;
 			this.result = event.target.parentElement.parentElement.id;
+			// debugger;
 			this._addEvidenceCard("high");
-			// this.vproot = this.parent.parent.parent;
-			// this.vproot.addEvidenceCard("high");
-			// this.dispatchEvent('createNewEvidenceCard', event);
 
-			// ._addEvidenceCard("high");
 		},
 		_addLowEvidenceCard: function(){
 			this.result = event.target.parentElement.parentElement.id;
 			this._addEvidenceCard("low");
-			// this.parent.parent.parent._addEvidenceCard("low");
 		},
 
-		/**
-		 * Iterates through the evidence collection and adds the cards to the view.
-		 *
-		 * @param model The evidence model.
-		 * @returns {*}
-		 */
-		addEvidence: function (model) {
 
-			// assume root is here
-			this.vproot = this.parent.parent.parent.parent;
-			// console.log(this.vproot);
-			// if a testresult is made in another child component
-			// (eg. in a bloodtest, we can get the root by checking the parent.
-
-			// while(this.vproot.el.className != 'component virtual-patient'){
-			while(this.vproot.cid != 'view7'){	// hack
-
-				this.vproot = this.vproot.parent;
-			}
-
-			// var evidence = this.add(new Evidence({
-			var evidence = this.vproot.add(new Evidence({
-				model: model
-			}));
-			// this.bindDraggableEvents(evidence);
-			return evidence;
-		},
-
+		// adds an evidence card to the vproot
 		_addEvidenceCard: function(flag){
-			// console.log(flag);
 			var metric = this.result;
 			var evidenceCard = this.addEvidence(new EvidenceModel({
 				width: 200,
@@ -87,8 +56,18 @@ define(function(require) {
 			}));
 
 			evidenceCard.position.x = 200;
+			this.vproot.add(evidenceCard);
 
+		},
+
+		addEvidence: function (model) {
+
+			var evidence = new Evidence({
+				model: model
+			});
+			return evidence;
 		}
+
 
 	});
 

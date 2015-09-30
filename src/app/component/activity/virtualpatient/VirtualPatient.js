@@ -74,14 +74,14 @@ define(function(require) {
 			this.patientbody = this.add(new PatientBody());
 			this.patientbody.interactive = true;
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
-			this.tests = this.add(new Tests(this.testresults));
+			this.tests = new Tests(this.vproot,this.testresults);
 
             this.queries = this.patient.get('queries');
             this.responses = this.patient.get('responses');
-			this.querymenu = this.add(new Query(this));
+			this.querymenu = new Query(this);
 
-			this.EvidenceFeed = this.addEvidenceFeed();
-			this.chart = this.add(new Chart({model: this.patient}));
+			// this.EvidenceFeed = this.addEvidenceFeed();
+			this.chart = new Chart({vproot:this.vproot, model: this.patient});
 			this.chart.position.set(0,275);
 
 
@@ -114,14 +114,7 @@ define(function(require) {
 			// this.menu.delete.detached = true;
 			this.menu.delete.position.set(-370, -300);
 			this.menu.delete.interactive = true;
-			// this.menu.interactive = true;
-
-
-			// this.help.scale.set(0.5, 0.5);
-			// this.buttons = {};
 			this.addVPButtons();
-
-
 		},
 
 
@@ -175,36 +168,6 @@ define(function(require) {
 
 			}.bind(this));
 		},
-
-
-		/**
-		 * An event triggered when an action-button is being dragged.
-		 */
-		// onDrag: function () {
-		//
-		// },
-
-		/**
-		 * An event triggered at the end of an action-button drag event.
-		 */
-		// onDragEnd: function(){
-		// 	// debugger;
-		// 	// if(this.children !== null && !this.children.visible){
-		// 	// 	this.children.show();
-		// 	// }
-		// },
-
-		/**
-		 * Binds the draggable events to the component.
-		 *
-		 * @param component The .
-		 */
-		// bindDraggableEvents: function (component) {
-		// 	component.on({
-		// 		drag: this.onDrag.bind(this),
-		// 		dragendsource: this.onDragEnd.bind(this),
-		// 	});
-		// },
 
 
 		onDelete: function (event) {

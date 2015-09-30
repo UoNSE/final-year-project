@@ -4,66 +4,81 @@
     </div>
     <table>
         <th>Details</th>
-        <tr>
+        <tr id="first name">
             <td>First Name</td>
-            <td>{{firstname}}</td>
+            <td id ="value">
+                {{firstname}}</td>
         </tr>
-        <tr>
+        <tr id="last name">
             <td>Last Name</td>
-            <td>{{lastname}}</td>
+            <td id ="value">
+                {{lastname}}</td>
         </tr>
-        <tr>
+        <tr id="gender">
             <td>Gender</td>
-            <td>{{sex}}</td>
-            <td><button class = "flag-btn flag-btn-low">Flag</button></td>
+            <td id ="value">
+                {{sex}}</td>
+            <td><button class = "flag-btn flag-btn-flag">Flag</button></td>
         </tr>
-        <tr>
+        <tr id="age">
             <td>Age</td>
-            <td>{{age}}</td>
-            <td><button class = "flag-btn flag-btn-low">Flag</button></td>
+            <td id ="value">
+                {{age}}</td>
+            <td><button class = "flag-btn flag-btn-flag">Flag</button></td>
         </tr>
-        <tr>
+        <tr id="date of birth">
             <td>DOB</td>
-            <td>{{dob}}</td>
-            <td><button class = "flag-btn flag-btn-low">Flag</button></td>
+            <td id ="value">
+                {dob}}</td>
+            <td><button class = "flag-btn flag-btn-flag">Flag</button></td>
         </tr>
-        <tr>
+        <tr id="occupation">
             <td>Occupation</td>
-            <td>{{profession}}</td>
-            <td><button class = "flag-btn flag-btn-low">Flag</button></td>
+            <td id ="value">
+                {{profession}}</td>
+            <td><button class = "flag-btn flag-btn-flag">Flag</button></td>
         </tr>
-
-        <tr>
-            <td>Current medication</td>
+        <th>Current Medication</th>
+        <tr id="Current medication: Insulin">
             <td>Insulin</td>
-            <td><button class = "flag-btn flag-btn-low">Flag</button></td>
-        </tr>
+            <td id ="value">
+                50mg</td>
+                <td><button class = "flag-btn flag-btn-low">Low</button></td>
+                <td><button class = "flag-btn flag-btn-high">High</button></td>
+                    </tr>
+        <tr id="Current medication: Ritalin">
+            <td>Ritalin</td>
+            <td id ="value">
+                30mg</td>
+                <td><button class = "flag-btn flag-btn-low">Low</button></td>
+                <td><button class = "flag-btn flag-btn-high">High</button></td>
+             </tr>
         <th>Vitals</th>
-        <!-- "heartRate": "60-100 beats per minute",
-        "respirations": "12-18 breaths per minute",
-        "bloodPressure": "90/60 to 120/80",
-        "temperature": "38 to 38.5 C", -->
-        <tr>
+        <tr id="heart rate">
             <td>Heart Rate</td>
-            <td>{{heartRate}}BPM</td>
+            <td id ="value">
+                {{heartRate}}BPM</td>
             <td><button class = "flag-btn flag-btn-low">Low</button></td>
             <td><button class = "flag-btn flag-btn-high">High</button></td>
         </tr>
-        <tr>
+        <tr id="respiration rate">
             <td>Respiration Rate</td>
-            <td>{{respirationRate}}Br/min</td>
+            <td id ="value">
+                {{respirationRate}}Br/min</td>
             <td><button class = "flag-btn flag-btn-low">Low</button></td>
             <td><button class = "flag-btn flag-btn-high">High</button></td>
         </tr>
-        <tr>
+        <tr id="blood pressure">
             <td>Blood Pressure</td>
-            <td>{{systolic}}/{{diastolic}} mm Hg</td>
+            <td id ="value">
+                {{systolic}}/{{diastolic}} mm Hg</td>
             <td><button class = "flag-btn flag-btn-low">Low</button></td>
             <td><button class = "flag-btn flag-btn-high">High</button></td>
         </tr>
-        <tr>
+        <tr id="temperature">
             <td>Temperature</td>
-            <td>{{temperature}}</td>
+            <td id ="value">
+                {{temperature}}</td>
             <td><button class = "flag-btn flag-btn-low">Low</button></td>
             <td><button class = "flag-btn flag-btn-high">High</button></td>
         </tr>
