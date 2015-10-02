@@ -24,6 +24,10 @@ define(function (require) {
     let GoalsCollection = require('collection/Goals');
     let ActionGroupsCollection = Backbone.Collection.extend({model: ActionModel});
 
+    // rules and card matching
+    let Rule = require('component/activity/goals/match/Rule');
+    let CardMatcher = require('component/activity/goals/match/CardMatcher');
+
     // positioning
     let Positioning = require('component/activity/goals/Positioning');
 
@@ -36,7 +40,7 @@ define(function (require) {
          * The x position.
          */
         x: () => {
-            return Positioning.widthLimit() * 0.99
+            return Positioning.widthLimit() * 0.70
         },
         /**
          * The y position.
@@ -54,7 +58,7 @@ define(function (require) {
     let goalCardPositions = {
 
         x: () => {
-            return -(Positioning.widthLimit() * 0.40);
+            return -(Positioning.widthLimit() * 0.50);
         },
 
         y: () => {
@@ -121,11 +125,18 @@ define(function (require) {
         },
 
         /**
+         * Rules based card matching.
+         */
+        cardMatcher: new CardMatcher(),
+
+        /**
          * Constructor.
          */
         initialize: function (caseID, goalID) {
             // invoke super(arguments)
             Component.prototype.initialize.apply(this, arguments);
+
+            this.registerRules();
 
             this.matches = [];
 
@@ -154,14 +165,96 @@ define(function (require) {
         },
 
         /**
+         * Register rules for matching with the CardMatcher.
+         */
+        registerRules: function () {
+
+            let actionsGroupsCollection = this.collection.actionGroups;
+
+            /**
+             * Goal => Action : 'ActionsGroup'.
+             *
+             * @type {Rule}
+             */
+            let ActionGroupRule = new Rule(function (goalCard, actionCard) {
+
+                let goal = goalCard.model;
+                let action = actionCard.model;
+
+                if (goal.matchesAction(action)) {
+
+                    let actions = new ActionsCollection();
+
+                    actions.add(action);
+
+                    let actionGroup = new ActionGroup({
+                        goal: goal,
+                        actions: actions
+                    });
+
+                    actionsGroupsCollection.add(actionGroup);
+
+                    // remove cards components as they will be
+                    // replaced by match components
+                    goalCard.remove();
+                    actionCard.remove();
+
+                }
+
+            });
+
+            /**
+             * Handles other direction: Action => Goal : ActionsGroup
+             *
+             * @type {Rule}
+             */
+            let ActionGroupRule2 = new Rule((actionCard, goalCard) => {
+                return ActionGroupRule.execute(goalCard, actionCard);
+            });
+
+            /**
+             * Action => ActionsGroup : ActionsGroup
+             *
+             * @type {Rule}
+             */
+            let ActionsGroupRule = new Rule((actionCard, actionGroupCard) => {
+                let action = actionCard.model;
+                let actionGroup = actionGroupCard.model;
+                actionGroup.addAction(action);
+            });
+
+            /**
+             * Handles other direction:
+             * ActionsGroup => Action: ActionsGroup
+             *
+             * @type {Rule}
+             */
+            let ActionsGroupRule2 = new Rule((actionGroupCard, actionCard) => {
+                return ActionsGroupRule.execute(actionCard, actionGroupCard);
+            });
+
+            this.cardMatcher.addRule('Goal => Action', ActionGroupRule);
+            this.cardMatcher.addRule('Action => Goal', ActionGroupRule2);
+            this.cardMatcher.addRule('Action => GoalActionsMatch', ActionsGroupRule);
+            this.cardMatcher.addRule('GoalActionsMatch => Action', ActionsGroupRule2);
+        },
+
+        /**
          * Todo: handle actionGroup display
          *
          * @param model
          */
         onAddActionGroup: function (model) {
+
+            Object.assign(model.attributes, {
+                width: 300
+            });
+
             let match = new GoalActionsMatch({
                 model: model
             });
+
+            this.bindDraggableEvents(match);
 
             match.show();
 
@@ -240,8 +333,6 @@ define(function (require) {
          * An event triggered when the issues collection has synced
          * upon a fetch call.
          *
-         * Todo: this can be improved using the Positioning utility.
-         *
          * @param goals The issues collection.
          */
         onGoalsSync: function (goals) {
@@ -304,113 +395,8 @@ define(function (require) {
          */
         bindDraggableEvents: function (component) {
             component.on({
-                dragendsink: this.onDrop.bind(this)
+                dragendsink: this.cardMatcher.matchCards.bind(this.cardMatcher)
             });
-        },
-
-        /**
-         *
-         *
-         * The logic of this function is as follows:
-         * 1. Evaluate the types of the components involved and
-         * assign them to a known tuple.
-         * 2. establish if a match can be made and handle any
-         * cleanup as necessary.
-         *
-         * @param event the event created by the drag
-         * and drop interaction.
-         */
-        onDrop: function (event) {
-            let draggable = event.draggable;
-            let droppable = event.droppable;
-
-            // check types
-            let models = this.assignTypes(draggable, droppable);
-
-            // case: Goal
-
-            let isMatch = this.goalMatchesAction(models);
-
-            if (isMatch) {
-
-                // todo: only remove goals / actions and append  actions to the ActionGroup
-                draggable.remove();
-                droppable.remove();
-            }
-        },
-
-        /**
-         * Resolves the types of the cards participating in a drag
-         * and drop event.
-         *
-         * todo: handle the case where either parameter is an ActionsGroup.
-         *
-         * @param draggable the draggable card
-         * @param droppable the droppable card
-         * @returns {{issue: *, goal: *}}
-         */
-        assignTypes: function (draggable, droppable) {
-            let types = {};
-
-            [draggable, droppable].map(function (card) {
-                if (card instanceof ActionCard) {
-                    types.action = card.model;
-                }
-                if (card instanceof GoalCard) {
-                    types.goal = card.model;
-                }
-                if (card instanceof ActionGroup) {
-                    types.group = card.model;
-                }
-            });
-
-            return types;
-        },
-
-        /**
-         * Goals can match with one or more Actions. This function
-         * determines if a Goal matches an Action. If a match is
-         * found, the action model will be allocated to an existing
-         * group if one exists or else a new group will be created.
-         *
-         * Can be used as a predicate.
-         *
-         * todo: the logic of this function could be improved.
-         *
-         * @param models the object literal with the two objects
-         * participating in a drop event.
-         * @returns {boolean} {@code true} iff the models match
-         * and {@code false} otherwise.
-         */
-        goalMatchesAction: function (models) {
-            let action = models.action;
-            let goal = models.goal;
-            let actionGroups = this.collection.actionGroups;
-
-            if (goal.matchesAction(action)) {
-
-                let existingGroup = actionGroups.find((group) => {
-                    return group.containsGoal(goal);
-                });
-
-                if (existingGroup) {
-                    existingGroup.addAction(action);
-                }
-                else {
-                    let actions = new ActionsCollection();
-                    actions.add(action);
-                    let match = new ActionGroup({
-                        title: 'Match',
-                        goal: goal,
-                        actions: actions,
-                        color: 'light-green',
-                        width: this.width
-                    });
-                    actionGroups.add(match);
-                }
-                return true;
-            }
-            return false;
         }
 
     });
