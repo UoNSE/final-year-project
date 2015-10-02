@@ -49,7 +49,7 @@
         },
         {
           "id": 2,
-          "content": "For Mr Tien to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
+          "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
           "issueId": "2",
           "actions": [
             5,
@@ -62,7 +62,7 @@
       "actions": [
         {
           "id": 1,
-          "content": "Notify Mr Tien's doctor of his condition",
+          "content": "Notify Mr Smith's doctor of his condition",
           "goalId": 1
         },
         {
@@ -75,7 +75,7 @@
         },
         {
           "id": 4,
-          "content": "Administer a fluid challenge and increase Mr Tien's IV fluid rate as ordered."
+          "content": "Administer a fluid challenge and increase Mr Smith's IV fluid rate as ordered."
         },
         {
           "id": 5,
@@ -83,15 +83,15 @@
         },
         {
           "id": 6,
-          "content": "Raise the foot of Mr Tien's bed."
+          "content": "Raise the foot of Mr Smith's bed."
         },
         {
           "id": 7,
-          "content": "Strictly monitor Mr Tien's input and maintain hourly urine measures"
+          "content": "Strictly monitor Mr Smith's input and maintain hourly urine measures"
         },
         {
           "id": 8,
-          "content": "Monitor Mr Tien's level of consciousness."
+          "content": "Monitor Mr Smith's level of consciousness."
         }
       ]
     },
@@ -142,7 +142,7 @@
     },
     {
       "id": 2,
-      "content": "For Mr Tien to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
+      "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
       "issueId": "2",
       "actions": [
         5,
@@ -155,7 +155,7 @@
   "actions": [
     {
       "id": 1,
-      "content": "Notify Mr Tien's doctor of his condition",
+      "content": "Notify Mr Smith's doctor of his condition",
       "goalId": 1
     },
     {
@@ -170,7 +170,7 @@
     },
     {
       "id": 4,
-      "content": "Administer a fluid challenge and increase Mr Tien's IV fluid rate as ordered.",
+      "content": "Administer a fluid challenge and increase Mr Smith's IV fluid rate as ordered.",
       "goalId": 1
     },
     {
@@ -180,17 +180,17 @@
     },
     {
       "id": 6,
-      "content": "Raise the foot of Mr Tien's bed.",
+      "content": "Raise the foot of Mr Smith's bed.",
       "goalId": 2
     },
     {
       "id": 7,
-      "content": "Strictly monitor Mr Tien's input and maintain hourly urine measures",
+      "content": "Strictly monitor Mr Smith's input and maintain hourly urine measures",
       "goalId": 2
     },
     {
       "id": 8,
-      "content": "Monitor Mr Tien's level of consciousness.",
+      "content": "Monitor Mr Smith's level of consciousness.",
       "goalId": 2
     }
   ],
