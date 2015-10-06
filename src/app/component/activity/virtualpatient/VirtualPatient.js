@@ -78,7 +78,8 @@ define(function(require) {
 			this.patientbody = this.add(new PatientBody(params)); //add params so it has access to vproot
 
 			if(this.collaborative){
-				this.patientbody.interactive = true;
+				//this.patientbody.interactive = true;
+				this.patientbody.setInteractive();
 			}
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = new Tests(this.vproot,this.testresults);
@@ -111,7 +112,8 @@ define(function(require) {
                         information related to that area. </br></br>\
                         If you no longer need an evidence card,<br> you can drag it to the trash can.'}
 			}));
-			this.help.interactive = true;
+			//this.help.interactive = true;
+			this.help.setInteractive();
 
 			this.menu = this.add(new Menu());
 			this.menu.on({
@@ -120,7 +122,8 @@ define(function(require) {
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
 			this.menu.delete.position.set(-370, -300);
-			this.menu.delete.interactive = true;
+			//this.menu.delete.interactive = true;
+			this.menu.delete.setInteractive();
 			this.addVPMenus();
 		},
 
@@ -176,7 +179,7 @@ define(function(require) {
 
 				button.on('click', this.onToggle.bind(this,target));
 				// this.bindDraggableEvents(button);
-				button.interactive = false;
+				
 				buttonhandle.add(button);
 				// this.bindDraggableEvents(buttonhandle);
 				this.add(buttonhandle);
@@ -198,7 +201,8 @@ define(function(require) {
 		 * @param component The button handle.
 		 */
 		bindDraggableEvents: function (component) {
-			component.interactive = true;
+			//component.interactive = true;
+			component.setInteractive();
 			component.setDraggable();
 			// debugger;
 			component.on({
