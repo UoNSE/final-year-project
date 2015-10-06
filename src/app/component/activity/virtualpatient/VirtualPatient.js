@@ -198,7 +198,7 @@ define(function(require) {
          */
         bindDraggableEvents: function (component) {
 			component.interactive = true;
-			component.setDraggable({opacity: 1});
+			component.setDraggable();
 			// debugger;
             component.on({
                 drag: this.onDrag.bind(this),
