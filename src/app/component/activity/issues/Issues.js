@@ -332,7 +332,7 @@ define(function (require) {
             }
             else {
                 this.gameCredit -= this.getScore(card);
-                //this.collection.issueGroup.remove(this.collection.issueGroup.where({evidence: model.attributes.evidence}))
+                this.removeIssueGroup(card);
             }
 
             card.remove();
@@ -364,9 +364,21 @@ define(function (require) {
                 }
                 this.collection.evidence.add(model);
             });
-
+            this.removeIssueGroup(issueGroup);
             issueGroup.remove();
             this.updateScore();
+
+        },
+
+        removeIssueGroup: function(group){
+            //find group in collection.issuegroup
+            var mark;
+            this.collection.issueGroup.each(function(model){
+                if(model.attributes.model.get("evidence").where({body: group.model.get("evidence").models[0].attributes.body}).length >0){
+                    mark = model;
+                }
+            })
+            this.collection.issueGroup.remove(mark);
 
         },
 
@@ -411,7 +423,8 @@ define(function (require) {
 
                 this.gameCredit -= this.getScore(draggable);
                 this.gameCredit -= this.getScore(droppable);
-
+                this.removeIssueGroup(draggable);
+                this.removeIssueGroup(droppable);
             }
             else if (droppable instanceof IssueGroup || draggable instanceof IssueGroup) {
                 var group = droppable instanceof IssueGroup ? droppable : draggable;
@@ -453,6 +466,7 @@ define(function (require) {
                 }
                 this.gameCredit += cardcost;
                 this.gameCredit -= this.getScore(group);
+                this.removeIssueGroup(group);
             } else {
                 //only 1 issue allowed
                 if (draggable instanceof Issue && droppable instanceof Issue) {
@@ -503,13 +517,15 @@ define(function (require) {
             //remove old collection occurences
             if(issueGroup.model.get("evidence") != null) {
                 issueGroup.model.get("evidence").each(function (groupModel) {
+                    var mark;
                     this.collection.evidence.each(function (model) {
 
                         if (model.attributes.data == groupModel.attributes.body) {
-                            this.collection.evidence.remove(model);
+                            mark = model;
                             //return;
                         }
                     }, this)
+                    this.collection.evidence.remove(mark);
                 }, this)
             }
 
