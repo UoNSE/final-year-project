@@ -44,21 +44,23 @@ define(function (require) {
          * @param caseinfo The caseinfo collection.
          */
         onCaseInfoSync: function (caseinfo) {
+            // Card positioning vars
+            var yloc = this.height + 10;
+            var xloc = -800;
+
+            // Add Timer component
             this.addTimer(new TimerModel({
                 body : caseinfo.first().get('timer'),
-                width: this.width,
-                height: this.height,
+                width:128,
                 title : 'Activity Timer',
                 'update-period' : 1000
             })).position.set(500,-300);
             var caseCards = caseinfo.first().get('cards');
-//            var n = caseCards.size();
-            var yloc = this.height + 10;
-            var xloc = -400;
+
+            // Add Card components
             caseCards.forEach(function (model, i) {
                 var card = this.addCaseCard(new CaseInfoCardModel({
                     width: this.width,
-                    /*height: this.height,*/
                     /* TODO refactor again */
                     title: model.get('title'),
                     onion: model.get('id'), /* onion = id, don't ask hard questions*/
@@ -73,12 +75,11 @@ define(function (require) {
                     color: 'info'
                 }));
                 card.position.set(xloc, yloc);
-                yloc = -yloc;
-                xloc = ( i == 0     ? xloc
-                        :i % 2 == 0 ? xloc
-                                    : xloc+this.width+10);
-            }, this);
 
+                yloc = -yloc;
+                xloc = (i % 2 == 0 ? xloc
+                                   : xloc+this.width+10);
+            }, this);
         },
 
         addTimer: function (model) {

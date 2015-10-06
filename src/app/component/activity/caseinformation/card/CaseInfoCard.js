@@ -4,21 +4,19 @@ define(function (require) {
 
     var Panel = require('component/panel/Panel');
     var template = require('text!component/activity/caseinformation/card/CaseInfoCard.hbs');
+    var sCounter = 0; //counter for selected items, counts all cards, no bound to a single instance
 
-    //function globals
-    var hiddenCards;
-    var sCounter;
 
     return Panel.extend({
         template:template,
         styles: 'component/activity/caseinformation/card/CaseInfoCard.css',
+        hiddenCards: null,
 
         initialize: function () {
             Panel.prototype.initialize.apply(this, arguments);
             this.interactive = true;
             this.setDraggable({});
-            hiddenCards = $('.hidden-info');
-            sCounter = 0;
+            this.hiddenCards = $('.hidden-info');
         },
 
 		/*TODO refactor this event and function into SelectableText */

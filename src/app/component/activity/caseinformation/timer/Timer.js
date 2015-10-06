@@ -3,7 +3,7 @@ define(function (require) {
 
     var Panel = require('component/panel/Panel');
     var template = require('text!component/activity/caseinformation/timer/Timer.hbs');
-    var that = null;   //because it is
+    var gTimer = null;   //because it is
 
     return Panel.extend({
         template: template,
@@ -13,7 +13,7 @@ define(function (require) {
         'activitytimer' : 0,
 
         initialize: function () {
-            that = this;  // for the calls to updateClock() within setInterval()
+            gTimer = this;  // binding this for calls to updateClock() made by setInterval()
             Panel.prototype.initialize.apply(this, arguments);
             this.interactive = true;
             this.setDraggable({});
@@ -33,22 +33,22 @@ define(function (require) {
         },
 
         updateClock: function () {
-            if (that.activitytimer !== 0) {
-                that.activitytimer -= that.model.get('update-period');
-                if (that.activitytimer < 0) {
-                    that.activitytimer = 0;
+            if (gTimer.activitytimer !== 0) {
+                gTimer.activitytimer -= gTimer.model.get('update-period');
+                if (gTimer.activitytimer < 0) {
+                    gTimer.activitytimer = 0;
                 }
                 switch(true){
-                    case (that.activitytimer < that.model.get('low')):
-                        that.model.set('color','danger').set('low',-1);
+                    case (gTimer.activitytimer < gTimer.model.get('low')):
+                        gTimer.model.set('color','danger').set('low',-1);
                         break;
-                    case (that.activitytimer < that.model.get('mid')):
-                        that.model.set('color','warning').set('mid',-1);
+                    case (gTimer.activitytimer < gTimer.model.get('mid')):
+                        gTimer.model.set('color','warning').set('mid',-1);
                         break;
                     default:
                         break;
                 }
-                $('#activity-clock').text(that.timerToString());
+                $('#activity-clock').text(gTimer.timerToString());
                 //that.model.set('body',that.timerToString()); // updating the model here seems to make the page unresponsive after about 5 seconds
             }
         },
@@ -72,7 +72,5 @@ define(function (require) {
             }
             return numHours + ":" + numMins + ":" + numSecs;
         }
-
     });
-
 });

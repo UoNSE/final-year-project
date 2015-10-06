@@ -7,6 +7,7 @@ define(function (require) {
     return InventoryPage.extend({
         name: 'caseinfo',
         title: 'Case Information',
+        counter: 0, //counter for hidden items
 
         initialize: function () {
             InventoryPage.prototype.initialize.apply(this, arguments);
