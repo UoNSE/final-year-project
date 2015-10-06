@@ -39,6 +39,7 @@ define(function (require) {
         // important for having fixed position near back button
         template: template,
         origin: 'top left',
+		pageOrigin: 'top left',
         events: {
             'click .cpn-button': 'close'
         },
@@ -62,6 +63,7 @@ define(function (require) {
     return ActionButton.extend({
         detached: true,
         origin: 'top left',
+		pageOrigin: 'top left',
 
         initialize: function (model) {
             this.model = {

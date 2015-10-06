@@ -78,8 +78,6 @@ define(function (require) {
             }));
             //add the topic unlock button
             var unlock = this.add(new ActionButton({
-                detached: true,
-                origin: 'top left',
                 model: new ActionButtonModel({
                     icon: 'action-shopping-cart',
                     color: 'blue',
@@ -88,6 +86,7 @@ define(function (require) {
                 })
             }));
 			unlock.origin = 'top left';
+            unlock.pageOrigin = 'top left';
 			unlock.detached = true;
 			unlock.position.y = -140;
 
