@@ -22,7 +22,7 @@ define(function (require) {
 
 	Object.assign(MultiTouchManager.prototype, {
 		get: function (id) {
-			return this.elementsHash[id];
+			return this.elements.map[id];
 		},
 
 		addElement: function (component) {
