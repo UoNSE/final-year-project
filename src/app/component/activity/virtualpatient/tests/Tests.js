@@ -7,68 +7,95 @@ define(function(require) {
 	var Button = require('component/button/Button');
 	var ButtonModel = require('model/Button');
 
-	var UrineAnalysis = require('component/activity/virtualpatient/tests/urineanalysis/UrineAnalysis');
+	var TestResult = require('component/activity/virtualpatient/tests/testresult/TestResult');
 	var BloodTest = require('component/activity/virtualpatient/tests/bloodtest/BloodTest');
+	var Scan = require('component/activity/virtualpatient/tests/scan/Scan');
+	var Patients = require('collection/TestResults');
 
 	return Component.extend({
 		template: template,
 		classes: 'tests',
 		styles: 'component/activity/virtualpatient/tests/Tests.css',
+		// collection: new TestResults(),
 
-		initialize: function () {
+
+		initialize: function (vproot,testresults) {
 			Component.prototype.initialize.apply(this, arguments);
 
-			var offset = 300;
+			this.testresults = testresults;
+			this.UrineAnalysisResult = this.testresults.get(1);
+			this.vproot = vproot;
+			// console.log(this.vproot);
 
-			this.urineAnalysis = this.createUrineAnalysis(offset, 0);
-			this.bloodTest = this.createBloodTest(offset, 50);
+			this.createTestMenu();
+
 		},
 
 		createButton: function (text, color) {
 			return new Button({
 				model: new ButtonModel({
 					text: text,
-					color: color
+					color: color,
+					id: 'test-btn'+this.testbuttoncount
 				})
 			});
 		},
 
-		onToggleTest: function (test, event) {
-			test.toggle();
-		},
+		onToggleTarget: function (target, event) {
+			target.toggle();
 
-		createUrineAnalysis: function (x, y) {
-
-			var button = this.createButton('Urine Analysis', 'info');
-			button.position.set(-x, y);
-
-			var urineAnalysis = new UrineAnalysis();
-
-			urineAnalysis.position.x = x;
-			urineAnalysis.hide();
-
-			button.add(urineAnalysis);
-			button.on('click', this.onToggleTest.bind(this, urineAnalysis));
-
-			return this.add(button);
+			if(target != this.bloodtestmenu){
+				this.bloodtestmenu.hide();
+			}
 
 		},
 
-		createBloodTest: function (x, y) {
+		createTestMenu: function(){
+			this.testbuttoncount = 1;
+			// for all menu items in collection, add menu item
+			this.yOffset = 50;
+			this.createMenuButton('Blood Test');
+			this.createMenuButton('Xray');
+			this.createMenuButton('CTScan');
+			this.createMenuButton('Urine');
 
-			var button = this.createButton('Blood Test', 'info');
-			button.position.set(-x, y);
+		},
 
-			var bloodTest = new BloodTest();
+		createMenuButton: function(label){
+			var button = this.createButton(label, 'primary');
+			this.yOffset = this.yOffset+50;
+			// console.log(this.yoffset);
+			button.position.set(0, this.yOffset);
 
-			bloodTest.position.x = x;
-			bloodTest.hide();
+			var target = null;
 
-			button.add(bloodTest);
-			button.on('click', this.onToggleTest.bind(this, bloodTest));
+			// console.log(label);
 
+			if(label==='Blood Test'){
+				target = new BloodTest(this.vproot, this.testresults);
+				this.bloodtestmenu = target;
+				target.position.x = 275;
+			}
+			else if (label==='Xray' || label ==='CTScan') {
+				target = new Scan();
+			}
+			else if (label==='Urine'){
+				target = new TestResult({vproot: this.vproot, model:this.UrineAnalysisResult});
+				// target = new TestResult(this.vproot,{model:this.UrineAnalysisResult});
+				// target = new TestResult(this.vproot,{model: this.UrineAnalysisResult});
+				// target = new TestResult({model:this.UrineAnalysisResult});
+				// target = new TestResult(this.UrineAnalysisResult);
+			}
+			else{}
+
+			// target.position.x = 0;
+			target.interactive = true;
+			target.hide();
+
+			button.add(target);
+			button.on('click', this.onToggleTarget.bind(this, target));
+			this.testbuttoncount++;
 			return this.add(button);
-
 		}
 
 	});

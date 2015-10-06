@@ -6,19 +6,24 @@ define(function (require) {
 	var Vector2 = require('math/Vector2');
 
 	return Object2D.extend({
-		back: true,
+		showBackButton: true,
 		title: 'Page',
-
 		initialize: function (router, camera, urlParams) {
 			Object2D.prototype.initialize.apply(this, arguments);
-
+            this.router = router;
 			this.camera = camera;
 			this.urlParams = urlParams;
-			if (this.back) {
-				this.add(new BackButton(router));
+			if (this.showBackButton) {
+				this.backButton = this.add(new BackButton(router));
+				this.backButton.on('back', this.onBack.bind(this));
 			}
 		},
 
+		// Override in submodule to modify.
+		onBack: function () {
+		},
+
+		// Override in submodule to modify.
 		onPageEnter: function () {
 			this.scale.set(0, 0);
 
@@ -29,13 +34,14 @@ define(function (require) {
 				.promise();
 		},
 
+		// Override in submodule to modify.
 		onPageLeave: function () {
-			// Override in submodule.
 			return new TWEEN.Tween(this.scale)
 				.to(Vector2.zeros(), 500)
 				.easing(TWEEN.Easing.Back.In)
 				.start()
 				.promise();
 		}
+
 	});
 });

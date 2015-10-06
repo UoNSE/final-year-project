@@ -46,8 +46,8 @@ define(function (require) {
 		},
 
 		bindEvents: function () {
-			this.delete.on('dragendsink', this.onDelete.bind(this));
-			this.split.on('dragendsink', this.onSplit.bind(this));
+			this.listenTo(this.delete, 'dragendsink', this.onDelete.bind(this));
+			this.listenTo(this.split, 'dragendsink', this.onSplit.bind(this));
 		},
 
 		onDelete: function (event) {

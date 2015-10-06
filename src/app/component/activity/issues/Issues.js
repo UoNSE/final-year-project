@@ -3,34 +3,48 @@ define(function (require) {
 
     var Component = require('core/Component');
     var template = require('text!component/activity/issues/Issues.hbs');
+    var TWEEN = require('tweenjs');
+    var Vector2 = require('math/Vector2');
 
     var IssuesCollection = require('collection/Issues');
     var EvidenceCollection = require('collection/Evidence');
     var IssueModel = require('model/Issue');
     var EvidenceModel = require('model/Evidence');
     var IssueGroupModel = require('model/IssueGroup');
+    var ActionButtonModel = require('model/ActionButton');
 
     var Menu = require('component/activity/issues/menu/Menu');
     var Issue = require('component/activity/issues/card/issue/Issue');
     var Evidence = require('component/activity/issues/card/evidence/Evidence');
     var IssueGroup = require('component/activity/issues/card/issuegroup/IssueGroup');
+    var ActionButton = require('component/actionbutton/ActionButton');
+    var Score = require('component/activity/issues/score/Score');
+    var Panel = require('component/panel/Panel');
+
+    var Help = require('component/help/help');
 
     return Component.extend({
-
+        //hack to stop duplicating cards
+        mergedYet: false,
         template: template,
-        classes: ['issues'],
+        classes: 'issues',
         styles: 'component/activity/issues/Issues.css',
 
         menu: null,
+        gameCredit: 0,
 
         collection: {
             issues: new IssuesCollection(),
             evidence: new EvidenceCollection()
         },
 
-        initialize: function () {
+        initialize: function (inventory, params) {
 
             Component.prototype.initialize.apply(this, arguments);
+            this.gameCredit = 0;
+
+            this.inventory = inventory;
+            this.params = params;
 
 			this.width = 300;
 			this.height = 90;
@@ -42,8 +56,12 @@ define(function (require) {
             this.listenTo(issues, 'sync', this.onIssuesSync);
             this.listenTo(evidence, 'sync', this.onEvidenceSync);
 
-            issues.fetch();
-            evidence.fetch();
+            if (this.canLoad()) {
+                this.loadCards(issues, evidence);
+            }
+            else{
+                this.fetchCards(issues, evidence);
+            }
 
             this.menu = this.add(new Menu());
             this.menu.on({
@@ -52,6 +70,67 @@ define(function (require) {
             });
             this.menu.hide();
 
+           this.add(new Help({
+                model: {
+                    helpContent: 'Join pieces of evidence together to score points.<br>'+
+                        'Once you have enough points you can unlock issues in the '+
+                        '<button class="mtl-fab btn btn-material-blue btn-fab btn-raised mdi-action-shopping-cart" style="width: 25px;height: 25px;padding: 0px;"> </button> menu<br>'+
+                        'Once all issues are linked with the correct evidence you will be able to continue'
+                }
+            }));
+            //add the topic unlock button
+            this.add(new ActionButton({
+                //detached:true,
+                model: new ActionButtonModel({
+                    icon: 'action-shopping-cart',
+                    color: 'blue',
+                    href: 'cases/' + params['case_id'] + '/activity/issues/unlock',
+                    classes: 'topic-unlock'
+                    //styles: {
+                    //    width:100,
+                    //    height:100,
+                    //    'font-size':40
+                    //}
+                })
+            })).detached = true;
+
+            this.scoreContainer = this.add(new Score());
+
+            this.scoreTrigger = -6;
+            this.scoreHint = this.add(new Panel({
+                model: {
+                    body: 'You now have enough credit to purchase issues!',
+                    width: 200
+                }
+            }));
+            this.scoreHint.hide();
+        },
+
+        /**
+         * Check if there are cards in the inventory
+         * @returns true if the inventory has cards
+         */
+        canLoad: function(){
+            //TODO check if inventory has cards
+            console.log("No loading");
+            return false;
+        },
+
+        /**
+         * Load cards from inventory
+         */
+        loadCards: function(issues, evidence){
+            //TODO load cards from inventory
+            console.log("Load cards");
+        },
+
+        /**
+         * fetch card data from db
+         */
+        fetchCards: function(issues, evidence){
+            console.log("Fetch cards");
+            issues.fetch();
+            evidence.fetch();
         },
 
         /**
@@ -62,17 +141,21 @@ define(function (require) {
         onIssuesSync: function (issues) {
             var n = issues.size();
             var distance = 10;
-            issues.forEach(function (model, i) {
+            issues.forEach((model, i) => {
                 var card = this.addIssue(new IssueModel({
 					width: this.width,
 					height: this.height,
 					title: 'Issue',
-					body: model.get('content'),
+                    issueid: model.get('id'),
+					body: model.get('data'),
+                    cost: model.get('cost'),
 					color: 'danger'
 				}));
                 var scale = i - ((n - 1) / 2);
+                this.gameCredit -= card.model.get('cost');
                 card.position.set(-300, scale * (distance + card.model.get('height')));
-            }, this);
+            });
+            this.updateScore();
         },
 
         /**
@@ -83,17 +166,26 @@ define(function (require) {
         onEvidenceSync: function (evidence) {
             var n = evidence.size();
             var distance = 10;
-            evidence.forEach(function (model, i) {
+            evidence.forEach((model, i) => {
                 var card = this.addEvidence(new EvidenceModel({
 					width: this.width,
 					height: this.height,
 					title: 'Evidence',
-					body: model.get('content'),
+					body: model.get('data'),
+                    score: model.get('score'),
+                    maxscore: model.get('maxscore'),
+                    issueid: model.get('issueId'),
 					color: 'info'
 				}));
                 var scale = i - ((n - 1) / 2);
+                var score = card.model.get('score');
+                this.gameCredit += score;
+                if(score < card.model.get('maxscore')) {
+                    this.gameCredit -= 2;
+                }
                 card.position.set(300, scale * (distance + card.model.get('height')));
-            }, this);
+            });
+            this.updateScore();
         },
 
         /**
@@ -132,7 +224,8 @@ define(function (require) {
         bindDraggableEvents: function (component) {
             component.on({
                 drag: this.onDrag.bind(this),
-                dragendsink: this.onDrop.bind(this)
+                dragendsource: this.onDragEnd.bind(this),
+                dropsink: this.onDrop.bind(this)
             });
         },
 
@@ -141,6 +234,11 @@ define(function (require) {
          */
         onDrag: function () {
             this.menu.show();
+            this.mergedYet = false;
+        },
+
+        onDragEnd: function(){
+            this.menu.hide();
         },
 
         /**
@@ -149,15 +247,46 @@ define(function (require) {
          * @param event
          */
         onDrop: function (event) {
+            if (this.mergedYet) {
+                return;
+            }
+            this.mergedYet = true;
             var draggable = event.draggable;
             var droppable = event.droppable;
             this.merge(draggable, droppable);
+            this.updateScore();
+        },
 
-            this.menu.hide();
+        updateScore: function(){
+            this.scoreContainer.setScore(this.gameCredit);
+
+            if (this.gameCredit >= this.scoreTrigger) {
+                this.triggerScoreHint();
+            }
+            //$(".score-display").text("CREDIT: " + gameCredit);
         },
 
         onDelete: function (event) {
-            event.draggable.remove();
+            // Refund score.
+            var card = event.draggable;
+            var model = card.model;
+            var type = this.resolveType(card);
+            if (type.issue) {
+                this.gameCredit+= model.get('cost');
+            }
+            else if (type.evidence) {
+                var score = model.get('score');
+                this.gameCredit -= score;
+                if (score < model.get('maxscore')) {
+                    this.gameCredit += 2;
+                }
+            }
+            else {
+                this.gameCredit -= this.getScore(card);
+            }
+
+            card.remove();
+            this.updateScore();
         },
 
         onSplit: function (event) {
@@ -165,18 +294,26 @@ define(function (require) {
             var issueGroup = event.draggable;
             var model = issueGroup.model;
 
-            var issue = model.get('issue');
-            var evidence = model.get('evidence');
+            this.gameCredit -= this.getScore(issueGroup);
 
+            var issue = model.get('issue');
             if (issue) {
                 this.addIssue(issue);
+                this.gameCredit -= issue.get('cost');
             }
 
-            evidence.each(function (model) {
+            var evidence = model.get('evidence');
+            evidence.each(model => {
+                var score = model.get('score');
                 this.addEvidence(model);
-            }, this);
+                this.gameCredit += score;
+                if (score < model.get('maxscore')) {
+                    this.gameCredit -= 2;
+                }
+            });
 
             issueGroup.remove();
+            this.updateScore();
 
         },
 
@@ -185,38 +322,198 @@ define(function (require) {
             var draggableType = this.resolveType(draggable);
             var droppableType = this.resolveType(droppable);
 
-            if (droppable instanceof IssueGroup) {
+            if (droppable instanceof IssueGroup && draggable instanceof IssueGroup) {
 
-                // TODO
-                //droppable.collection.add(draggable.model);
-                draggable.remove();
+                //only 1 issue allowed
+                if (draggable.model.get('issue') && droppable.model.get('issue')) {
+                    draggable.shake();
+                    return;
+                }
+                //load old collections
 
+                var issue = droppable.model.get('issue') || draggable.model.get('issue');
+                var evidence = draggable.model.get('evidence');
+
+                if (issue) {
+                    var issueID = issue.attributes.issueid;
+                    var correctmerge = true;
+                    var Ielist = droppable.model.get('evidence');
+                    evidence.each(model => {
+                        if (issueID != model.get('issueid')) {
+                            correctmerge = false
+                        }
+                    });
+                    Ielist.each(function (model) {
+                        if (issueID != model.get('issueid')) {
+                            correctmerge = false
+                        }
+                    });
+                    if (correctmerge === false) {
+                        draggable.shake();
+                        return;
+                    }
+                }
+
+                evidence.add(droppable.model.get('evidence').toJSON());
+
+                this.gameCredit -= this.getScore(draggable);
+                this.gameCredit -= this.getScore(droppable);
+
+            }
+            else if (droppable instanceof IssueGroup || draggable instanceof IssueGroup) {
+                var group = droppable instanceof IssueGroup ? droppable : draggable;
+                var card = droppable instanceof IssueGroup ? draggable : droppable;
+                var cardType = droppable instanceof IssueGroup ? draggableType : droppableType;
+                //only 1 issue allowed
+                if(card instanceof Issue && group.model.get('issue') != undefined){
+                    draggable.shake();
+                    return;
+                }
+
+                //load old collections
+
+                var issue = cardType.issue || group.model.get('issue');
+                var collection = [];
+                var ev = group.model.get('evidence');
+                if (cardType.evidence) {collection.push(cardType.evidence);}
+                var evidence = new Backbone.Collection(collection);
+                evidence.add(ev.toJSON());
+
+
+                if (issue) {
+                    var issueID = issue.get('issueid');
+                    var correctmerge = true;
+                    evidence.each(function (model) {
+                        if (issueID !== model.get('issueid')) {
+                            correctmerge = false;
+                        }
+                    });
+                    if (!correctmerge) {
+                        draggable.shake();
+                        return;
+                    }
+                }
+
+                var cardcost = cardType.issue ? card.model.get('cost') : -1* card.model.get('score');
+                if (!cardType.issue && card.model.get('score') < card.model.get('maxscore')) {
+                    this.gameCredit += 2;
+                }
+                this.gameCredit += cardcost;
+                this.gameCredit -= this.getScore(group);
             } else {
+                //only 1 issue allowed
+                if (draggable instanceof Issue && droppable instanceof Issue) {
+                    draggable.shake();
+                    return;
+                }
 
-                var issue = draggableType.issue || droppableType.issue || null;
-
-                // TODO make nicer?
+                var issue = draggableType.issue || droppableType.issue;
                 var collection = [];
                 if (draggableType.evidence) {collection.push(draggableType.evidence);}
                 if (droppableType.evidence) {collection.push(droppableType.evidence);}
                 var evidence = new Backbone.Collection(collection);
 
-                var issueGroup = this.add(new IssueGroup({
-                    model: new IssueGroupModel({
-						width: this.width,
-                        title: 'Issues and evidence',
-                        color: 'success',
-                        issue: issue,
-                        evidence: evidence
-                    })
-                }));
+                if (issue) {
+                    var issueID = issue.get('issueid');
+                    var correctmerge = true;
+                    evidence.each(function (model) {
+                        if (issueID != model.get('issueid')) {
+                            correctmerge = false
+                        }
+                    });
+                    if (!correctmerge) {
+                        draggable.shake();
+                        return;
+                    }
+                    this.gameCredit += issue.attributes.cost;
+                }
+                evidence.each(evidence => {
+                    this.gameCredit -= evidence.get('score');
+                    if (evidence.get('score') < evidence.get('maxscore')) {
+                        this.gameCredit += 2;
+                    }
+                });
+            }
+            //create new card
+            var issueGroup = this.add(new IssueGroup({
+                model: new IssueGroupModel({
+                    width: this.width,
+                    title: 'Issues and evidence',
+                    color: 'success',
+                    issue: issue,
+                    evidence: evidence
+                })
+            }));
+            this.gameCredit += this.getScore(issueGroup);
+            this.bindDraggableEvents(issueGroup);
+            issueGroup.position.copy(droppable.position);
+            //remove old cards
+            draggable.remove();
+            droppable.remove();
 
-                issueGroup.position.copy(droppable.position);
-                draggable.remove();
-                droppable.remove();
+        },
 
+         getScore: function(card){
+             var cost = card.model.get('issue') != null ? card.model.get('issue').get('cost') : 0;
+             var evlist = card.model.get('evidence');
+
+             var count = 0;
+             var max = 0;
+             var penalty = 0;
+
+             evlist.each(function (obj) {
+                 count += obj.get('score');
+                 let maxScore = obj.get('maxscore');
+                 if (max === 0) {
+                     max = maxScore;
+                 }
+                 else if (max !== maxScore) {
+                     penalty += 1;
+                     if (max > maxScore) {
+                         max = maxScore;
+                     }
+                 }
+             });
+
+            if (penalty != 0){
+                count -= penalty;
+            }
+            else if (max != count) {
+                count -= 2;
+            }
+            if(cost > 0) {
+                count -= cost;
             }
 
+            return count;
+        },
+
+
+        triggerScoreHint: function() {
+            this.scoreHint.position.copy(this.scoreContainer.position);
+            //this.scoreHint.scale.copy(Vector2.zeros());
+
+            this.scoreHint.show();
+
+            var animationTime = 900;
+            var originalPos = this.scoreContainer.position;
+            var newPos = originalPos.clone().add(new Vector2(0, 50));
+
+            var tween = new TWEEN.Tween(this.scoreHint.position)
+                .to(newPos,animationTime)
+                .easing(TWEEN.Easing.Elastic.Out);
+
+            var tweenBack = new TWEEN.Tween(this.scoreHint.position)
+                .to(originalPos,animationTime)
+                .delay(3000)
+                .easing(TWEEN.Easing.Elastic.In)
+                .onComplete(function() {
+                    this.scoreHint.hide();
+                }.bind(this));
+
+            tween.chain(tweenBack);
+
+            tween.start();
         },
 
         resolveType: function (view) {
@@ -229,6 +526,10 @@ define(function (require) {
 
             if (view instanceof Evidence) {
                 type['evidence'] = view.model;
+            }
+
+            if (view instanceof IssueGroup) {
+                type['issuegroup'] = view.model;
             }
 
             return type;

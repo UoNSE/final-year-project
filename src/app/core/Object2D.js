@@ -126,9 +126,17 @@ define(function (require) {
 			if (!(child instanceof Object2D)) {
 				throw new Error('Object2D: Cannot add child which is not of type Object2D');
 			}
+			if (child.parent) {
+				throw new Error('Object2D: Child already has parent, remove object from parent first');
+			}
 			child.parent = this;
 			this.children.push(child);
 			return child;
+		},
+
+		remove: function () {
+			this.trigger('remove');
+			Backbone.View.prototype.remove.apply(this, arguments);
 		},
 
 		removeAll: function () {
@@ -137,6 +145,11 @@ define(function (require) {
 				child.trigger('remove');
 			});
 			this.children.length = 0;
+		},
+
+		destroy: function () {
+			this.trigger('destroy');
+			Backbone.View.prototype.destroy.apply(this, arguments);
 		},
 
 		destroyAll: function () {
@@ -176,6 +189,26 @@ define(function (require) {
 
 		show: function () {
 			this.visible = true;
+		},
+
+		shake: function (duration, amplitude, bounces) {
+			// https://www.desmos.com/calculator/vaxe6wsqg6
+
+			var scale = 7; // approx -ln(1E-3)
+			if (duration === undefined) {
+				duration = 1000;
+			}
+			if (amplitude === undefined) {
+				amplitude = 10;
+			}
+			if (bounces === undefined) {
+				bounces = 20;
+			}
+			new TWEEN.Tween({obj: this, last: 0}).to({}, duration).onUpdate(function (t) {
+				var y = amplitude * Math.sin(bounces * Math.TAU * t) * Math.exp(-scale * t);
+				this.obj.position.x += y - this.last;
+				this.last = y;
+			}).start();
 		}
 	});
 

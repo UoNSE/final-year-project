@@ -7,6 +7,8 @@ define(function (require) {
 
 	return Backbone.RelationalModel.extend({
 
+		type: Backbone.HasOne,
+
 		defaults: {
 			issue: null,
 			evidence: null

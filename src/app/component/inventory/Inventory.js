@@ -3,37 +3,30 @@ define(function (require) {
 
 	var Component = require('core/Component');
 	var template = require('text!component/inventory/Inventory.hbs');
+	var Inventory = require('model/Inventory');
+
+	var Issue = require('model/Issue');
+	var Evidence = require('model/Evidence');
 
 	return Component.extend({
 
 		template: template,
-		styles: ['component/inventory/Inventory.css'],
-		classes: ['cpn-inventory'],
+		model: new Inventory(),
+		styles: 'component/inventory/Inventory.css',
+		classes: 'cpn-inventory',
 		detached: true,
 		width: 400,
-		height: '100%'
-		/*TODO refactor this event and function into SelectableText */
-		,events : {
-			'click .list-item' : 'selectListItem'
-		},
+		height: '100%',
 
-		selectListItem: function (event) {
-			var item = $(event.target);
+		initialize: function () {
 
-			if (!(item.hasClass('inv-list-item'))) {
-				if (item.hasClass('selected-text')) {
-					$("#list-" + item.attr('id')).remove();
-				} else {
-					item.clone().attr('id', 'list-' + item.attr('id')).addClass('inv-list-item well').css('box-shadow', '-3px 1px 6px 0 rgba(0,0,0,0.12)').appendTo($('.cpn-inventory').find('.panel-body'));
-				}
-			} else {
-				var id = item.attr('id');
-				item.remove();
-				item = $("#" + (id.slice(5, id.length)));
-			}
-			item.toggleClass('selected-text');
+			Component.prototype.initialize.apply(this, arguments);
+
+			var inventory = this.model;
+			inventory.add(new Issue({body: 'Something'}));
+			inventory.get('evidence').add(new Evidence({body: 'Something'}));
+
 		}
-
 
 	});
 
