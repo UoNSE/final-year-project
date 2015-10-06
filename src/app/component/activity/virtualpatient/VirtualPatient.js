@@ -16,6 +16,8 @@ define(function(require) {
 	var Button = require('component/button/Button');
 	var ActionButton = require('component/actionbutton/ActionButton');
 	var ActionButtonHandle = require('component/actionbuttonhandle/ActionButtonHandle');
+	// var ActionButtonHandleModel = require('model/ActionButtonHandle');
+
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
 	var Query = require('component/activity/virtualpatient/querypatient/Query');
 	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
@@ -45,7 +47,7 @@ define(function(require) {
 			'click #TestBtn': '_toggleTestMenu',
 			'click #ChartBtn': '_togglePatientsChart'
 
-			},
+		},
 
 		initialize: function () {
 			// debugger;
@@ -64,6 +66,7 @@ define(function(require) {
 			this.evidencecollection = new EvidenceCollection();
 			this.patient = this.patients.get(1); // get id.
 			this.addComponents();
+			// debugger;
 			this._hideElements();
 		},
 
@@ -75,13 +78,13 @@ define(function(require) {
 			this.patientbody = this.add(new PatientBody(params)); //add params so it has access to vproot
 
 			if(this.collaborative){
-				this.patientbody.setInteractive();
+				this.patientbody.interactive = true;
 			}
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = new Tests(this.vproot,this.testresults);
 
-            this.queries = this.patient.get('queries');
-            this.responses = this.patient.get('responses');
+			this.queries = this.patient.get('queries');
+			this.responses = this.patient.get('responses');
 			this.querymenu = new Query(this);
 
 			// this.EvidenceFeed = this.addEvidenceFeed();
@@ -91,24 +94,24 @@ define(function(require) {
 
 			this.help = this.add(new Help({
 				model: {
-				helpContent:
-				'Players take turns at gathering evidence.</br> \
-				Collect evidence about the \
-				patients condition.   </br> </br>\
-				Use the <strong>"Query"</strong> button </br>\
-				to ask the patient questions. </br> </br>\
-				Use the <strong>"Test"</strong> button </br>\
-				to run blood/urine/saliva </br>\
-				tests on the patint.</br> </br>\
-				Use the <strong>"Chart"</strong> button </br>\
-				to see the patients details </br>\
-				and vital signs.</br></br>\
-				<strong>Inspect</strong> areas of the body </br>\
-				to reveal scans and other  </br>\
-				information related to that area. </br></br>\
-				If you no longer need an evidence card,<br> you can drag it to the trash can.'}
+					helpContent:
+						'Players take turns at gathering evidence.</br> \
+                        Collect evidence about the \
+                        patients condition.   </br> </br>\
+                        Use the <strong>"Query"</strong> button </br>\
+                        to ask the patient questions. </br> </br>\
+                        Use the <strong>"Test"</strong> button </br>\
+                        to run blood/urine/saliva </br>\
+                        tests on the patint.</br> </br>\
+                        Use the <strong>"Chart"</strong> button </br>\
+                        to see the patients details </br>\
+                        and vital signs.</br></br>\
+                        <strong>Inspect</strong> areas of the body </br>\
+                        to reveal scans and other  </br>\
+                        information related to that area. </br></br>\
+                        If you no longer need an evidence card,<br> you can drag it to the trash can.'}
 			}));
-			this.help.setInteractive();
+			this.help.interactive = true;
 
 			this.menu = this.add(new Menu());
 			this.menu.on({
@@ -117,9 +120,8 @@ define(function(require) {
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
 			this.menu.delete.position.set(-370, -300);
-			//this.menu.delete.interactive = true;
-			this.menu.delete.setInteractive();
-			this.addVPButtons();
+			this.menu.delete.interactive = true;
+			this.addVPMenus();
 		},
 
 
@@ -175,7 +177,13 @@ define(function(require) {
 				button.on('click', this.onToggle.bind(this,target));
 				// this.bindDraggableEvents(button);
 				button.interactive = false;
-				buttonhandle.interactive = true;
+				buttonhandle.add(button);
+				// this.bindDraggableEvents(buttonhandle);
+				this.add(buttonhandle);
+				// debugger;
+				this.bindDraggableEvents(buttonhandle);
+				// debugger;
+				// this.event.trigger();
 
 				// this.buttons.push();
 
@@ -185,38 +193,38 @@ define(function(require) {
 
 
 		/**
-         * Binds the draggable events to the component.
-         *
-         * @param component The button handle.
-         */
-        bindDraggableEvents: function (component) {
+		 * Binds the draggable events to the component.
+		 *
+		 * @param component The button handle.
+		 */
+		bindDraggableEvents: function (component) {
 			component.interactive = true;
 			component.setDraggable();
 			// debugger;
-            component.on({
-                drag: this.onDrag.bind(this),
-                dragendsource: this.onDragEnd.bind(this),
-                // dropsink: this.onDrop.bind(this)
-            });
-        },
+			component.on({
+				drag: this.onDrag.bind(this),
+				dragendsource: this.onDragEnd.bind(this),
+				// dropsink: this.onDrop.bind(this)
+			});
+		},
 
-        /**
-         * An event triggered when a card is being dragged.
-         */
-        onDrag: function () {
-            // this.menu.show();
-            // this.mergedYet = false;
-        },
+		/**
+		 * An event triggered when a card is being dragged.
+		 */
+		onDrag: function () {
+			// this.menu.show();
+			// this.mergedYet = false;
+		},
 
-        onDragEnd: function(event){
+		onDragEnd: function(event){
 			// console.log("drag end");
-            // //alert("drag end");
+			// //alert("drag end");
 			var yOffset = event.draggable.position.y;
 			// var topScreenLimit = 350;
 			// var bottScreenLimit = -370;
 			// var leftScreenLimit =
 			console.log(yOffset);
-        },
+		},
 
 
 
