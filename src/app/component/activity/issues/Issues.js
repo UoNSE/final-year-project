@@ -368,9 +368,13 @@ define(function (require) {
                 this.scoreHint.popup(popupPos);
             }
 
-            if (this.collection.issues.length == 0){
+            if (this.collection.issues.length == 0 && this.gameCredit==0){
                 this.hiddenActionsActivityLink.show();
                 this.hiddenActionsHint.show();
+            }
+            else{
+                this.hiddenActionsActivityLink.hide();
+                this.hiddenActionsHint.hide();
             }
 
             this.inventory.saveScore = this.gameCredit;
@@ -384,6 +388,7 @@ define(function (require) {
             if (type.issue) {
                 this.gameCredit+= model.get('cost');
                 this.collection.issues.remove(this.collection.issues.where({data : model.attributes.body}));
+                this.collection.issues.remove(this.collection.issues.where({body : model.attributes.body}));
             }
             else if (type.evidence) {
                 var score = model.get('score');
@@ -392,6 +397,7 @@ define(function (require) {
                     this.gameCredit += 2;
                 }
                 this.collection.evidence.remove(this.collection.evidence.where({data : model.attributes.body}));
+                this.collection.evidence.remove(this.collection.evidence.where({body : model.attributes.body}));
             }
             else {
                 this.gameCredit -= this.getScore(card);
