@@ -11,7 +11,8 @@ define(function (require) {
 	function Application () {
 		this.scene = new Scene();
 		this.camera = new Camera();
-		this.router = new Router(this.scene, this.camera);
+		this.session = {};
+		this.router = new Router(this.scene, this.camera, this.session);
 		this.renderer = new CSS2DRenderer(this.router);
 		this.animateCallback = this.animate.bind(this);
 		Backbone.history.start({pushState: true});
