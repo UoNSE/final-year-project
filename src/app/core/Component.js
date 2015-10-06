@@ -4,6 +4,7 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var Object2D = require('core/Object2D');
+	var zIndexManager = require('core/ZIndexManager').getInstance();
 	var Handlebars = require('handlebars');
 	var multiTouchManager = require('behaviour/MultiTouchManager').getInstance();
 
@@ -17,22 +18,16 @@ define(function (require) {
 		classes: [],
 		width: null,
 		height: null,
+		zIndex: 0,
 
 		initialize: function () {
 			Object2D.prototype.initialize.apply(this, arguments);
+			zIndexManager.registerComponent(this);
 
-			var interactive = false;
 			Object.defineProperties(this, {
 				interactive: {
-					enumerable: true,
-					get: function () {
-						return interactive;
-					},
 					set: function (value) {
-						if (interactive != value) {
-							interactive = value;
-							this.onSetInteractive(value);
-						}
+						throw new Error('component.interactive = true is now deprecated, use component.setInteractive()');
 					}
 				}
 			});
@@ -41,6 +36,11 @@ define(function (require) {
 		render: function () {
 			this.$el.html(this.renderTemplate(this.template));
 			return this;
+		},
+
+		destroy: function () {
+			zIndexManager.removeComponent(this);
+			Object2D.destroy.apply(this, arguments);
 		},
 
 		/**
@@ -121,9 +121,9 @@ define(function (require) {
 			return this.multiTouchElement;
 		},
 
-		onSetInteractive: function (enabled) {
+		setInteractive: function (options) {
 			// TODO: handle remove
-			multiTouchManager.makeRTS(this.getMultiTouchElement());
+			multiTouchManager.makeRTS(this.getMultiTouchElement(), options);
 		},
 
 		setDraggable: function (options) {
@@ -137,11 +137,11 @@ define(function (require) {
 		},
 
 		bringToFront: function () {
-			this.trigger('bringToFront');
+			zIndexManager.bringToFront(this);
 		},
 
 		sendToBack: function () {
-			this.trigger('sendToBack');
+			zIndexManager.sendToBack(this);
 		}
 
 	});

@@ -74,8 +74,9 @@ define(function (require) {
 				});
 			}
 			object.$el.toggle(visible);
-			if (!object.detached) {
-				this.applyTransform(object.$el, transform);
+			this.applyTransform(object.$el, transform, object.origin);
+			if (object.detached) {
+				object.$el.css(this.applyDetachedPageOriginOffset(object.detachedPageOrigin));
 			}
 			if (object.width) {
 				object.$el.width(object.width);
@@ -83,7 +84,10 @@ define(function (require) {
 			if (object.height) {
 				object.$el.height(object.height);
 			}
-			object.$el.css('opacity', object.opacity);
+			object.$el.css({
+				'opacity': object.opacity,
+				'zIndex': object.zIndex
+			});
 			return element;
 		},
 
@@ -149,12 +153,46 @@ define(function (require) {
 			return Promise.all(promises);
 		},
 
-		applyTransform: function (element, transform) {
+		applyTransform: function (element, transform, origin) {
+			var origins = origin.split(' ');
+			// follow suit from CSS properties (such as margin) which specify Y axis first
+			var originY = origins[0];
+			var originX = origins[1] || originY;
+			var x = this.applyOriginOffset(transform.position.x + 'px', originX);
+			var y = this.applyOriginOffset(-transform.position.y + 'px', originY);
 			$(element).css({
-				'transform': 'translate(calc(-50% + ' + transform.position.x + 'px), calc(-50% + ' + (-transform.position.y) + 'px))'
+				'transform': 'translate(' + x + ', ' + y + ')'
 				+ ' rotateZ(' + (-transform.rotation / Math.TAU) + 'turn)'
 				+ ' scale(' + transform.scale.x + ', ' + transform.scale.y + ')'
 			});
+		},
+
+		applyOriginOffset: function (value, origin) {
+			switch (origin) {
+				case 'left':
+				case 'top':
+					return value;
+				case 'center':
+					return 'calc(-50% + ' + value + ')';
+				case 'right':
+				case 'bottom':
+					return 'calc(-100% + ' + value + ')';
+				default:
+					throw new Error('CSS2DRenderer: Unsupported origin: ' + origin);
+			}
+		},
+
+		applyDetachedPageOriginOffset: function (origin) {
+			var origins = origin.split(' ');
+			// follow suit from CSS properties (such as margin) which specify Y axis first
+			var originY = origins[0];
+			var originX = origins[1] || originY;
+
+			var map = { top: 0, center: '50%', bottom: '100%' };
+			return {
+				top: map[originY],
+				left: map[originX]
+			};
 		}
 	});
 

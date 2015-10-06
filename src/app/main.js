@@ -59,15 +59,15 @@ define(function (require) {
                                         'activity/goals/Actions': null
                                     }
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    });
+							}
+						}
+					}
+				}
+			}
+		}
+	});
 
-    require(['core/Application', 'es6-shim', 'addons', 'backbone-relational'], function (Application) {
-        new Application();
-    });
+	require(['core/Application', 'es6-shim', 'addons', 'backbone-relational'], function (Application) {
+		window.app = new Application();
+	});
 });

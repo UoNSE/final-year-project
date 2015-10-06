@@ -12,7 +12,7 @@ define(function (require) {
 			//var inventory = this.add(new Inventory());
 			//this.position.x = -inventory.width / 2;
 
-			this.inventory = new Inventory();
+			this.inventory = this.session.inventory = this.session.inventory || new Inventory();
 
 			//this.camera.position.x = inventory.width / 2;
 		},

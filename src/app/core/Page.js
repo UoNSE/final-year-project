@@ -8,11 +8,12 @@ define(function (require) {
 	return Object2D.extend({
 		showBackButton: true,
 		title: 'Page',
-		initialize: function (router, camera, urlParams) {
+		initialize: function (router, camera, urlParams, session) {
 			Object2D.prototype.initialize.apply(this, arguments);
             this.router = router;
 			this.camera = camera;
 			this.urlParams = urlParams;
+			this.session = session;
 			if (this.showBackButton) {
 				this.backButton = this.add(new BackButton(router));
 				this.backButton.on('back', this.onBack.bind(this));

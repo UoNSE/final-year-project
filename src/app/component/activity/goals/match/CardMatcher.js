@@ -2,91 +2,9 @@ define(function (require) {
 
     "use strict";
 
-    // cards
-    let IssueCard = require('component/activity/goals/card/issue/IssueCard');
-    let IssueGoalMatch = require('component/activity/goals/card/issuegoal/IssueGoalMatch');
-    let GoalCard = require('component/activity/goals/card/goal/GoalCard');
-    let ActionCard = require('component/activity/goals/card/action/ActionCard');
-
-    // models
-    let GoalModel = require('model/Goal');
-    let ActionModel = require('model/Action');
-    let ActionGroup = require('model/ActionGroup');
-    let IssueGoalPair = require('model/IssueGoalPair');
-
-    // collections
-    let ActionsCollection = require('collection/Actions');
-
     // rule
     let Rule = require('component/activity/goals/match/Rule');
 
-
-    // Define our rules.
-
-    /**
-     * Goal => Action : 'ActionsGroup'.
-     *
-     * @type {Rule}
-     */
-    let ActionGroupRule = new Rule((goalCard, actionCard) => {
-
-        let goal = goalCard.model;
-        let action = actionCard.model;
-
-        if (goal.matchesAction(action)) {
-            let actions = new ActionsCollection();
-            actions.add(action);
-            return new ActionGroup({
-                goal: goal,
-                actions: actions
-            });
-        }
-
-    });
-
-    /**
-     * Handles other direction: Action => Goal : ActionsGroup
-     *
-     * @type {Rule}
-     */
-    let ActionGroupRule2 = new Rule((actionCard, goalCard) => {
-        return ActionGroupRule.execute(goalCard, actionCard);
-    });
-
-    /**
-     * Action => ActionsGroup : ActionsGroup
-     *
-     * @type {Rule}
-     */
-    let ActionsGroupRule = new Rule((actionCard, actionGroupCard) => {
-        let action = actionCard.model;
-        let actionGroup = actionGroupCard.model;
-        actionGroup.addAction(action);
-    });
-
-    /**
-     * Handles other direction:
-     * ActionsGroup => Action: ActionsGroup
-     *
-     * @type {Rule}
-     */
-    let ActionsGroupRule2 = new Rule((actionGroupCard, actionCard) => {
-        return ActionsGroupRule.execute(actionCard, actionGroupCard);
-    });
-
-    /**
-     * This an example of using an object literal as a rudimentary hashmap.
-     *
-     * The key is of the form: 'cardClassName' => 'cardClassName'.
-     * The above Rules would be defined in each activity, and simply
-     * added via CardMatcher.addRule(rule);
-     */
-    let Rules = {
-        'Action => Goal': ActionGroupRule,
-        'Goal => Action': ActionGroupRule2,
-        'Action => ActionsGroup': ActionsGroupRule,
-        'ActionsGroup => Action': ActionsGroupRule2
-    };
 
     /**
      * @class Card Matcher

@@ -16,12 +16,14 @@ define(function (require) {
 
 	Object.assign(RotateTranslateScaleBehaviour.prototype, {
 		onMouseMove: function (element, event) {
+			this.component.bringToFront();
 			var point = MathUtil.pageToWorld(new Vector2(event.pageX, event.pageY));
 			this.component.worldPosition.copy(point);
 			this.component.updateLocal(true);
 		},
 
 		onTouchStart: function (component, event) {
+			this.component.bringToFront();
 			var changedTouches = event.originalEvent.changedTouches;
 			Array.from(changedTouches).forEach(function (touch) {
 				this.component.updateWorld();

@@ -10,28 +10,37 @@ html, body {
 	.user-select(none);
 }
 
-h1 {
-	color: @primary;
-	margin: 0;
-}
-
 main {
 	position: absolute;
 	top: 50%;
 	left: 50%;
+
+	section {
+		//display: inline-block;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+	}
+
 }
 
 nav {
 	position: absolute;
 	top: 0;
 	left: 0;
+	width: 100%;
+	height: 100%;
+
+	section {
+		//display: inline-block;
+		position: absolute;
+	}
+
 }
 
-main section {
-	//display: inline-block;
-	position: absolute;
-	left: 50%;
-	top: 50%;
+h1 {
+	color: @primary;
+	margin: 0;
 }
 
 h3 {
@@ -72,17 +81,3 @@ button {
 	white-space: normal !important;
 }
 
-//button.mtl-fab {
-//
-//	@size: 100px;
-//
-//	width: @size !important;
-//	height: @size !important;
-//
-//}
-
-button.back {
-	position: relative;
-	margin: 0.5em !important;
-	z-index: 100 !important;
-}

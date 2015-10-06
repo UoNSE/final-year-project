@@ -5,9 +5,10 @@ define(function (require, exports, module) {
 	var $ = require('jquery');
 
 	return Backbone.Router.extend({
-		initialize: function (scene, camera) {
+		initialize: function (scene, camera, session) {
 			this.scene = scene;
 			this.camera = camera;
+			this.session = session;
 			this.pageName = null;
 			this.page = null;
 
@@ -64,7 +65,7 @@ define(function (require, exports, module) {
 			require(['page/' + pageName], Page => {
 				this.scene.destroyAll();
 				this.pageName = pageName;
-				this.page = this.scene.add(new Page(this, this.camera, urlParams));
+				this.page = this.scene.add(new Page(this, this.camera, urlParams, this.session));
 				this.page.onPageEnter();
 				document.title = this.page.title;
 			});

@@ -47,7 +47,7 @@ define(function(require) {
 			'click #TestBtn': '_toggleTestMenu',
 			'click #ChartBtn': '_togglePatientsChart'
 
-			},
+		},
 
 		initialize: function () {
 			// debugger;
@@ -78,13 +78,14 @@ define(function(require) {
 			this.patientbody = this.add(new PatientBody(params)); //add params so it has access to vproot
 
 			if(this.collaborative){
-				this.patientbody.interactive = true;
+				//this.patientbody.interactive = true;
+				this.patientbody.setInteractive();
 			}
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = new Tests(this.vproot,this.testresults);
 
-            this.queries = this.patient.get('queries');
-            this.responses = this.patient.get('responses');
+			this.queries = this.patient.get('queries');
+			this.responses = this.patient.get('responses');
 			this.querymenu = new Query(this);
 
 			// this.EvidenceFeed = this.addEvidenceFeed();
@@ -94,24 +95,25 @@ define(function(require) {
 
 			this.help = this.add(new Help({
 				model: {
-				helpContent:
-				'Players take turns at gathering evidence.</br> \
-				Collect evidence about the \
-				patients condition.   </br> </br>\
-				Use the <strong>"Query"</strong> button </br>\
-				to ask the patient questions. </br> </br>\
-				Use the <strong>"Test"</strong> button </br>\
-				to run blood/urine/saliva </br>\
-				tests on the patint.</br> </br>\
-				Use the <strong>"Chart"</strong> button </br>\
-				to see the patients details </br>\
-				and vital signs.</br></br>\
-				<strong>Inspect</strong> areas of the body </br>\
-				to reveal scans and other  </br>\
-				information related to that area. </br></br>\
-				If you no longer need an evidence card,<br> you can drag it to the trash can.'}
+					helpContent:
+						'Players take turns at gathering evidence.</br> \
+                        Collect evidence about the \
+                        patients condition.   </br> </br>\
+                        Use the <strong>"Query"</strong> button </br>\
+                        to ask the patient questions. </br> </br>\
+                        Use the <strong>"Test"</strong> button </br>\
+                        to run blood/urine/saliva </br>\
+                        tests on the patint.</br> </br>\
+                        Use the <strong>"Chart"</strong> button </br>\
+                        to see the patients details </br>\
+                        and vital signs.</br></br>\
+                        <strong>Inspect</strong> areas of the body </br>\
+                        to reveal scans and other  </br>\
+                        information related to that area. </br></br>\
+                        If you no longer need an evidence card,<br> you can drag it to the trash can.'}
 			}));
-			this.help.interactive = true;
+			//this.help.interactive = true;
+			this.help.setInteractive();
 
 			this.menu = this.add(new Menu());
 			this.menu.on({
@@ -120,7 +122,8 @@ define(function(require) {
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
 			this.menu.delete.position.set(-370, -300);
-			this.menu.delete.interactive = true;
+			//this.menu.delete.interactive = true;
+			this.menu.delete.setInteractive();
 			this.addVPMenus();
 		},
 
@@ -176,7 +179,7 @@ define(function(require) {
 
 				button.on('click', this.onToggle.bind(this,target));
 				// this.bindDraggableEvents(button);
-				button.interactive = false;
+				
 				buttonhandle.add(button);
 				// this.bindDraggableEvents(buttonhandle);
 				this.add(buttonhandle);
@@ -193,38 +196,39 @@ define(function(require) {
 
 
 		/**
-         * Binds the draggable events to the component.
-         *
-         * @param component The button handle.
-         */
-        bindDraggableEvents: function (component) {
-			component.interactive = true;
+		 * Binds the draggable events to the component.
+		 *
+		 * @param component The button handle.
+		 */
+		bindDraggableEvents: function (component) {
+			//component.interactive = true;
+			component.setInteractive();
 			component.setDraggable();
 			// debugger;
-            component.on({
-                drag: this.onDrag.bind(this),
-                dragendsource: this.onDragEnd.bind(this),
-                // dropsink: this.onDrop.bind(this)
-            });
-        },
+			component.on({
+				drag: this.onDrag.bind(this),
+				dragendsource: this.onDragEnd.bind(this),
+				// dropsink: this.onDrop.bind(this)
+			});
+		},
 
-        /**
-         * An event triggered when a card is being dragged.
-         */
-        onDrag: function () {
-            // this.menu.show();
-            // this.mergedYet = false;
-        },
+		/**
+		 * An event triggered when a card is being dragged.
+		 */
+		onDrag: function () {
+			// this.menu.show();
+			// this.mergedYet = false;
+		},
 
-        onDragEnd: function(event){
+		onDragEnd: function(event){
 			// console.log("drag end");
-            // //alert("drag end");
+			// //alert("drag end");
 			var yOffset = event.draggable.position.y;
 			// var topScreenLimit = 350;
 			// var bottScreenLimit = -370;
 			// var leftScreenLimit =
 			console.log(yOffset);
-        },
+		},
 
 
 

@@ -12,7 +12,7 @@ define(function (require) {
 			'click .cpn-actionbutton': 'onClick'
 		},
 
-		onClick:function(event){
+		onClick: function(event){
 			this.trigger('click',event);
 		}
 	});

@@ -72,11 +72,11 @@ define(function (require) {
          * This provides the link to move forward to the Actions activity,
          * after all cards have been matched.
          */
-        hiddenActionsActivityLink: {},
+        hiddenLink: {},
         /**
          * This provides a hint to click / touch the activity link.
          */
-        hiddenActionsHint: {},
+        hiddenHint: {},
         /**
          * An array of references to the Match components is kept to
          * rearrange these upon new Matches being made.
@@ -115,6 +115,7 @@ define(function (require) {
             this.setupActivityStartState();
 
             this.matches = [];
+
             matchesCollection.map((model) => this.onAddMatch(model));
 
         },
@@ -185,7 +186,7 @@ define(function (require) {
             this.help.show();
 
             // add a link to the Actions activity
-            this.hiddenActionsActivityLink = this.add(new ActionButton({
+            this.hiddenLink = this.add(new ActionButton({
                 model: {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
@@ -194,17 +195,17 @@ define(function (require) {
                 }
             }));
 
-            this.hiddenActionsActivityLink.position.set(0, 100);
+            this.hiddenLink.position.set(0, 100);
 
-            this.hiddenActionsHint = this.add(new Hint({
+            this.hiddenHint = this.add(new Hint({
                 model: {
                     text: "Touch the Green Button to Continue"
                 }
             }));
 
             // hide these components until matching is completed
-            this.hiddenActionsActivityLink.hide();
-            this.hiddenActionsHint.hide();
+            this.hiddenLink.hide();
+            this.hiddenHint.hide();
         },
 
         /**
@@ -217,8 +218,8 @@ define(function (require) {
 
             // Listen to the sync events on both collections, which waits for
             // the models to be loaded.
-            this.listenTo(issuesCollection, 'sync', this.onIssuesSync);
-            this.listenTo(goalsCollection, 'sync', this.onGoalsSync);
+            this.listenToOnce(issuesCollection, 'sync', this.onIssuesSync);
+            this.listenToOnce(goalsCollection, 'sync', this.onGoalsSync);
             this.listenTo(this.collection.matches, 'add', this.onAddMatch);
 
             // fetch issues and goals ready for matching to begin
@@ -232,8 +233,8 @@ define(function (require) {
         checkMatches: function () {
             if (this.collection.matches.length === this.collection.goals.length) {
                 // activate actions activity link
-                this.hiddenActionsActivityLink.show();
-                this.hiddenActionsHint.show();
+                this.hiddenLink.show();
+                this.hiddenHint.show();
             }
         },
 
@@ -244,6 +245,13 @@ define(function (require) {
          * @param model the IssueGoalPair
          */
         onAddMatch: function (model) {
+
+            let goal = model.get('goal');
+            let issue = model.get('issue');
+
+            goal.set('body', goal.get('content'));
+            issue.set('body', issue.get('data'));
+
             let match = new IssueGoalMatch({
                 model: model
             });
@@ -253,7 +261,7 @@ define(function (require) {
             this.matches.push(match);
 
             // positioning
-            match.interactive = true;
+            match.setInteractive();
             this.matches.forEach((element, index, array) => {
                 let scale = index - ((array.length - 1) / 2);
                 element.position.set(MatchPositioning.x(), scale * 270);
@@ -301,7 +309,7 @@ define(function (require) {
                 let scale = i - ((n - 1) / 2);
 
                 let x = () => {
-                    return -(this.width) -100;
+                    return -(this.width) - 100;
                 };
 
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
@@ -319,8 +327,14 @@ define(function (require) {
             let separatorDistance = 10; // 10 px
             let matches = this.collection.matches;
 
-            // first filter any goals that we have already matched
+            goals.map((goal) => {
+                // mark all goals as incomplete
+                goal.set('complete', false);
+                goal.save();
+            });
+
             goals.filter((goal) => {
+                // filter any goals that we have already matched
 
                 let existingMatch =
                     matches.find((match) => match.get('goal').id === goal.id);
