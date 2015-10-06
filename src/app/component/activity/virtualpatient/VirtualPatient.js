@@ -177,7 +177,6 @@ define(function(require) {
 				// this.bindDraggableEvents(button);
 				button.interactive = false;
 				buttonhandle.add(button);
-				buttonhandle.interactive = true;
 				// this.bindDraggableEvents(buttonhandle);
 				this.add(buttonhandle);
 				// debugger;
@@ -198,6 +197,8 @@ define(function(require) {
          * @param component The button handle.
          */
         bindDraggableEvents: function (component) {
+			component.interactive = true;
+			component.setDraggable({opacity: 1});
 			// debugger;
             component.on({
                 drag: this.onDrag.bind(this),
@@ -216,7 +217,7 @@ define(function(require) {
 
         onDragEnd: function(){
 			console.log("drag end");
-            alert("drag end");
+            //alert("drag end");
         },
 
 
