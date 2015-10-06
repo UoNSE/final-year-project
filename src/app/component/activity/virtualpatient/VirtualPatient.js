@@ -215,9 +215,14 @@ define(function(require) {
             // this.mergedYet = false;
         },
 
-        onDragEnd: function(){
-			console.log("drag end");
-            //alert("drag end");
+        onDragEnd: function(event){
+			// console.log("drag end");
+            // //alert("drag end");
+			var yOffset = event.draggable.position.y;
+			// var topScreenLimit = 350;
+			// var bottScreenLimit = -370;
+			// var leftScreenLimit =
+			console.log(yOffset);
         },
 
 
