@@ -17,7 +17,6 @@ define(function (require) {
 
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);
-            $(".help-container").interactive = true;
 			this.position.y = -80;
         },
 

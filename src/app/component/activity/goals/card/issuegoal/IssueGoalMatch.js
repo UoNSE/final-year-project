@@ -18,7 +18,7 @@ define(function (require) {
             // super(arguments)
             Component.prototype.initialize.apply(this, arguments);
             this.className = 'IssueGoalMatch';
-            this.interactive = true;
+            this.setInteractive();
         }
 
     });

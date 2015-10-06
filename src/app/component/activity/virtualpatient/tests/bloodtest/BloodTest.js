@@ -75,7 +75,7 @@ define(function(require) {
 			}
 
 			target.hide();
-			target.interactive = true;
+			target.setInteractive();
 			button.add(target);
 			button.on('click', this.onToggleButton.bind(this, target));
 

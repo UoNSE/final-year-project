@@ -21,18 +21,10 @@ define(function (require) {
 		initialize: function () {
 			Object2D.prototype.initialize.apply(this, arguments);
 
-			var interactive = false;
 			Object.defineProperties(this, {
 				interactive: {
-					enumerable: true,
-					get: function () {
-						return interactive;
-					},
 					set: function (value) {
-						if (interactive != value) {
-							interactive = value;
-							this.onSetInteractive(value);
-						}
+						throw new Error('component.interactive = true is now deprecated, use component.setInteractive()');
 					}
 				}
 			});
@@ -121,9 +113,9 @@ define(function (require) {
 			return this.multiTouchElement;
 		},
 
-		onSetInteractive: function (enabled) {
+		setInteractive: function (options) {
 			// TODO: handle remove
-			multiTouchManager.makeRTS(this.getMultiTouchElement());
+			multiTouchManager.makeRTS(this.getMultiTouchElement(), options);
 		},
 
 		setDraggable: function (options) {

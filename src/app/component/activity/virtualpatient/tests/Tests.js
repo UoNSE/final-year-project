@@ -89,7 +89,7 @@ define(function(require) {
 			else{}
 
 			// target.position.x = 0;
-			target.interactive = true;
+			target.setInteractive();
 			target.hide();
 
 			button.add(target);

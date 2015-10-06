@@ -170,7 +170,7 @@ define(function (require) {
             this.matches.push(match);
 
             // positioning
-            match.interactive = true;
+            match.setInteractive();
             this.matches.forEach((element, index, array) => {
                 let scale = index - ((array.length - 1) / 2);
                 element.position.set(MatchPositioning.x(), scale * 270);

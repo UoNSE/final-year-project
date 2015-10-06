@@ -74,7 +74,7 @@ define(function(require) {
 			this.patientbody = this.add(new PatientBody());
 
 			if(this.collaborative){
-				this.patientbody.interactive = true;
+				this.patientbody.setInteractive();
 			}
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = new Tests(this.vproot,this.testresults);
@@ -107,7 +107,7 @@ define(function(require) {
 				information related to that area. </br></br>\
 				If you no longer need an evidence card,<br> you can drag it to the trash can.'}
 			}));
-			this.help.interactive = true;
+			this.help.setInteractive();
 
 			this.menu = this.add(new Menu());
 			this.menu.on({
@@ -116,7 +116,7 @@ define(function(require) {
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
 			this.menu.delete.position.set(-370, -300);
-			this.menu.delete.interactive = true;
+			this.menu.delete.setInteractive();
 			this.addVPButtons();
 		},
 
@@ -164,8 +164,8 @@ define(function(require) {
 				// }
 				button.on('click', this.onToggle.bind(this,target));
 				// this.bindDraggableEvents(button);
-				button.interactive = false;
-				buttonhandle.interactive = true;
+				button.setInteractive();
+				buttonhandle.setInteractive();
 
 				// this.buttons.push();
 
