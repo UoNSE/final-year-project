@@ -12,6 +12,7 @@ define(function (require) {
         defaults: {
             content: '',
             issueId: '0',
+            complete: false,
             actions: [1]
         },
 

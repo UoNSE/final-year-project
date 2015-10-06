@@ -72,11 +72,11 @@ define(function (require) {
          * This provides the link to move forward to the Actions activity,
          * after all cards have been matched.
          */
-        hiddenActionsActivityLink: {},
+        hiddenLink: {},
         /**
          * This provides a hint to click / touch the activity link.
          */
-        hiddenActionsHint: {},
+        hiddenHint: {},
         /**
          * An array of references to the Match components is kept to
          * rearrange these upon new Matches being made.
@@ -183,7 +183,7 @@ define(function (require) {
             }));
 
             // add a link to the Actions activity
-            this.hiddenActionsActivityLink = this.add(new ActionButton({
+            this.hiddenLink = this.add(new ActionButton({
                 model: {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
@@ -192,17 +192,17 @@ define(function (require) {
                 }
             }));
 
-            this.hiddenActionsActivityLink.position.set(0, 100);
+            this.hiddenLink.position.set(0, 100);
 
-            this.hiddenActionsHint = this.add(new Hint({
+            this.hiddenHint = this.add(new Hint({
                 model: {
                     text: "Touch the Green Button to Continue"
                 }
             }));
 
             // hide these components until matching is completed
-            this.hiddenActionsActivityLink.hide();
-            this.hiddenActionsHint.hide();
+            this.hiddenLink.hide();
+            this.hiddenHint.hide();
         },
 
         /**
@@ -230,8 +230,8 @@ define(function (require) {
         checkMatches: function () {
             if (this.collection.matches.length === this.collection.goals.length) {
                 // activate actions activity link
-                this.hiddenActionsActivityLink.show();
-                this.hiddenActionsHint.show();
+                this.hiddenLink.show();
+                this.hiddenHint.show();
             }
         },
 
@@ -325,6 +325,10 @@ define(function (require) {
                 return !existingMatch;
 
             }).forEach(function (model, i) {
+
+                // mark all as incomplete
+                model.set('complete', false);
+                model.save();
 
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(

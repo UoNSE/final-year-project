@@ -15,8 +15,9 @@ define(function (require) {
 
         initialize: function () {
             Page.prototype.initialize.apply(this, arguments);
+            let caseID = this.urlParams['case_id'];
             let goalID = this.urlParams['goal_id'];
-            this.add(new Actions(goalID));
+            this.add(new Actions(caseID, goalID));
         }
 
     });

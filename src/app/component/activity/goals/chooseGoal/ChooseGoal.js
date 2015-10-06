@@ -84,6 +84,9 @@ define(function (require) {
          */
         caseID: 0,
 
+        hiddenLink: {},
+        hiddenHint: {},
+
         /**
          * The help component manages the instructions.
          */
@@ -119,6 +122,7 @@ define(function (require) {
 
         },
 
+
         /**
          * This sets up the components that are state-invariant.
          *
@@ -134,6 +138,28 @@ define(function (require) {
                     helpContent: HelpText
                 })
             }));
+
+            // add a link to the overview activity
+            this.hiddenLink = this.add(new ActionButton({
+                model: {
+                    color: 'light-green',
+                    classes: 'help-btn actions-btn',
+                    icon: 'content-send',
+                    href: 'cases/'.concat(caseID, '/overview')
+                }
+            }));
+
+            this.hiddenLink.position.set(0, 100);
+
+            this.hiddenHint = this.add(new Hint({
+                model: {
+                    text: "You're finished !! Touch the link to see your accomplishments."
+                }
+            }));
+
+            // hide these components until all goals are completed
+            this.hiddenLink.hide();
+            this.hiddenHint.hide();
 
             this.hint = this.add(new Hint({
                 model: {text: 'Choose a Goal to assign Actions'}
@@ -163,10 +189,17 @@ define(function (require) {
          * @param goals The issues collection.
          */
         onGoalsSync: function (goals) {
+
             let n = goals.size();
             let separatorDistance = 10; // 10 px
 
-            goals.forEach(function (model, i) {
+            let incompleteGoals = goals.filter((goal)=> {
+
+                return goal.get('complete') === false;
+
+            });
+
+            incompleteGoals.forEach(function (model, i) {
 
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
@@ -191,6 +224,13 @@ define(function (require) {
 
             }, this);
 
+            // if we're done; all goals will be compelete
+            if (incompleteGoals.length === 0) {
+                this.hint.hide();
+                this.hiddenHint.show();
+                this.hiddenLink.show();
+            }
+
         },
 
         /**
@@ -205,7 +245,6 @@ define(function (require) {
          * Card Creation Factory.
          *
          * @param model
-         * @param CardClass
          * @returns {*}
          */
         createCard: function (model) {
