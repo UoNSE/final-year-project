@@ -82,6 +82,10 @@ define(function (require) {
             this.listenTo(issues, 'sync', this.onIssuesSync);
             this.listenTo(evidence, 'sync', this.onEvidenceSync);
             this.listenTo(issueGroups, 'sync', this.onIssueGroupSync);
+            //update listener to sync to inventory
+            this.listenTo(issueGroups,'update', this.syncCards);
+            this.listenTo(issues,'update', this.syncCards);
+            this.listenTo(evidence,'update', this.syncCards);
 
             if (this.canLoad()) {
                 this.loadCards(issues, evidence, issueGroups);
@@ -192,9 +196,14 @@ define(function (require) {
          */
         syncCards: function(){
             //clear existing collection
-            this.inventory.attributes.issuegroup.reset();
+            this.inventory.attributes.issuegroups.reset();
+            this.inventory.attributes.issues.reset();
+            this.inventory.attributes.evidence.reset();
             //sync new collection
-            this.inventory.attributes.issuegroup.add(this.collection.issueGroup);
+            this.inventory.attributes.issuegroups.add(this.collection.issueGroup);
+            this.inventory.attributes.issues.add(this.collection.issues);
+            this.inventory.attributes.evidence.add(this.collection.evidence);
+
         },
 
         /**
@@ -363,6 +372,8 @@ define(function (require) {
                 this.hiddenActionsActivityLink.show();
                 this.hiddenActionsHint.show();
             }
+
+            this.inventory.saveScore = this.gameCredit;
         },
 
         onDelete: function (event) {
@@ -572,7 +583,7 @@ define(function (require) {
                     var mark;
                     this.collection.evidence.each(function (model) {
 
-                        if (model.attributes.data == groupModel.attributes.body) {
+                        if (model.attributes.data == groupModel.attributes.body||model.attributes.body == groupModel.attributes.body) {
                             mark = model;
                             //return;
                         }
@@ -583,6 +594,7 @@ define(function (require) {
 
             if(issueGroup.model.get("issue") != null) {
                 this.collection.issues.remove(this.collection.issues.where({data : issueGroup.model.get("issue").attributes.body}));
+                this.collection.issues.remove(this.collection.issues.where({body : issueGroup.model.get("issue").attributes.body}));
             }
 
             this.gameCredit += this.getScore(issueGroup);

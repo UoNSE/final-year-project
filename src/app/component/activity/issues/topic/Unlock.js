@@ -26,8 +26,13 @@ define(function (require) {
         },
 
         gameCredit: 0,
+        availableCredit: 0,
+        inventory: null,
 
-        initialize: function (params) {
+        initialize: function (inventory, params) {
+            this.inventory = inventory;
+            this.availableCredit = this.inventory.attributes.saveScore;
+            this.gameCredit = this.availableCredit;
             Component.prototype.initialize.apply(this, arguments);
 
             this.topics = [];
@@ -162,21 +167,21 @@ define(function (require) {
         //analyses all evidence stacks and current expenditures and returns the credit available for use
         updateCredit: function () {
             //available credit will be determined by evidence card stacks persisted by the inventory
-            var availableCredit = 20;
+
 
             this.topics.forEach(topic => {
                 topic.issues.forEach(issue => {
                     if (issue.purchased) {
-                        availableCredit -= issue.getCost();
+                        this.availableCredit -= issue.getCost();
                     }
                 });
             });
 
-            if (this.gameCredit !== availableCredit){
-                this.scoreContainer.setScore(availableCredit);
+            if (this.gameCredit !== this.availableCredit){
+                this.scoreContainer.setScore(this.availableCredit);
             }
 
-            this.gameCredit = availableCredit;
+            this.gameCredit = this.availableCredit;
         }
 
     });

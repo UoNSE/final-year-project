@@ -9,6 +9,7 @@ define(function (require) {
 	return Backbone.RelationalModel.extend({
 
 		defaults: {
+			saveScore: 0,
 			issues: null,
 			evidence: null,
 			issuegroup: null
