@@ -7,7 +7,7 @@ define(function (require) {
 		this.multiTouchElement = multiTouchElement;
 		this.component = multiTouchElement.component;
 		this.multiTouchManager = multiTouchManager;
-		this.options = options;
+		this.options = options || {};
 		this.dragging = {};
 		this.bindEvents();
 	}
@@ -20,7 +20,7 @@ define(function (require) {
 		},
 
 		onDrag: function () {
-			var opacity = this.options.opacity;
+			var opacity = this.options.opacity || 1;
 			if (opacity) {
 				new TWEEN.Tween(this.component).to({opacity: opacity}, 300).start();
 				//this.component.$el.fadeTo('fast', opacity);
