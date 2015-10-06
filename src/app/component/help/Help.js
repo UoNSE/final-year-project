@@ -38,10 +38,12 @@ define(function (require) {
     var Panel = Component.extend({
         // important for having fixed position near back button
         template: template,
+		classes: 'cpn-help',
+		styles: 'component/help/Help.css',
         origin: 'top left',
 		pageOrigin: 'top left',
         events: {
-            'click .cpn-button': 'close'
+            'click .confirm': 'close'
         },
 
         initialize: function () {

@@ -1,14 +1,12 @@
-<div class="help-container">
-    <div class="panel panel-primary{{#if classes}}{{ classes}}{{/if}}"
-         style="width: {{units width}}">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{#if title}}{{title}}{{else}}Help{{/if}}</h3>
-        </div>
-        <div class="panel-body">
-			{{{body}}}
-            <div class="text-center">
-                <button class="cpn-button btn btn-info btn-raised">Got it</button>
-            </div>
-        </div>
-    </div>
+<div class="cpn-help panel panel-primary{{#if classes}}{{ classes}}{{/if}}"
+	 style="width: {{units width}}">
+	<div class="panel-heading">
+		<h3 class="panel-title">{{#if title}}{{title}}{{else}}Help{{/if}}</h3>
+	</div>
+	<div class="panel-body">
+		{{{body}}}
+		<div class="text-center">
+			<button class="btn btn-info btn-raised confirm">Got It!</button>
+		</div>
+	</div>
 </div>
