@@ -74,7 +74,8 @@ define(function(require) {
 			this.testresults = this.patient.get('testresults');
 			this.hotspots = this.patient.get('hotspots');
 
-			this.patientbody = this.add(new PatientBody());
+			var params = {vproot: this.vproot}; // = this; //this.vproot;
+			this.patientbody = this.add(new PatientBody(params)); //add params so it has access to vproot
 
 			if(this.collaborative){
 				this.patientbody.interactive = true;

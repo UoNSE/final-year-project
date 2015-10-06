@@ -10,7 +10,7 @@ define(function (require) {
     let ActionsActivityLink = require('component/activity/goals/chooseGoal/ActionsActivityLink');
 
     // help
-    var Help = require('component/activity/goals/help/Help');
+    var Help = require('component/help/v2/help/Help');
     var HelpText = require('text!component/activity/goals/chooseGoal/helpContent.hbs');
 
     // hint
