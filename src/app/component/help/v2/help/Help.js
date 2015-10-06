@@ -3,40 +3,10 @@ define(function (require) {
     'use strict';
 
     var _ = require('underscore');
+    var $ = require('jquery');
     var Component = require('core/Component');
-    var template = require('text!component/help/v2/help/help.hbs');
+    var template = require('text!component/help/v2/help/Help.hbs');
     var ActionButton = require('component/actionbutton/ActionButton');
-
-    /**
-     * @class HelpButton
-     * @classdesc This is a custom ActionButton for handling
-     * hiding and showing the Help Information.
-     */
-    var HelpButton = ActionButton.extend({
-        detached: true,
-
-        events: {
-            'click .help-btn': 'help',
-            'click .help-close': 'close'
-        },
-
-        model: {
-            color: 'primary',
-            icon: 'action-help',
-            classes: 'help-btn'
-        },
-
-        initialize: function () {
-            Component.prototype.initialize.apply(this, arguments);
-        },
-
-        help: function () {
-            $('.help-container').show();
-            $('.help-btn').hide();
-        }
-
-    });
-
 
     /**
      * @class Help
@@ -67,26 +37,53 @@ define(function (require) {
      *  },
      *
      */
-    return Component.extend({
+    var Panel = Component.extend({
         // important for having fixed position near back button
-        detached: true,
-
-        events: {
-            'click .help-close': 'close'
-        },
-
         template: template,
-
-        styles: 'component/help/v2/help/help.css',
+        styles: 'component/help/v2/help/Help.css',
+        detached: true,
+        origin: 'top left',
+        events: {
+            'click .cpn-button': 'close'
+        },
 
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);
-            this.helpButton = this.add(new HelpButton());
+            this.position.x = 80;
         },
 
         close: function () {
-            $('.help-btn').show();
-            $('.help-container').hide();
+            this.hide();
+        }
+
+    });
+
+    /**
+     * @class HelpButton
+     * @classdesc This is a custom ActionButton for handling
+     * hiding and showing the Help Information.
+     */
+    return ActionButton.extend({
+        detached: true,
+        origin: 'top left',
+
+        initialize: function (model) {
+            this.model = {
+                color: 'primary',
+				icon: 'action-help',
+				classes: 'help-btn'
+            };
+            ActionButton.prototype.initialize.apply(this, arguments);
+            this.position.y = -80;
+            this.panel = this.add(new Panel({model: model}));
+        },
+
+        onClick: function (event) {
+            let panel = this.panel;
+            panel.toggle();
+            if (panel.visible) {
+                panel.bringToFront();
+            }
         }
 
     });
