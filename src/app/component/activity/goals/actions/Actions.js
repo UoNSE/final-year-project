@@ -368,7 +368,7 @@ define(function (require) {
             this.matches.push(match);
 
             // positioning
-            match.interactive.setInteractive();
+            match.setInteractive();
 
             this.matches.forEach((element, index, array) => {
                 let scale = index - ((array.length - 1) / 2);
