@@ -519,7 +519,7 @@ define(function (require) {
                     var mark;
                     this.collection.evidence.each(function (model) {
 
-                        if (model.attributes.data == groupModel.attributes.body) {
+                        if (model.attributes.data == groupModel.attributes.body||model.attributes.body == groupModel.attributes.body) {
                             mark = model;
                             //return;
                         }
@@ -530,6 +530,7 @@ define(function (require) {
 
             if(issueGroup.model.get("issue") != null) {
                 this.collection.issues.remove(this.collection.issues.where({data : issueGroup.model.get("issue").attributes.body}));
+                this.collection.issues.remove(this.collection.issues.where({body : issueGroup.model.get("issue").attributes.body}));
             }
 
             this.gameCredit += this.getScore(issueGroup);
