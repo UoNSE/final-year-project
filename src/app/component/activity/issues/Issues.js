@@ -21,6 +21,7 @@ define(function (require) {
     var ActionButton = require('component/actionbutton/ActionButton');
     var Score = require('component/activity/issues/score/Score');
     var Panel = require('component/panel/Panel');
+    var PopupPanel = require('component/activity/issues/PopupPanel');
 
     var Help = require('component/help/help');
 
@@ -101,13 +102,13 @@ define(function (require) {
             this.scoreContainer = this.add(new Score());
 
             this.scoreTrigger = -6;
-            this.scoreHint = this.add(new Panel({
+            this.scoreHint = this.add(new PopupPanel({
                 model: {
                     body: 'You now have enough credit to purchase issues!',
                     width: 200
                 }
             }));
-            this.scoreHint.hide();
+            this.scoreHint.setOriginalPosition(this.scoreContainer.position);
         },
 
         /**
@@ -307,9 +308,9 @@ define(function (require) {
             this.scoreContainer.setScore(this.gameCredit);
 
             if (this.gameCredit >= this.scoreTrigger) {
-                this.triggerScoreHint();
+                var popupPos = this.scoreContainer.position.clone().add(0,50);
+                this.scoreHint.popup(popupPos);
             }
-            //$(".score-display").text("CREDIT: " + gameCredit);
         },
 
         onDelete: function (event) {
@@ -558,34 +559,6 @@ define(function (require) {
             }
 
             return count;
-        },
-
-
-        triggerScoreHint: function() {
-            this.scoreHint.position.copy(this.scoreContainer.position);
-            //this.scoreHint.scale.copy(Vector2.zeros());
-
-            this.scoreHint.show();
-
-            var animationTime = 900;
-            var originalPos = this.scoreContainer.position;
-            var newPos = originalPos.clone().add(new Vector2(0, 50));
-
-            var tween = new TWEEN.Tween(this.scoreHint.position)
-                .to(newPos,animationTime)
-                .easing(TWEEN.Easing.Elastic.Out);
-
-            var tweenBack = new TWEEN.Tween(this.scoreHint.position)
-                .to(originalPos,animationTime)
-                .delay(3000)
-                .easing(TWEEN.Easing.Elastic.In)
-                .onComplete(function() {
-                    this.scoreHint.hide();
-                }.bind(this));
-
-            tween.chain(tweenBack);
-
-            tween.start();
         },
 
         resolveType: function (view) {
