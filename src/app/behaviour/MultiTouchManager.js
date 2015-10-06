@@ -3,7 +3,6 @@ define(function (require) {
 
 	var $ = require('jquery');
 	var Factory = require('Factory');
-	var ZIndexManager = require('behaviour/ZIndexManager');
 	var MultiTouchElement = require('behaviour/MultiTouchElement');
 	var RotateTranslateScaleBehaviour = require('behaviour/RotateTranslateScaleBehaviour');
 	var DraggableBehaviour = require('behaviour/DraggableBehaviour');
@@ -12,7 +11,6 @@ define(function (require) {
 	function MultiTouchManager() {
 		this.elements = [];
 		this.elements.map = {};
-		this.zIndexManager = new ZIndexManager();
 
 		$(window).on('touchmove', function (event) {
 			// Prevent the browser's inbuilt touch gestures
@@ -33,8 +31,6 @@ define(function (require) {
 
 			this.elements.push(multiTouchElement);
 			this.elements.map[component.id] = multiTouchElement;
-			this.zIndexManager.registerElement(multiTouchElement);
-			multiTouchElement.addBehaviour(this.zIndexManager);
 			return multiTouchElement;
 		},
 
@@ -63,7 +59,6 @@ define(function (require) {
 		remove: function (multiTouchElement) {
 			this.elements.splice(this.elements.indexOf(multiTouchElement), 1);
 			delete this.elements.map[multiTouchElement.component.id];
-			this.zIndexManager.removeElement(multiTouchElement);
 		}
 	});
 

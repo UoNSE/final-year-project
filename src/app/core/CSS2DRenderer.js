@@ -84,7 +84,10 @@ define(function (require) {
 			if (object.height) {
 				object.$el.height(object.height);
 			}
-			object.$el.css('opacity', object.opacity);
+			object.$el.css({
+				'opacity': object.opacity,
+				'zIndex': object.zIndex
+			});
 			return element;
 		},
 

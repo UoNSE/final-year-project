@@ -4,6 +4,7 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var Object2D = require('core/Object2D');
+	var zIndexManager = require('core/ZIndexManager').getInstance();
 	var Handlebars = require('handlebars');
 	var multiTouchManager = require('behaviour/MultiTouchManager').getInstance();
 
@@ -17,9 +18,11 @@ define(function (require) {
 		classes: [],
 		width: null,
 		height: null,
+		zIndex: 0,
 
 		initialize: function () {
 			Object2D.prototype.initialize.apply(this, arguments);
+			zIndexManager.registerComponent(this);
 
 			Object.defineProperties(this, {
 				interactive: {
@@ -33,6 +36,11 @@ define(function (require) {
 		render: function () {
 			this.$el.html(this.renderTemplate(this.template));
 			return this;
+		},
+
+		destroy: function () {
+			zIndexManager.removeComponent(this);
+			Object2D.destroy.apply(this, arguments);
 		},
 
 		/**
@@ -129,11 +137,11 @@ define(function (require) {
 		},
 
 		bringToFront: function () {
-			this.trigger('bringToFront');
+			zIndexManager.bringToFront(this);
 		},
 
 		sendToBack: function () {
-			this.trigger('sendToBack');
+			zIndexManager.sendToBack(this);
 		}
 
 	});
