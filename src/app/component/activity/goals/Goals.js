@@ -115,6 +115,7 @@ define(function (require) {
             this.setupActivityStartState();
 
             this.matches = [];
+
             matchesCollection.map((model) => this.onAddMatch(model));
 
         },
@@ -244,6 +245,13 @@ define(function (require) {
          * @param model the IssueGoalPair
          */
         onAddMatch: function (model) {
+
+            let goal = model.get('goal');
+            let issue = model.get('issue');
+
+            goal.set('body', goal.get('content'));
+            issue.set('body', issue.get('data'));
+
             let match = new IssueGoalMatch({
                 model: model
             });
