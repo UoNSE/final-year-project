@@ -8,6 +8,7 @@ define(function (require) {
 
     var IssuesCollection = require('collection/Issues');
     var EvidenceCollection = require('collection/Evidence');
+    var IssueGroupCollection = require('collection/IssueGroups')
     var IssueModel = require('model/Issue');
     var EvidenceModel = require('model/Evidence');
     var IssueGroupModel = require('model/IssueGroup');
@@ -35,7 +36,8 @@ define(function (require) {
 
         collection: {
             issues: new IssuesCollection(),
-            evidence: new EvidenceCollection()
+            evidence: new EvidenceCollection(),
+            issueGroup: new IssueGroupCollection()
         },
 
         initialize: function (inventory, params) {
@@ -51,13 +53,15 @@ define(function (require) {
 
             var issues = this.collection.issues;
             var evidence = this.collection.evidence;
+            var issueGroups = this.collection.issueGroup;
 
             // Listen to the sync events on both collections, which waits for the models to be loaded.
             this.listenTo(issues, 'sync', this.onIssuesSync);
             this.listenTo(evidence, 'sync', this.onEvidenceSync);
+            this.listenTo(issueGroups, 'sync', this.onIssueGroupSync);
 
             if (this.canLoad()) {
-                this.loadCards(issues, evidence);
+                this.loadCards(issues, evidence, issueGroups);
             }
             else{
                 this.fetchCards(issues, evidence);
@@ -112,16 +116,37 @@ define(function (require) {
          */
         canLoad: function(){
             //TODO check if inventory has cards
-            console.log("No loading");
             return false;
         },
 
         /**
          * Load cards from inventory
          */
-        loadCards: function(issues, evidence){
+        loadCards: function(issues, evidence, issueGroups){
             //TODO load cards from inventory
             console.log("Load cards");
+            this.collection.issues = this.inventory.get("issues");
+            this.collection.evidence = this.inventory.get("evidence");
+            this.collection.issueGroup = this.inventory.get("issuegroups");
+
+            issues = this.collection.issues;
+            evidence = this.collection.evidence;
+            issueGroups = this.collection.issueGroup;
+            issueGroups.trigger('sync');
+            evidence.trigger('sync');
+            issues.trigger('sync');
+
+        },
+
+
+        /**
+         * sync issuegroups to inventory
+         */
+        syncCards: function(){
+            //clear existing collection
+            this.inventory.attributes.issuegroup.reset();
+            //sync new collection
+            this.inventory.attributes.issuegroup.add(this.collection.issueGroup);
         },
 
         /**
@@ -156,6 +181,27 @@ define(function (require) {
                 card.position.set(-300, scale * (distance + card.model.get('height')));
             });
             this.updateScore();
+        },
+
+
+        onIssueGroupSync: function (issues) {
+            var n = issues.size();
+            var distance = 10;
+            issues.forEach((model, i) => {
+                var card = this.add(new IssueGroup({
+                    model: new IssueGroupModel({
+                        width: this.width,
+                        title: 'Issues and evidence',
+                        color: 'success',
+                        issue: issue,
+                        evidence: evidence
+                    })
+                }));
+            var scale = i - ((n - 1) / 2);
+            this.gameCredit -= this.getScore(card);
+            card.position.set(-300, scale * (distance + card.model.get('height')));
+        });
+        this.updateScore();
         },
 
         /**
@@ -273,6 +319,7 @@ define(function (require) {
             var type = this.resolveType(card);
             if (type.issue) {
                 this.gameCredit+= model.get('cost');
+                this.collection.issues.remove(this.collection.issues.where({data : model.attributes.body}));
             }
             else if (type.evidence) {
                 var score = model.get('score');
@@ -280,9 +327,11 @@ define(function (require) {
                 if (score < model.get('maxscore')) {
                     this.gameCredit += 2;
                 }
+                this.collection.evidence.remove(this.collection.evidence.where({data : model.attributes.body}));
             }
             else {
                 this.gameCredit -= this.getScore(card);
+                //this.collection.issueGroup.remove(this.collection.issueGroup.where({evidence: model.attributes.evidence}))
             }
 
             card.remove();
@@ -299,7 +348,9 @@ define(function (require) {
             var issue = model.get('issue');
             if (issue) {
                 this.addIssue(issue);
+                this.collection.issues.add(issue);
                 this.gameCredit -= issue.get('cost');
+
             }
 
             var evidence = model.get('evidence');
@@ -310,6 +361,7 @@ define(function (require) {
                 if (score < model.get('maxscore')) {
                     this.gameCredit -= 2;
                 }
+                this.collection.evidence.add(model);
             });
 
             issueGroup.remove();
@@ -444,6 +496,26 @@ define(function (require) {
                     evidence: evidence
                 })
             }));
+            //update collections
+            this.collection.issueGroup.add(issueGroup);
+
+            //remove old collection occurences
+            if(issueGroup.model.get("evidence") != null) {
+                issueGroup.model.get("evidence").each(function (groupModel) {
+                    this.collection.evidence.each(function (model) {
+
+                        if (model.attributes.data == groupModel.attributes.body) {
+                            this.collection.evidence.remove(model);
+                            //return;
+                        }
+                    }, this)
+                }, this)
+            }
+
+            if(issueGroup.model.get("issue") != null) {
+                this.collection.issues.remove(this.collection.issues.where({data : issueGroup.model.get("issue").attributes.body}));
+            }
+
             this.gameCredit += this.getScore(issueGroup);
             this.bindDraggableEvents(issueGroup);
             issueGroup.position.copy(droppable.position);
