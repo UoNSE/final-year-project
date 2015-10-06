@@ -57,11 +57,9 @@ define(function(require) {
 
 			evidenceCard.position.x = 200;
 			this.vproot.add(evidenceCard);
-
 		},
 
 		addEvidence: function (model) {
-
 			var evidence = new Evidence({
 				model: model
 			});

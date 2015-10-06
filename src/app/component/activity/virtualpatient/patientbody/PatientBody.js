@@ -6,6 +6,10 @@ define(function (require) {
     var ActionButton = require('component/actionbutton/ActionButton'); //referencing javascript file (require js)
     var Hotspots = require('collection/Hotspots'); //HotspotData from db.json, collections, model
 
+    //Use Dylans module to retain consistency
+    var Evidence = require('component/activity/issues/card/evidence/Evidence');
+    var EvidenceModel = require('model/Evidence');
+
     return Component.extend({
         template: template,
         classes: ['patient-body'],
@@ -16,48 +20,19 @@ define(function (require) {
         },
         events: {
             'click .vpb': 'logPos'
+            //,'click .hotspawn': 'spawnHotspotEvidence'
         },
 
-        initialize: function () {
-        // initialize: function (hotspots) {
-            Component.prototype.initialize.apply(this, arguments);
-            // this.hotspots = hotspots;
-
-            // this.listenTo(hotspots, 'sync', this.createHotspots.bind(this));
-            this.listenTo(this.collection.hotspots, 'sync', this.createHotspots.bind(this));
-            // this.createHotspots(collection);
-            //THE onHotspots() method ADDS THE HOTSPOTS
-            //add a listener (listening to sync (backbone thing))
-            //checks the collection has fully loaded
-
-            this.collection.hotspots.fetch();
-            //linking to the collection: { hotpots } key
-            //if you dont call fecth(), the collection will always be empty (fetch calls ajax event under the hood)
-
-            //button.position.set(100, 100);
-            //button.rotation = Math.PI/4.; ----- this.scale.set(1,1); //scales the virtual patient COMPONENT
+        initialize: function (params) {
+            Component.prototype.initialize.apply(this, arguments); //initialise hotspots
+            this.listenTo(this.collection.hotspots, 'sync', this.createHotspots.bind(this)); //this creates hotsposts and adds a listener to the hotspots
+            this.collection.hotspots.fetch(); //checks the collection has fully loaded
+            this.vproot = params.vproot;
+            this.hotEvidence = {};
         },
 
-        createHotspots: function (collection) {
-            // this is the callback function
-            // this function scales and positions the hotspots based on db.json data
-            // var collection = this.hotspots;
+        createHotspots: function (collection) { //this is the callback function
 
-            // issues.forEach(function (model, i) {
-            //     var card = this.addIssue(new IssueModel({
-			// 		width: this.width,
-			// 		height: this.height,
-			// 		title: 'Issue',
-			// 		body: model.get('content'),
-			// 		color: 'danger'
-			// 	}));
-            //     var scale = i - ((n - 1) / 2);
-            //     card.position.set(-300, scale * (distance + card.model.get('height')));
-            // }, this);
-
-
-            // debugger;
-                // this.hotspots.each(function(model, index, this) {
                 collection.each(function (model) { // .each(function, this) <- Need this to be this context!
                 var button = new ActionButton({
                     model: {
@@ -67,13 +42,12 @@ define(function (require) {
                     }
                 });
 
-                button.on('click', this.activateHotspot.bind(this, model));
-
+                button.on('click', this.activateHotspot.bind(this, model)); //add listener
                 var x = model.get('x');
                 var y = model.get('y');
                 button.position.set(x, y);
-                //button.scale.set(.5, .5);
                 this.add(button);
+                this.spawnHotspotEvidence(model.get('id'), model.get('x'), model.get('y'), model.get('data'))
 
             }, this);
 
@@ -94,24 +68,64 @@ define(function (require) {
 
         },
 
+        spawnHotspotEvidence: function(evid, evx, evy, evcontent){
+            //depracated code from addValue Testresults.js > addEvidencecar
+            //var attribute = event.target.parentElement.parentElement;
+            //var value = attribute.children.namedItem("value").innerHTML;
+
+            var mywidth = 200;
+            var myheight = 150;
+
+            var evidenceCard = this.addEvidence(new EvidenceModel({//this is likely a backbone id, not a css id
+                width: mywidth,
+                height: myheight,
+                title: 'Observation',
+                color: 'info',
+                body: evcontent
+            }));
+
+            this.hotEvidence[evid] = evidenceCard;
+
+            evidenceCard.position.x = evx + mywidth/2.; //add a nice offset
+            evidenceCard.position.y = evy - myheight/2.;
+
+            //if(!$("#"+elid).length)
+            this.vproot.add(evidenceCard); //we have to add the card to the root of the vitualpatient page
+            evidenceCard.hide();
+            //this.hotEvidence[model.get('id')].hide();
+
+        },
+
+        addEvidence: function (model) {
+            var evidence = new Evidence({
+                model: model
+            });
+            return evidence;
+        },
+
+
         activateHotspot: function(model) {
+            //var referenceclass = '.hotEvi' + model.get('id');
+            //var dialogue = this.$(referenceclass);
+            //dialogue.is(':visible') ? dialogue.hide() : dialogue.show();
+            this.hotEvidence[model.get('id')].toggle();
+
+            //this.spawnHotspotEvidence(model.get('id'), model.get('x'), model.get('y'), model.get('data'));
+            //alert(referenceid)
             //alert('Hotspot activated: #' + model.get('id'));
 
-            var thex = 256 + model.get('x');
-            var they = 384 - model.get('y');
-            var d    = $('.hotspawn'); //the psudothis dialogue
-
-            //d.text('This is hotspot ' + model.get('id'));
-            d.css('left', thex);
-            d.css('top', they);
-            d.is(':visible') ? d.hide() : d.show();
-            d.css('z-index', '1000');
-
-            d.html(model.get('data'));
-
-            //;top:'+model.get('y')+'px');
-
-        }
+            /* //Former
+             var thex = 256 + model.get('x');
+             var they = 384 - model.get('y');
+             var d    = $('.hotspawn'); // the jquery DOM reference to the
+                // d.text('This is hotspot ' + model.get('id'));
+                d.css('left', thex);
+                d.css('top', they);
+                d.is(':visible') ? d.hide() : d.show();
+                d.css('z-index', '1000');
+                d.html(model.get('data'));
+            */
+            }
 
 
     });
