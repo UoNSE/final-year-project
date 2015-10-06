@@ -71,7 +71,8 @@ define(function(require) {
 			this.testresults = this.patient.get('testresults');
 			this.hotspots = this.patient.get('hotspots');
 
-			this.patientbody = this.add(new PatientBody());
+			var params = {vproot: this.vproot}; // = this; //this.vproot;
+			this.patientbody = this.add(new PatientBody(params)); //add params so it has access to vproot
 
 			if(this.collaborative){
 				this.patientbody.setInteractive();
@@ -116,7 +117,7 @@ define(function(require) {
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
 			this.menu.delete.position.set(-370, -300);
-			this.menu.delete.setInteractive();
+			this.menu.delete.interactive = true;
 			this.addVPButtons();
 		},
 
@@ -128,21 +129,25 @@ define(function(require) {
 
 		},
 
-		addVPButtons: function () {
+		addVPMenus: function () {
 			var texts = ['Query', 'Test', 'Chart'];
 			var targets = [this.querymenu, this.tests, this.chart];
 			var n = texts.length;
 			var offset = 100;
 
 			texts.forEach(function (text, i) {
-				var buttonhandle = this.add(new ActionButtonHandle());
-				var button = buttonhandle.add(new ActionButton({
+
+				// var actionbuttonhandlemodel = new ActionButtonHandleModel();
+				// var buttonhandle = new ActionButtonHandle({model: actionbuttonhandlemodel});
+				var buttonhandle = new ActionButtonHandle();
+				// var button = buttonhandle.add(new ActionButton({
+				var button = new ActionButton({
 					model: new ActionButtonModel({
 						text: text,
 						id: text + 'Btn',
 						// color: danger
 					})
-				}));
+				});
 				// buttons x position
 				var buttonXPos = button.position.x;
 				//
@@ -154,23 +159,64 @@ define(function(require) {
 				buttonhandle.position.set(scale * (offset + offset * 1), -300);
 				button.position.set(buttonhandleXPos, buttonhandleYPos+350);
 
-				// buttonhandle.position.set(buttonXPos, -250);
+				// check if buttonhandle is too high for button and target
+				// to be seen onscreen.
+				// this needs to be done after every drag end event.
+				// if it is, then reposition button and target underneath
+				// instead of ontop.
+				// if(buttonhandle.position.y)
+
+
+
 				var target = targets[i];
-				// if(button.text == "Query"|| button.text == "Test"){
-					button.add(target);
-				// }
-				// else{
-				// 	this.vproot.add(target);
-				// }
+				button.add(target);
+
 				button.on('click', this.onToggle.bind(this,target));
 				// this.bindDraggableEvents(button);
-				button.setInteractive();
-				buttonhandle.setInteractive();
+				button.interactive = false;
+				buttonhandle.interactive = true;
 
 				// this.buttons.push();
 
 			}.bind(this));
 		},
+
+
+
+		/**
+         * Binds the draggable events to the component.
+         *
+         * @param component The button handle.
+         */
+        bindDraggableEvents: function (component) {
+			component.interactive = true;
+			component.setDraggable();
+			// debugger;
+            component.on({
+                drag: this.onDrag.bind(this),
+                dragendsource: this.onDragEnd.bind(this),
+                // dropsink: this.onDrop.bind(this)
+            });
+        },
+
+        /**
+         * An event triggered when a card is being dragged.
+         */
+        onDrag: function () {
+            // this.menu.show();
+            // this.mergedYet = false;
+        },
+
+        onDragEnd: function(event){
+			// console.log("drag end");
+            // //alert("drag end");
+			var yOffset = event.draggable.position.y;
+			// var topScreenLimit = 350;
+			// var bottScreenLimit = -370;
+			// var leftScreenLimit =
+			console.log(yOffset);
+        },
+
 
 
 		onDelete: function (event) {
