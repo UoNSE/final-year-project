@@ -40,6 +40,7 @@ define(function (require) {
             this.listenTo(issueCollection, 'sync', this.onIssuesSync);
 
             topicCollection.fetch();
+            issueCollection.fetch();
 
             this.topicHint = this.add(new Hint({model: {text: 'Select a topic'}}));
             this.issueHint = this.add(new Hint({model: {text: 'Select an issue to<br/>purchase it'}}));
@@ -62,7 +63,6 @@ define(function (require) {
 
         onTopicsSync: function (topics) {
             this.addTopics(topics);
-            this.collection.issues.fetch();
         },
 
         onIssuesSync: function (issues) {
