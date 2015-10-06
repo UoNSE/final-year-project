@@ -19,9 +19,11 @@ define(function(require) {
 		},
 		initialize: function (params) {
 			Component.prototype.initialize.apply(this, arguments);
-			this.model = params.model;
+			this.model = params.model.attributes.metrics;
 			this.results = this.model;
 			this.vproot = params.vproot;
+			// debugger;
+			// this.metrics = this.results.attributes.metrics;
 		},
 
 		createTestResults: function () {
