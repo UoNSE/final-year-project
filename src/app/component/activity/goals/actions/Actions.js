@@ -351,15 +351,14 @@ define(function (require) {
          * @param model
          */
         onAddActionGroup: function (model) {
-
             Object.assign(model.attributes, {
                 width: 300
             });
-
+            
             let match = new GoalActionsMatch({
                 model: model
             });
-
+            
             this.bindDraggableEvents(match);
 
             match.show();
@@ -369,7 +368,7 @@ define(function (require) {
             this.matches.push(match);
 
             // positioning
-            match.interactive = true;
+            match.interactive.setInteractive();
 
             this.matches.forEach((element, index, array) => {
                 let scale = index - ((array.length - 1) / 2);
