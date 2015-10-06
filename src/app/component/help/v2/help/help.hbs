@@ -1,7 +1,9 @@
 <div class="help-container">
-    <div class="panel panel-primary {{#if classes}}{{ classes}}{{/if}}"
-         style="width: {{units width}}; height: {{units height}}">
-        <div class="panel-heading">{{#if title}}{{title}}{{else}}Help{{/if}}</div>
+    <div class="panel panel-primary{{#if classes}}{{ classes}}{{/if}}"
+         style="width: {{units width}}">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{#if title}}{{title}}{{else}}Help{{/if}}</h3>
+        </div>
         <div class="panel-body">
 			{{{helpContent}}}
             <div class="text-center">
