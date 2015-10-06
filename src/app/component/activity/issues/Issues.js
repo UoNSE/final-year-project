@@ -86,7 +86,7 @@ define(function (require) {
             this.listenTo(issueGroups,'update', this.syncCards);
             this.listenTo(issues,'update', this.syncCards);
             this.listenTo(evidence,'update', this.syncCards);
-
+            this.setupFixedComponents(params['case_id']);
             if (this.canLoad()) {
                 this.loadCards(issues, evidence, issueGroups);
             }
@@ -101,7 +101,7 @@ define(function (require) {
             });
             this.menu.hide();
 
-            this.setupFixedComponents(params['case_id']);
+
         },
 
         /**
@@ -110,7 +110,8 @@ define(function (require) {
          */
         canLoad: function(){
             //TODO check if inventory has cards
-            return false;
+            return(this.inventory.get("issues").length > 0 || this.inventory.get("evidence").length > 0 ||this.inventory.get("issuegroups").length > 0);
+
         },
 
         setupFixedComponents: function( caseID ){
@@ -177,16 +178,23 @@ define(function (require) {
         loadCards: function(issues, evidence, issueGroups){
             //TODO load cards from inventory
             console.log("Load cards");
-            this.collection.issues = this.inventory.get("issues");
-            this.collection.evidence = this.inventory.get("evidence");
-            this.collection.issueGroup = this.inventory.get("issuegroups");
+            this.collection.issues = this.inventory.get('issues').models[0].attributes;
+            this.collection.evidence = this.inventory.get("evidence").models[0].attributes;
+            this.collection.issueGroup = this.inventory.get("issuegroups").models[0].attributes;
+
 
             issues = this.collection.issues;
             evidence = this.collection.evidence;
             issueGroups = this.collection.issueGroup;
-            issueGroups.trigger('sync');
-            evidence.trigger('sync');
-            issues.trigger('sync');
+            if(issues.length>0){
+                this.onIssuesSync(issues);
+            }
+            if(evidence.length>0){
+                this.onEvidenceSync(evidence);
+            }
+            if(this.inventory.get("issuegroups").length>0){
+                this.onIssueGroupLoad(issueGroups);
+            }
 
         },
 
@@ -240,11 +248,57 @@ define(function (require) {
             this.updateScore();
         },
 
-
-        onIssueGroupSync: function (issues) {
+        onIssuesLoad: function (issues) {
             var n = issues.size();
             var distance = 10;
+
             issues.forEach((model, i) => {
+                var card = this.addIssue(new IssueModel({
+                    width: this.width,
+                    height: this.height,
+                    title: 'Issue',
+                    issueid: model.attributes.model.get('id'),
+                    body: model.attributes.model.get('body'),
+                    cost: model.attributes.model.get('cost'),
+                    color: 'danger'
+                }));
+                var scale = i - ((n - 1) / 2);
+                this.gameCredit -= card.model.get('cost');
+                card.position.set(-300, scale * (distance + card.model.get('height')));
+            });
+            this.updateScore();
+        },
+
+        onEvidenceLoad: function (evidence) {
+            var n = evidence.size();
+            var distance = 10;
+            evidence.forEach((model, i) => {
+                var card = this.addEvidence(new EvidenceModel({
+                    width: this.width,
+                    height: this.height,
+                    title: 'Evidence',
+                    body: model.attributes.model.get('body'),
+                    score: model.attributes.model.get('score'),
+                    maxscore: model.attributes.model.get('maxscore'),
+                    issueid: model.attributes.model.get('issueId'),
+                    color: 'info'
+                }));
+                var scale = i - ((n - 1) / 2);
+                var score = card.model.get('score');
+                this.gameCredit += score;
+                if(score < card.model.get('maxscore')) {
+                    this.gameCredit -= 2;
+                }
+                card.position.set(300, scale * (distance + card.model.get('height')));
+            });
+            this.updateScore();
+        },
+
+
+        onIssueGroupLoad: function (issuegroup) {
+            var n = issuegroup.size();
+            var distance = 10;
+            issuegroup.forEach((model, i) => {
                 var card = this.add(new IssueGroup({
                     model: new IssueGroupModel({
                         width: this.width,
@@ -377,7 +431,7 @@ define(function (require) {
                 this.hiddenActionsHint.hide();
             }
 
-            this.inventory.saveScore = this.gameCredit;
+            this.inventory.attributes.saveScore = this.gameCredit;
         },
 
         onDelete: function (event) {

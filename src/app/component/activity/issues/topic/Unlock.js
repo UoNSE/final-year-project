@@ -132,8 +132,11 @@ define(function (require) {
         onIssueSelected: function (issue) {
             if (issue.canPurchase(this.gameCredit)){
                 issue.purchase();
-                this.updateCredit();
-                this.inventory.attributes.issues.add(issue);
+                //this.updateCredit();
+                this.gameCredit -= issue.model.attributes.cost;
+                this.scoreContainer.setScore(this.gameCredit);
+                //this.inventory.attributes.issues
+                this.inventory.get('issues').models[0].attributes.add(issue);
             }
             else {
                 this.scoreContainer.invalidAction();
@@ -177,10 +180,7 @@ define(function (require) {
                     }
                 });
             });
-
-            if (this.gameCredit !== this.availableCredit){
-                this.scoreContainer.setScore(this.availableCredit);
-            }
+            this.scoreContainer.setScore(this.gameCredit);
 
             this.gameCredit = this.availableCredit;
         }
