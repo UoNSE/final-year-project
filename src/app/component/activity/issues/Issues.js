@@ -21,8 +21,8 @@ define(function (require) {
     var ActionButton = require('component/actionbutton/ActionButton');
     var Score = require('component/activity/issues/score/Score');
     var Panel = require('component/panel/Panel');
-    var PopupPanel = require('component/activity/issues/PopupPanel');
-
+    var PopupPanel = require('component/panel/PopupPanel');
+    var Hint = require('component/hint/Hint');
     var Help = require('component/help/help');
 
     return Component.extend({
@@ -34,6 +34,28 @@ define(function (require) {
 
         menu: null,
         gameCredit: 0,
+
+        /**
+         * This provides the link to move forward to the Actions activity,
+         * after all cards have been matched.
+         */
+        hiddenActionsActivityLink: {},
+        /**
+         * This provides a hint to click / touch the activity link.
+         */
+        hiddenActionsHint: {},
+        /**
+         * Minimum number of points required to unlock an issue
+         */
+        scoreTrigger: -6,
+        /**
+         * Provides a popup notification when the user has earnt points greater than or equal to scoreTrigger
+         */
+        scoreHint: {},
+        /**
+         * Provides a container for the score to sit in
+         */
+        scoreContainer: {},
 
         collection: {
             issues: new IssuesCollection(),
@@ -75,40 +97,7 @@ define(function (require) {
             });
             this.menu.hide();
 
-           this.add(new Help({
-                model: {
-                    helpContent: 'Join pieces of evidence together to score points.<br>'+
-                        'Once you have enough points you can unlock issues in the '+
-                        '<button class="mtl-fab btn btn-material-blue btn-fab btn-raised mdi-action-shopping-cart" style="width: 25px;height: 25px;padding: 0px;"> </button> menu<br>'+
-                        'Once all issues are linked with the correct evidence you will be able to continue'
-                }
-            }));
-            //add the topic unlock button
-            this.add(new ActionButton({
-                //detached:true,
-                model: new ActionButtonModel({
-                    icon: 'action-shopping-cart',
-                    color: 'blue',
-                    href: 'cases/' + params['case_id'] + '/activity/issues/unlock',
-                    classes: 'topic-unlock'
-                    //styles: {
-                    //    width:100,
-                    //    height:100,
-                    //    'font-size':40
-                    //}
-                })
-            })).detached = true;
-
-            this.scoreContainer = this.add(new Score());
-
-            this.scoreTrigger = -6;
-            this.scoreHint = this.add(new PopupPanel({
-                model: {
-                    body: 'You now have enough credit to purchase issues!',
-                    width: 200
-                }
-            }));
-            this.scoreHint.setOriginalPosition(this.scoreContainer.position);
+            this.setupFixedComponents(params['case_id']);
         },
 
         /**
@@ -118,6 +107,64 @@ define(function (require) {
         canLoad: function(){
             //TODO check if inventory has cards
             return false;
+        },
+
+        setupFixedComponents: function( caseID ){
+            this.scoreContainer = this.add(new Score());
+
+            this.add(new Help({
+                model: {
+                    helpContent: 'Join pieces of evidence together to score points.<br>'+
+                    'Once you have enough points you can unlock issues in the '+
+                    '<button class="mtl-fab btn btn-material-blue btn-fab btn-raised mdi-action-shopping-cart" style="width: 25px;height: 25px;padding: 0px;"> </button> menu<br>'+
+                    'Once all issues are linked with the correct evidence you will be able to continue'
+                }
+            }));
+
+            this.scoreHint = this.add(new PopupPanel({
+                model: {
+                    body: 'You now have enough credit to purchase issues!',
+                    width: 200
+                }
+            }));
+            this.scoreHint.setOriginalPosition(this.scoreContainer.position);
+
+            //add the topic unlock button
+            this.add(new ActionButton({
+                //detached:true,
+                model: new ActionButtonModel({
+                    icon: 'action-shopping-cart',
+                    color: 'blue',
+                    href: 'cases/' + caseID + '/activity/issues/unlock',
+                    classes: 'topic-unlock'
+                    //styles: {
+                    //    width:100,
+                    //    height:100,
+                    //    'font-size':40
+                    //}
+                })
+            })).detached = true;
+
+            // add a link to the Actions activity
+            this.hiddenActionsActivityLink = this.add(new ActionButton({
+                model: {
+                    color: 'light-green',
+                    classes: 'help-btn actions-btn',
+                    icon: 'content-send',
+                    href: 'cases/'.concat(caseID, '/activity/goals')
+                }
+            }));
+
+            this.hiddenActionsActivityLink.position.set(0, 100);
+
+            this.hiddenActionsHint = this.add(new Hint({
+                model: {
+                    text: "Touch the Green Button to Continue"
+                }
+            }));
+
+            this.hiddenActionsActivityLink.hide();
+            this.hiddenActionsHint.hide();
         },
 
         /**
@@ -308,8 +355,13 @@ define(function (require) {
             this.scoreContainer.setScore(this.gameCredit);
 
             if (this.gameCredit >= this.scoreTrigger) {
-                var popupPos = this.scoreContainer.position.clone().add(0,50);
+                var popupPos = this.scoreContainer.position.clone().add(new Vector2(0,50));
                 this.scoreHint.popup(popupPos);
+            }
+
+            if (this.collection.issues.length == 0){
+                this.hiddenActionsActivityLink.show();
+                this.hiddenActionsHint.show();
             }
         },
 

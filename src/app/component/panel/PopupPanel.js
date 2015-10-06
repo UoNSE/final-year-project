@@ -9,7 +9,10 @@ define(function (require) {
 
     return Panel.extend({
         initialize: function () {
-            this.originalPosititon = null;
+
+            Panel.prototype.initialize.apply(this, arguments);
+
+            this.originalPosititon = this.position;
             this.hangTime = 3000;
             this.animationTime = 900;
 
@@ -18,6 +21,7 @@ define(function (require) {
 
         setOriginalPosition: function ( pos ) {
             this.originalPosititon = pos;
+            this.position.copy(this.originalPosititon);
         },
 
         popup: function ( popupPos ) {
