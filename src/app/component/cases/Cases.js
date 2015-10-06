@@ -52,9 +52,10 @@ define(function (require) {
 				this.cases.push(newCase);
 				this.add(newCase);
 			});
+			this.animate();
 		},
 
-		onLoad: function () {
+		animate: function () {
 			var radius = 200; // The distance each case is from the center
 			var delay  = 50; // The delay between each case animating, creating the 'spiral' effect
 			var totalTime = 1500; // The total time of each animation
