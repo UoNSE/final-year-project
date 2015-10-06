@@ -2,8 +2,6 @@ define(function (require) {
 
     'use strict';
 
-    var _ = require('underscore');
-    var $ = require('jquery');
     var Component = require('core/Component');
     var template = require('text!component/help/v2/help/Help.hbs');
     var ActionButton = require('component/actionbutton/ActionButton');
@@ -41,7 +39,6 @@ define(function (require) {
         // important for having fixed position near back button
         template: template,
         styles: 'component/help/v2/help/Help.css',
-        detached: true,
         origin: 'top left',
         events: {
             'click .cpn-button': 'close'
@@ -74,7 +71,7 @@ define(function (require) {
 				classes: 'help-btn'
             };
             ActionButton.prototype.initialize.apply(this, arguments);
-            this.position.y = -80;
+            this.position.set(10, -80);
             this.panel = this.add(new Panel({model: model}));
         },
 
