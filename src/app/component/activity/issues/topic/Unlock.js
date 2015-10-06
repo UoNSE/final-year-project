@@ -133,6 +133,7 @@ define(function (require) {
             if (issue.canPurchase(this.gameCredit)){
                 issue.purchase();
                 this.updateCredit();
+                this.inventory.attributes.issues.add(issue);
             }
             else {
                 this.scoreContainer.invalidAction();
