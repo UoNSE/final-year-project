@@ -117,7 +117,8 @@ define(function(require) {
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
 			this.menu.delete.position.set(-370, -300);
-			this.menu.delete.interactive = true;
+			//this.menu.delete.interactive = true;
+			this.menu.delete.setInteractive();
 			this.addVPButtons();
 		},
 
