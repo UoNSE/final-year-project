@@ -9,7 +9,7 @@ define(function (require) {
     let ActionButton = require('component/actionbutton/ActionButton');
 
     // help
-    var Help = require('component/activity/goals/help/Help');
+    var Help = require('component/help/v2/help/Help');
     var HelpText = require('text!component/activity/goals/help/helpContent.hbs');
 
     // hint
@@ -181,6 +181,8 @@ define(function (require) {
                     helpContent: HelpText
                 })
             }));
+
+            this.help.show();
 
             // add a link to the Actions activity
             this.hiddenLink = this.add(new ActionButton({

@@ -2,17 +2,18 @@ define(function (require) {
 	'use strict';
 
 	var Component = require('core/Component');
-	var template = require('text!component/actionbutton/ActionButton.hbs');
+	var template = require('text!component/actionbuttonhandle/ActionButtonHandle.hbs');
 
 	return Component.extend({
 		template: template,
 		classes: ['cpn-actionbutton'],
+		styles: 'component/actionbuttonhandle/ActionButtonHandle.css',
 
 		events: {
 			'click .cpn-actionbutton': 'onClick'
 		},
 
-		onClick: function(event){
+		onClick:function(event){
 			this.trigger('click',event);
 		}
 	});

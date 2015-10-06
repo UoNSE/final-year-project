@@ -70,7 +70,7 @@ define(function (require) {
             });
             this.menu.hide();
 
-           this.add(new Help({
+            this.add(new Help({
                 model: {
                     helpContent: 'Join pieces of evidence together to score points.<br>'+
                         'Once you have enough points you can unlock issues in the '+
@@ -79,20 +79,17 @@ define(function (require) {
                 }
             }));
             //add the topic unlock button
-            this.add(new ActionButton({
-                //detached:true,
+            var unlock = this.add(new ActionButton({
                 model: new ActionButtonModel({
                     icon: 'action-shopping-cart',
                     color: 'blue',
                     href: 'cases/' + params['case_id'] + '/activity/issues/unlock',
                     classes: 'topic-unlock'
-                    //styles: {
-                    //    width:100,
-                    //    height:100,
-                    //    'font-size':40
-                    //}
                 })
-            })).detached = true;
+            }));
+			unlock.origin = 'top left';
+			unlock.detached = true;
+			unlock.position.y = -160;
 
             this.scoreContainer = this.add(new Score());
 

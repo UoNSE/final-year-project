@@ -18,7 +18,7 @@ define(function (require) {
     let HelpModel = require('model/HelpModel');
 
     // help
-    let Help = require('component/activity/goals/help/Help');
+    var Help = require('component/help/v2/help/Help');
     let HelpText = require('text!component/activity/goals/actions/HelpContent.hbs');
 
     // collections

@@ -39,6 +39,7 @@ define(function (require) {
                     'cases/:case_id/information': 'case/information/Information',
                     'cases/:case_id/activity/virtual-patient': 'activity/VirtualPatient',
                     'cases/:case_id/activity/issues': 'activity/Issues',
+                    'cases/:case_id/activity/issues/unlock': 'activity/issues/TopicUnlock',
                     'cases/:case_id/activity/goals': 'activity/Goals',
                     'cases/:case_id/activity/goals/choose' : 'activity/goals/ChooseGoal',
                     'cases/:case_id/activity/goals/choose/:goal_id/actions': 'activity/goals/Actions'
@@ -50,21 +51,23 @@ define(function (require) {
                                 'case/information/Information': {
                                     'activity/VirtualPatient': null
                                 },
-                                'activity/Issues': null,
+                                'activity/Issues': {
+                                    'activity/issues/TopicUnlock': null
+                                },
                                 'activity/Goals': {
                                     'activity/goals/ChooseGoal': {
                                         'activity/goals/Actions': null
                                     }
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    });
+							}
+						}
+					}
+				}
+			}
+		}
+	});
 
-    require(['core/Application', 'es6-shim', 'addons', 'backbone-relational'], function (Application) {
-        new Application();
-    });
+	require(['core/Application', 'es6-shim', 'addons', 'backbone-relational'], function (Application) {
+		window.app = new Application();
+	});
 });

@@ -14,8 +14,11 @@ define(function (require) {
 		needsWorldUpdate: true,
 		detached: false,
 		opacity: 1,
+		origin: 'center',
+		detachedPageOrigin: 'top left',
 
 		initialize: function () {
+
 			this.id = 'component-' + MathUtil.generateUUID(8);
 			this.children = [];
 
@@ -125,6 +128,9 @@ define(function (require) {
 		add: function (child) {
 			if (!(child instanceof Object2D)) {
 				throw new Error('Object2D: Cannot add child which is not of type Object2D');
+			}
+			if (child.parent) {
+				throw new Error('Object2D: Child already has parent, remove object from parent first');
 			}
 			child.parent = this;
 			this.children.push(child);

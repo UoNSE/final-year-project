@@ -4,11 +4,11 @@ define(function (require) {
 
     var Component = require('core/Component');
     var template = require('text!component/help/help.hbs');
-    var ActionButton = require('component/actionButton/Actionbutton');
 
     return Component.extend({
         detached: true,
         template: template,
+        origin: 'top left',
         styles: 'component/help/help.css',
 
         events: {
@@ -18,6 +18,7 @@ define(function (require) {
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);
             $(".help-container").interactive = true;
+			this.position.y = -80;
         },
 
         onHelpClick: function (event) {

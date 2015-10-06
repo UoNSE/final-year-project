@@ -12,16 +12,17 @@ define(function (require) {
 
 	Object.assign(MultiTouchElement.prototype, {
 		bindEvents: function () {
+			this.component.on('remove', this.onRemove.bind(this));
 			this.element.on({
 				mouseenter: this.onMouseEnter.bind(this),
 				mouseleave: this.onMouseLeave.bind(this),
 				mousedown: this.onMouseDown.bind(this),
-				touchstart: this.onTouchStart.bind(this),
-				remove: this.onRemove.bind(this)
+				touchstart: this.onTouchStart.bind(this)
 			});
 		},
 
 		unbindEvents: function () {
+			this.component.off();
 			this.element.off();
 		},
 
@@ -89,6 +90,7 @@ define(function (require) {
 		},
 
 		onRemove: function () {
+			this.unbindEvents();
 			$(this).trigger('remove');
 		},
 

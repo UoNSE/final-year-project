@@ -239,13 +239,13 @@
   "patients": [
     {
       "id": 1,
-      "firstname": "Gerard",
-      "lastname": "Smith",
+      "firstname": "Dang",
+      "lastname": "Tien",
       "age": "62",
-      "dob": "1914-05-12",
+      "dob": "1952-05-12",
       "sex": "Male",
       "profession": "Physiotherapist",
-      "heartRate": "100",
+      "heartRate": "120",
       "respirationRate": "12",
       "systolic": "90",
       "diastolic": "60",
@@ -285,23 +285,19 @@
       "observations": [
         {
           "id": 1,
-          "description": "mucusmouth",
-          "result": "Conditionoforalmucosa;mouthdrytonguefurrowed"
+          "text": "mucusmouth: Conditionoforalmucosa;mouthdrytonguefurrowed"
         },
         {
           "id": 2,
-          "description": "Drinking",
-          "result": "Oralintake–sipsonly"
+          "text": "Patient looks dehydrated"
         },
         {
           "id": 3,
-          "description": "cognitivestate",
-          "result": "appearsrestlessandanxious"
+          "text": "patient is very pale"
         },
         {
           "id": 4,
-          "description": "skin",
-          "result": "pale,clammy"
+          "text": "patients skin is dry"
         }
       ],
       "queries": [
@@ -376,24 +372,84 @@
         {
           "id": 1,
           "name": "UrineAnalysis",
-          "glucose": "100",
-          "bilirubin": "30",
-          "ketones": "120",
-          "sg": "20",
-          "eryth": "30",
-          "ph": "40",
-          "ts": "50"
+          "metrics": [
+            {
+              "id": 1,
+              "name": "glucose",
+              "value": "100"
+            },
+            {
+              "id": 2,
+              "name": "bilirubin",
+              "value": "30"
+            },
+            {
+              "id": 3,
+              "name": "ketones",
+              "value": "120"
+            },
+            {
+              "id": 4,
+              "name": "sg",
+              "value": "20"
+            },
+            {
+              "id": 5,
+              "name": "eryth",
+              "value": "30"
+            },
+            {
+              "id": 6,
+              "name": "ph",
+              "value": "40"
+            },
+            {
+              "id": 7,
+              "name": "ts",
+              "value": "50"
+            }
+          ]
         },
         {
           "id": 2,
           "name": "hormonePanel",
-          "estrone": "100",
-          "estradiol": "30",
-          "estriol": "120",
-          "testosterone": "20",
-          "progesterone": "30",
-          "DHEA": "40",
-          "cortisol": "50"
+          "metrics": [
+            {
+              "id": 1,
+              "name": "estrone",
+              "value": "100"
+            },
+            {
+              "id": 2,
+              "name": "estradiol",
+              "value": "30"
+            },
+            {
+              "id": 3,
+              "name": "estriol",
+              "value": "120"
+            },
+            {
+              "id": 4,
+              "name": "testosterone",
+              "value": "20"
+            },
+            {
+              "id": 5,
+              "name": "progesterone",
+              "value": "30"
+            },
+            {
+              "id": 6,
+              "name": "DHEA",
+              "value": "40"
+            },
+            {
+              "id": 7,
+              "name": "cortisol",
+              "value": "50"
+            }
+          ]
         }
       ]
     }
