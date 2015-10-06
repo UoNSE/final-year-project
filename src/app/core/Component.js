@@ -15,6 +15,8 @@ define(function (require) {
 		multiTouchElement: null,
 		template: '',
 		classes: [],
+		width: null,
+		height: null,
 
 		initialize: function () {
 			Object2D.prototype.initialize.apply(this, arguments);
@@ -132,7 +134,16 @@ define(function (require) {
 		setDroppable: function (options) {
 			// TODO: handle remove
 			multiTouchManager.makeDroppable(this.getMultiTouchElement(), options);
+		},
+
+		bringToFront: function () {
+			this.trigger('bringToFront');
+		},
+
+		sendToBack: function () {
+			this.trigger('sendToBack');
 		}
+
 	});
 });
 

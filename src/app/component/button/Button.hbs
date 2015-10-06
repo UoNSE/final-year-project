@@ -1,6 +1,8 @@
 <!--{{#if href}}{{#unless disabled}}<a href="{{href}}">{{/unless}}{{/if}}-->
 {{#if href}}<a href="{{href}}">{{/if}}
-<button class="cpn-button btn btn-{{mtl-color color}} btn-raised{{#if disabled}} btn-disabled{{/if}}{{#if classes}}{{ classes}}{{/if}}"
+<button
+id = "{{#if id}}{{id}}{{/if}}"
+class="cpn-button btn btn-{{mtl-color color}} btn-raised{{#if disabled}} btn-disabled{{/if}}{{#if classes}} {{classes}}{{/if}}"
 {{#if styles}}style="{{#each styles}}{{@key}}: {{units this}};{{styles}}{{/each}}{{/if}}">
 	{{text}}
 </button>

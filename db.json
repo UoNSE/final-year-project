@@ -1,41 +1,4 @@
 {
-  "hotspots": [
-    {
-      "id": 1,
-      "patientId": 1,
-      "x": -2,
-      "y": 347,
-      "data": "Hotspot1"
-    },
-    {
-      "id": 2,
-      "patientId": 1,
-      "x": 86,
-      "y": 222,
-      "data": "Hotspot2"
-    },
-    {
-      "id": 3,
-      "patientId": 1,
-      "x": 53,
-      "y": -142,
-      "data": "<img src=\"/resources/images/nof.jpg\">"
-    },
-    {
-      "id": 4,
-      "patientId": 1,
-      "x": -97,
-      "y": -352,
-      "data": "Hotspot4"
-    },
-    {
-      "id": 5,
-      "patientId": 1,
-      "x": -161,
-      "y": -15,
-      "data": "Hotspot5"
-    }
-  ],
   "cases": [
     {
       "id": 1,
@@ -70,6 +33,65 @@
           "id": 4,
           "content": "Pulse rate very high (120 bpm)",
           "issueId": 2
+        }
+      ],
+      "goals": [
+        {
+          "id": 1,
+          "content": "Immediately stabilise patient",
+          "issueId": "1",
+          "actions": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "id": 2,
+          "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
+          "issueId": "2",
+          "actions": [
+            5,
+            6,
+            7,
+            8
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": 1,
+          "content": "Notify Mr Smith's doctor of his condition",
+          "goalId": 1
+        },
+        {
+          "id": 2,
+          "content": "Reassure patient."
+        },
+        {
+          "id": 3,
+          "content": "Check that the IV cannula is not kinked or blocked."
+        },
+        {
+          "id": 4,
+          "content": "Administer a fluid challenge and increase Mr Smith's IV fluid rate as ordered."
+        },
+        {
+          "id": 5,
+          "content": "Check that the urinary catheter is not kinked or blocked."
+        },
+        {
+          "id": 6,
+          "content": "Raise the foot of Mr Smith's bed."
+        },
+        {
+          "id": 7,
+          "content": "Strictly monitor Mr Smith's input and maintain hourly urine measures"
+        },
+        {
+          "id": 8,
+          "content": "Monitor Mr Smith's level of consciousness."
         }
       ]
     },
@@ -106,255 +128,324 @@
       "name": "Bob"
     }
   ],
-  "issues": [
+  "goals": [
     {
       "id": 1,
-      "content": "Dehydration"
+      "content": "Immediately stabilise patient",
+      "issueId": "1",
+      "actions": [
+        1,
+        2,
+        3,
+        4
+      ]
     },
     {
       "id": 2,
-      "content": "Hypovolaemia"
+      "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
+      "issueId": "2",
+      "actions": [
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "content": "Notify Mr Smith's doctor of his condition",
+      "goalId": 1
+    },
+    {
+      "id": 2,
+      "content": "Reassure patient.",
+      "goalId": 1
+    },
+    {
+      "id": 3,
+      "content": "Check that the IV cannula is not kinked or blocked.",
+      "goalId": 1
+    },
+    {
+      "id": 4,
+      "content": "Administer a fluid challenge and increase Mr Smith's IV fluid rate as ordered.",
+      "goalId": 1
+    },
+    {
+      "id": 5,
+      "content": "Check that the urinary catheter is not kinked or blocked.",
+      "goalId": 2
+    },
+    {
+      "id": 6,
+      "content": "Raise the foot of Mr Smith's bed.",
+      "goalId": 2
+    },
+    {
+      "id": 7,
+      "content": "Strictly monitor Mr Smith's input and maintain hourly urine measures",
+      "goalId": 2
+    },
+    {
+      "id": 8,
+      "content": "Monitor Mr Smith's level of consciousness.",
+      "goalId": 2
+    }
+  ],
+  "issues": [
+    {
+      "id": 1,
+      "data": "Dehydration",
+      "topicId": 1,
+      "cost": 20
+    },
+    {
+      "id": 2,
+      "data": "Hypovolaemia",
+      "topicId": 2,
+      "cost": 4
+    },
+    {
+      "id": 3,
+      "data": "Nausea",
+      "topicId": 1,
+      "cost": 0
+    }
+  ],
+  "topics": [
+    {
+      "id": 1,
+      "data": "Lungs"
+    },
+    {
+      "id": 2,
+      "data": "Heart"
+    },
+    {
+      "id": 3,
+      "data": "Kidneys"
     }
   ],
   "evidence": [
     {
       "id": 1,
-      "content": "Condition of oral mucosa",
+      "data": "Condition of oral mucosa",
+      "score": 10,
+      "maxscore": 20,
       "issueId": 1
     },
     {
       "id": 2,
-      "content": "Level of thirst",
+      "data": "Level of thirst",
+      "score": 10,
+      "maxscore": 20,
       "issueId": 1
     },
     {
       "id": 3,
-      "content": "Pale colour",
+      "data": "Pale colour",
+      "score": 2,
+      "maxscore": 4,
       "issueId": 2
     },
     {
       "id": 4,
-      "content": "Pulse rate very high (120 bpm)",
+      "data": "Pulse rate very high (120 bpm)",
+      "score": 2,
+      "maxscore": 4,
       "issueId": 2
-    }
-  ],
-  "goals": [
-    {
-      "content": "testing 123",
-      "id": 2
-    }
-  ],
-  "actions": [],
-  "questions": [
-    {
-      "id": 1,
-      "text": "what seems to be the problem?"
-    },
-    {
-      "id": 2,
-      "text": "where does it hurt?"
-    },
-    {
-      "id": 3,
-      "text": "when did the pain begin?"
-    }
-  ],
-  "testtype": [
-    {
-      "id": 1,
-      "text": "urine analysis"
-    },
-    {
-      "id": 2,
-      "text": "blood test",
-      "bloodtesttype": [
-        {
-          "id": 1,
-          "text": "cbc"
-        },
-        {
-          "id": 2,
-          "text": "esr"
-        },
-        {
-          "id": 3,
-          "text": "glucose"
-        },
-        {
-          "id": 4,
-          "text": "lipoprotein"
-        },
-        {
-          "id": 5,
-          "text": "eliza"
-        },
-        {
-          "id": 6,
-          "text": "std"
-        },
-        {
-          "id": 7,
-          "text": "western blot"
-        },
-        {
-          "id": 8,
-          "text": "liver function"
-        },
-        {
-          "id": 9,
-          "text": "hormones"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "text": "xray"
-    },
-    {
-      "id": 4,
-      "text": "ctscan"
     }
   ],
   "patients": [
     {
       "id": 1,
-      "firstname": "Cyril",
-      "lastname": "Smith",
-      "age": "99",
-      "dob": "12.05.1916",
-      "sex": "female",
-      "profession": "receptionist",
-      "metrics": [
-        {
-          "id": 1,
-          "temperature": "37°C",
-          "pulse": "112 bpm",
-          "respiratory rate": "22 breaths per minute",
-          "blood pressure": "90/50",
-          "pain": "3-4 using VAS scale",
-          "oxygen saturation level": "97%",
-          "hourly urine output (average)": "26mL/hr",
-          "bgl": "4mmol/L",
-          "patientId": 1
-        }
-      ],
-      "problems": [
-        {
-          "id": 1,
-          "codename": "NOF",
-          "description": "neck of femur fracture"
-        }
-      ],
-      "observations": [
-        {
-          "id": 1,
-          "observation": "mouth",
-          "result": "Condition of oral mucosa; mouth dry tongue furrowed",
-          "patientId": 1
-        },
-        {
-          "id": 2,
-          "observation": "Drinking",
-          "result": "Oral intake–sips only",
-          "patientId": 1
-        },
-        {
-          "id": 3,
-          "observation": "cognitive state",
-          "result": "appears restless and anxious",
-          "patientId": 1
-        },
-        {
-          "id": 4,
-          "observation": "skin",
-          "result": "pale, clammy",
-          "patientId": 1
-        }
-      ],
-      "responses": [
-        {
-          "id": 1,
-          "question": "appetite",
-          "answer": "not very",
-          "patientId": 1
-        },
-        {
-          "id": 2,
-          "question": "thirst",
-          "answer": "very",
-          "patientId": 1
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "firstname": "Gerard",
-      "lastname": "Smith",
+      "firstname": "Dang",
+      "lastname": "Tien",
       "age": "62",
-      "dob": "1914-05-12",
+      "dob": "1952-05-12",
       "sex": "Male",
       "profession": "Physiotherapist",
-      "metrics": [
+      "heartRate": "120",
+      "respirationRate": "12",
+      "systolic": "90",
+      "diastolic": "60",
+      "temperature": "38",
+      "hotspots": [
         {
           "id": 1,
-          "temperature": "37°C",
-          "pulse": "112 bpm",
-          "respiratory rate": "22 breaths per minute",
-          "blood pressure": "90/50",
-          "pain": "3-4 using VAS scale",
-          "oxygen saturation level": "97%",
-          "hourly urine output (average)": "26mL/hr",
-          "bgl": "4mmol/L",
-          "patientId": 1
-        }
-      ],
-      "problems": [
+          "x": -2,
+          "y": 347,
+          "data": "Hotspot1"
+        },
         {
-          "id": 1,
-          "codename": "NOF",
-          "description": "neck of femur fracture"
+          "id": 2,
+          "x": 86,
+          "y": 222,
+          "data": "Hotspot2"
+        },
+        {
+          "id": 3,
+          "x": 53,
+          "y": -142,
+          "data": "<img src=\"/resources/images/nof.jpg\">"
+        },
+        {
+          "id": 4,
+          "x": -97,
+          "y": -352,
+          "data": "Hotspot4"
+        },
+        {
+          "id": 5,
+          "x": -161,
+          "y": -15,
+          "data": "Hotspot5"
         }
       ],
       "observations": [
         {
           "id": 1,
-          "observation": "mouth",
-          "result": "Condition of oral mucosa; mouth dry tongue furrowed",
-          "patientId": 1
+          "text": "mucusmouth: Conditionoforalmucosa;mouthdrytonguefurrowed"
         },
         {
           "id": 2,
-          "observation": "Drinking",
-          "result": "Oral intake–sips only",
-          "patientId": 1
+          "text": "Patient looks dehydrated"
         },
         {
           "id": 3,
-          "observation": "cognitive state",
-          "result": "appears restless and anxious",
-          "patientId": 1
+          "text": "patient is very pale"
         },
         {
           "id": 4,
-          "observation": "skin",
-          "result": "pale, clammy",
-          "patientId": 1
+          "text": "patients skin is dry"
+        }
+      ],
+      "queries": [
+        {
+          "id": 1,
+          "text": "What is the problem?"
+        },
+        {
+          "id": 2,
+          "text": "Where does it hurt?"
+        },
+        {
+          "id": 3,
+          "text": "When did the pain begin?"
+        },
+        {
+          "id": 4,
+          "text": "Have you noticed any swelling?"
+        },
+        {
+          "id": 5,
+          "text": "Has your skin been dry?"
+        },
+        {
+          "id": 6,
+          "text": "How old are you?"
+        },
+        {
+          "id": 7,
+          "text": "How have you been sleeping?"
+        },
+        {
+          "id": 8,
+          "text": "Do you have family here?"
         }
       ],
       "responses": [
         {
           "id": 1,
-          "question": "appetite",
-          "answer": "not very",
-          "patientId": 1
+          "text": "I hurt my knee"
         },
         {
           "id": 2,
-          "question": "thirst",
-          "answer": "very",
-          "patientId": 1
+          "text": "On my knee"
+        },
+        {
+          "id": 3,
+          "text": "Yesterday"
+        },
+        {
+          "id": 4,
+          "text": "Yes. On my knee"
+        },
+        {
+          "id": 5,
+          "text": "No. Not really"
+        },
+        {
+          "id": 6,
+          "text": "Im 75"
+        },
+        {
+          "id": 7,
+          "text": "Not well. Iâ€™ve been waking up frequently."
+        },
+        {
+          "id": 8,
+          "text": "Yes, Toi song voi con gai cua toi"
+        }
+      ],
+      "testresults": [
+        {
+          "id": 1,
+          "name": "UrineAnalysis",
+          "glucose": "100",
+          "bilirubin": "30",
+          "ketones": "120",
+          "sg": "20",
+          "eryth": "30",
+          "ph": "40",
+          "ts": "50"
+        },
+        {
+          "id": 2,
+          "name": "hormonePanel",
+          "estrone": "100",
+          "estradiol": "30",
+          "estriol": "120",
+          "testosterone": "20",
+          "progesterone": "30",
+          "DHEA": "40",
+          "cortisol": "50"
         }
       ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": 1,
+      "x": -2,
+      "y": 347,
+      "data": "Hotspot1"
+    },
+    {
+      "id": 2,
+      "x": 86,
+      "y": 222,
+      "data": "Hotspot2"
+    },
+    {
+      "id": 3,
+      "x": 53,
+      "y": -142,
+      "data": "<img src=\"/resources/images/nof.jpg\">"
+    },
+    {
+      "id": 4,
+      "x": -97,
+      "y": -352,
+      "data": "Hotspot4"
+    },
+    {
+      "id": 5,
+      "x": -161,
+      "y": -15,
+      "data": "Hotspot5"
     }
   ]
 }

@@ -2,7 +2,7 @@ define(function (require) {
 
 	'use strict';
 
-	var Card = require('component/activity/issues/card/Card');
+	var Card = require('component/activity/issues/card/EscapedCard');
 
 	return Card.extend({
 

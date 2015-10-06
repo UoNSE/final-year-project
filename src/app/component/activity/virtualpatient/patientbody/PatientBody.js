@@ -1,9 +1,3 @@
-$(document).ready(function() {
-
-
-
-});
-
 define(function (require) {
     'use strict';
 
@@ -25,9 +19,13 @@ define(function (require) {
         },
 
         initialize: function () {
+        // initialize: function (hotspots) {
             Component.prototype.initialize.apply(this, arguments);
+            // this.hotspots = hotspots;
 
-            this.listenTo(this.collection.hotspots, 'sync', this.onHotspots.bind(this));
+            // this.listenTo(hotspots, 'sync', this.createHotspots.bind(this));
+            this.listenTo(this.collection.hotspots, 'sync', this.createHotspots.bind(this));
+            // this.createHotspots(collection);
             //THE onHotspots() method ADDS THE HOTSPOTS
             //add a listener (listening to sync (backbone thing))
             //checks the collection has fully loaded
@@ -36,35 +34,31 @@ define(function (require) {
             //linking to the collection: { hotpots } key
             //if you dont call fecth(), the collection will always be empty (fetch calls ajax event under the hood)
 
-
-            /*
-            var button = [];
-            for (var i = 0; i < 5; i++) {
-                button[i] = new ActionButton({
-                    model: {
-                        text: '',
-                        color: 'red',
-                        classes: ['hotspotbutton']
-                    }
-                });
-
-                button[i].position.set(i * 30, i * 30);
-                button[i].scale.set(.5, .5);
-                button.rotation = i * Math.PI / 4;
-                this.add(button[i]);
-            }
-            */
-
             //button.position.set(100, 100);
             //button.rotation = Math.PI/4.; ----- this.scale.set(1,1); //scales the virtual patient COMPONENT
         },
 
-        onHotspots: function (collection) {
+        createHotspots: function (collection) {
             // this is the callback function
             // this function scales and positions the hotspots based on db.json data
+            // var collection = this.hotspots;
+
+            // issues.forEach(function (model, i) {
+            //     var card = this.addIssue(new IssueModel({
+			// 		width: this.width,
+			// 		height: this.height,
+			// 		title: 'Issue',
+			// 		body: model.get('content'),
+			// 		color: 'danger'
+			// 	}));
+            //     var scale = i - ((n - 1) / 2);
+            //     card.position.set(-300, scale * (distance + card.model.get('height')));
+            // }, this);
 
 
-            collection.each(function (model) { // .each(function, this) <- Need this to this this context!
+            // debugger;
+                // this.hotspots.each(function(model, index, this) {
+                collection.each(function (model) { // .each(function, this) <- Need this to be this context!
                 var button = new ActionButton({
                     model: {
                         text: '',
@@ -78,7 +72,7 @@ define(function (require) {
                 var x = model.get('x');
                 var y = model.get('y');
                 button.position.set(x, y);
-                button.scale.set(.5, .5);
+                //button.scale.set(.5, .5);
                 this.add(button);
 
             }, this);

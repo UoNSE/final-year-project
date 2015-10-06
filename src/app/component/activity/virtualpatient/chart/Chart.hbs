@@ -1,37 +1,89 @@
-<div id="patients-chart-table" class="panel panel-info">
+<div id="chart" class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title">Patients Chart</h3>
     </div>
     <table>
-        <tr>
+        <th>Details</th>
+        <tr id="first name">
             <td>First Name</td>
-            <td>{{this.firstname}}</td>
+            <td id ="value">
+                {{firstname}}</td>
         </tr>
-        <tr>
+        <tr id="last name">
             <td>Last Name</td>
-            <td>{{this.lastname}}</td>
+            <td id ="value">
+                {{lastname}}</td>
         </tr>
-        <tr>
+        <tr id="gender">
             <td>Gender</td>
-            <td>{{this.sex}}</td>
+            <td id ="value">
+                {{sex}}</td>
+            <td><button class = "flag-btn flag-btn-flag">Flag</button></td>
         </tr>
-        <tr>
+        <tr id="age">
             <td>Age</td>
-            <td>{{this.age}}</td>
+            <td id ="value">
+                {{age}}</td>
+            <td><button class = "flag-btn flag-btn-flag">Flag</button></td>
         </tr>
-        <tr>
+        <tr id="date of birth">
             <td>DOB</td>
-            <td>{{this.dob}}</td>
+            <td id ="value">
+                {{dob}}</td>
+            <td><button class = "flag-btn flag-btn-flag">Flag</button></td>
         </tr>
-        <tr>
+        <tr id="occupation">
             <td>Occupation</td>
-            <td>{{this.profession}}</td>
+            <td id ="value">
+                {{profession}}</td>
+            <td><button class = "flag-btn flag-btn-flag">Flag</button></td>
         </tr>
-
-        <tr>
-            <td>Current medication:</td>
+        <th>Current Medication</th>
+        <tr id="Current medication: Insulin">
             <td>Insulin</td>
+            <td id ="value">
+                50mg</td>
+                <td><button class = "flag-btn flag-btn-low">Low</button></td>
+                <td><button class = "flag-btn flag-btn-high">High</button></td>
+                    </tr>
+        <tr id="Current medication: Ritalin">
+            <td>Ritalin</td>
+            <td id ="value">
+                30mg</td>
+                <td><button class = "flag-btn flag-btn-low">Low</button></td>
+                <td><button class = "flag-btn flag-btn-high">High</button></td>
+             </tr>
+        <th>Vitals</th>
+        <tr id="heart rate">
+            <td>Heart Rate</td>
+            <td id ="value">
+                {{heartRate}}BPM</td>
+            <td><button class = "flag-btn flag-btn-low">Low</button></td>
+            <td><button class = "flag-btn flag-btn-high">High</button></td>
+        </tr>
+        <tr id="respiration rate">
+            <td>Respiration Rate</td>
+            <td id ="value">
+                {{respirationRate}}Br/min</td>
+            <td><button class = "flag-btn flag-btn-low">Low</button></td>
+            <td><button class = "flag-btn flag-btn-high">High</button></td>
+        </tr>
+        <tr id="blood pressure">
+            <td>Blood Pressure</td>
+            <td id ="value">
+                {{systolic}}/{{diastolic}} mm Hg</td>
+            <td><button class = "flag-btn flag-btn-low">Low</button></td>
+            <td><button class = "flag-btn flag-btn-high">High</button></td>
+        </tr>
+        <tr id="temperature">
+            <td>Temperature</td>
+            <td id ="value">
+                {{temperature}}</td>
+            <td><button class = "flag-btn flag-btn-low">Low</button></td>
+            <td><button class = "flag-btn flag-btn-high">High</button></td>
         </tr>
     </table>
-    <button id="hide-chart-button" class="btn btn-primary btn-raised hide-chart-button">Hide</button>
+    <div class= "centerize">
+        <button id="hide-chart-button" class="btn btn-primary btn-raised hide-chart-button">Hide</button>
+    </div>
 </div>

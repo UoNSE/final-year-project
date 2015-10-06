@@ -4,14 +4,17 @@ define(function (require) {
 	var Page = require('core/Page');
 	var Start = require('component/start/Start');
 
-	return Page.extend({
-		name: 'start',
-		initialize: function () {
-			Page.prototype.initialize.call(this);
+	var Vector2 = require('math/Vector2');
 
-			var start = new Start();
-			this.add(start);
+	return Page.extend({
+		name: 'startpage',
+		title: 'Start',
+		showBackButton: false,
+
+		initialize: function () {
+			Page.prototype.initialize.apply(this, arguments);
+			this.add(new Start());
 		}
+
 	});
 });
-

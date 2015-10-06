@@ -1,14 +1,15 @@
 define(function (require) {
 	'use strict';
 
-	var Object2D = require('core/Object2D');
+	var InventoryPage = require('page/InventoryPage');
 	var Issues = require('component/activity/issues/Issues');
 
-	return Object2D.extend({
+	return InventoryPage.extend({
 		name: 'issues',
+		title: 'Issues & Evidence',
 		initialize: function () {
-			Object2D.prototype.initialize.apply(this, arguments);
-			this.add(new Issues());
+			InventoryPage.prototype.initialize.apply(this, arguments);
+			this.add(new Issues(this.inventory, this.urlParams));
 		}
 	});
 });

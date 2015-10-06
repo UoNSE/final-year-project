@@ -7,20 +7,19 @@ define(function (require) {
 
 	return Page.extend({
 		name: 'overview',
+		title: 'Case Overview',
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
 
 			new Cases().fetch({
 				data: {
-					id: this.urlParams.id
+					id: this.urlParams['case_id']
 				}
-			}).then(function (cases) {
-				var theCase = cases[0];
-
+			}).then(cases => {
 				this.add(new Overview({
-					model: theCase
+					model: cases[0]
 				}));
-			}.bind(this));
+			});
 
 		}
 	});

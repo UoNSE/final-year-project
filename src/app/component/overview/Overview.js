@@ -20,14 +20,14 @@ define(function (require) {
 				collection: new ActionButtons([
 					{text: 'Case Information', href: 'cases/' + this.model.id + '/information'},
 					{text: 'Identify Issues', href: this.getActivityLink('issues'), disabled: true},
-					{text: 'Goals and Actions', href: this.getActivityLink('goals-and-actions'), disabled: true},
+					{text: 'Goals and Actions', href: this.getActivityLink('goals'), disabled: true},
 					{text: 'Reflection', href: this.getActivityLink('reflection'), disabled: true}
 				])
 			}));
 			var hint = this.add(new Hint({
 				model: {text: 'Tap an activity below'}
 			}));
-			hint.position.y = 100;
+			hint.position.y = 120;
 		},
 
 		getActivityLink: function (name) {
