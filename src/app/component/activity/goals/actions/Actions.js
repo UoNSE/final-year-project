@@ -172,8 +172,8 @@ define(function (require) {
             let actionsGroupsCollection = this.collection.actionGroups;
 
             // setup syncing
-            this.listenTo(actionsCollection, 'sync', this.onActionsSync);
-            this.listenTo(goalsCollection, 'sync', this.onGoalsSync);
+            this.listenToOnce(actionsCollection, 'sync', this.onActionsSync);
+            this.listenToOnce(goalsCollection, 'sync', this.onGoalsSync);
             this.listenTo(actionsGroupsCollection, 'add', this.onAddActionGroup);
 
             // fetch models
@@ -181,14 +181,6 @@ define(function (require) {
             goalsCollection.fetch();
 
             this.setupFixedComponents(caseID);
-
-            this.help = this.add(new Help({
-                model: new HelpModel({
-                    title: 'Help',
-                    width: this.width,
-                    helpContent: HelpText
-                })
-            }));
 
         },
 
@@ -205,8 +197,8 @@ define(function (require) {
                 // mark goal as completed
                 let goalId = this.goalID;
                 let goal = this.collection.goals.get(goalId);
-                goal.set('complete', true);
-                goal.save();
+
+                goal.save({complete: true}, {patch: true});
 
                 // remove all action cards
                 this.actionCards.forEach((card)=> {
@@ -458,7 +450,9 @@ define(function (require) {
             let goalId = this.goalID;
 
             goals.filter((goal)=> {
+
                 return goal.id == goalId;
+
             }).forEach(function (model, i) {
 
                 // here we assign all these additional attributes to the model,

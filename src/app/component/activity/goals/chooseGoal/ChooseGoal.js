@@ -176,7 +176,7 @@ define(function (require) {
 
             // Listen to the sync events on both collections, which waits for
             // the models to be loaded.
-            this.listenTo(this.collection.goals, 'sync', this.onGoalsSync);
+            this.listenToOnce(this.collection.goals, 'sync', this.onGoalsSync);
 
             // load data
             this.collection.goals.fetch();

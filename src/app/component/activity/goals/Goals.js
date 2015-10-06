@@ -215,8 +215,8 @@ define(function (require) {
 
             // Listen to the sync events on both collections, which waits for
             // the models to be loaded.
-            this.listenTo(issuesCollection, 'sync', this.onIssuesSync);
-            this.listenTo(goalsCollection, 'sync', this.onGoalsSync);
+            this.listenToOnce(issuesCollection, 'sync', this.onIssuesSync);
+            this.listenToOnce(goalsCollection, 'sync', this.onGoalsSync);
             this.listenTo(this.collection.matches, 'add', this.onAddMatch);
 
             // fetch issues and goals ready for matching to begin
@@ -299,7 +299,7 @@ define(function (require) {
                 let scale = i - ((n - 1) / 2);
 
                 let x = () => {
-                    return -(this.width) -100;
+                    return -(this.width) - 100;
                 };
 
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
@@ -317,18 +317,20 @@ define(function (require) {
             let separatorDistance = 10; // 10 px
             let matches = this.collection.matches;
 
-            // first filter any goals that we have already matched
+            goals.map((goal) => {
+                // mark all goals as incomplete
+                goal.set('complete', false);
+                goal.save();
+            });
+
             goals.filter((goal) => {
+                // filter any goals that we have already matched
 
                 let existingMatch =
                     matches.find((match) => match.get('goal').id === goal.id);
                 return !existingMatch;
 
             }).forEach(function (model, i) {
-
-                // mark all as incomplete
-                model.set('complete', false);
-                model.save();
 
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(

@@ -35,30 +35,6 @@
           "issueId": 2
         }
       ],
-      "goals": [
-        {
-          "id": 1,
-          "content": "Immediately stabilise patient",
-          "issueId": "1",
-          "actions": [
-            1,
-            2,
-            3,
-            4
-          ]
-        },
-        {
-          "id": 2,
-          "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
-          "issueId": "2",
-          "actions": [
-            5,
-            6,
-            7,
-            8
-          ]
-        }
-      ],
       "actions": [
         {
           "id": 1,
@@ -139,14 +115,7 @@
         3,
         4
       ],
-      "complete": true,
-      "title": "Goal",
-      "body": "Immediately stabilise patient",
-      "color": "light-blue",
-      "classes": null,
-      "width": 288,
-      "height": null,
-      "href": "cases/2/activity/goals/choose/1/actions"
+      "complete": false
     },
     {
       "id": 2,
@@ -158,14 +127,7 @@
         7,
         8
       ],
-      "complete": true,
-      "title": "Goal",
-      "body": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
-      "color": "light-blue",
-      "classes": null,
-      "width": 288,
-      "height": null,
-      "href": "cases/2/activity/goals/choose/2/actions"
+      "complete": true
     }
   ],
   "actions": [
