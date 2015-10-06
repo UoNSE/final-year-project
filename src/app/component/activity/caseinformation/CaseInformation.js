@@ -13,6 +13,9 @@ define(function (require) {
     var Timer = require('component/activity/caseinformation/timer/Timer');
     var Card = require('component/activity/caseinformation/card/CaseInfoCard');
 
+    var totalEvidenceCount=0;
+
+
     return Component.extend({
 
         template: template,
@@ -75,11 +78,13 @@ define(function (require) {
                     color: 'info'
                 }));
                 card.position.set(xloc, yloc);
-
+                totalEvidenceCount += model.get('items').length;
                 yloc = -yloc;
                 xloc = (i % 2 == 0 ? xloc
                                    : xloc+this.width+10);
             }, this);
+
+
         },
 
         addTimer: function (model) {
