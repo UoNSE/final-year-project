@@ -3,7 +3,7 @@ define(function (require) {
     'use strict';
 
     var Component = require('core/Component');
-    var template = require('text!component/help/v2/help/Help.hbs');
+    var template = require('text!component/help/Help.hbs');
     var ActionButton = require('component/actionbutton/ActionButton');
 
     /**
@@ -38,7 +38,6 @@ define(function (require) {
     var Panel = Component.extend({
         // important for having fixed position near back button
         template: template,
-        styles: 'component/help/v2/help/Help.css',
         origin: 'top left',
         events: {
             'click .cpn-button': 'close'
@@ -73,14 +72,12 @@ define(function (require) {
             ActionButton.prototype.initialize.apply(this, arguments);
             this.position.set(10, -80);
             this.panel = this.add(new Panel({model: model}));
+            this.panel.alwaysOnTop = true;
         },
 
         onClick: function (event) {
             let panel = this.panel;
             panel.toggle();
-            if (panel.visible) {
-                panel.bringToFront();
-            }
         }
 
     });

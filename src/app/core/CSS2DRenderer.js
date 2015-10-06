@@ -86,7 +86,7 @@ define(function (require) {
 			}
 			object.$el.css({
 				'opacity': object.opacity,
-				'zIndex': object.zIndex
+				'zIndex': object.zIndex + (object.alwaysOnTop ? 1e10 : 0)
 			});
 			return element;
 		},

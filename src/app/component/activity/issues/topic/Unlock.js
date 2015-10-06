@@ -14,8 +14,7 @@ define(function (require) {
     var ActionButton = require('component/actionbutton/ActionButton');
     var Help = require('component/help/help');
 
-    var ActionButtonModel = require('model/ActionButton');
-
+    var HelpModel = require('model/Help');
     var IssuesCollection = require('collection/Issues');
     var TopicCollection = require('collection/Topics');
 
@@ -51,11 +50,9 @@ define(function (require) {
             this.updateCredit();
 
             this.add(new Help({
-                model: {
-                    helpContent: 'Click topics to explore issues.<br>'+
-                    'Click issues to purchases them. Once purchased the cost will be<br/>' +
-                    'deducted from your credit tally and the issue will appear red.'
-                }
+                model: new HelpModel({
+                    body: 'Click topics to explore issues. Click issues to purchases them. Once purchased the cost will be deducted from your credit tally and the issue will appear red.'
+                })
             }));
         },
 
