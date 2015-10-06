@@ -28,7 +28,11 @@ define(function (require) {
             this.listenTo(this.collection.hotspots, 'sync', this.createHotspots.bind(this)); //this creates hotsposts and adds a listener to the hotspots
             this.collection.hotspots.fetch(); //checks the collection has fully loaded
             this.vproot = params.vproot;
+
+            //This is the array of elements
             this.hotEvidence = {};
+            this.elwidth = 200;
+            this.elheight = 150;
         },
 
         createHotspots: function (collection) { //this is the callback function
@@ -73,21 +77,15 @@ define(function (require) {
             //var attribute = event.target.parentElement.parentElement;
             //var value = attribute.children.namedItem("value").innerHTML;
 
-            var mywidth = 200;
-            var myheight = 150;
-
             var evidenceCard = this.addEvidence(new EvidenceModel({//this is likely a backbone id, not a css id
-                width: mywidth,
-                height: myheight,
+                width: this.elwidth,
+                height: this.elheight,
                 title: 'Observation',
                 color: 'info',
                 body: evcontent
             }));
 
             this.hotEvidence[evid] = evidenceCard;
-
-            evidenceCard.position.x = evx + mywidth/2.; //add a nice offset
-            evidenceCard.position.y = evy - myheight/2.;
 
             //if(!$("#"+elid).length)
             this.vproot.add(evidenceCard); //we have to add the card to the root of the vitualpatient page
@@ -105,27 +103,22 @@ define(function (require) {
 
 
         activateHotspot: function(model) {
-            //var referenceclass = '.hotEvi' + model.get('id');
-            //var dialogue = this.$(referenceclass);
-            //dialogue.is(':visible') ? dialogue.hide() : dialogue.show();
-            this.hotEvidence[model.get('id')].toggle();
 
-            //this.spawnHotspotEvidence(model.get('id'), model.get('x'), model.get('y'), model.get('data'));
-            //alert(referenceid)
-            //alert('Hotspot activated: #' + model.get('id'));
 
-            /* //Former
-             var thex = 256 + model.get('x');
-             var they = 384 - model.get('y');
-             var d    = $('.hotspawn'); // the jquery DOM reference to the
-                // d.text('This is hotspot ' + model.get('id'));
-                d.css('left', thex);
-                d.css('top', they);
-                d.is(':visible') ? d.hide() : d.show();
-                d.css('z-index', '1000');
-                d.html(model.get('data'));
-            */
+            var d = this.hotEvidence[model.get('id')]; //could this.hotEvidence[model.get('id')].toggle
+
+            if (d.$el.is(':visible'))
+                d.hide();
+            else {
+                d.show();
+                d.position.x = model.get('x') + this.elwidth/2.;
+                d.position.y = model.get('y') - this.elheight/2.;
+
+                //evidenceCard.position.x = evx + mywidth/2.; //add a nice offset
+                //evidenceCard.position.y = evy - myheight/2.;
             }
+
+        }
 
 
     });
