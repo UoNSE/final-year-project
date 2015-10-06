@@ -6,7 +6,7 @@ define(function(require) {
 	var Button = require('component/button/Button');
 	var ButtonModel = require('model/Button');
 	var EmptyTestResult = require('component/activity/virtualpatient/tests/emptytestresult/TestResult');
-	var HormonePanelResult = require('component/activity/virtualpatient/tests/hormonepanel/HormonePanelResult');
+	var TestResult = require('component/activity/virtualpatient/tests/testresult/TestResult');
 
 	return Component.extend({
 		template: template,
@@ -68,7 +68,7 @@ define(function(require) {
 
 			if (label === 'Hormones') {
 				// target = new HormonePanelResult(this.vproot, this.hormonepanelresult);
-				target = new HormonePanelResult({vproot: this.vproot, model:this.hormonepanelresult});
+				target = new TestResult({vproot: this.vproot, model:this.hormonepanelresult});
 			}
 			else{
 				target = new EmptyTestResult();
