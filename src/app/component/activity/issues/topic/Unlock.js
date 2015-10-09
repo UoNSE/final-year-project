@@ -109,6 +109,15 @@ define(function (require) {
 
             issue.on('issueSelected', this.onIssueSelected.bind(this));
 
+            //Check if issue exists in the inventory
+            let inventoryIssues = this.inventory.get('issues').models[0].attributes;
+
+            inventoryIssues.forEach((inventModel, i) => {
+                if ( model.get('topicId') === inventModel.get('topicId') && model.get('data') === inventModel.get('data')){
+                    issue.purchase();
+                }
+            });
+
             this.topics.forEach(topic => {
                 if (topic.topicId === issue.topicId){
                     topic.addIssue(issue);
