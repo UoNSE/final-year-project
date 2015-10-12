@@ -189,7 +189,7 @@ define(function (require) {
                 this.onIssuesLoad(issues);
             }
             if(this.inventory.get("evidence").length>0){
-                this.onEvidenceSync(evidence);
+                this.onEvidenceLoad(evidence);
             }
             if(this.inventory.get("issuegroups").length>0){
                 this.onIssueGroupLoad(issueGroups);
@@ -285,17 +285,32 @@ define(function (require) {
         onEvidenceLoad: function (evidence) {
             var n = evidence.size();
             var distance = 10;
+            debugger;
             evidence.forEach((model, i) => {
-                var card = this.addEvidence(new EvidenceModel({
-                    width: this.width,
-                    height: this.height,
-                    title: 'Evidence',
-                    body: model.attributes.model.get('body'),
-                    score: model.attributes.model.get('score'),
-                    maxscore: model.attributes.model.get('maxscore'),
-                    issueid: model.attributes.model.get('issueId'),
-                    color: 'info'
-                }));
+                if (model.attributes.data != undefined) {
+                    var card = this.addEvidence(new EvidenceModel({
+                        width: this.width,
+                        height: this.height,
+                        title: 'Evidence',
+                        body: model.get('data'),
+                        score: model.get('score'),
+                        maxscore: model.get('maxscore'),
+                        issueid: model.get('issueId'),
+                        color: 'info'
+                    }));
+                }
+                else{
+                    var card = this.addEvidence(new EvidenceModel({
+                        width: this.width,
+                        height: this.height,
+                        title: 'Evidence',
+                        body: model.get('body'),
+                        score: model.get('score'),
+                        maxscore: model.get('maxscore'),
+                        issueid: model.get('issueId'),
+                        color: 'info'
+                    }));
+                }
                 var scale = i - ((n - 1) / 2);
                 var score = card.model.get('score');
                 this.gameCredit += score;
