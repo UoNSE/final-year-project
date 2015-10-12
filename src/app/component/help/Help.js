@@ -41,7 +41,6 @@ define(function (require) {
 		classes: 'cpn-help',
 		styles: 'component/help/Help.css',
         origin: 'top left',
-		pageOrigin: 'top left',
         events: {
             'click .confirm': 'close'
         },
