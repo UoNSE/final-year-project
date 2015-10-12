@@ -22,7 +22,8 @@ define(function (require) {
     return Component.extend({
         collection: {
             topics: new TopicCollection(),
-            issues: new IssuesCollection()
+            issues: new IssuesCollection(),
+            loadedIssues: new IssuesCollection()
         },
 
         gameCredit: 0,
@@ -144,8 +145,10 @@ define(function (require) {
                 //this.updateCredit();
                 this.gameCredit -= issue.model.attributes.cost;
                 this.scoreContainer.setScore(this.gameCredit);
-                //this.inventory.attributes.issues
-                this.inventory.get('issues').models[0].attributes.add(issue);
+                this.collection.loadedIssues = this.inventory.get('issues').models[0].attributes;
+                this.collection.loadedIssues.add(issue.model);
+                this.inventory.attributes.issues.reset();
+                this.inventory.attributes.issues.add(this.collection.loadedIssues);
             }
             else {
                 this.scoreContainer.invalidAction();

@@ -186,10 +186,10 @@ define(function (require) {
             issues = this.collection.issues;
             evidence = this.collection.evidence;
             issueGroups = this.collection.issueGroup;
-            if(issues.length>0){
-                this.onIssuesSync(issues);
+            if(this.inventory.get('issues').length>0){
+                this.onIssuesLoad(issues);
             }
-            if(evidence.length>0){
+            if(this.inventory.get("evidence").length>0){
                 this.onEvidenceSync(evidence);
             }
             if(this.inventory.get("issuegroups").length>0){
@@ -219,7 +219,7 @@ define(function (require) {
          */
         fetchCards: function(issues, evidence){
             console.log("Fetch cards");
-            issues.fetch();
+            //issues.fetch();
             evidence.fetch();
         },
 
@@ -253,15 +253,30 @@ define(function (require) {
             var distance = 10;
 
             issues.forEach((model, i) => {
-                var card = this.addIssue(new IssueModel({
-                    width: this.width,
-                    height: this.height,
-                    title: 'Issue',
-                    issueid: model.attributes.model.get('id'),
-                    body: model.attributes.model.get('body'),
-                    cost: model.attributes.model.get('cost'),
-                    color: 'danger'
-                }));
+                //conditional model loading
+                //model has data or body based on when it's defined
+                if (model.attributes.data != undefined) {
+                    var card = this.addIssue(new IssueModel({
+                        width: this.width,
+                        height: this.height,
+                        title: 'Issue',
+                        issueid: model.attributes.id,
+                        body: model.attributes.data,
+                        cost: model.attributes.cost,
+                        color: 'danger'
+                    }));
+                }
+                else{
+                    card = this.addIssue(new IssueModel({
+                        width: this.width,
+                        height: this.height,
+                        title: 'Issue',
+                        issueid: model.attributes.id,
+                        body: model.attributes.body,
+                        cost: model.attributes.cost,
+                        color: 'danger'
+                    }));
+                }
                 var scale = i - ((n - 1) / 2);
                 this.gameCredit -= card.model.get('cost');
                 card.position.set(-300, scale * (distance + card.model.get('height')));
@@ -299,18 +314,22 @@ define(function (require) {
             var n = issuegroup.size();
             var distance = 10;
             issuegroup.forEach((model, i) => {
+                debugger;
                 var card = this.add(new IssueGroup({
                     model: new IssueGroupModel({
                         width: this.width,
                         title: 'Issues and evidence',
                         color: 'success',
-                        issue: issue,
-                        evidence: evidence
+                        issue: model.collection.models[i].attributes.model.attributes.issue,
+                        evidence: model.collection.models[i].attributes.model.attributes.evidence
                     })
+
                 }));
-            var scale = i - ((n - 1) / 2);
-            this.gameCredit -= this.getScore(card);
-            card.position.set(-300, scale * (distance + card.model.get('height')));
+                var scale = i - ((n - 1) / 2);
+                this.gameCredit += this.getScore(card);
+                card.position.set(-300, scale * (distance + card.model.get('height')));
+                this.bindDraggableEvents(card);
+
         });
         this.updateScore();
         },
