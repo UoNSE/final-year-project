@@ -260,7 +260,7 @@ define(function (require) {
                         width: this.width,
                         height: this.height,
                         title: 'Issue',
-                        issueid: model.attributes.id,
+                        issueid: model.attributes.issueid,
                         body: model.attributes.data,
                         cost: model.attributes.cost,
                         color: 'danger'
@@ -314,7 +314,6 @@ define(function (require) {
             var n = issuegroup.size();
             var distance = 10;
             issuegroup.forEach((model, i) => {
-                debugger;
                 var card = this.add(new IssueGroup({
                     model: new IssueGroupModel({
                         width: this.width,
@@ -594,6 +593,7 @@ define(function (require) {
                     evidence.each(function (model) {
                         if (issueID !== model.get('issueid')) {
                             correctmerge = false;
+                            debugger;
                         }
                     });
                     if (!correctmerge) {

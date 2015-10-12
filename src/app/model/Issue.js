@@ -7,6 +7,7 @@ define(function (require) {
 
 		defaults: {
 			body: 'Issue',
+			issueid: 0,
 			cost: 0,
 			topicId: 0
 		}

@@ -102,12 +102,14 @@ define(function (require) {
         },
 
         addIssue: function(model) {
+
             var issue = this.add(new Issue({
+                issueid: model.get('id'),
                 name: model.get('data'),
                 cost: model.get('cost'),
                 topicId: model.get('topicId')
             }));
-
+            debugger;
             issue.on('issueSelected', this.onIssueSelected.bind(this));
 
             //Check if issue exists in the inventory
@@ -146,6 +148,7 @@ define(function (require) {
                 this.gameCredit -= issue.model.attributes.cost;
                 this.scoreContainer.setScore(this.gameCredit);
                 this.collection.loadedIssues = this.inventory.get('issues').models[0].attributes;
+                debugger;
                 this.collection.loadedIssues.add(issue.model);
                 this.inventory.attributes.issues.reset();
                 this.inventory.attributes.issues.add(this.collection.loadedIssues);
