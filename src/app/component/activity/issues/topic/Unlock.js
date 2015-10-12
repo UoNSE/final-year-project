@@ -116,6 +116,17 @@ define(function (require) {
                     issue.purchase();
                 }
             });
+            inventoryIssues = this.inventory.get('issuegroups').models[0].attributes;
+            inventoryIssues.forEach((inventModel, i) => {
+                var groupissue = inventModel.attributes.model.attributes.issue;
+                debugger;
+                if (groupissue != null) {
+
+                if (groupissue.get("body") == model.get('data')) {
+                    issue.purchase();
+                }
+            }
+            });
 
             this.topics.forEach(topic => {
                 if (topic.topicId === issue.topicId){
