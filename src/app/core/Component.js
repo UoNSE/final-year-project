@@ -19,6 +19,7 @@ define(function (require) {
 		width: null,
 		height: null,
 		zIndex: 0,
+		alwaysOnTop: false,
 
 		initialize: function () {
 			Object2D.prototype.initialize.apply(this, arguments);

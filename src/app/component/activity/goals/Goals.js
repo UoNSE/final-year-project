@@ -9,14 +9,14 @@ define(function (require) {
     let ActionButton = require('component/actionbutton/ActionButton');
 
     // help
-    var Help = require('component/help/v2/help/Help');
+    var Help = require('component/help/Help');
     var HelpText = require('text!component/activity/goals/help/helpContent.hbs');
 
     // hint
     var Hint = require('component/hint/Hint');
 
     // models
-    var HelpModel = require('model/HelpModel');
+    var HelpModel = require('model/Help');
     let IssueGoalPair = require('model/IssueGoalPair');
 
     // collections
@@ -176,11 +176,7 @@ define(function (require) {
 
             // add help component to the page
             this.help = this.add(new Help({
-                model: new HelpModel({
-                    title: 'Help',
-                    width: 300,
-                    helpContent: HelpText
-                })
+                model: new HelpModel({body: HelpText})
             }));
 
             this.help.show();

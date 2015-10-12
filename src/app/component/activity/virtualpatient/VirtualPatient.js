@@ -25,6 +25,7 @@ define(function(require) {
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Help = require('component/help/Help');
 
+	var HelpModel = require('model/Help');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 	var EvidenceCollection = require('collection/Evidence');
 	var EvidenceModel = require('model/Evidence');
@@ -94,30 +95,21 @@ define(function(require) {
 
 
 			this.help = this.add(new Help({
-				model: {
-					helpContent:
-						'Players take turns at gathering evidence.</br> \
-                        Collect evidence about the \
-                        patients condition.   </br> </br>\
-                        Use the <strong>"Query"</strong> button </br>\
-                        to ask the patient questions. </br> </br>\
-                        Use the <strong>"Test"</strong> button </br>\
-                        to run blood/urine/saliva </br>\
-                        tests on the patint.</br> </br>\
-                        Use the <strong>"Chart"</strong> button </br>\
-                        to see the patients details </br>\
-                        and vital signs.</br></br>\
-                        <strong>Inspect</strong> areas of the body </br>\
-                        to reveal scans and other  </br>\
-                        information related to that area. </br></br>\
-                        If you no longer need an evidence card,<br> you can drag it to the trash can.'}
+				model: new HelpModel({
+					body: 'Players take turns at gathering evidence. Collect evidence about the patients condition.<br><br>' +
+						'Use the <strong>Query</strong> button to ask the patient questions.<br><br>' +
+                        'Use the <strong>Test</strong> button to run blood, urine and saliva tests on the patient.<br><br>' +
+                        'Use the <strong>Chart</strong> button to view the patients details and vital signs.<br><br>' +
+                        '<strong>Inspect</strong> areas of the body to reveal scans and other information related to that area.' +
+                        'If you no longer need an evidence card, you can drag it to the trash can.'
+				})
 			}));
 			//this.help.interactive = true;
 			this.help.setInteractive();
 
 			this.menu = this.add(new Menu());
 			this.menu.on({
-				delete: this.onDelete.bind(this),
+				delete: this.onDelete.bind(this)
 			});
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
@@ -151,7 +143,11 @@ define(function(require) {
 					model: new ActionButtonModel({
 						text: text,
 						id: text + 'Btn',
-						// color: danger
+						styles: {
+							width: 100,
+							height: 100
+							// color: danger
+						}
 					})
 				});
 				// buttons x position

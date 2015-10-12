@@ -22,6 +22,7 @@ define(function (require) {
     var Panel = require('component/panel/Panel');
 
     var Help = require('component/help/help');
+    var HelpModel = require('model/Help');
 
     return Component.extend({
         //hack to stop duplicating cards
@@ -71,12 +72,9 @@ define(function (require) {
             this.menu.hide();
 
             this.add(new Help({
-                model: {
-                    helpContent: 'Join pieces of evidence together to score points.<br>'+
-                        'Once you have enough points you can unlock issues in the '+
-                        '<button class="mtl-fab btn btn-material-blue btn-fab btn-raised mdi-action-shopping-cart" style="width: 25px;height: 25px;padding: 0px;"> </button> menu<br>'+
-                        'Once all issues are linked with the correct evidence you will be able to continue'
-                }
+                model: new HelpModel({
+                    body: 'Join pieces of evidence together to score points. Once you have enough points you can unlock issues in the <button class="mtl-fab btn btn-material-blue btn-fab btn-raised mdi-action-shopping-cart" style="width: 25px;height: 25px;padding: 0px;"> </button> menu. Once all issues are linked with the correct evidence you will be able to continue.'
+                })
             }));
             //add the topic unlock button
             var unlock = this.add(new ActionButton({
@@ -88,8 +86,9 @@ define(function (require) {
                 })
             }));
 			unlock.origin = 'top left';
+            unlock.pageOrigin = 'top left';
 			unlock.detached = true;
-			unlock.position.y = -160;
+			unlock.position.y = -140;
 
             this.scoreContainer = this.add(new Score());
 

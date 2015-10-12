@@ -20,22 +20,21 @@ define(function (require) {
 			var container = $(selector);
 			var children = scene.children;
 			var transform = camera.transform.getInverse();
+
 			for (var i = 0, length = children.length; i < length; i++) {
 				var child = children[i];
 				var classes = child.classes || [];
-				this.renderObject(child, container, transform, classes, scene.visible);
+				this.renderObject(child, container, transform, classes, scene.visible, scene.pageOrigin);
 			}
 		},
 
-		renderObject: function (object, container, parentTransform, parentClasses, parentVisible) {
+		renderObject: function (object, container, parentTransform, parentClasses, parentVisible, parentPageOrigin) {
 			var transform;
 
-			if (object.detached) {
-				transform = object.transform;
+			if (object.needsWorldUpdate) {
+				transform = object.worldTransform.copy(parentTransform).applyTransform(object.transform);
 			}
-			else if (object.needsWorldUpdate) {
-				transform = object.worldTransform.copy(parentTransform).applyTransform(object.transform)
-			} else {
+			else {
 				object.transform.copy(object.worldTransform);
 				if (object.parent) {
 					object.transform.worldToLocal(object.parent.worldTransform);
@@ -44,26 +43,23 @@ define(function (require) {
 
 			var classes = (parentClasses || []).slice().concat(object.classes || []);
 			var visible = parentVisible && object.visible;
-			this.renderObjectHTML(object, container, transform, classes, visible);
+			var pageOrigin = object.detached ? object.pageOrigin : parentPageOrigin;
+			this.renderObjectHTML(object, container, transform, classes, visible, pageOrigin);
 			var children = object.children;
 			for (var i = 0, length = children.length; i < length; i++) {
 				var child = children[i];
-				this.renderObject(child, container, transform, classes, visible);
+				this.renderObject(child, container, transform, classes, visible, pageOrigin);
 			}
 			object.needsWorldUpdate = true;
 		},
 
-		renderObjectHTML: function (object, container, transform, classes, visible) {
+		renderObjectHTML: function (object, container, transform, classes, visible, pageOrigin) {
 			if (!object.added) {
 				var element = object.render().$el;
 				element.attr('id', object.id);
 				element.addClass(classes.join(' '));
 				this.linkify(element);
-				if (object.detached) {
-					this.gui.append(element);
-				} else {
-					container.append(element);
-				}
+				container.append(element);
 				this.loadStyles(object.styles).then(function () {
 					object.trigger('loaded');
 				});
@@ -74,10 +70,7 @@ define(function (require) {
 				});
 			}
 			object.$el.toggle(visible);
-			this.applyTransform(object.$el, transform, object.origin);
-			if (object.detached) {
-				object.$el.css(this.applyDetachedPageOriginOffset(object.detachedPageOrigin));
-			}
+			this.applyTransform(object.$el, transform, object.origin, pageOrigin);
 			if (object.width) {
 				object.$el.width(object.width);
 			}
@@ -86,7 +79,7 @@ define(function (require) {
 			}
 			object.$el.css({
 				'opacity': object.opacity,
-				'zIndex': object.zIndex
+				'zIndex': object.zIndex + (object.alwaysOnTop ? 1e10 : 0)
 			});
 			return element;
 		},
@@ -113,10 +106,6 @@ define(function (require) {
 				// Prevent page from actually loading a new URL.
 				e.preventDefault();
 
-				//animate.onFinished(function () {
-				//	// Use the router navigation method instead, using the History API to simulate updating the URL.
-				//	this._router.navigate($anchor.attr('href'), {trigger: true});
-				//}.bind(this));
 				this.router.navigate($anchor.attr('href'), {trigger: true});
 			}.bind(this));
 		},
@@ -153,18 +142,31 @@ define(function (require) {
 			return Promise.all(promises);
 		},
 
-		applyTransform: function (element, transform, origin) {
-			var origins = origin.split(' ');
-			// follow suit from CSS properties (such as margin) which specify Y axis first
-			var originY = origins[0];
-			var originX = origins[1] || originY;
-			var x = this.applyOriginOffset(transform.position.x + 'px', originX);
-			var y = this.applyOriginOffset(-transform.position.y + 'px', originY);
+		applyTransform: function (element, transform, origin, pageOrigin) {
+			origin = this.normalizeCSS(origin);
+			pageOrigin = this.normalizeCSS(pageOrigin);
+
+			var x = transform.position.x + 'px';
+			x = this.applyOriginOffset(x, origin[0]);
+			x = this.applyPageOriginOffset(x, pageOrigin[0]);
+
+			var y = -transform.position.y + 'px';
+			y = this.applyOriginOffset(y, origin[1]);
+			y = this.applyPageOriginOffset(y, pageOrigin[1]);
+
 			$(element).css({
-				'transform': 'translate(' + x + ', ' + y + ')'
+				'transform': 'translate(calc(' + x + '), calc(' + y + '))'
 				+ ' rotateZ(' + (-transform.rotation / Math.TAU) + 'turn)'
 				+ ' scale(' + transform.scale.x + ', ' + transform.scale.y + ')'
 			});
+		},
+
+		normalizeCSS: function (value) {
+			var values = value.split(' ');
+			// follow suit from CSS properties (such as margin) which specify Y axis first
+			var y = values[0];
+			var x = values[1] || y;
+			return [x, y];
 		},
 
 		applyOriginOffset: function (value, origin) {
@@ -173,26 +175,30 @@ define(function (require) {
 				case 'top':
 					return value;
 				case 'center':
-					return 'calc(-50% + ' + value + ')';
+					return value + ' - 50%';
 				case 'right':
 				case 'bottom':
-					return 'calc(-100% + ' + value + ')';
+					return value + ' - 100%';
 				default:
 					throw new Error('CSS2DRenderer: Unsupported origin: ' + origin);
 			}
 		},
 
-		applyDetachedPageOriginOffset: function (origin) {
-			var origins = origin.split(' ');
-			// follow suit from CSS properties (such as margin) which specify Y axis first
-			var originY = origins[0];
-			var originX = origins[1] || originY;
-
-			var map = { top: 0, center: '50%', bottom: '100%' };
-			return {
-				top: map[originY],
-				left: map[originX]
-			};
+		applyPageOriginOffset: function (value, origin) {
+			switch (origin) {
+				case 'center':
+					return value;
+				case 'left':
+					return value + ' - 50vw';
+				case 'top':
+					return value + ' - 50vh';
+				case 'right':
+					return value + ' + 50vw';
+				case 'bottom':
+					return value + ' + 50vh';
+				default:
+					throw new Error('CSS2DRenderer: Unsupported origin: ' + origin);
+			}
 		}
 	});
 
