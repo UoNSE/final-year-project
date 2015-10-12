@@ -18,7 +18,7 @@ define(function (require) {
             // super(arguments)
             Card.prototype.initialize.apply(this, arguments);
             this.className = 'GoalActionsMatch';
-            this.interactive = true;
+            this.setInteractive();
             this.setDroppable({types: ActionCard});
         }
 

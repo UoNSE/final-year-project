@@ -14,8 +14,16 @@ define(function (require) {
 		needsWorldUpdate: true,
 		detached: false,
 		opacity: 1,
+		// Supports:
+		// 'top left',    'top center',    'top right',
+		// 'center left'  'center'         'center right',
+		// 'bottom left', 'bottom center', 'bottom right'
+		origin: 'center',
+		// Same support as origin
+		pageOrigin: 'center',
 
 		initialize: function () {
+
 			this.id = 'component-' + MathUtil.generateUUID(8);
 			this.children = [];
 
@@ -171,7 +179,7 @@ define(function (require) {
 		},
 
 		updateWorld: function (force) {
-			if (this.parent) {
+			if (this.parent && !this.detached) {
 				this.parent.updateWorld(force);
 				this.worldTransform.copy(this.parent.worldTransform).applyTransform(this.transform);
 			} else {

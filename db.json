@@ -35,30 +35,6 @@
           "issueId": 2
         }
       ],
-      "goals": [
-        {
-          "id": 1,
-          "content": "Immediately stabilise patient",
-          "issueId": "1",
-          "actions": [
-            1,
-            2,
-            3,
-            4
-          ]
-        },
-        {
-          "id": 2,
-          "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
-          "issueId": "2",
-          "actions": [
-            5,
-            6,
-            7,
-            8
-          ]
-        }
-      ],
       "actions": [
         {
           "id": 1,
@@ -132,24 +108,26 @@
     {
       "id": 1,
       "content": "Immediately stabilise patient",
-      "issueId": "1",
+      "issueId": 1,
       "actions": [
         1,
         2,
         3,
         4
-      ]
+      ],
+      "complete": false
     },
     {
       "id": 2,
       "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
-      "issueId": "2",
+      "issueId": 2,
       "actions": [
         5,
         6,
         7,
         8
-      ]
+      ],
+      "complete": false
     }
   ],
   "actions": [
@@ -479,33 +457,33 @@
   "hotspots": [
     {
       "id": 1,
-      "x": -2,
-      "y": 347,
-      "data": "Hotspot1"
+      "x": -1,
+      "y": 260,
+      "data": "Mr Tien had a restless night and was continually pulling off his nasal prongs."
     },
     {
       "id": 2,
-      "x": 86,
-      "y": 222,
-      "data": "Hotspot2"
-    },
-    {
-      "id": 3,
-      "x": 53,
-      "y": -142,
-      "data": "<img src=\"/resources/images/nof.jpg\">"
+      "x": 26,
+      "y": 156,
+      "data": "Mr Tien has a moist cough and he looks exhausted."
     },
     {
       "id": 4,
-      "x": -97,
-      "y": -352,
-      "data": "Hotspot4"
+      "x": -140,
+      "y": 88,
+      "data": "Skin appears dehydrated. His water jug remains unused."
+    },
+    {
+      "id": 3,
+      "x": 50,
+      "y": 10,
+      "data": "During the night, Mr Tien inappropriately used the sink as a toilet."
     },
     {
       "id": 5,
-      "x": -161,
-      "y": -15,
-      "data": "Hotspot5"
+      "x": -81,
+      "y": -330,
+      "data": "Mr Tien appears Lethargic and withdrawn with very little energy."
     }
   ]
 }

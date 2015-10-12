@@ -56,6 +56,22 @@ define(function (require) {
          */
         matchesAction: function (action) {
             return this.get('goal').matchesAction(action);
+        },
+
+        /**
+         * Returns true iff this ActionGroup is fully matched:
+         * that all actions have been added.
+         *
+         * @returns {boolean}
+         */
+        isComplete: function () {
+            let goal = this.get('goal');
+            let actions = this.get('actions');
+            let actionIds = goal.get('actions');
+
+            // since actions can only be added if they pass a match condition
+            // comparing the lengths of the two arrays will suffice
+            return actionIds.length === actions.length;
         }
 
     });

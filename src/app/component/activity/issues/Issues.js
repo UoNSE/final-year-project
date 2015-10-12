@@ -24,6 +24,7 @@ define(function (require) {
     var PopupPanel = require('component/panel/PopupPanel');
     var Hint = require('component/hint/Hint');
     var Help = require('component/help/help');
+    var HelpModel = require('model/Help');
 
     return Component.extend({
         //hack to stop duplicating cards
@@ -71,8 +72,8 @@ define(function (require) {
             this.inventory = inventory;
             this.params = params;
 
-			this.width = 300;
-			this.height = 90;
+            this.width = 300;
+            this.height = 90;
 
             var issues = this.collection.issues;
             var evidence = this.collection.evidence;
@@ -83,14 +84,14 @@ define(function (require) {
             this.listenTo(evidence, 'sync', this.onEvidenceSync);
             this.listenTo(issueGroups, 'sync', this.onIssueGroupSync);
             //update listener to sync to inventory
-            this.listenTo(issueGroups,'update', this.syncCards);
-            this.listenTo(issues,'update', this.syncCards);
-            this.listenTo(evidence,'update', this.syncCards);
+            this.listenTo(issueGroups, 'update', this.syncCards);
+            this.listenTo(issues, 'update', this.syncCards);
+            this.listenTo(evidence, 'update', this.syncCards);
             this.setupFixedComponents(params['case_id']);
             if (this.canLoad()) {
                 this.loadCards(issues, evidence, issueGroups);
             }
-            else{
+            else {
                 this.fetchCards(issues, evidence);
             }
 
@@ -118,12 +119,12 @@ define(function (require) {
             this.scoreContainer = this.add(new Score());
 
             this.add(new Help({
-                model: {
-                    helpContent: 'Join pieces of evidence together to score points.<br>'+
+                model:new HelpModel({
+                    body: 'Join pieces of evidence together to score points.<br>'+
                     'Once you have enough points you can unlock issues in the '+
                     '<button class="mtl-fab btn btn-material-blue btn-fab btn-raised mdi-action-shopping-cart" style="width: 25px;height: 25px;padding: 0px;"> </button> menu<br>'+
                     'Once all issues are linked with the correct evidence you will be able to continue'
-                }
+                })
             }));
 
             this.scoreHint = this.add(new PopupPanel({
@@ -135,20 +136,18 @@ define(function (require) {
             this.scoreHint.setOriginalPosition(this.scoreContainer.position);
 
             //add the topic unlock button
-            this.add(new ActionButton({
-                //detached:true,
+            var unlock = this.add(new ActionButton({
                 model: new ActionButtonModel({
                     icon: 'action-shopping-cart',
                     color: 'blue',
                     href: 'cases/' + caseID + '/activity/issues/unlock',
                     classes: 'topic-unlock'
-                    //styles: {
-                    //    width:100,
-                    //    height:100,
-                    //    'font-size':40
-                    //}
                 })
-            })).detached = true;
+            }));
+			unlock.origin = 'top left';
+            unlock.pageOrigin = 'top left';
+			unlock.detached = true;
+			unlock.position.y = -140;
 
             // add a link to the Actions activity
             this.hiddenActionsActivityLink = this.add(new ActionButton({
@@ -593,7 +592,6 @@ define(function (require) {
                     evidence.each(function (model) {
                         if (issueID !== model.get('issueid')) {
                             correctmerge = false;
-                            debugger;
                         }
                     });
                     if (!correctmerge) {

@@ -16,6 +16,8 @@ define(function(require) {
 	var Button = require('component/button/Button');
 	var ActionButton = require('component/actionbutton/ActionButton');
 	var ActionButtonHandle = require('component/actionbuttonhandle/ActionButtonHandle');
+	// var ActionButtonHandleModel = require('model/ActionButtonHandle');
+
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
 	var Query = require('component/activity/virtualpatient/querypatient/Query');
 	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
@@ -23,6 +25,7 @@ define(function(require) {
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Help = require('component/help/Help');
 
+	var HelpModel = require('model/Help');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 	var EvidenceCollection = require('collection/Evidence');
 	var EvidenceModel = require('model/Evidence');
@@ -45,7 +48,7 @@ define(function(require) {
 			'click #TestBtn': '_toggleTestMenu',
 			'click #ChartBtn': '_togglePatientsChart'
 
-			},
+		},
 
 		initialize: function () {
 			// debugger;
@@ -64,6 +67,7 @@ define(function(require) {
 			this.evidencecollection = new EvidenceCollection();
 			this.patient = this.patients.get(1); // get id.
 			this.addComponents();
+			// debugger;
 			this._hideElements();
 		},
 
@@ -71,16 +75,18 @@ define(function(require) {
 			this.testresults = this.patient.get('testresults');
 			this.hotspots = this.patient.get('hotspots');
 
-			this.patientbody = this.add(new PatientBody());
+			var params = {vproot: this.vproot}; // = this; //this.vproot;
+			this.patientbody = this.add(new PatientBody(params)); //add params so it has access to vproot
 
 			if(this.collaborative){
-				this.patientbody.interactive = true;
+				//this.patientbody.interactive = true;
+				this.patientbody.setInteractive();
 			}
 			// this.patientbody = this.add(new PatientBody(this.hotspots));
 			this.tests = new Tests(this.vproot,this.testresults);
 
-            this.queries = this.patient.get('queries');
-            this.responses = this.patient.get('responses');
+			this.queries = this.patient.get('queries');
+			this.responses = this.patient.get('responses');
 			this.querymenu = new Query(this);
 
 			// this.EvidenceFeed = this.addEvidenceFeed();
@@ -89,35 +95,28 @@ define(function(require) {
 
 
 			this.help = this.add(new Help({
-				model: {
-				helpContent:
-				'Players take turns at gathering evidence.</br> \
-				Collect evidence about the \
-				patients condition.   </br> </br>\
-				Use the <strong>"Query"</strong> button </br>\
-				to ask the patient questions. </br> </br>\
-				Use the <strong>"Test"</strong> button </br>\
-				to run blood/urine/saliva </br>\
-				tests on the patint.</br> </br>\
-				Use the <strong>"Chart"</strong> button </br>\
-				to see the patients details </br>\
-				and vital signs.</br></br>\
-				<strong>Inspect</strong> areas of the body </br>\
-				to reveal scans and other  </br>\
-				information related to that area. </br></br>\
-				If you no longer need an evidence card,<br> you can drag it to the trash can.'}
+				model: new HelpModel({
+					body: 'Players take turns at gathering evidence. Collect evidence about the patients condition.<br><br>' +
+						'Use the <strong>Query</strong> button to ask the patient questions.<br><br>' +
+                        'Use the <strong>Test</strong> button to run blood, urine and saliva tests on the patient.<br><br>' +
+                        'Use the <strong>Chart</strong> button to view the patients details and vital signs.<br><br>' +
+                        '<strong>Inspect</strong> areas of the body to reveal scans and other information related to that area.' +
+                        'If you no longer need an evidence card, you can drag it to the trash can.'
+				})
 			}));
-			this.help.interactive = true;
+			//this.help.interactive = true;
+			this.help.setInteractive();
 
 			this.menu = this.add(new Menu());
 			this.menu.on({
-				delete: this.onDelete.bind(this),
+				delete: this.onDelete.bind(this)
 			});
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
 			this.menu.delete.position.set(-370, -300);
-			this.menu.delete.interactive = true;
-			this.addVPButtons();
+			//this.menu.delete.interactive = true;
+			this.menu.delete.setInteractive();
+			this.addVPMenus();
 		},
 
 
@@ -128,21 +127,29 @@ define(function(require) {
 
 		},
 
-		addVPButtons: function () {
+		addVPMenus: function () {
 			var texts = ['Query', 'Test', 'Chart'];
 			var targets = [this.querymenu, this.tests, this.chart];
 			var n = texts.length;
 			var offset = 100;
 
 			texts.forEach(function (text, i) {
-				var buttonhandle = this.add(new ActionButtonHandle());
-				var button = buttonhandle.add(new ActionButton({
+
+				// var actionbuttonhandlemodel = new ActionButtonHandleModel();
+				// var buttonhandle = new ActionButtonHandle({model: actionbuttonhandlemodel});
+				var buttonhandle = new ActionButtonHandle();
+				// var button = buttonhandle.add(new ActionButton({
+				var button = new ActionButton({
 					model: new ActionButtonModel({
 						text: text,
 						id: text + 'Btn',
-						// color: danger
+						styles: {
+							width: 100,
+							height: 100
+							// color: danger
+						}
 					})
-				}));
+				});
 				// buttons x position
 				var buttonXPos = button.position.x;
 				//
@@ -154,23 +161,71 @@ define(function(require) {
 				buttonhandle.position.set(scale * (offset + offset * 1), -300);
 				button.position.set(buttonhandleXPos, buttonhandleYPos+350);
 
-				// buttonhandle.position.set(buttonXPos, -250);
+				// check if buttonhandle is too high for button and target
+				// to be seen onscreen.
+				// this needs to be done after every drag end event.
+				// if it is, then reposition button and target underneath
+				// instead of ontop.
+				// if(buttonhandle.position.y)
+
+
+
 				var target = targets[i];
-				// if(button.text == "Query"|| button.text == "Test"){
-					button.add(target);
-				// }
-				// else{
-				// 	this.vproot.add(target);
-				// }
+				button.add(target);
+
 				button.on('click', this.onToggle.bind(this,target));
 				// this.bindDraggableEvents(button);
-				button.interactive = false;
-				buttonhandle.interactive = true;
+				
+				buttonhandle.add(button);
+				// this.bindDraggableEvents(buttonhandle);
+				this.add(buttonhandle);
+				// debugger;
+				this.bindDraggableEvents(buttonhandle);
+				// debugger;
+				// this.event.trigger();
 
 				// this.buttons.push();
 
 			}.bind(this));
 		},
+
+
+
+		/**
+		 * Binds the draggable events to the component.
+		 *
+		 * @param component The button handle.
+		 */
+		bindDraggableEvents: function (component) {
+			//component.interactive = true;
+			component.setInteractive();
+			component.setDraggable();
+			// debugger;
+			component.on({
+				drag: this.onDrag.bind(this),
+				dragendsource: this.onDragEnd.bind(this),
+				// dropsink: this.onDrop.bind(this)
+			});
+		},
+
+		/**
+		 * An event triggered when a card is being dragged.
+		 */
+		onDrag: function () {
+			// this.menu.show();
+			// this.mergedYet = false;
+		},
+
+		onDragEnd: function(event){
+			// console.log("drag end");
+			// //alert("drag end");
+			var yOffset = event.draggable.position.y;
+			// var topScreenLimit = 350;
+			// var bottScreenLimit = -370;
+			// var leftScreenLimit =
+			console.log(yOffset);
+		},
+
 
 
 		onDelete: function (event) {

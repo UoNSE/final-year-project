@@ -14,7 +14,7 @@ define(function (require) {
 			var m = 3;
 			for (var j = 0; j < m; j++) {
 				var circle = new Circle();
-				circle.interactive = true;
+				circle.setInteractive();
 				circle.position.setPolar(200, j / m * Math.TAU);
 				//circle.rotation = -Math.TAU / 8;
 				//circle.rotation = -Math.TAU / 6;

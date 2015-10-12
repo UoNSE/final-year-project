@@ -14,8 +14,7 @@ define(function (require) {
     var ActionButton = require('component/actionbutton/ActionButton');
     var Help = require('component/help/help');
 
-    var ActionButtonModel = require('model/ActionButton');
-
+    var HelpModel = require('model/Help');
     var IssuesCollection = require('collection/Issues');
     var TopicCollection = require('collection/Topics');
 
@@ -47,6 +46,7 @@ define(function (require) {
             this.listenTo(issueCollection, 'sync', this.onIssuesSync);
 
             topicCollection.fetch();
+            issueCollection.fetch();
 
             this.topicHint = this.add(new Hint({model: {text: 'Select a topic'}}));
             this.issueHint = this.add(new Hint({model: {text: 'Select an issue to<br/>purchase it'}}));
@@ -57,11 +57,9 @@ define(function (require) {
             this.updateCredit();
 
             this.add(new Help({
-                model: {
-                    helpContent: 'Click topics to explore issues.<br>'+
-                    'Click issues to purchases them. Once purchased the cost will be<br/>' +
-                    'deducted from your credit tally and the issue will appear red.'
-                }
+                model: new HelpModel({
+                    body: 'Click topics to explore issues. Click issues to purchases them. Once purchased the cost will be deducted from your credit tally and the issue will appear red.'
+                })
             }));
         },
 
@@ -71,7 +69,6 @@ define(function (require) {
 
         onTopicsSync: function (topics) {
             this.addTopics(topics);
-            this.collection.issues.fetch();
         },
 
         onIssuesSync: function (issues) {

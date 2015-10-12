@@ -6,16 +6,16 @@ define(function (require) {
 
 	return Component.extend({
 		template: template,
-		classes: ['cpn-actionbutton'],
+		classes: ['cpn-actionbutton-handle'],
 		styles: 'component/actionbuttonhandle/ActionButtonHandle.css',
 
 		events: {
 			'click .cpn-actionbutton': 'onClick'
-		},
-
-		onClick:function(event){
-			this.trigger('click',event);
 		}
+
+		// onClick:function(event){
+		// 	this.trigger('click',event);
+		// }
 	});
 
 

@@ -20,6 +20,7 @@ define(function (require) {
 			var container = $(selector);
 			var children = scene.children;
 			var transform = camera.transform.getInverse();
+
 			for (var i = 0, length = children.length; i < length; i++) {
 				var child = children[i];
 				var classes = child.classes || [];
@@ -30,12 +31,10 @@ define(function (require) {
 		renderObject: function (object, container, parentTransform, parentClasses, parentVisible) {
 			var transform;
 
-			if (object.detached) {
-				transform = object.transform;
-			}
-			else if (object.needsWorldUpdate) {
+			if (object.needsWorldUpdate) {
 				transform = object.worldTransform.copy(parentTransform).applyTransform(object.transform)
-			} else {
+			}
+			else {
 				object.transform.copy(object.worldTransform);
 				if (object.parent) {
 					object.transform.worldToLocal(object.parent.worldTransform);
@@ -59,11 +58,7 @@ define(function (require) {
 				element.attr('id', object.id);
 				element.addClass(classes.join(' '));
 				this.linkify(element);
-				if (object.detached) {
-					this.gui.append(element);
-				} else {
-					container.append(element);
-				}
+				container.append(element);
 				this.loadStyles(object.styles).then(function () {
 					object.trigger('loaded');
 				});
@@ -74,16 +69,17 @@ define(function (require) {
 				});
 			}
 			object.$el.toggle(visible);
-			if (!object.detached) {
-				this.applyTransform(object.$el, transform);
-			}
+			this.applyTransform(object.$el, transform, object.origin, object.pageOrigin);
 			if (object.width) {
 				object.$el.width(object.width);
 			}
 			if (object.height) {
 				object.$el.height(object.height);
 			}
-			object.$el.css('opacity', object.opacity);
+			object.$el.css({
+				'opacity': object.opacity,
+				'zIndex': object.zIndex + (object.alwaysOnTop ? 1e10 : 0)
+			});
 			return element;
 		},
 
@@ -149,12 +145,63 @@ define(function (require) {
 			return Promise.all(promises);
 		},
 
-		applyTransform: function (element, transform) {
+		applyTransform: function (element, transform, origin, pageOrigin) {
+			origin = this.normalizeCSS(origin);
+			pageOrigin = this.normalizeCSS(pageOrigin);
+
+			var x = transform.position.x + 'px';
+			x = this.applyOriginOffset(x, origin[0]);
+			x = this.applyPageOriginOffset(x, pageOrigin[0]);
+
+			var y = -transform.position.y + 'px';
+			y = this.applyOriginOffset(y, origin[1]);
+			y = this.applyPageOriginOffset(y, pageOrigin[1]);
+
 			$(element).css({
-				'transform': 'translate(calc(-50% + ' + transform.position.x + 'px), calc(-50% + ' + (-transform.position.y) + 'px))'
+				'transform': 'translate(calc(' + x + '), calc(' + y + '))'
 				+ ' rotateZ(' + (-transform.rotation / Math.TAU) + 'turn)'
 				+ ' scale(' + transform.scale.x + ', ' + transform.scale.y + ')'
 			});
+		},
+
+		normalizeCSS: function (value) {
+			var values = value.split(' ');
+			// follow suit from CSS properties (such as margin) which specify Y axis first
+			var y = values[0];
+			var x = values[1] || y;
+			return [x, y];
+		},
+
+		applyOriginOffset: function (value, origin) {
+			switch (origin) {
+				case 'left':
+				case 'top':
+					return value;
+				case 'center':
+					return value + ' - 50%';
+				case 'right':
+				case 'bottom':
+					return value + ' - 100%';
+				default:
+					throw new Error('CSS2DRenderer: Unsupported origin: ' + origin);
+			}
+		},
+
+		applyPageOriginOffset: function (value, origin) {
+			switch (origin) {
+				case 'center':
+					return value;
+				case 'left':
+					return value + ' - 50vw';
+				case 'top':
+					return value + ' - 50vh';
+				case 'right':
+					return value + ' + 50vw';
+				case 'bottom':
+					return value + ' + 50vh';
+				default:
+					throw new Error('CSS2DRenderer: Unsupported origin: ' + origin);
+			}
 		}
 	});
 
