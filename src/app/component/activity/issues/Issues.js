@@ -250,7 +250,6 @@ define(function (require) {
         onIssuesLoad: function (issues) {
             var n = issues.size();
             var distance = 10;
-
             issues.forEach((model, i) => {
                 //conditional model loading
                 //model has data or body based on when it's defined
@@ -270,7 +269,7 @@ define(function (require) {
                         width: this.width,
                         height: this.height,
                         title: 'Issue',
-                        issueid: model.attributes.id,
+                        issueid: model.attributes.issueid,
                         body: model.attributes.body,
                         cost: model.attributes.cost,
                         color: 'danger'

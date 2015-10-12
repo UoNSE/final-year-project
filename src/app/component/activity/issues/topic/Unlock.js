@@ -14,6 +14,7 @@ define(function (require) {
     var ActionButton = require('component/actionbutton/ActionButton');
     var Help = require('component/help/help');
 
+    var IssueModel = require('model/Issue');
     var HelpModel = require('model/Help');
     var IssuesCollection = require('collection/Issues');
     var TopicCollection = require('collection/Topics');
@@ -106,14 +107,12 @@ define(function (require) {
                 cost: model.get('cost'),
                 topicId: model.get('topicId')
             }));
-            debugger;
             issue.on('issueSelected', this.onIssueSelected.bind(this));
 
             //Check if issue exists in the inventory
             let inventoryIssues = this.inventory.get('issues').models[0].attributes;
-
             inventoryIssues.forEach((inventModel, i) => {
-                if ( model.get('topicId') === inventModel.get('topicId') && model.get('data') === inventModel.get('data')){
+                if ( model.get('data') === inventModel.get('data') || model.get('data') === inventModel.get('body')){
                     issue.purchase();
                 }
             });
@@ -145,7 +144,6 @@ define(function (require) {
                 this.gameCredit -= issue.model.attributes.cost;
                 this.scoreContainer.setScore(this.gameCredit);
                 this.collection.loadedIssues = this.inventory.get('issues').models[0].attributes;
-                debugger;
                 this.collection.loadedIssues.add(issue.model);
                 this.inventory.attributes.issues.reset();
                 this.inventory.attributes.issues.add(this.collection.loadedIssues);
