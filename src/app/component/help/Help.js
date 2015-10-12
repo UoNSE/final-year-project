@@ -35,7 +35,7 @@ define(function (require) {
      *  },
      *
      */
-    var Panel = Component.extend({
+    let Panel = Component.extend({
         // important for having fixed position near back button
         template: template,
 		classes: 'cpn-help',
@@ -52,6 +52,7 @@ define(function (require) {
 
         close: function () {
             this.hide();
+            this.trigger('close');
         }
 
     });
@@ -61,26 +62,57 @@ define(function (require) {
      * @classdesc This is a custom ActionButton for handling
      * hiding and showing the Help Information.
      */
-    return ActionButton.extend({
+    let Button = ActionButton.extend({
+
+        origin: 'top left',
+
+        model: {
+			color: 'primary',
+            base: 'primary',
+            active: 'success',
+			icon: 'action-help',
+			classes: 'help-btn'
+		},
+
+        initialize: function () {
+            ActionButton.prototype.initialize.apply(this, arguments);
+            this.model = new Backbone.Model(this.model);
+            this.position.set(10, -80);
+        },
+
+        toggle: function (active) {
+            let model = this.model;
+            let color = active ? model.get('active') : model.get('base');
+            this.model.set('color', color);
+        }
+
+    });
+
+    return Component.extend({
         detached: true,
         origin: 'top left',
-		pageOrigin: 'top left',
+        pageOrigin: 'top left',
 
-        initialize: function (model) {
-            this.model = {
-                color: 'primary',
-				icon: 'action-help',
-				classes: 'help-btn'
-            };
-            ActionButton.prototype.initialize.apply(this, arguments);
-            this.position.set(10, -80);
-            this.panel = this.add(new Panel({model: model}));
+        initialize: function () {
+            Component.prototype.initialize.apply(this, arguments);
+            this.button = this.add(new Button());
+            this.button.toggle(true);
+
+            this.panel = this.button.add(new Panel({model: this.model}));
             this.panel.alwaysOnTop = true;
+
+            this.listenTo(this.button, 'click', this.onClick.bind(this));
+            this.listenTo(this.panel, 'close', this.onClose.bind(this));
         },
 
         onClick: function (event) {
             let panel = this.panel;
             panel.toggle();
+            this.button.toggle(panel.visible);
+        },
+
+        onClose: function (event) {
+            this.button.toggle(false);
         }
 
     });
