@@ -24,6 +24,7 @@ define(function(require) {
 	var EvidenceFeed = require('component/activity/virtualpatient/evidencefeed/EvidenceFeed');
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Help = require('component/help/Help');
+	var Inventory = require('component/inventory/Inventory');
 
 	var HelpModel = require('model/Help');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
@@ -50,7 +51,7 @@ define(function(require) {
 
 		},
 
-		initialize: function () {
+		initialize: function (caseID) {
 			// debugger;
 			Component.prototype.initialize.apply(this, arguments);
 			this.vproot = this;
@@ -58,6 +59,7 @@ define(function(require) {
 			this.collection.fetch();
 			this.visiblemenus = [];
 			this.collaborative = false;
+			this.caseID =  caseID;
 
 		},
 
@@ -65,7 +67,7 @@ define(function(require) {
 			// get the patient with the case Id.
 			this.patients = this.collection;
 			this.evidencecollection = new EvidenceCollection();
-			this.patient = this.patients.get(1); // get id.
+			this.patient = this.patients.get(caseID); // get id.
 			this.addComponents();
 			// debugger;
 			this._hideElements();
@@ -88,6 +90,8 @@ define(function(require) {
 			this.queries = this.patient.get('queries');
 			this.responses = this.patient.get('responses');
 			this.querymenu = new Query(this);
+
+			this.inventory = new Inventory();
 
 			// this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = new Chart({vproot:this.vproot, model: this.patient});
@@ -124,6 +128,7 @@ define(function(require) {
 			this.tests.hide();
 			this.querymenu.hide();
 			this.chart.hide();
+			this.hiddenLink.hide();
 
 		},
 
@@ -175,7 +180,7 @@ define(function(require) {
 
 				button.on('click', this.onToggle.bind(this,target));
 				// this.bindDraggableEvents(button);
-				
+
 				buttonhandle.add(button);
 				// this.bindDraggableEvents(buttonhandle);
 				this.add(buttonhandle);
@@ -189,7 +194,19 @@ define(function(require) {
 			}.bind(this));
 		},
 
+		addTimelineLink: function () {
 
+			// add a link to the Timeline page
+            this.hiddenLink = this.add(new ActionButton({
+                model: {
+                    color: 'light-green',
+                    classes: 'help-btn actions-btn',
+                    icon: 'content-send',
+                    href: 'cases/'.concat(caseID, '/case/Overview')
+                }
+            }));
+
+		},
 
 		/**
 		 * Binds the draggable events to the component.
