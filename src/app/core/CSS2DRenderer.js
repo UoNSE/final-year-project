@@ -24,15 +24,15 @@ define(function (require) {
 			for (var i = 0, length = children.length; i < length; i++) {
 				var child = children[i];
 				var classes = child.classes || [];
-				this.renderObject(child, container, transform, classes, scene.visible);
+				this.renderObject(child, container, transform, classes, scene.visible, scene.pageOrigin);
 			}
 		},
 
-		renderObject: function (object, container, parentTransform, parentClasses, parentVisible) {
+		renderObject: function (object, container, parentTransform, parentClasses, parentVisible, parentPageOrigin) {
 			var transform;
 
 			if (object.needsWorldUpdate) {
-				transform = object.worldTransform.copy(parentTransform).applyTransform(object.transform)
+				transform = object.worldTransform.copy(parentTransform).applyTransform(object.transform);
 			}
 			else {
 				object.transform.copy(object.worldTransform);
@@ -43,16 +43,17 @@ define(function (require) {
 
 			var classes = (parentClasses || []).slice().concat(object.classes || []);
 			var visible = parentVisible && object.visible;
-			this.renderObjectHTML(object, container, transform, classes, visible);
+			var pageOrigin = object.detached ? object.pageOrigin : parentPageOrigin;
+			this.renderObjectHTML(object, container, transform, classes, visible, pageOrigin);
 			var children = object.children;
 			for (var i = 0, length = children.length; i < length; i++) {
 				var child = children[i];
-				this.renderObject(child, container, transform, classes, visible);
+				this.renderObject(child, container, transform, classes, visible, pageOrigin);
 			}
 			object.needsWorldUpdate = true;
 		},
 
-		renderObjectHTML: function (object, container, transform, classes, visible) {
+		renderObjectHTML: function (object, container, transform, classes, visible, pageOrigin) {
 			if (!object.added) {
 				var element = object.render().$el;
 				element.attr('id', object.id);
@@ -69,7 +70,7 @@ define(function (require) {
 				});
 			}
 			object.$el.toggle(visible);
-			this.applyTransform(object.$el, transform, object.origin, object.pageOrigin);
+			this.applyTransform(object.$el, transform, object.origin, pageOrigin);
 			if (object.width) {
 				object.$el.width(object.width);
 			}
@@ -105,10 +106,6 @@ define(function (require) {
 				// Prevent page from actually loading a new URL.
 				e.preventDefault();
 
-				//animate.onFinished(function () {
-				//	// Use the router navigation method instead, using the History API to simulate updating the URL.
-				//	this._router.navigate($anchor.attr('href'), {trigger: true});
-				//}.bind(this));
 				this.router.navigate($anchor.attr('href'), {trigger: true});
 			}.bind(this));
 		},

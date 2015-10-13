@@ -112,7 +112,10 @@ define(function (require) {
 		},
 
 		bindDataModelEvents: function (model) {
-			this.listenTo(model, 'change', this.render);
+			if (!this.modelBind) {
+				this.listenTo(model, 'change', this.render);
+				this.modelBind = true;
+			}
 		},
 
 		getMultiTouchElement: function () {

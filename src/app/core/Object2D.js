@@ -15,11 +15,11 @@ define(function (require) {
 		detached: false,
 		opacity: 1,
 		// Supports:
+		origin: 'center',
+		// Same support as origin
 		// 'top left',    'top center',    'top right',
 		// 'center left'  'center'         'center right',
 		// 'bottom left', 'bottom center', 'bottom right'
-		origin: 'center',
-		// Same support as origin
 		pageOrigin: 'center',
 
 		initialize: function () {
