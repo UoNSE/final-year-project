@@ -11,10 +11,9 @@ define(function (require) {
 
 			//var inventory = this.add(new Inventory());
 			//this.position.x = -inventory.width / 2;
-
-			this.inventory = this.session.inventory = this.session.inventory || new Inventory();
-
 			//this.camera.position.x = inventory.width / 2;
+
+			this.inventory = this.session.get('inventory', () => new Inventory());
 		},
 
 		/**
