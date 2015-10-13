@@ -66,11 +66,18 @@ define(function(require) {
 		onSync: function (collection) {
 			// get the patient with the case Id.
 			this.patients = this.collection;
-			this.evidencecollection = new EvidenceCollection();
-			this.patient = this.patients.get(caseID); // get id.
+			// this.evidencecollection = new EvidenceCollection();
+			// console.log("this case id: " + this.caseID);
+			// debugger;
+			this.patient = this.patients.get(1); // get id.
+			// this.patient = this.patients.get(this.caseID); // get id.
 			this.addComponents();
 			// debugger;
 			this._hideElements();
+		},
+
+		addEvidenceCardToCollection: function(evidence){
+			this.evidencecollection.add(evidence);
 		},
 
 		addComponents: function() {
@@ -111,6 +118,8 @@ define(function(require) {
 			//this.help.interactive = true;
 			this.help.setInteractive();
 
+			// this.hiddenLink = this.addTimelineLink();
+
 			this.menu = this.add(new Menu());
 			this.menu.on({
 				delete: this.onDelete.bind(this)
@@ -128,7 +137,7 @@ define(function(require) {
 			this.tests.hide();
 			this.querymenu.hide();
 			this.chart.hide();
-			this.hiddenLink.hide();
+			// this.hiddenLink.hide();
 
 		},
 
@@ -197,7 +206,7 @@ define(function(require) {
 		addTimelineLink: function () {
 
 			// add a link to the Timeline page
-            this.hiddenLink = this.add(new ActionButton({
+            var hiddenLink = this.add(new ActionButton({
                 model: {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
@@ -205,7 +214,7 @@ define(function(require) {
                     href: 'cases/'.concat(caseID, '/case/Overview')
                 }
             }));
-
+			return hiddenLink;
 		},
 
 		/**
