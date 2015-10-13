@@ -1,8 +1,10 @@
 define(function (require) {
 	'use strict';
 
-	var Component = require('core/Component');
-	var ActionButton = require('component/actionbutton/ActionButton');
+	let Component = require('core/Component');
+	let ActionButton = require('component/actionbutton/ActionButton');
+	let Rectangle = require('component/sprite/rectangle/Rectangle');
+	let RectangleModel = require('model/Rectangle');
 
 	return Component.extend({
 		classes: 'timeline',
@@ -10,14 +12,30 @@ define(function (require) {
 
 		initialize: function (width, height) {
 			Component.prototype.initialize.apply(this, arguments);
-			var buttons = this.collection;
-			var n = buttons.size();
-			var distanceBetween = 200;
+			let buttons = this.collection;
+			let n = buttons.size();
+			let distanceBetween = 200;
+
+			for (let i = 0; i < n; i++) {
+				if (i < n - 1) {
+					let line = new Rectangle({
+						model: new RectangleModel({
+							width: distanceBetween,
+							height: 5,
+							color: '#333'
+						})
+					});
+					let scale = i - (n - 2) / 2;
+					line.position.set(scale * distanceBetween, 0);
+					this.add(line);
+				}
+			}
+
 			buttons.each(function (model, i) {
-				var button = new ActionButton({
+				let button = new ActionButton({
 					model: model
 				});
-				var scale = i - (n - 1) / 2;
+				let scale = i - (n - 1) / 2;
 				button.position.set(scale * distanceBetween, 0);
 				this.add(button);
 			}, this);
