@@ -18,6 +18,7 @@ define(function(require) {
 	var ActionButtonHandle = require('component/actionbuttonhandle/ActionButtonHandle');
 	// var ActionButtonHandleModel = require('model/ActionButtonHandle');
 
+	var Card = require('component/activity/issues/card/Card');
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
 	var Query = require('component/activity/virtualpatient/querypatient/Query');
 	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
@@ -25,6 +26,7 @@ define(function(require) {
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Help = require('component/help/Help');
 	var Inventory = require('component/inventory/Inventory');
+	var AddToCollectionButton = require('component/activity/virtualpatient/addtocollectionbutton/AddToCollection');
 
 	var HelpModel = require('model/Help');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
@@ -51,7 +53,7 @@ define(function(require) {
 
 		},
 
-		initialize: function (caseID) {
+		initialize: function (inventory, caseID) {
 			// debugger;
 			Component.prototype.initialize.apply(this, arguments);
 			this.vproot = this;
@@ -59,6 +61,7 @@ define(function(require) {
 			this.collection.fetch();
 			this.visiblemenus = [];
 			this.collaborative = false;
+			this.inventory = inventory;
 			this.caseID =  caseID;
 
 		},
@@ -66,18 +69,11 @@ define(function(require) {
 		onSync: function (collection) {
 			// get the patient with the case Id.
 			this.patients = this.collection;
-			// this.evidencecollection = new EvidenceCollection();
-			// console.log("this case id: " + this.caseID);
-			// debugger;
-			this.patient = this.patients.get(1); // get id.
-			// this.patient = this.patients.get(this.caseID); // get id.
+			// this wont load properly if there is no patient for the case.
+			this.patient = this.patients.get(this.caseID); // get id.
 			this.addComponents();
 			// debugger;
 			this._hideElements();
-		},
-
-		addEvidenceCardToCollection: function(evidence){
-			this.evidencecollection.add(evidence);
 		},
 
 		addComponents: function() {
@@ -85,6 +81,7 @@ define(function(require) {
 			this.hotspots = this.patient.get('hotspots');
 
 			var params = {vproot: this.vproot}; // = this; //this.vproot;
+			this.evidencecollection = new EvidenceCollection();
 			this.patientbody = this.add(new PatientBody(params)); //add params so it has access to vproot
 
 			if(this.collaborative){
@@ -98,7 +95,7 @@ define(function(require) {
 			this.responses = this.patient.get('responses');
 			this.querymenu = new Query(this);
 
-			this.inventory = new Inventory();
+			// this.inventory = new Inventory();
 
 			// this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = new Chart({vproot:this.vproot, model: this.patient});
@@ -115,14 +112,26 @@ define(function(require) {
                         'If you no longer need an evidence card, you can drag it to the trash can.'
 				})
 			}));
-			//this.help.interactive = true;
 			this.help.setInteractive();
 
-			// this.hiddenLink = this.addTimelineLink();
+
+			this.addtocollectionbutton = this.add(new AddToCollectionButton());
+
+			//add the addtocollection button
+			// this.addtocollectionbutton = this.add(new AddToCollectionButton());
+			this.addtocollectionbutton.on({
+				addToCollection: this.addEvidenceCardToCollection.bind(this)
+			});
+
+			// this.addtocollectionbutton.setInteractive();
+			// this.addtocollectionbutton.setDraggable();
+
+
+			this.hiddenLink = this.addTimelineLink();
 
 			this.menu = this.add(new Menu());
 			this.menu.on({
-				delete: this.onDelete.bind(this)
+				delete: this.onDelete.bind(this),
 			});
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
@@ -137,7 +146,7 @@ define(function(require) {
 			this.tests.hide();
 			this.querymenu.hide();
 			this.chart.hide();
-			// this.hiddenLink.hide();
+			this.hiddenLink.hide();
 
 		},
 
@@ -194,7 +203,9 @@ define(function(require) {
 				// this.bindDraggableEvents(buttonhandle);
 				this.add(buttonhandle);
 				// debugger;
-				this.bindDraggableEvents(buttonhandle);
+				// this.bindDraggableEvents(buttonhandle);
+				buttonhandle.setInteractive();
+				buttonhandle.setDraggable();
 				// debugger;
 				// this.event.trigger();
 
@@ -211,7 +222,7 @@ define(function(require) {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
                     icon: 'content-send',
-                    href: 'cases/'.concat(caseID, '/case/Overview')
+                    href: 'cases/'.concat(this.caseID, '/case/Overview')
                 }
             }));
 			return hiddenLink;
@@ -234,6 +245,8 @@ define(function(require) {
 			});
 		},
 
+
+
 		/**
 		 * An event triggered when a card is being dragged.
 		 */
@@ -255,7 +268,23 @@ define(function(require) {
 
 
 		onDelete: function (event) {
-			event.draggable.remove();
+			if(event.draggable instanceof Evidence){
+				event.draggable.remove();
+			}
+		},
+
+		addEvidenceCardToCollection: function(event){
+			console.log("checkign evidence is a Evidence");
+			console.log("type: "+ event.draggable + " - "+ event.draggableType);
+			console.log(event.draggable instanceof Evidence);
+			var evidence = event.draggable;
+			if(event.draggable instanceof Evidence){
+				this.evidencecollection.add(evidence);
+				this.inventory.attributes.evidence.add(this.evidencecollection);
+				// debugger;
+				console.log("added "+evidence.id+" to inventory: " + this.inventory.get("evidence"));
+			}
+			debugger;
 		},
 
 		onToggle: function (toggableTarget) {
