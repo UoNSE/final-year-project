@@ -89,6 +89,7 @@ define(function (require) {
 
             //if(!$("#"+elid).length)
             this.vproot.add(evidenceCard); //we have to add the card to the root of the vitualpatient page
+            // this.vproot.addEvidenceCardToCollection(evidenceCard);
             evidenceCard.hide();
             //this.hotEvidence[model.get('id')].hide();
 

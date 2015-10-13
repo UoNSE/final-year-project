@@ -39,11 +39,17 @@ define(function (require) {
 		bringToFront: function (component) {
 			component.zIndex = this.frontIndex;
 			this.frontIndex++;
+			component.children.forEach(child => { //equiv to function(child) {} // => (no this, it is a lambda)
+				child.bringToFront();
+			});
 		},
 
 		sendToBack: function (component) {
 			component.zIndex = this.backIndex;
 			this.backIndex--;
+			component.children.forEach(child => { //equiv to function(child) {} // => (no this, it is a lambda)
+				child.sendToBack();
+			});
 		}
 	});
 

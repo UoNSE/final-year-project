@@ -24,6 +24,7 @@ define(function(require) {
 	var EvidenceFeed = require('component/activity/virtualpatient/evidencefeed/EvidenceFeed');
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Help = require('component/help/Help');
+	var Inventory = require('component/inventory/Inventory');
 
 	var HelpModel = require('model/Help');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
@@ -50,7 +51,7 @@ define(function(require) {
 
 		},
 
-		initialize: function () {
+		initialize: function (caseID) {
 			// debugger;
 			Component.prototype.initialize.apply(this, arguments);
 			this.vproot = this;
@@ -58,17 +59,25 @@ define(function(require) {
 			this.collection.fetch();
 			this.visiblemenus = [];
 			this.collaborative = false;
+			this.caseID =  caseID;
 
 		},
 
 		onSync: function (collection) {
 			// get the patient with the case Id.
 			this.patients = this.collection;
-			this.evidencecollection = new EvidenceCollection();
+			// this.evidencecollection = new EvidenceCollection();
+			// console.log("this case id: " + this.caseID);
+			// debugger;
 			this.patient = this.patients.get(1); // get id.
+			// this.patient = this.patients.get(this.caseID); // get id.
 			this.addComponents();
 			// debugger;
 			this._hideElements();
+		},
+
+		addEvidenceCardToCollection: function(evidence){
+			this.evidencecollection.add(evidence);
 		},
 
 		addComponents: function() {
@@ -89,6 +98,8 @@ define(function(require) {
 			this.responses = this.patient.get('responses');
 			this.querymenu = new Query(this);
 
+			this.inventory = new Inventory();
+
 			// this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = new Chart({vproot:this.vproot, model: this.patient});
 			this.chart.position.set(0,275);
@@ -107,6 +118,8 @@ define(function(require) {
 			//this.help.interactive = true;
 			this.help.setInteractive();
 
+			// this.hiddenLink = this.addTimelineLink();
+
 			this.menu = this.add(new Menu());
 			this.menu.on({
 				delete: this.onDelete.bind(this)
@@ -124,6 +137,7 @@ define(function(require) {
 			this.tests.hide();
 			this.querymenu.hide();
 			this.chart.hide();
+			// this.hiddenLink.hide();
 
 		},
 
@@ -175,7 +189,7 @@ define(function(require) {
 
 				button.on('click', this.onToggle.bind(this,target));
 				// this.bindDraggableEvents(button);
-				
+
 				buttonhandle.add(button);
 				// this.bindDraggableEvents(buttonhandle);
 				this.add(buttonhandle);
@@ -189,7 +203,19 @@ define(function(require) {
 			}.bind(this));
 		},
 
+		addTimelineLink: function () {
 
+			// add a link to the Timeline page
+            var hiddenLink = this.add(new ActionButton({
+                model: {
+                    color: 'light-green',
+                    classes: 'help-btn actions-btn',
+                    icon: 'content-send',
+                    href: 'cases/'.concat(caseID, '/case/Overview')
+                }
+            }));
+			return hiddenLink;
+		},
 
 		/**
 		 * Binds the draggable events to the component.
