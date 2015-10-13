@@ -18,8 +18,10 @@ define(function (require) {
 		this.animateCallback = this.animate.bind(this);
 		this.rendering = true;
 		this.requestId = null;
-		Backbone.history.start({pushState: true});
-		this.startRendering();
+		this.session.load().then(() => {
+			Backbone.history.start({pushState: true});
+			this.startRendering();
+		});
 	}
 	Object.assign(Application.prototype, {
 		startRendering: function () {

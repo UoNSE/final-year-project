@@ -1,4 +1,4 @@
-define(function (require) {
+define(function (require, exports, module) {
 
 	var SerializableModel = require('model/SerializableModel');
 
@@ -8,6 +8,7 @@ define(function (require) {
 
 	return SerializableModel.extend({
 
+		id: module.id,
 		defaults: {
 			saveScore: 0,
 			issues: null,

@@ -7,15 +7,14 @@ define(function (require) {
 	function Session (autoLoad) {
 		this.map = {};
 		this.sessionStorage = window.sessionStorage;
-		if (autoLoad !== false) {
-			this.load();
-		}
 	}
 
 	Object.assign(Session.prototype, {
-		set: function (key, value) {
+		set: function (key, value, noSave) {
 			this.map[key] = value;
-			this.save();
+			if (noSave !== false) {
+				this.save();
+			}
 		},
 
 		get: function (key, defaultValue) {
@@ -49,24 +48,39 @@ define(function (require) {
 		},
 
 		load: function () {
+			var promises = [];
 			var sessionString = this.sessionStorage.getItem('session');
 			if (sessionString !== null) {
 				var session = JSON.parse(sessionString);
 				for (let key in session) {
-					let simpleValue = session[key];
-					let type = simpleValue.type;
-					let value = simpleValue.value;
-					if (type === 'model') {
-						var id = simpleValue.id;
-						require([id], function (Model) {
-							this.set(key, new Model(value))
-						}.bind(this));
-					}
-					else {
-						this.set(key, value);
-					}
+					promises.push(new Promise(function (resolve) {
+						let simpleValue = session[key];
+						let type = simpleValue.type;
+						let value = simpleValue.value;
+						if (type === 'model') {
+							var id = simpleValue.id;
+							require([id], function (Model) {
+								var instance = new Model(value);
+								if (instance.relations) {
+									instance.relations.forEach(relation => {
+										var relationKey = relation.key;
+										var relatedModel = relation.relatedModel;
+
+										instance.set(relationKey, new relatedModel(instance.get(relationKey)));
+									});
+								}
+								this.set(key, instance, false);
+								resolve();
+							}.bind(this));
+						}
+						else {
+							this.set(key, value, false);
+							resolve();
+						}
+					}.bind(this)));
 				}
 			}
+			return Promise.all(promises);
 		},
 
 		toJSON: function () {

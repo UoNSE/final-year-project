@@ -177,22 +177,19 @@ define(function (require) {
         loadCards: function(issues, evidence, issueGroups){
             //TODO load cards from inventory
             console.log("Load cards");
-            this.collection.issues = this.inventory.get('issues').models[0].attributes;
-            this.collection.evidence = this.inventory.get("evidence").models[0].attributes;
-            this.collection.issueGroup = this.inventory.get("issuegroups").models[0].attributes;
+			let collection = this.collection;
+            collection.issues = this.inventory.get('issues');
+            collection.evidence = this.inventory.get('evidence');
+            collection.issueGroup = this.inventory.get('issuegroups');
 
-
-            issues = this.collection.issues;
-            evidence = this.collection.evidence;
-            issueGroups = this.collection.issueGroup;
-            if(this.inventory.get('issues').length>0){
-                this.onIssuesLoad(issues);
+            if (this.inventory.get('issues')) {
+                this.onIssuesLoad(collection.issues);
             }
-            if(this.inventory.get("evidence").length>0){
-                this.onEvidenceLoad(evidence);
+            if (this.inventory.get('evidence')) {
+                this.onEvidenceLoad(collection.evidence);
             }
-            if(this.inventory.get("issuegroups").length>0){
-                this.onIssueGroupLoad(issueGroups);
+            if (this.inventory.get('issuegroups')) {
+                this.onIssueGroupLoad(collection.issueGroup);
             }
 
         },
@@ -203,13 +200,19 @@ define(function (require) {
          */
         syncCards: function(){
             //clear existing collection
-            this.inventory.attributes.issuegroups.reset();
-            this.inventory.attributes.issues.reset();
-            this.inventory.attributes.evidence.reset();
+			let inventory = this.inventory;
+			let issueGroups = inventory.get('issuegroups');
+			let issues = inventory.get('issues');
+			let evidence = inventory.get('evidence');
+
+            issueGroups.reset();
+			issues.reset();
+			evidence.reset();
+
             //sync new collection
-            this.inventory.attributes.issuegroups.add(this.collection.issueGroup);
-            this.inventory.attributes.issues.add(this.collection.issues);
-            this.inventory.attributes.evidence.add(this.collection.evidence);
+            issueGroups.add(this.collection.issueGroup);
+            issues.add(this.collection.issues);
+            evidence.add(this.collection.evidence);
 
         },
 
@@ -285,7 +288,6 @@ define(function (require) {
         onEvidenceLoad: function (evidence) {
             var n = evidence.size();
             var distance = 10;
-            debugger;
             evidence.forEach((model, i) => {
                 if (model.attributes.data != undefined) {
                     var card = this.addEvidence(new EvidenceModel({
@@ -323,17 +325,19 @@ define(function (require) {
         },
 
 
-        onIssueGroupLoad: function (issuegroup) {
-            var n = issuegroup.size();
+        onIssueGroupLoad: function (issueGroup) {
+            var n = issueGroup.size();
             var distance = 10;
-            issuegroup.forEach((model, i) => {
-                var card = this.add(new IssueGroup({
+            issueGroup.forEach((group, i) => {
+                let model = group.get('models')[i];
+				debugger;
+                let card = this.add(new IssueGroup({
                     model: new IssueGroupModel({
                         width: this.width,
                         title: 'Issues and evidence',
                         color: 'success',
-                        issue: model.collection.models[i].attributes.model.attributes.issue,
-                        evidence: model.collection.models[i].attributes.model.attributes.evidence
+                        issue: model.get('model').get('issue'),
+                        evidence: model.get('model').get('evidence')
                     })
 
                 }));
