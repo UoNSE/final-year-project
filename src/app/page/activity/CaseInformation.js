@@ -2,7 +2,7 @@ define(function (require) {
     'use strict';
 
     var InventoryPage = require('page/InventoryPage');
-    var CaseInformation = require('component/activity/caseinformation/CaseInformation');
+    var CaseInformation = require('component/activity/casebackground/Issues');
 
     return InventoryPage.extend({
         name: 'caseinfo',
@@ -11,7 +11,7 @@ define(function (require) {
 
         initialize: function () {
             InventoryPage.prototype.initialize.apply(this, arguments);
-            this.add(new CaseInformation());
+            this.add(new CaseInformation(this.inventory, this.urlParams));
         }
     });
 });
