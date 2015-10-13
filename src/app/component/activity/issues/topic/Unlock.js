@@ -14,6 +14,7 @@ define(function (require) {
     var ActionButton = require('component/actionbutton/ActionButton');
     var Help = require('component/help/help');
 
+    var IssueModel = require('model/Issue');
     var HelpModel = require('model/Help');
     var IssuesCollection = require('collection/Issues');
     var TopicCollection = require('collection/Topics');
@@ -21,12 +22,18 @@ define(function (require) {
     return Component.extend({
         collection: {
             topics: new TopicCollection(),
-            issues: new IssuesCollection()
+            issues: new IssuesCollection(),
+            loadedIssues: new IssuesCollection()
         },
 
         gameCredit: 0,
+        availableCredit: 0,
+        inventory: null,
 
-        initialize: function (params) {
+        initialize: function (inventory, params) {
+            this.inventory = inventory;
+            this.availableCredit = this.inventory.attributes.saveScore;
+            this.gameCredit = this.availableCredit;
             Component.prototype.initialize.apply(this, arguments);
 
             this.topics = [];
@@ -93,13 +100,33 @@ define(function (require) {
         },
 
         addIssue: function(model) {
+
             var issue = this.add(new Issue({
+                issueid: model.get('id'),
                 name: model.get('data'),
                 cost: model.get('cost'),
                 topicId: model.get('topicId')
             }));
-
             issue.on('issueSelected', this.onIssueSelected.bind(this));
+
+            //Check if issue exists in the inventory
+            let inventoryIssues = this.inventory.get('issues').models[0].attributes;
+            inventoryIssues.forEach((inventModel, i) => {
+                if ( model.get('data') === inventModel.get('data') || model.get('data') === inventModel.get('body')){
+                    issue.purchase();
+                }
+            });
+            inventoryIssues = this.inventory.get('issuegroups').models[0].attributes;
+            inventoryIssues.forEach((inventModel, i) => {
+                var groupissue = inventModel.attributes.model.attributes.issue;
+                debugger;
+                if (groupissue != null) {
+
+                if (groupissue.get("body") == model.get('data')) {
+                    issue.purchase();
+                }
+            }
+            });
 
             this.topics.forEach(topic => {
                 if (topic.topicId === issue.topicId){
@@ -124,7 +151,13 @@ define(function (require) {
         onIssueSelected: function (issue) {
             if (issue.canPurchase(this.gameCredit)){
                 issue.purchase();
-                this.updateCredit();
+                //this.updateCredit();
+                this.gameCredit -= issue.model.attributes.cost;
+                this.scoreContainer.setScore(this.gameCredit);
+                this.collection.loadedIssues = this.inventory.get('issues').models[0].attributes;
+                this.collection.loadedIssues.add(issue.model);
+                this.inventory.attributes.issues.reset();
+                this.inventory.attributes.issues.add(this.collection.loadedIssues);
             }
             else {
                 this.scoreContainer.invalidAction();
@@ -159,21 +192,18 @@ define(function (require) {
         //analyses all evidence stacks and current expenditures and returns the credit available for use
         updateCredit: function () {
             //available credit will be determined by evidence card stacks persisted by the inventory
-            var availableCredit = 20;
+
 
             this.topics.forEach(topic => {
                 topic.issues.forEach(issue => {
                     if (issue.purchased) {
-                        availableCredit -= issue.getCost();
+                        this.availableCredit -= issue.getCost();
                     }
                 });
             });
+            this.scoreContainer.setScore(this.gameCredit);
 
-            if (this.gameCredit !== availableCredit){
-                this.scoreContainer.setScore(availableCredit);
-            }
-
-            this.gameCredit = availableCredit;
+            this.gameCredit = this.availableCredit;
         }
 
     });

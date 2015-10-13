@@ -21,6 +21,7 @@ define(function (require) {
 
             this.model = new Model({
                 body: params.name,
+                issueid: params.issueid,
                 cost: params.cost,
                 color: 'blue',
                 styles: {
