@@ -39,7 +39,6 @@ define(function (require) {
         // important for having fixed position near back button
         template: template,
 		classes: 'cpn-help',
-		styles: 'component/help/Help.css',
         origin: 'top left',
         events: {
             'click .confirm': 'close'
@@ -70,8 +69,7 @@ define(function (require) {
 			color: 'primary',
             base: 'primary',
             active: 'success',
-			icon: 'action-help',
-			classes: 'help-btn'
+			icon: 'action-help'
 		},
 
         initialize: function () {
