@@ -13,7 +13,7 @@ define(function (require) {
 
         initialize: function () {
             Panel.prototype.initialize.apply(this, arguments);
-            this.interactive = true;
+            this.setInteractive();
             this.setDraggable({});
             this.hiddenCards = $('.hidden-info');
         },

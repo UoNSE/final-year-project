@@ -15,7 +15,7 @@ define(function (require) {
         initialize: function () {
             gTimer = this;  // binding this for calls to updateClock() made by setInterval()
             Panel.prototype.initialize.apply(this, arguments);
-            this.interactive = true;
+            this.setInteractive();
             this.setDraggable({});
             this.model.set('color','success');
             this.activitytimer = this.timerInitialize(this.model.get('body'));
