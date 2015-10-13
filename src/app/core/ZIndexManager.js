@@ -36,20 +36,24 @@ define(function (require) {
 			return null;
 		},
 
-		bringToFront: function (component) {
+		bringToFront: function (component, propagateToChildren) {
 			component.zIndex = this.frontIndex;
 			this.frontIndex++;
-			component.children.forEach(child => { //equiv to function(child) {} // => (no this, it is a lambda)
-				child.bringToFront();
-			});
+			if (propagateToChildren !== false) {
+				component.children.forEach(child => {
+					child.bringToFront();
+				});
+			}
 		},
 
-		sendToBack: function (component) {
+		sendToBack: function (component, propagateToChildren) {
 			component.zIndex = this.backIndex;
 			this.backIndex--;
-			component.children.forEach(child => { //equiv to function(child) {} // => (no this, it is a lambda)
-				child.sendToBack();
-			});
+			if (propagateToChildren !== false) {
+				component.children.forEach(child => {
+					child.sendToBack();
+				});
+			}
 		}
 	});
 

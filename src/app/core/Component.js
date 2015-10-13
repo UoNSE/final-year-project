@@ -140,12 +140,12 @@ define(function (require) {
 			multiTouchManager.makeDroppable(this.getMultiTouchElement(), options);
 		},
 
-		bringToFront: function () {
-			zIndexManager.bringToFront(this);
+		bringToFront: function (propagateToChildren) {
+			zIndexManager.bringToFront(this, propagateToChildren);
 		},
 
-		sendToBack: function () {
-			zIndexManager.sendToBack(this);
+		sendToBack: function (propagateToChildren) {
+			zIndexManager.sendToBack(this, propagateToChildren);
 		}
 
 	});
