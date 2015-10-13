@@ -63,6 +63,9 @@ define(function(require) {
 			this.collaborative = false;
 			this.inventory = inventory;
 			this.caseID =  caseID;
+			console.log("inventory on entering activity: " + + this.inventory.get("evidence").length + " evidences in inventory.");
+
+
 
 		},
 
@@ -281,10 +284,11 @@ define(function(require) {
 			if(event.draggable instanceof Evidence){
 				this.evidencecollection.add(evidence);
 				this.inventory.attributes.evidence.add(this.evidencecollection);
+				// remove the evidence from the view after adding to inventory.
+				evidence.remove();
 				// debugger;
-				console.log("added "+evidence.id+" to inventory: " + this.inventory.get("evidence"));
+				console.log("added "+evidence.id+" to inventory: " + this.inventory.get("evidence").length + " evidences in inventory.");
 			}
-			debugger;
 		},
 
 		onToggle: function (toggableTarget) {
