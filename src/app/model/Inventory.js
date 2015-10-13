@@ -1,12 +1,12 @@
 define(function (require) {
 
-	var Backbone = require('backbone');
+	var SerializableModel = require('model/SerializableModel');
 
 	var Issue = require('model/Issue');
 	var Evidence = require('model/Evidence');
 	var IssueGroup = require('model/IssueGroup');
 
-	return Backbone.RelationalModel.extend({
+	return SerializableModel.extend({
 
 		defaults: {
 			saveScore: 0,

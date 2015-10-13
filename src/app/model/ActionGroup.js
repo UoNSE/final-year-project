@@ -1,12 +1,12 @@
 define(function (require) {
     "use strict";
 
-    var Backbone = require('backbone');
+    var SerializableModel = require('model/SerializableModel');
 
     var Goal = require('model/Goal');
     var Action = require('model/Action');
 
-    return Backbone.RelationalModel.extend({
+    return SerializableModel.extend({
 
         defaults: {
             goal: null,

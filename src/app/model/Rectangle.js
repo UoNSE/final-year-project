@@ -1,7 +1,7 @@
 define(function (require) {
-	var Backbone = require('backbone');
+	var SerializableModel = require('model/SerializableModel');
 
-	return Backbone.Model.extend({
+	return SerializableModel.extend({
 		defaults: {
 			width: 100,
 			height: 100,

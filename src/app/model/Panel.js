@@ -1,8 +1,8 @@
 define(function (require) {
 
-	var Backbone = require('backbone');
+	var SerializableModel = require('model/SerializableModel');
 
-	return Backbone.RelationalModel.extend({
+	return SerializableModel.extend({
 
 		type: Backbone.HasOne,
 
