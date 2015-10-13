@@ -135,7 +135,7 @@ define(function (require) {
                 model: new HelpModel({
                     title: 'Help',
                     width: 300,
-                    helpContent: HelpText
+                    body: HelpText
                 })
             }));
 
