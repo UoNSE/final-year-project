@@ -15,10 +15,10 @@ define(function (require) {
     let GoalModel = require('model/Goal');
     let ActionModel = require('model/Action');
     let ActionGroup = require('model/ActionGroup');
-    let HelpModel = require('model/HelpModel');
+    let HelpModel = require('model/Help');
 
     // help
-    var Help = require('component/help/v2/help/Help');
+    var Help = require('component/help/Help');
     let HelpText = require('text!component/activity/goals/actions/HelpContent.hbs');
 
     // collections
