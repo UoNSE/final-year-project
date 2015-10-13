@@ -542,7 +542,9 @@ define(function (require) {
             var droppableType = this.resolveType(droppable);
 
             if (droppable instanceof IssueGroup && draggable instanceof IssueGroup) {
-
+                this.gameCredit -= this.getScore(draggable);
+                this.gameCredit -= this.getScore(droppable);
+                console.log(this.gameCredit);
                 //only 1 issue allowed
                 if (draggable.model.get('issue') && droppable.model.get('issue')) {
                     draggable.shake();
@@ -575,8 +577,7 @@ define(function (require) {
 
                 evidence.add(droppable.model.get('evidence').toJSON());
 
-                this.gameCredit -= this.getScore(draggable);
-                this.gameCredit -= this.getScore(droppable);
+
                 this.removeIssueGroup(draggable);
                 this.removeIssueGroup(droppable);
             }
@@ -705,6 +706,7 @@ define(function (require) {
              var max = 0;
              var penalty = 0;
 
+
              evlist.each(function (obj) {
                  count += obj.get('score');
                  let maxScore = obj.get('maxscore');
@@ -713,14 +715,11 @@ define(function (require) {
                  }
                  else if (max !== maxScore) {
                      penalty += 1;
-                     if (max > maxScore) {
-                         max = maxScore;
-                     }
                  }
              });
 
             if (penalty != 0){
-                count -= penalty;
+                count -= evlist.length;
             }
             else if (max != count) {
                 count -= 2;
