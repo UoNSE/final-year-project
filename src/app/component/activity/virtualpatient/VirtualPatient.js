@@ -130,7 +130,9 @@ define(function(require) {
 			this.statuscart = this.add(new StatusCart({
 				model: new StatusCartModel({
 					title: 'Clues found',
-					body: '<div class="inventorydisp"><i>No Clues discovered yet</i></div><br><br>Correct clues found: <span class="cf">'+this.noclues+'</span>/6'
+					body: '<div class="inventorydisp"><i>No Clues discovered yet</i></div><br><br>'+
+					'Correct clues found: <span class="cf">'+this.noclues+'</span>/6'+
+					'<div class="btnspace"></div>'
 				})
 			}));
 
@@ -308,7 +310,8 @@ define(function(require) {
 				//@TODO ONLY INCREMENT THE CLUES IF THE HASH IS PART OF THE id=6,7,8,9,10,11,12
 				if(this.noclues < 6)
 					this.noclues++; //update count, limit 6
-
+				if(this.noclues == 6)
+					$('.btnspace').html('<button>@todo: If 6(or 8, 2 free strikes) found and incorrect, show reset button, if correct show next module button</button>');
 				//THE HASHES CHANGE EACH TIME - NOT RELIABLE :(
 				this.cluelist += evidence.id+'<br>'; //evidence.id (evidence is an event.draggable)
 
