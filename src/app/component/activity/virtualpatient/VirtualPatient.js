@@ -66,6 +66,7 @@ define(function(require) {
 			this.inventory = inventory;
 			this.caseID =  caseID;
 			this.noclues = 0; //the number of clues the user has discovered
+			this.correctclues = 7; //the amount of correct clues for this module
 			this.cluelist = '';
 			console.log("inventory on entering activity: " + this.inventory.get("evidence").length + " evidences in inventory.");
 
@@ -125,13 +126,13 @@ define(function(require) {
 			//ox
 			//ok, so the addtoCollection button is going to show a module progress yes. It will highlight correct evidence as green
 			//and incorrect evidence as red (with possibly a small time delay
-			//the progress bar will be an n/6 indicator representing how many of the 6 correct evidences have been found on the virtual patient.
+			//the progress bar will be an n/7 indicator representing how many of the 7 correct evidences have been found on the virtual patient.
 			//var noclues=0; //number of correct clues found so far
 			this.statuscart = this.add(new StatusCart({
 				model: new StatusCartModel({
 					title: 'Clues found',
-					body: '<div class="inventorydisp"><i>No Clues discovered yet</i></div><br><br>'+
-					'Correct clues found: <span class="cf">'+this.noclues+'</span>/6'+
+					body: '<div class="inventorydisp"><i>No Clues discovered yet</i></div><br>'+
+					'Correct clues found: <span class="cf">'+this.noclues+'</span>/'+this.correctclues+
 					'<div class="btnspace"></div>'
 				})
 			}));
@@ -308,10 +309,10 @@ define(function(require) {
 				console.log("----\n"+this.evidencecollection);
 
 				//@TODO ONLY INCREMENT THE CLUES IF THE HASH IS PART OF THE id=6,7,8,9,10,11,12
-				if(this.noclues < 6)
+				if(this.noclues < this.correctclues)
 					this.noclues++; //update count, limit 6
-				if(this.noclues == 6)
-					$('.btnspace').html('<button>@todo: If 6(or 8, 2 free strikes) found and incorrect, show reset button, if correct show next module button</button>');
+				if(this.noclues == this.correctclues)
+					$('.btnspace').html('<button>@todo: If 7(or 9, 2 free strikes) found and incorrect, show reset button, if correct show next module button</button>');
 				//THE HASHES CHANGE EACH TIME - NOT RELIABLE :(
 				this.cluelist += evidence.id+'<br>'; //evidence.id (evidence is an event.draggable)
 
