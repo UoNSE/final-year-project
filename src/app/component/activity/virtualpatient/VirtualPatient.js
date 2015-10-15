@@ -30,6 +30,7 @@ define(function(require) {
 	var AddToCollectionButton = require('component/activity/virtualpatient/addtocollectionbutton/AddToCollection');
 
 	var HelpModel = require('model/Help');
+	var StatusCartModel = require('model/Statuscart');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 	var EvidenceCollection = require('collection/Evidence');
 	var EvidenceModel = require('model/Evidence');
@@ -64,7 +65,9 @@ define(function(require) {
 			this.collaborative = false;
 			this.inventory = inventory;
 			this.caseID =  caseID;
-			console.log("inventory on entering activity: " + + this.inventory.get("evidence").length + " evidences in inventory.");
+			this.noclues = 0; //the number of clues the user has discovered
+			this.cluelist = '';
+			console.log("inventory on entering activity: " + this.inventory.get("evidence").length + " evidences in inventory.");
 
 
 
@@ -108,6 +111,7 @@ define(function(require) {
 
 			this.help = this.add(new Help({
 				model: new HelpModel({
+					title: 'Help', //apperently this is getting overridden when we have a second simmilar model in our view
 					body: 'Players take turns at gathering evidence. Collect evidence about the patients condition.<br><br>' +
 						'Use the <strong>Query</strong> button to ask the patient questions.<br><br>' +
                         'Use the <strong>Test</strong> button to run blood, urine and saliva tests on the patient.<br><br>' +
@@ -118,31 +122,29 @@ define(function(require) {
 			}));
 			this.help.setInteractive();
 
-
-			this.addtocollectionbutton = this.add(new AddToCollectionButtonAddToCollectionButton()); //add the AddToCollectionButton
-			this.addtocollectionbutton.on({
-				addToCollection: this.addEvidenceCardToCollection.bind(this)
-			});
-
 			//ox
 			//ok, so the addtoCollection button is going to show a module progress yes. It will highlight correct evidence as green
 			//and incorrect evidence as red (with possibly a small time delay
 			//the progress bar will be an n/6 indicator representing how many of the 6 correct evidences have been found on the virtual patient.
-			this.progresschart = this.add(new Help({
-				model: new HelpModel({
-					body: 'Players take turns at gathering evidence. Collect evidence about the patients condition.<br><br>' +
-					'Use the <strong>Query</strong> button to ask the patient questions.<br><br>' +
-					'Use the <strong>Test</strong> button to run blood, urine and saliva tests on the patient.<br><br>' +
-					'Use the <strong>Chart</strong> button to view the patients details and vital signs.<br><br>' +
-					'<strong>Inspect</strong> areas of the body to reveal scans and other information related to that area.' +
-					'If you no longer need an evidence card, you can drag it to the trash can.'
+			//var noclues=0; //number of correct clues found so far
+			this.statuscart = this.add(new StatusCart({
+				model: new StatusCartModel({
+					title: 'Clues found',
+					body: '<div class="inventorydisp"><i>No Clues discovered yet</i></div><br><br>Correct clues found: <span class="cf">'+this.noclues+'</span>/6'
 				})
 			}));
-			this.help.setInteractive();
 
+
+
+
+
+
+			this.addtocollectionbutton = this.add(new AddToCollectionButton()); //add the AddToCollectionButton
+			this.addtocollectionbutton.on({
+				addToCollection: this.addEvidenceCardToCollection.bind(this)
+			});
 
 			this.hiddenLink = this.addTimelineLink();
-
 			this.menu = this.add(new Menu());
 			this.menu.on({
 				delete: this.onDelete.bind(this),
@@ -220,6 +222,8 @@ define(function(require) {
 				// this.bindDraggableEvents(buttonhandle);
 				buttonhandle.setInteractive();
 				buttonhandle.setDraggable();
+
+
 				// debugger;
 				// this.event.trigger();
 
@@ -288,7 +292,7 @@ define(function(require) {
 		},
 
 		addEvidenceCardToCollection: function(event){
-			console.log("checkign evidence is a Evidence");
+			console.log("checking evidence is a Evidence");
 			console.log("type: "+ event.draggable + " - "+ event.draggableType);
 			console.log(event.draggable instanceof Evidence);
 			var evidence = event.draggable;
@@ -299,6 +303,24 @@ define(function(require) {
 				evidence.remove();
 				// debugger;
 				console.log("added "+evidence.id+" to inventory: " + this.inventory.get("evidence").length + " evidences in inventory.");
+				console.log("----\n"+this.evidencecollection);
+
+				//@TODO ONLY INCREMENT THE CLUES IF THE HASH IS PART OF THE id=6,7,8,9,10,11,12
+				if(this.noclues < 6)
+					this.noclues++; //update count, limit 6
+
+				//THE HASHES CHANGE EACH TIME - NOT RELIABLE :(
+				this.cluelist += evidence.id+'<br>'; //evidence.id (evidence is an event.draggable)
+
+				/*
+				var cluelist = '';
+				for(var i=0;i<this.inventory.get("evidence").length;i++) //todo: find out how to convert this to a foreach
+					cluelist += this.inventory.get("evidence") +'<br>';//+this.inventory.get("evidence")+' '+i+'<br>';
+				//console.log("******\n"+this.ev);
+				*/
+
+				$('.inventorydisp').html(this.cluelist); //update list
+				$('.cf').html(this.noclues); //update count display
 			}
 		},
 
