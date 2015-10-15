@@ -25,6 +25,7 @@ define(function(require) {
 	var EvidenceFeed = require('component/activity/virtualpatient/evidencefeed/EvidenceFeed');
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Help = require('component/help/Help');
+	var StatusCart = require('component/statuscart/StatusCart'); //ox
 	var Inventory = require('component/inventory/Inventory');
 	var AddToCollectionButton = require('component/activity/virtualpatient/addtocollectionbutton/AddToCollection');
 
@@ -118,16 +119,26 @@ define(function(require) {
 			this.help.setInteractive();
 
 
-			this.addtocollectionbutton = this.add(new AddToCollectionButton());
-
-			//add the addtocollection button
-			// this.addtocollectionbutton = this.add(new AddToCollectionButton());
+			this.addtocollectionbutton = this.add(new AddToCollectionButtonAddToCollectionButton()); //add the AddToCollectionButton
 			this.addtocollectionbutton.on({
 				addToCollection: this.addEvidenceCardToCollection.bind(this)
 			});
 
-			// this.addtocollectionbutton.setInteractive();
-			// this.addtocollectionbutton.setDraggable();
+			//ox
+			//ok, so the addtoCollection button is going to show a module progress yes. It will highlight correct evidence as green
+			//and incorrect evidence as red (with possibly a small time delay
+			//the progress bar will be an n/6 indicator representing how many of the 6 correct evidences have been found on the virtual patient.
+			this.progresschart = this.add(new Help({
+				model: new HelpModel({
+					body: 'Players take turns at gathering evidence. Collect evidence about the patients condition.<br><br>' +
+					'Use the <strong>Query</strong> button to ask the patient questions.<br><br>' +
+					'Use the <strong>Test</strong> button to run blood, urine and saliva tests on the patient.<br><br>' +
+					'Use the <strong>Chart</strong> button to view the patients details and vital signs.<br><br>' +
+					'<strong>Inspect</strong> areas of the body to reveal scans and other information related to that area.' +
+					'If you no longer need an evidence card, you can drag it to the trash can.'
+				})
+			}));
+			this.help.setInteractive();
 
 
 			this.hiddenLink = this.addTimelineLink();
