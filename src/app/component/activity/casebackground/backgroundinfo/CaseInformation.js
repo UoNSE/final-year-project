@@ -1,6 +1,11 @@
 define(function (require) {
     'use strict';
-
+    /* TODO:
+     - add help
+     - fix positioning and sizing
+     - add hiddenlink and hiddenhint
+     - state save (for completion)
+    */
     var Component = require('core/Component');
     var template = require('text!component/activity/casebackground/backgroundinfo/CaseInformation.hbs');
 
