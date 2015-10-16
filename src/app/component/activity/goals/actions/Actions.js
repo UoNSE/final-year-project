@@ -173,7 +173,7 @@ define(function (require) {
 
             // setup syncing
             this.listenToOnce(actionsCollection, 'sync', this.onActionsSync);
-            this.listenToOnce(goalsCollection, 'sync', this.onGoalsSync);
+            this.listenToOnce(goalsCollection, 'sync', this.onDefinitionsSync);
             this.listenTo(actionsGroupsCollection, 'add', this.onAddActionGroup);
 
             // fetch models
@@ -442,7 +442,7 @@ define(function (require) {
          *
          * @param goals The issues collection.
          */
-        onGoalsSync: function (goals) {
+        onDefinitionsSync: function (goals) {
             var n = goals.size();
             var distance = this.width / 2;
 
@@ -464,7 +464,7 @@ define(function (require) {
                 });
 
                 // create card
-                var card = this.addGoal(model);
+                var card = this.addDefinition(model);
 
                 var scale = i - ((n - 1) / 2);
                 card.position.set(goalCardPositions.x(), scale * (distance));
@@ -483,7 +483,7 @@ define(function (require) {
          * @param model the Goal model.
          * @returns Card
          */
-        addGoal: function (model) {
+        addDefinition: function (model) {
             return this.createDraggableCard(model, GoalCard);
         },
 

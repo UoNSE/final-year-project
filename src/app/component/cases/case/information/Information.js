@@ -21,7 +21,8 @@ define(function (require) {
 			this.caseId = params['case_id'];
 			let model = new Model();
 			let buttons = model.get('buttons');
-			buttons.add(new ActionButton({text: 'Virtual Patient', href: this.getLink('virtual-patient')}));
+			buttons.add(new ActionButton({text: 'Case Background', href: this.getLink('case-information')}));
+			buttons.add(new ActionButton({text: 'Virtual Patient', href: this.getLink('virtual-patient'),disabled:true }));
 			this.add(new Timeline({model: model}));
 			var hint = this.add(new Hint({model: {text: 'Case Information'}}));
 			hint.position.y = 120;

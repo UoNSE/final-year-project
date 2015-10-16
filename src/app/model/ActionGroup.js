@@ -70,6 +70,7 @@ define(function (require) {
             let actionIds = goal.get('actions');
 
             // since actions can only be added if they pass a match condition
+            // and can't be added twice
             // comparing the lengths of the two arrays will suffice
             return actionIds.length === actions.length;
         }

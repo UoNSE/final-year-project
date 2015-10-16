@@ -26,7 +26,7 @@ define(function (require) {
             });
         },
 
-        addIssue: function (issue) {
+        addType: function (issue) {
             this.issues.push(issue);
         },
 

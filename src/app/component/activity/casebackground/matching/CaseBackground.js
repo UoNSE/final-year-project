@@ -3,26 +3,26 @@ define(function (require) {
 
     // components
     let Component = require('core/Component');
-    let GoalCard = require('component/activity/goals/card/goal/GoalCard');
-    let IssueCard = require('component/activity/goals/card/issue/IssueCard');
-    let IssueGoalMatch = require('component/activity/goals/card/issuegoal/IssueGoalMatch');
+    let DefCard = require('component/activity/casebackground/card/definition/DefinitionCard');
+    let TypeCard = require('component/activity/casebackground/card/type/TypeCard');
+    let TypeDefMatch = require('component/activity/casebackground/card/typedefinition/TypeDefinitionMatch');
     let ActionButton = require('component/actionbutton/ActionButton');
 
     // help
-    var Help = require('component/help/Help');
-    var HelpText = require('text!component/activity/goals/help/helpContent.hbs');
+    let Help = require('component/help/Help');
+    let HelpText = require('text!component/activity/casebackground/matching/help/MatchingHelp.hbs');
+    let HelpModel = require('model/Help');
 
     // hint
-    var Hint = require('component/hint/Hint');
+    let Hint = require('component/hint/Hint');
 
     // models
-    var HelpModel = require('model/Help');
-    let IssueGoalPair = require('model/IssueGoalPair');
+    let TypeDefPair = require('model/TypeDefPair');
 
     // collections
-    let IssuesCollection = require('collection/Issues');
-    let GoalsCollection = require('collection/Goals');
-    let MatchCollection = require('collection/IssueGoalMatches');
+    let TypesCollection = require('collection/Types');
+    let DefinitionsCollection = require('collection/Definitions');
+    let MatchCollection = require('collection/TypeDefMatches');
 
     // positioning
     let Positioning = require('component/activity/goals/Positioning');
@@ -51,8 +51,8 @@ define(function (require) {
     };
 
     /**
-     * @class Goals
-     * @classdesc The view class for Goals Action Activity.
+     * @class CaseBackground
+     * @classdesc The view class for Case Background 4 D's Matching Activity.
      */
     return Component.extend({
 
@@ -87,8 +87,8 @@ define(function (require) {
          * The collections managed by this activity.
          */
         collection: {
-            issues: new IssuesCollection(),
-            goals: new GoalsCollection(),
+            types: new TypesCollection(),
+            definitions: new DefinitionsCollection(),
             matches: new MatchCollection()
         },
 
@@ -126,20 +126,20 @@ define(function (require) {
         registerRules: function () {
 
             /**
-             * Goal => Issue : IssueGoalPair
+             * Definition => Type : TypeDefPair
              *
              * @type {Rule}
              */
-            let IssueGoalMatchRule = new Rule(function (goalCard, issueCard) {
+            let TypeDefMatchRule = new Rule(function (defCard, typeCard) {
 
-                let goal = goalCard.model;
-                let issue = issueCard.model;
+                let type = typeCard.model;
+                let definition = defCard.model;
 
-                if (goal.matchesIssue(issue)) {
+                if (definition.matchesType(type)) {
 
-                    let match = new IssueGoalPair({
-                        issue: issue,
-                        goal: goal,
+                    let match = new TypeDefPair({
+                        type: type,
+                        definition: definition,
                         color: 'light-green',
                         width: this.width
                     });
@@ -148,23 +148,23 @@ define(function (require) {
 
                     // remove cards components as they will be
                     // replaced by match components
-                    goalCard.remove();
-                    issueCard.remove();
+                    defCard.remove();
+                    typeCard.remove();
                 }
 
             }.bind(this));
 
             /**
-             * Handles other direction: Issue => Goal : IssueGoalPair
+             * Handles other direction: Type => Definition : TypeDefPair
              *
              * @type {Rule}
              */
-            let IssueGoalMatchRule2 = new Rule((issueCard, goalCard) => {
-                return IssueGoalMatchRule.execute(goalCard, issueCard);
+            let TypeDefMatchRule2 = new Rule((typeCard, definitionCard) => {
+                return TypeDefMatchRule.execute(definitionCard, typeCard);
             });
 
-            this.cardMatcher.addRule('Goal => Issue', IssueGoalMatchRule);
-            this.cardMatcher.addRule('Issue => Goal', IssueGoalMatchRule2);
+            this.cardMatcher.addRule('Definition => Type', TypeDefMatchRule);
+            this.cardMatcher.addRule('Type => Definition', TypeDefMatchRule2);
         },
 
         /**
@@ -187,7 +187,7 @@ define(function (require) {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
                     icon: 'content-send',
-                    href: 'cases/'.concat(caseID, '/activity/goals/choose')
+                    href: 'cases/'.concat(caseID, '/activity/casebackground/info')
                 }
             }));
 
@@ -209,25 +209,25 @@ define(function (require) {
          */
         setupActivityStartState: function () {
             // setup syncing
-            let issuesCollection = this.collection.issues;
-            let goalsCollection = this.collection.goals;
+            let typesCollection = this.collection.types;
+            let definitionsCollection = this.collection.definitions;
 
             // Listen to the sync events on both collections, which waits for
             // the models to be loaded.
-            this.listenToOnce(issuesCollection, 'sync', this.onTypesSync);
-            this.listenToOnce(goalsCollection, 'sync', this.onDefinitionsSync);
+            this.listenToOnce(typesCollection, 'sync', this.onTypesSync);
+            this.listenToOnce(definitionsCollection, 'sync', this.onDefinitionsSync);
             this.listenTo(this.collection.matches, 'add', this.onAddMatch);
 
-            // fetch issues and goals ready for matching to begin
-            issuesCollection.fetch();
-            goalsCollection.fetch();
+            // fetch types and definitions ready for matching to begin
+            typesCollection.fetch();
+            definitionsCollection.fetch();
         },
 
         /**
-         * Check if we have matched all issues and goals.
+         * Check if we have matched all types and definitions.
          */
         checkMatches: function () {
-            if (this.collection.matches.length === this.collection.goals.length) {
+            if (this.collection.matches.length === this.collection.definitions.length) {
                 // activate actions activity link
                 this.hiddenLink.show();
                 this.hiddenHint.show();
@@ -235,20 +235,20 @@ define(function (require) {
         },
 
         /**
-         * When an IssueGoalPair is added to its collection,
+         * When an TypeDefPair is added to its collection,
          * this function is called.
          *
-         * @param model the IssueGoalPair
+         * @param model the TypeDefPair
          */
         onAddMatch: function (model) {
 
-            let goal = model.get('goal');
-            let issue = model.get('issue');
+            let definition = model.get('definition');
+            let type = model.get('type');
 
-            goal.set('body', goal.get('content'));
-            issue.set('body', issue.get('data'));
+            definition.set('body', definition.get('content'));
+            type.set('body', type.get('content'));
 
-            let match = new IssueGoalMatch({
+            let match = new TypeDefMatch({
                 model: model
             });
 
@@ -263,40 +263,40 @@ define(function (require) {
                 element.position.set(MatchPositioning.x(), scale * 270);
             });
 
-            // check if we have matched all goals and issues
+            // check if we have matched all definitions and types
             this.checkMatches();
         },
 
         /**
-         * An event triggered when the issues collection has synced upon a fetch call.
+         * An event triggered when the types collection has synced upon a fetch call.
          *
-         * @param issues The issues collection.
+         * @param types The types collection.
          */
-        onTypesSync: function (issues) {
-            let n = issues.size();
+        onTypesSync: function (types) {
+            let n = types.size();
             let separatorDistance = 10; // 10 px
             let matches = this.collection.matches;
 
-            // first filter any issues that we have already matched
-            issues.filter((issue) => {
+            // first filter any types that we have already matched
+            types.filter((type) => {
 
                 let existingMatch =
-                    matches.find((match) => match.get('issue').id === issue.id);
+                    matches.find((match) => match.get('type').id === type.id);
                 return !existingMatch;
 
             }).forEach(function (model, i) {
-                // now create Issue Cards for any unmatched issues
+                // now create Type Cards for any unmatched types
 
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
-                    model.get('data').length
+                    model.get('content').length
                 );
 
                 Object.assign(model.attributes,
                     {
                         width: this.width,
-                        title: 'Issue',
-                        body: model.get('data'),
+                        title: 'Type',
+                        body: model.get('content'),
                         color: 'orange'
                     }
                 );
@@ -314,26 +314,26 @@ define(function (require) {
         },
 
         /**
-         * An event triggered when the issues collection has synced upon a fetch call.
+         * An event triggered when the types collection has synced upon a fetch call.
          *
-         * @param goals The issues collection.
+         * @param definitions The definitions collection.
          */
-        onDefinitionsSync: function (goals) {
-            var n = goals.size();
+        onDefinitionsSync: function (definitions) {
+            var n = definitions.size();
             let separatorDistance = 10; // 10 px
             let matches = this.collection.matches;
+/*
+            definitions.map((definition) => {
+                // mark all definitions as incomplete
+                definition.set('complete', false);
+                definition.save();
+            });*/
 
-            goals.map((goal) => {
-                // mark all goals as incomplete
-                goal.set('complete', false);
-                goal.save();
-            });
-
-            goals.filter((goal) => {
-                // filter any goals that we have already matched
+            definitions.filter((definition) => {
+                // filter any definitions that we have already matched
 
                 let existingMatch =
-                    matches.find((match) => match.get('goal').id === goal.id);
+                    matches.find((match) => match.get('definition').id === definition.id);
                 return !existingMatch;
 
             }).forEach(function (model, i) {
@@ -345,7 +345,7 @@ define(function (require) {
 
                 Object.assign(model.attributes, {
                     width: this.width,
-                    title: 'Goal',
+                    title: 'Definition',
                     body: model.get('content'),
                     color: 'light-blue'
                 });
@@ -364,21 +364,21 @@ define(function (require) {
         },
 
         /**
-         * Iterates through the issue collection and adds the cards to the view.
+         * Iterates through the type collection and adds the cards to the view.
          *
-         * @param model The issue model.
-         * @returns IssueGoalMatcher
+         * @param model The type model.
+         * @returns Card
          */
         addType: function (model) {
-            return this.createDraggableCard(model, IssueCard);
+            return this.createDraggableCard(model, TypeCard);
         },
 
         /**
-         * @param model the Goal model.
+         * @param model the Definition model.
          * @returns Card
          */
         addDefinition: function (model) {
-            return this.createDraggableCard(model, GoalCard);
+            return this.createDraggableCard(model, DefCard);
         },
 
         /**
@@ -418,13 +418,13 @@ define(function (require) {
         determineCardHeight: function (length) {
             // dimensions
             let height = 100;
-            let goalHeight = 100;
+            let definitionHeight = 100;
 
             const scale = 80;
             if (length > 42) {
-                return goalHeight = height * (length / scale);
+                return definitionHeight = height * (length / scale);
             }
-            return goalHeight;
+            return definitionHeight;
         }
 
     });

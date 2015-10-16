@@ -1,18 +1,22 @@
 define(function (require) {
 
-	'use strict';
+    'use strict';
 
-	var Panel = require('component/panel/Panel');
+    let Panel = require('component/panel/Panel');
 
-	return Panel.extend({
+    /**
+     * @class Card
+     * @classdesc A generic 'Card' component class.
+     */
+    return Panel.extend({
 
-		initialize: function () {
-			Panel.prototype.initialize.apply(this, arguments);
-			this.setInteractive();
-			this.setDraggable({opacity: 0.7});
-		}
+        initialize: function () {
+            Panel.prototype.initialize.apply(this, arguments);
+            this.className = 'Card';
+            this.setInteractive();
+            this.setDraggable({opacity: 0.7});
+        }
 
-	});
+    });
 
 });
-

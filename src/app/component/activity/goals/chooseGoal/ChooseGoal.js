@@ -176,7 +176,7 @@ define(function (require) {
 
             // Listen to the sync events on both collections, which waits for
             // the models to be loaded.
-            this.listenToOnce(this.collection.goals, 'sync', this.onGoalsSync);
+            this.listenToOnce(this.collection.goals, 'sync', this.onDefinitionsSync);
 
             // load data
             this.collection.goals.fetch();
@@ -188,7 +188,7 @@ define(function (require) {
          *
          * @param goals The issues collection.
          */
-        onGoalsSync: function (goals) {
+        onDefinitionsSync: function (goals) {
 
             let n = goals.size();
             let separatorDistance = 10; // 10 px
@@ -214,7 +214,7 @@ define(function (require) {
                 });
 
                 // create card
-                let card = this.addGoal(model);
+                let card = this.addDefinition(model);
 
                 let scale = i - ((n - 1) / 2);
                 let x = () => {
@@ -237,7 +237,7 @@ define(function (require) {
          * @param model the Goal model.
          * @returns {Card}
          */
-        addGoal: function (model) {
+        addDefinition: function (model) {
             return this.createCard(model);
         },
 

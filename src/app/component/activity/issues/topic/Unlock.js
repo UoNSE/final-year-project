@@ -44,7 +44,7 @@ define(function (require) {
 
             // Listen to the sync events on both collections, which waits for the models to be loaded.
             this.listenTo(topicCollection, 'sync', this.onTopicsSync);
-            this.listenTo(issueCollection, 'sync', this.onIssuesSync);
+            this.listenTo(issueCollection, 'sync', this.onTypesSync);
 
             topicCollection.fetch();
             issueCollection.fetch();
@@ -72,9 +72,9 @@ define(function (require) {
             this.addTopics(topics);
         },
 
-        onIssuesSync: function (issues) {
+        onTypesSync: function (issues) {
             issues.forEach(model => {
-                var issue = this.addIssue(model);
+                var issue = this.addType(model);
                 issue.hide();
             });
         },
@@ -99,7 +99,7 @@ define(function (require) {
             return topic;
         },
 
-        addIssue: function(model) {
+        addType: function(model) {
 
             var issue = this.add(new Issue({
                 issueid: model.get('id'),
@@ -130,7 +130,7 @@ define(function (require) {
 
             this.topics.forEach(topic => {
                 if (topic.topicId === issue.topicId){
-                    topic.addIssue(issue);
+                    topic.addType(issue);
                 }
             });
 

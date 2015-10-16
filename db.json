@@ -225,6 +225,46 @@
       "complete": false
     }
   ],
+  "types": [
+    {
+      "id": 1,
+      "content": "Decline"
+    },
+    {
+      "id": 2,
+      "content": "Dementia"
+    },
+    {
+      "id": 3,
+      "content": "Delirium"
+    },
+    {
+      "id": 4,
+      "content": "Depression"
+    }
+  ],
+  "definitions": [
+    {
+      "id": 1,
+      "typeId": 1,
+      "content": "Definition1"
+    },
+    {
+      "id": 2,
+      "typeId": 2,
+      "content": "Definition2"
+    },
+    {
+      "id": 3,
+      "typeId": 3,
+      "content": "Definition3"
+    },
+    {
+      "id": 4,
+      "typeId": 4,
+      "content": "Definition4"
+    }
+  ],
   "actions": [
     {
       "id": 1,
@@ -268,7 +308,7 @@
     }
   ],
   "caseinfo": {
-    "id":1,
+    "id": 1,
     "timer": "00:05:23",
     "cards": [
       {
