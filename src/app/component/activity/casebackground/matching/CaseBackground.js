@@ -246,7 +246,7 @@ define(function (require) {
             let type = model.get('type');
 
             definition.set('body', definition.get('content'));
-            type.set('body', type.get('content'));
+            type.set('title', type.get('content'));
 
             let match = new TypeDefMatch({
                 model: model
@@ -260,7 +260,7 @@ define(function (require) {
             match.setInteractive();
             this.matches.forEach((element, index, array) => {
                 let scale = index - ((array.length - 1) / 2);
-                element.position.set(MatchPositioning.x(), scale * 270);
+                element.position.set(MatchPositioning.x(), scale * 140);
             });
 
             // check if we have matched all definitions and types

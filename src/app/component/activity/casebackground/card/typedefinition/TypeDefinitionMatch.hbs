@@ -1,22 +1,9 @@
 <div class="panel panel-{{mtl-color color}}"
      style="width: {{units width}}; height: {{units height}}">
     <div class="panel-heading">
-        <h3 class="panel-title">Match</h3>
+        <h3 class="panel-title">{{type.title}}</h3>
     </div>
-    <div class="panel panel-{{mtl-color color}}">
-        <div class="panel-heading">
-            <h3 class="panel-title">Type</h3>
-        </div>
-        <div class="panel-body">
-            {{type.body}}
-        </div>
-    </div>
-    <div class="panel panel-{{mtl-color color}}">
-        <div class="panel-heading">
-            <h3 class="panel-title">Definition</h3>
-        </div>
-        <div class="panel-body">
-            {{definition.body}}
-        </div>
+    <div class="panel-body">
+        {{definition.body}}
     </div>
 </div>
