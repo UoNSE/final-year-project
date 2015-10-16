@@ -2,6 +2,7 @@ define(function (require) {
 	'use strict';
 
 	var Backbone = require('backbone');
+	var $ = require('jquery');
 	var TWEEN = require('tweenjs');
 	var Camera = require('core/Camera');
 	var CSS2DRenderer = require('core/CSS2DRenderer');
@@ -18,6 +19,9 @@ define(function (require) {
 		this.animateCallback = this.animate.bind(this);
 		this.rendering = true;
 		this.requestId = null;
+		$(window).unload(() => {
+			this.session.save();
+		});
 		this.session.load().then(() => {
 			Backbone.history.start({pushState: true});
 			this.startRendering();

@@ -13,7 +13,7 @@ define(function (require, exports, module) {
 			saveScore: 0,
 			issues: null,
 			evidence: null,
-			issuegroup: null
+			issueGroups: null
 		},
 
 		relations: [{
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
 			relatedModel: Evidence
 		}, {
 			type: Backbone.HasMany,
-			key: 'issuegroups',
+			key: 'issueGroups',
 			relatedModel: IssueGroup
 		}],
 
@@ -38,7 +38,7 @@ define(function (require, exports, module) {
 				this.get('evidence').add(model);
 			}
 			else if (model instanceof IssueGroup) {
-				this.get('issuegroups').add(model);
+				this.get('issueGroups').add(model);
 			}
 			else {
 				throw new error('Cannot add model of type', model);

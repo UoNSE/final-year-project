@@ -51,7 +51,7 @@ define(function (require) {
 			var promises = [];
 			var sessionString = this.sessionStorage.getItem('session');
 			if (sessionString !== null) {
-				var session = JSON.parse(sessionString);
+				let session = JSON.parse(sessionString);
 				for (let key in session) {
 					promises.push(new Promise(function (resolve) {
 						let simpleValue = session[key];
@@ -61,14 +61,14 @@ define(function (require) {
 							var id = simpleValue.id;
 							require([id], function (Model) {
 								var instance = new Model(value);
-								if (instance.relations) {
-									instance.relations.forEach(relation => {
-										var relationKey = relation.key;
-										var relatedModel = relation.relatedModel;
-
-										instance.set(relationKey, new relatedModel(instance.get(relationKey)));
-									});
-								}
+						//		if (instance.relations) {
+						//			instance.relations.forEach(relation => {
+						//				var relationKey = relation.key;
+						//				var relatedModel = relation.relatedModel;
+						//
+						//				instance.set(relationKey, new relatedModel(instance.get(relationKey)));
+						//			});
+						//		}
 								this.set(key, instance, false);
 								resolve();
 							}.bind(this));
@@ -88,6 +88,7 @@ define(function (require) {
 			for (let key in this.map) {
 				let value = this.map[key];
 				let simpleValue = {};
+				debugger;
 				if (value instanceof Backbone.Model) {
 					simpleValue.type = 'model';
 					simpleValue.value = value.toJSON();

@@ -61,7 +61,7 @@ define(function (require) {
         collection: {
             issues: new IssuesCollection(),
             evidence: new EvidenceCollection(),
-            issueGroup: new IssueGroupCollection()
+            issueGroups: new IssueGroupCollection()
         },
 
         initialize: function (inventory, params) {
@@ -77,16 +77,18 @@ define(function (require) {
 
             var issues = this.collection.issues;
             var evidence = this.collection.evidence;
-            var issueGroups = this.collection.issueGroup;
+            var issueGroups = this.collection.issueGroups;
 
             // Listen to the sync events on both collections, which waits for the models to be loaded.
             this.listenTo(issues, 'sync', this.onIssuesSync);
             this.listenTo(evidence, 'sync', this.onEvidenceSync);
             this.listenTo(issueGroups, 'sync', this.onIssueGroupSync);
+
             //update listener to sync to inventory
-            this.listenTo(issueGroups, 'update', this.syncCards);
-            this.listenTo(issues, 'update', this.syncCards);
-            this.listenTo(evidence, 'update', this.syncCards);
+            //this.listenTo(issues, 'update', this.syncCards);
+            //this.listenTo(evidence, 'update', this.syncCards);
+            //this.listenTo(issueGroups, 'update', this.syncCards);
+
             this.setupFixedComponents(params['case_id']);
             if (this.canLoad()) {
                 this.loadCards();
@@ -94,6 +96,10 @@ define(function (require) {
             else {
                 this.fetchCards(issues, evidence);
             }
+
+            this.collection.issues = inventory.get('issues');
+            this.collection.evidence = inventory.get('evidence');
+            this.collection.issueGroups = inventory.get('issueGroups');
 
             this.menu = this.add(new Menu());
             this.menu.on({
@@ -107,12 +113,10 @@ define(function (require) {
 
         /**
          * Check if there are cards in the inventory
-         * @returns true if the inventory has cards
+         * @returns {boolean} true if the inventory has cards
          */
-        canLoad: function(){
-            //TODO check if inventory has cards
-            return(this.inventory.get("issues").length > 0 || this.inventory.get("evidence").length > 0 ||this.inventory.get("issuegroups").length > 0);
-
+        canLoad: function () {
+            return this.inventory.get('issues').size() > 0 || this.inventory.get('evidence').size() > 0 || this.inventory.get('issueGroups').size() > 0;
         },
 
         setupFixedComponents: function( caseID ){
@@ -180,15 +184,15 @@ define(function (require) {
 			let collection = this.collection;
             let issues = this.inventory.get('issues');
             let evidence = this.inventory.get('evidence');
-            let issueGroup = this.inventory.get('issuegroups');
+            let issueGroups = this.inventory.get('issueGroups');
 
             collection.issues = issues;
             collection.evidence = evidence;
-            collection.issueGroup = issueGroup;
+            collection.issueGroups = issueGroups;
 
 			this.onIssuesLoad(issues);
 			this.onEvidenceLoad(evidence);
-			this.onIssueGroupLoad(issueGroup);
+			this.onIssueGroupsLoad(issueGroups);
 
         },
 
@@ -199,18 +203,18 @@ define(function (require) {
         syncCards: function () {
             //clear existing collection
 			let inventory = this.inventory;
-			let issueGroups = inventory.get('issuegroups');
-			let issues = inventory.get('issues');
 			let evidence = inventory.get('evidence');
+            let issues = inventory.get('issues');
+            let issueGroups = inventory.get('issueGroups');
 
-            issueGroups.reset();
-			issues.reset();
 			evidence.reset();
+            issues.reset();
+            issueGroups.reset();
 
             //sync new collection
-            issueGroups.add(this.collection.issueGroup);
-            issues.add(this.collection.issues);
-            evidence.add(this.collection.evidence);
+            evidence.set(this.collection.evidence.models);
+            issues.set(this.collection.issues.models);
+            issueGroups.set(this.collection.issueGroups.models);
 
         },
 
@@ -290,7 +294,7 @@ define(function (require) {
 				}));
                 var scale = i - ((n - 1) / 2);
                 this.gameCredit += score;
-                if(score < card.model.get('maxscore')) {
+                if (score < card.model.get('maxscore')) {
                     this.gameCredit -= 2;
                 }
                 card.position.set(300, scale * (distance + card.model.get('height')));
@@ -299,27 +303,29 @@ define(function (require) {
         },
 
 
-        onIssueGroupLoad: function (issueGroup) {
-            var n = issueGroup.size();
+        onIssueGroupsLoad: function (issueGroups) {
+            var n = issueGroups.size();
             var distance = 10;
-            issueGroup.forEach((model, i) => {
+            issueGroups.forEach((model, i) => {
+                let issue = model.get('issue');
+                let evidence = model.get('evidence');
                 let card = this.add(new IssueGroup({
                     model: new IssueGroupModel({
                         width: this.width,
                         title: 'Issues and evidence',
                         color: 'success',
-                        issue: model.get('issue'),
-                        evidence: model.get('evidence')
+                        issue: issue,
+                        evidence: evidence
                     })
-
                 }));
                 var scale = i - ((n - 1) / 2);
                 this.gameCredit += this.getScore(card);
-                card.position.set(-300, scale * (distance + card.model.get('height')));
+                let height = ((issue || []).length + (evidence || []).length) * 100;
+                card.position.set(300, scale * (distance + height));
                 this.bindDraggableEvents(card);
 
-        });
-        this.updateScore();
+            });
+            this.updateScore();
         },
 
         /**
@@ -331,7 +337,7 @@ define(function (require) {
             var n = evidence.size();
             var distance = 10;
             evidence.forEach((model, i) => {
-                var card = this.addEvidence(new EvidenceModel({
+                var card = this.addEvidence({
 					width: this.width,
 					height: this.height,
 					title: 'Evidence',
@@ -340,7 +346,7 @@ define(function (require) {
                     maxscore: model.get('maxscore'),
                     issueid: model.get('issueId'),
 					color: 'info'
-				}));
+				});
                 var scale = i - ((n - 1) / 2);
                 var score = card.model.get('score');
                 this.gameCredit += score;
@@ -360,7 +366,7 @@ define(function (require) {
          */
         addIssue: function (model) {
 			var issue = this.add(new Issue({
-                model: model
+                model: new IssueModel(model)
             }));
             this.bindDraggableEvents(issue);
             return issue;
@@ -374,7 +380,7 @@ define(function (require) {
          */
         addEvidence: function (model) {
 			var evidence = this.add(new Evidence({
-                model: model
+                model: new EvidenceModel(model)
             }));
             this.bindDraggableEvents(evidence);
             return evidence;
@@ -474,12 +480,12 @@ define(function (require) {
 
         onSplit: function (event) {
 
-            var issueGroup = event.draggable;
-            var model = issueGroup.model;
+            let issueGroup = event.draggable;
+            let model = issueGroup.model;
 
             this.gameCredit -= this.getScore(issueGroup);
 
-            var issue = model.get('issue');
+            let issue = model.get('issue');
             if (issue) {
                 this.addIssue(issue);
                 this.collection.issues.add(issue);
@@ -487,7 +493,7 @@ define(function (require) {
 
             }
 
-            var evidence = model.get('evidence');
+            let evidence = model.get('evidence');
             evidence.each(model => {
                 var score = model.get('score');
                 this.addEvidence(model);
@@ -503,16 +509,16 @@ define(function (require) {
 
         },
 
-        removeIssueGroup: function(group){
+        removeIssueGroup: function (issueGroup) {
             //find group in collection.issuegroup
-            let issueGroup = this.collection.issueGroup;
+            let issueGroups = this.collection.issueGroups;
             let models = [];
-            issueGroup.each(function (model) {
-                if (model.get('model').get('evidence').where({body: group.model.get('evidence').models[0].get('body')}).length >0) {
+            issueGroups.each(function (model) {
+                if (model.get('evidence').where({body: issueGroup.model.get('evidence').models[0].get('body')}).length >0) {
                     models.push(model);
                 }
             });
-            issueGroup.remove(models);
+            issueGroups.remove(models);
 
         },
 
@@ -646,7 +652,7 @@ define(function (require) {
                 })
             }));
             //update collections
-            this.collection.issueGroup.add(issueGroup);
+            this.collection.issueGroups.add(issueGroup.model);
 
             //remove old collection occurences
             if(issueGroup.model.get("evidence") != null) {
