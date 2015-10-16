@@ -10,15 +10,7 @@ define(function (require) {
 		title: 'Case Information',
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
-			new Cases().fetch({
-				data: {
-					id: this.urlParams['case_id']
-				}
-			}).then(function (cases) {
-				this.add(new Information({
-					model: cases[0]
-				}));
-			}.bind(this));
+			this.add(new Information(this.urlParams));
 		}
 	});
 });

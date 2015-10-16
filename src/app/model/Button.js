@@ -2,7 +2,9 @@ define(function (require) {
 
 	var Backbone = require('backbone');
 
-	return Backbone.Model.extend({
+	return Backbone.RelationalModel.extend({
+
+		type: Backbone.HasOne,
 
 		defaults: {
 			text: '',
