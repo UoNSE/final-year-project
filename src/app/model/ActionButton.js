@@ -1,11 +1,18 @@
 define(function (require) {
 
 	var _ = require('underscore');
+
 	var Button = require('model/Button');
 
-	var ActionButton = Button.extend({});
+	var ActionButton = Button.extend({
 
-	_.extend(ActionButton.prototype.defaults, Button.prototype.defaults, {icon: null});
+		defaults: {
+			icon: null
+		}
+
+	});
+
+	_.extend(ActionButton.prototype.defaults, Button.prototype.defaults);
 
 	return ActionButton;
 

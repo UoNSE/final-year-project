@@ -170,17 +170,17 @@ define(function(require) {
 		template: template,
 		classes: 'queries',
 		styles: 'component/activity/virtualpatient/querypatient/Query.css',
-		events: {
+		Events: {
 			// 'click .query-btn': '_addEvidenceCard',
-			//'click #query-btn-1': '_addEvidenceCard',
-			//'click #query-btn-2': '_addEvidenceCard',
-			//'click #query-btn-3': '_addEvidenceCard',
-			//'click #query-btn-4': '_addEvidenceCard',
-			//'click #query-btn-5': '_addEvidenceCard',
-			//'click #query-btn-6': '_addEvidenceCard',
-			//'click #query-btn-7': '_addEvidenceCard',
-			//'click #query-btn-8': '_addEvidenceCard',
-			//'click #query-btn-9': '_addEvidenceCard',
+			'click #query-btn1': '_addEvidenceCard',
+			'click #query-btn2': '_addEvidenceCard',
+			'click #query-btn3': '_addEvidenceCard',
+			'click #query-btn4': '_addEvidenceCard',
+			'click #query-btn5': '_addEvidenceCard',
+			'click #query-btn6': '_addEvidenceCard',
+			'click #query-btn7': '_addEvidenceCard',
+			'click #query-btn8': '_addEvidenceCard',
+			'click #query-btn9': '_addEvidenceCard',
 		},
 
 		initialize: function (vproot) {
@@ -189,7 +189,7 @@ define(function(require) {
 			this.vproot = vproot;
 			this.queries = vproot.queries;
 			this.responses = vproot.responses;
-			this.buttons = [];
+			// debugger;
 
 			this.createTestMenu();
 
@@ -201,7 +201,7 @@ define(function(require) {
 					text: text,
 					color: color,
 					// classes: ['querybtn'],
-					id: 'query-btn-' + this.buttons.length + 1
+					id: 'query-btn'+this.buttoncount
 				})
 			});
 		},
@@ -209,7 +209,6 @@ define(function(require) {
 		onToggleButton: function (button, event) {
 
 			button.toggle();
-			button.bringToFront();
 			// debugger;
 			// var evidencetarget = button.evidencetarget;
 			// this.evidencetarget.detached = true;
@@ -227,11 +226,10 @@ define(function(require) {
 			this.testMenu = [];
 			var menuSize = this.queries.length;
 
-			for (var i=0; i < menuSize; i++) {
-				let menuBtn = this.createMenuButton(this.queries[i].text);
+			for (var i=0; i < menuSize; i++){
+				this.menuBtn = this.createMenuButton(this.queries[i].text);
 				// this.testMenu.push(this.menuBtn);
-				this.addEvidenceTarget(menuBtn, this.responses[i].text);
-				this.buttons.push(menuBtn);
+				this.addEvidenceTarget(this.menuBtn, this.responses[i].text);
 			}
 
 			// this.add(testMenu);
@@ -262,7 +260,7 @@ define(function(require) {
 				title: 'Evidence',
 				color: 'info',
 				body: "<strong>Question:</strong> " +
-					button.model.get('text') +
+					button.model.attributes.text +
 					"</br>" + "<strong>Response: </strong>"+ response,
 				classes: " queryevidence" // hack. needs a space. bug in panel.hbs...
 				// body: dummy
@@ -285,9 +283,10 @@ define(function(require) {
 		addEvidence: function (model) {
 
 			// add the evidence to the root virtual patient component.
-			return new Evidence({
+			var evidence = new Evidence({
 				model: model
 			});
+			return evidence;
 		},
 
 	});

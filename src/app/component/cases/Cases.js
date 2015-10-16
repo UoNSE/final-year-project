@@ -8,7 +8,6 @@ define(function (require) {
 
 	var Cases = require('collection/Cases');
 	var ActionButton = require('model/ActionButton');
-	var Timeline = require('model/Timeline');
 
 	var TWEEN = require('tweenjs');
 	var Vector2 = require('math/Vector2');
@@ -41,21 +40,17 @@ define(function (require) {
 			var colorClasses = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
 				'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange'];
 			collection.each((model, i) => {
-				let id = model.get('id');
-				let currentCase = new Case({
+				var newCase = new Case({
 					model: new ActionButton({
-						caseId: id,
 						text: model.get('name'),
 						color: colorClasses[Math.round(i * colorClasses.length / length)],
-						href: 'cases/' + id + '/overview'
+						href: 'cases/' + model.get('id') + '/overview'
 					})
 				});
-
-				currentCase.position.set(0, 0);
-				currentCase.scale.set(0, 0);
-				this.listenTo(currentCase, 'click', this.onClick.bind(this, currentCase));
-				this.cases.push(currentCase);
-				this.add(currentCase);
+				newCase.position.set(0, 0);
+				newCase.scale.set(0, 0);
+				this.cases.push(newCase);
+				this.add(newCase);
 			});
 			this.animate();
 		},
@@ -78,30 +73,6 @@ define(function (require) {
 					.easing(TWEEN.Easing.Elastic.Out)
 					.start();
 			});
-		},
-
-		onClick: function (button) {
-			let model = button.model;
-			app.session.get('case', () => {
-
-				let id = model.get('caseId');
-				let overview = new Timeline();
-				let buttons = overview.get('buttons');
-				let link = (name) => {
-					return 'cases/' + id + '/activity/' + name;
-				};
-
-				buttons.add(new ActionButton({text: 'Case Information', href: 'cases/' + id + '/information'}));
-				buttons.add(new ActionButton({text: 'Identify Issues', href: link('issues'), disabled: true}));
-				buttons.add(new ActionButton({text: 'Goals and Actions', href: link('goals'), disabled: true}));
-				buttons.add(new ActionButton({text: 'Reflection', href: link('reflection'), disabled: true}));
-
-				return {
-					overview: overview
-				};
-
-			});
 		}
-
 	});
 });
