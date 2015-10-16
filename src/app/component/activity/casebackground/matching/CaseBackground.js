@@ -187,7 +187,7 @@ define(function (require) {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
                     icon: 'content-send',
-                    href: 'cases/'.concat(caseID, '/activity/casebackground/info')
+                    href: 'cases/'.concat(caseID, '/activity/case-information/info')
                 }
             }));
 

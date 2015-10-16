@@ -2,7 +2,7 @@ define(function (require) {
     'use strict';
 
     var Component = require('core/Component');
-    var template = require('text!component/activity/caseinformation/CaseInformation.hbs');
+    var template = require('text!component/activity/casebackground/backgroundinfo/CaseInformation.hbs');
 
     var CaseInfoCollection = require('collection/CaseInfos');
     var CaseInfoCardsCollection = require('collection/CaseInfoCards');
@@ -10,8 +10,8 @@ define(function (require) {
     var TimerModel = require('model/Timer');
     var SelectableText = require('model/SelectableText');
 
-    var Timer = require('component/activity/caseinformation/timer/Timer');
-    var Card = require('component/activity/caseinformation/card/CaseInfoCard');
+    var Timer = require('component/activity/casebackground/timer/Timer');
+    var Card = require('component/activity/casebackground/card/caseinfo/CaseInfoCard');
 
     var totalEvidenceCount=0;
 
@@ -20,17 +20,18 @@ define(function (require) {
 
         template: template,
         classes: ['caseinfos'],
-        styles: 'component/activity/caseinformation/CaseInformation.css',
-
+        styles: 'component/activity/casebackground/backgroundinfo/CaseInformation.css',
+        caseid: '0',
         collection: {
             caseinfos: new CaseInfoCollection(),
             caseinfocards : new CaseInfoCardsCollection()
         },
 
-        initialize: function () {
+        initialize: function (caseId) {
+            debugger;
 
             Component.prototype.initialize.apply(this, arguments);
-
+            this.caseid = caseId;
             this.width = 300;
             this.height = 200;
 

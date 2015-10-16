@@ -3,12 +3,12 @@ define(function (require) {
     'use strict';
 
     var Panel = require('component/panel/Panel');
-    var template = require('text!component/activity/caseinformation/card/CaseInfoCard.hbs');
+    var template = require('text!component/activity/casebackground/card/caseinfo/CaseInfoCard.hbs');
     var sCounter = 0; //counter for selected items, counts all cards, no bound to a single instance
 
     return Panel.extend({
         template:template,
-        styles: 'component/activity/caseinformation/card/CaseInfoCard.css',
+        styles: 'component/activity/casebackground/card/caseinfo/CaseInfoCard.css',
         hiddenCards: null,
 
         initialize: function () {
