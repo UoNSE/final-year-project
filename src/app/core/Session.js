@@ -25,6 +25,10 @@ define(function (require) {
 			}
 		},
 
+		has: function (key) {
+			return key in this.map;
+		},
+
 		remove: function (key) {
 			delete this.map[key];
 		}

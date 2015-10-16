@@ -276,6 +276,7 @@ define(function(require) {
 			}
 
 			toggableTarget.toggle();
+			toggableTarget.bringToFront();
 
 		},
 

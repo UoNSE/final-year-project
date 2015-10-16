@@ -1,30 +1,34 @@
 define(function (require) {
 
-	var Component = require('core/Component');
-	var template = require('text!component/case/information/Information.hbs');
+	'use strict';
 
-	var ActionButtons = require('collection/ActionButtons');
-	var Timeline = require('component/timeline/Timeline');
-	var Hint = require('component/hint/Hint');
+	let Component = require('core/Component');
+	let template = require('text!component/case/information/Information.hbs');
+
+	let Model = require('model/Timeline');
+	let ActionButton = require('model/ActionButton');
+
+	let Timeline = require('component/timeline/Timeline');
+	let Hint = require('component/hint/Hint');
 
 	return Component.extend({
 		template: template,
 		classes: 'case-information',
 		styles: 'component/case/information/information.css',
 
-		initialize: function () {
+		initialize: function (params) {
 			Component.prototype.initialize.apply(this, arguments);
-			this.add(new Timeline({
-				collection: new ActionButtons([
-					{text: 'Virtual Patient', href: this.getLink('virtual-patient')}
-				])
-			}));
+			this.caseId = params['case_id'];
+			let model = new Model();
+			let buttons = model.get('buttons');
+			buttons.add(new ActionButton({text: 'Virtual Patient', href: this.getLink('virtual-patient')}));
+			this.add(new Timeline({model: model}));
 			var hint = this.add(new Hint({model: {text: 'Case Information'}}));
 			hint.position.y = 120;
 		},
 
 		getLink: function (name) {
-			return 'cases/' + this.model.id + '/activity/' + name;
+			return 'cases/' + this.caseId + '/activity/' + name;
 		}
 
 	});
