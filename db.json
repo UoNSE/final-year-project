@@ -199,32 +199,6 @@
       "name": "Bob"
     }
   ],
-  "goals": [
-    {
-      "id": 1,
-      "content": "Immediately stabilise patient",
-      "issueId": 1,
-      "actions": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "complete": false
-    },
-    {
-      "id": 2,
-      "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
-      "issueId": 2,
-      "actions": [
-        5,
-        6,
-        7,
-        8
-      ],
-      "complete": false
-    }
-  ],
   "types": [
     {
       "id": 1,
@@ -268,230 +242,102 @@
   "info": [
     {
       "id": 1,
-      "content": "won",
+      "content": "one one one one one",
+      "short": "one",
+      "relevant": true,
       "groupId": 1
     },
     {
       "id": 2,
-      "content": "too",
+      "content": "two",
+      "relevant": false,
       "groupId": 1
     },
     {
       "id": 3,
-      "content": "free",
+      "content": "three",
+      "short": "3",
+      "relevant": true,
       "groupId": 1
     },
     {
       "id": 4,
-      "content": "fore",
+      "content": "four",
+      "relevant": false,
       "groupId": 1
     },
     {
       "id": 5,
       "content": "five",
+      "relevant": false,
       "groupId": 2
     },
     {
       "id": 6,
       "content": "six",
+      "short": "6",
+      "relevant": true,
       "groupId": 2
     },
     {
       "id": 7,
       "content": "se7en",
+      "relevant": false,
       "groupId": 2
     },
     {
       "id": 8,
-      "content": "ate",
+      "content": "eight",
+      "short": "8",
+      "relevant": true,
       "groupId": 3
     },
     {
       "id": 9,
-      "content": "nein",
+      "content": "nine",
+      "relevant": false,
       "groupId": 3
     },
     {
       "id": 10,
       "content": "ten",
+      "relevant": false,
       "groupId": 3
     },
     {
       "id": 11,
-      "content": "Notify Mr Smith's doctor of his condition",
+      "content": "eleven",
+      "short": "11",
+      "relevant": true,
       "groupId": 3
     },
     {
       "id": 12,
-      "content": "Notify Mr Smith's doctor of his condition",
+      "content": "twelve",
+      "relevant": false,
       "groupId": 4
     },
     {
       "id": 13,
-      "content": "Notify Mr Smith's doctor of his condition",
+      "content": "thirteen",
+      "short": "13",
+      "relevant": true,
       "groupId": 4
     },
     {
       "id": 14,
-      "content": "Notify Mr Smith's doctor of his condition",
+      "content": "fourteen",
+      "short": "14",
+      "relevant": true,
       "groupId": 5
     },
     {
       "id": 15,
-      "content": "Notify Mr Smith's doctor of his condition",
+      "content": "fifteen",
+      "relevant": false,
       "groupId": 5
     }
   ],
-  "actions": [
-    {
-      "id": 1,
-      "content": "Notify Mr Smith's doctor of his condition",
-      "goalId": 1
-    },
-    {
-      "id": 2,
-      "content": "Reassure patient.",
-      "goalId": 1
-    },
-    {
-      "id": 3,
-      "content": "Check that the IV cannula is not kinked or blocked.",
-      "goalId": 1
-    },
-    {
-      "id": 4,
-      "content": "Administer a fluid challenge and increase Mr Smith's IV fluid rate as ordered.",
-      "goalId": 1
-    },
-    {
-      "id": 5,
-      "content": "Check that the urinary catheter is not kinked or blocked.",
-      "goalId": 2
-    },
-    {
-      "id": 6,
-      "content": "Raise the foot of Mr Smith's bed.",
-      "goalId": 2
-    },
-    {
-      "id": 7,
-      "content": "Strictly monitor Mr Smith's input and maintain hourly urine measures",
-      "goalId": 2
-    },
-    {
-      "id": 8,
-      "content": "Monitor Mr Smith's level of consciousness.",
-      "goalId": 2
-    }
-  ],
-  "caseinfo": {
-    "id": 1,
-    "timer": "00:05:23",
-    "total": 11,
-    "cards": [
-      {
-        "id": 1,
-        "title": "Information",
-        "items": [
-          {
-            "text": "husband died 10 years ago",
-            "issue": 1
-          },
-          {
-            "text": "found the increasing volume of traffic intimidating and quit driving",
-            "issue": null
-          },
-          {
-            "text": "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
-            "issue": 1
-          },
-          {
-            "text": "was assessed as competent to administer her own medicines",
-            "issue": 2
-          },
-          {
-            "text": "has found it increasingly difficult to manage at home on her own",
-            "issue": 1
-          },
-          {
-            "text": "especially with the steep steps to her front door and a large garden to maintain",
-            "issue": 5
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "show-threshold": 5,
-        "title": "Medications",
-        "items": [
-          {
-            "text": "alendronate 70 mg, one weekly",
-            "issue": 2
-          },
-          {
-            "text": "calcium carbonate 1500 mg, one daily",
-            "issue": null
-          },
-          {
-            "text": "cholecalciferol 25 ?g, one daily",
-            "issue": null
-          },
-          {
-            "text": "paracetamol 500 mg, two every day",
-            "issue": 4
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "image": true,
-        "show-threshold": 7,
-        "title": "Image Two",
-        "source": "http://lorempixel.com/360/300/animals",
-        "items": [
-          {
-            "text": "what kind of animal is this?",
-            "issue": null
-          },
-          {
-            "text": "bad temperament",
-            "issue": 2
-          },
-          {
-            "text": "lives alone",
-            "issue": 2
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "video": true,
-        "show-threshold": 9,
-        "title": "Video Example",
-        "type": "mp4",
-        "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
-        "items": [
-          {
-            "text": "A placeholder video card",
-            "issue": 2
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "image": true,
-        "show-threshold": 10,
-        "title": "Image One",
-        "source": "http://lorempixel.com/360/300/animals",
-        "items": [
-          {
-            "text": "A placeholder image card",
-            "issue": 1
-          }
-        ]
-      }
-    ]
-  },
   "issues": [
     {
       "id": 1,
@@ -554,6 +400,74 @@
       "score": 2,
       "maxscore": 4,
       "issueId": 2
+    }
+  ],
+  "goals": [
+    {
+      "id": 1,
+      "content": "Immediately stabilise patient",
+      "issueId": 1,
+      "actions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "complete": false
+    },
+    {
+      "id": 2,
+      "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
+      "issueId": 2,
+      "actions": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "complete": false
+    }
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "content": "Notify Mr Smith's doctor of his condition",
+      "goalId": 1
+    },
+    {
+      "id": 2,
+      "content": "Reassure patient.",
+      "goalId": 1
+    },
+    {
+      "id": 3,
+      "content": "Check that the IV cannula is not kinked or blocked.",
+      "goalId": 1
+    },
+    {
+      "id": 4,
+      "content": "Administer a fluid challenge and increase Mr Smith's IV fluid rate as ordered.",
+      "goalId": 1
+    },
+    {
+      "id": 5,
+      "content": "Check that the urinary catheter is not kinked or blocked.",
+      "goalId": 2
+    },
+    {
+      "id": 6,
+      "content": "Raise the foot of Mr Smith's bed.",
+      "goalId": 2
+    },
+    {
+      "id": 7,
+      "content": "Strictly monitor Mr Smith's input and maintain hourly urine measures",
+      "goalId": 2
+    },
+    {
+      "id": 8,
+      "content": "Monitor Mr Smith's level of consciousness.",
+      "goalId": 2
     }
   ],
   "patients": [

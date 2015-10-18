@@ -1,9 +1,9 @@
+/*
+* TODO: Update Help tooltip (component/activity/casebackground/backgroundinfo/help/Help.hbs)
+* */
 define(function (require) {
     'use strict';
-    /* TODO:
-     - flag event for finished activity
-     - state save (for completion)
-     */
+
     let Component = require('core/Component');
     let template = require('text!component/activity/casebackground/backgroundinfo/CaseInformation.hbs');
     let InfoCard = require('component/activity/casebackground/card/info/InfoCard');
@@ -19,30 +19,106 @@ define(function (require) {
     // hint
     let Hint = require('component/hint/Hint');
 
+    // info
     let InfoCollection = require('collection/Info');
-    let InfoGroupCollection = require('collection/InfoGroup');
     let InfoModel = require('model/Info');
     let InfoGroupModel = require('model/InfoGroup');
 
-    //var ActionButtonModel = require('model/ActionButton');
+    // positioning (from goals)
+    let Positioning = require('component/activity/goals/Positioning');
+
+    // rule based matching (from goals)
+    let CardMatcher = require('component/activity/goals/match/CardMatcher');
+    let Rule = require('component/activity/goals/match/Rule');
+
+    /**
+     * Defines the positioning for Matches, so that
+     * they align with the inventory.
+     */
+    let MatchPositioning = {
+        /**
+         * The x position.
+         */
+        x: () => {
+            return Positioning.widthLimit() * 0.70
+        },
+        /**
+         * The y position.
+         */
+        y: () => {
+            return Positioning.heightLimit() * 0.15;
+        }
+    };
 
     return Component.extend({
 
         template: template,
         collection:{
             info : new InfoCollection(),
-            infogroup : new InfoGroupCollection()
+            infogroup : new InfoCollection()
         },
+        /**
+         * The current screen number, corresponds to the 'groupId' property in db.
+         */
         round:0,
+        /**
+         * Case id of current dataset
+         */
         caseID: 0,
-        completion:null,
+        /**
+         * The sidebar (original position, can be moved) of collected pieces of relevant information.
+         */
+        infogroup:null,
+        /**
+         * A count of the number of relevant pieces of information shown on this screen
+         */
+        relevantpieces:0,
+        /**
+         * Rules based card matching.
+         */
+        cardMatcher: new CardMatcher(),
 
         initialize: function (caseID,roundID) {
             Component.prototype.initialize.apply(this, arguments);
             this.round = +roundID;
             this.caseID = +caseID;
+            this.registerRules();
             this.setupFixedComponents(caseID,roundID);
             this.setupActivityStartState();
+        },
+
+        registerRules: function () {
+
+            /**
+             * Definition => Type : TypeDefPair
+             *
+             * @type {Rule}
+             */
+            let InfoInfoGroupMatchRule = new Rule(function (infoCard, infoGroupCard) {
+
+                let info = infoCard.model;
+                let infoGroup = infoGroupCard.model;
+
+                if (info.get('relevant')) {
+
+                    let match = new InfoModel({
+                        'infoid':info.get('id'),
+                        'content':info.get('content'),
+                        'short':info.get('short'),
+                        'relevant':info.get('relevant')
+
+                    });
+
+                    infoGroup.get('info').add(match);
+                    this.checkComplete();
+                    // remove cards components as they will be
+                    // replaced by match components
+                    infoCard.remove();
+                } else infoCard.shake();
+
+            }.bind(this));
+
+            this.cardMatcher.addRule('Info => InfoGroup', InfoInfoGroupMatchRule);
         },
 
         setupFixedComponents: function (caseID,roundID) {
@@ -54,13 +130,13 @@ define(function (require) {
 
             this.help.show();
 
-            // add a link to the Actions activity
+            // add a link to the next activity screen
             this.hiddenLink = this.add(new ActionButton({
                 model: {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
                     icon: 'content-send',
-                    href: 'cases/'.concat(caseID, '/activity/case-information/').concat(nextRound, '/info')
+                    href: 'cases/'.concat(caseID, '/activity/case-information/')+nextRound+ '/info'
                 }
             }));
 
@@ -80,48 +156,76 @@ define(function (require) {
         setupActivityStartState: function () {
             // setup syncing
             let infoCollection = this.collection.info;
+            let infoGroupCollection = this.collection.infogroup;
+
+            //set up the info collection pane
+            this.infogroup = this.addInfoGroup()
+                this.infogroup.position.set(MatchPositioning.x(),0);
+            //attach collection to the sub-collection within the collected info pane
+            this.infogroup.model.set('info',infoGroupCollection);
+
 
             // Listen to the sync events on both collections, which waits for
             // the models to be loaded.
             this.listenToOnce(infoCollection, 'sync', this.onInfoSync);
-            this.listenTo(this.collection.infogroup, 'add', this.addInfoGroup);
+            this.listenTo(this.collection.infogroup, 'add', this.onAddInfoGroup);
 
-            // fetch issues and goals ready for matching to begin
+            // fetch info collection to start activity
             infoCollection.fetch();
         },
 
         /**
          * An event triggered when the collection has synced upon a fetch call.
          *
-         * @param caseinfo The caseinfo collection.
+         * @param info The information collection.
          */
         onInfoSync: function (info) {
-            this.completion = this.completion || info.size();
+            this.relevantpieces = this.infogroup.model.get('info').length;
 
+            /*
+            filter - all info cards NOT from this group
+            filter - all info cards already collected
+            then add the rest of the cards to the screen
+            * */
             info.filter((info) => this.round === info.get('groupId'))
+                .filter((info) => !(this.collection.infogroup.find((rInfo) => rInfo.get('infoid')=== info.get('id'))))
                 .forEach(function (model, i){
+                    //increment the number of relevant pieces to match to determine completion
+                    if (model.get('relevant')){this.relevantpieces++;}
+                    //assign model attributes
                     Object.assign(model.attributes,{
                         height : 100,
                         width : 200,
+                        id: model.get('id'),
                         body : model.get('content'),
+                        short : model.get('short'),
                         color : 'pink'
                     });
                     let card = this.addInfo(model);
-                    card.position.set(110*i - 400,100);
-
+                    card.position.set(210*i - 400,100);
             },this);
 
             let finalPage = info.filter((info) => (this.round+1) === info.get('groupId')).length;
             // if there is no info items in the next group, change the hidden link
-            // to point back to the top level information menu
+            // to point back to the top level case information menu
             if (finalPage == 0){
-                $('#'+this.hiddenLink.id)[0].firstElementChild.setAttribute('href','cases/'+this.caseID+'/information');
+                this.hiddenLink.model.href = 'cases/'+this.caseID+'/information';
+                this.hiddenLink.render();
+                this.hiddenHint.model.text = "Congratulations!<br> you've found all the pieces of case information.<br> Touch the GREEN button to continue";
+                this.hiddenHint.render();
+                //old jQuery link change
+                //$('#'+this.hiddenLink.id)[0].firstElementChild.setAttribute('href','cases/'+this.caseID+'/information');
             }
 
-            let collect = this.addInfoGroup();
-            collect.position.set(400,200);
+            this.checkComplete();
+
         },
 
+        onAddInfoGroup: function(){
+            // remove body text and re-render component to show new items in info collection
+            this.infogroup.model.set('body','');
+            this.infogroup.render();
+        },
 
         addInfoGroup: function () {
             let model = new InfoGroupModel({
@@ -148,29 +252,24 @@ define(function (require) {
             return card;
         },
 
+        checkComplete : function(){
+            if(this.infogroup.model.get('info').length >= this.relevantpieces)
+            {
+                this.hiddenLink.show();
+                this.hiddenHint.show();
+            }
+        },
 
         /**
          * Binds the draggable events to the component.
-         * @param component The .
+         * @param component this component.
          */
         bindDraggableEvents: function (component) {
             component.on({
-                drag: this.onDrag.bind(this),
-                dragendsink: this.onDrop.bind(this)
+                dragendsink: this.cardMatcher.matchCards.bind(this.cardMatcher)
             });
-        },
-        /**
-         * An event triggered when a card is being dragged.
-         */
-        onDrag: function () {
-        },
-
-        /**
-         * An event triggered when a card is being dropped.
-         * @param event
-         */
-        onDrop: function (event) {
         }
+
     });
 
 

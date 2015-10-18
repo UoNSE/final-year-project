@@ -1,3 +1,8 @@
+/**
+* Page no longer used, old Case Info module
+* */
+
+
 define(function (require) {
     'use strict';
     /* TODO:
