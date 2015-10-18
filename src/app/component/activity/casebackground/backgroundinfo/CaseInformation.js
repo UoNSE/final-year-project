@@ -1,9 +1,7 @@
 define(function (require) {
     'use strict';
     /* TODO:
-     - add help
-     - fix positioning and sizing
-     - add hiddenlink and hiddenhint
+     - flag event for finished activity
      - state save (for completion)
     */
     var Component = require('core/Component');
@@ -14,37 +12,93 @@ define(function (require) {
     var CaseInfoCardModel = require('model/CaseInfoCard');
     var TimerModel = require('model/Timer');
     var SelectableText = require('model/SelectableText');
+    let ActionButton = require('component/actionbutton/ActionButton');
+    // help
+    let Help = require('component/help/Help');
+    let HelpText = require('text!component/activity/casebackground/backgroundinfo/help/Help.hbs');
+    let HelpModel = require('model/Help');
+
+    // hint
+    let Hint = require('component/hint/Hint');
+
 
     var Timer = require('component/activity/casebackground/timer/Timer');
     var Card = require('component/activity/casebackground/card/caseinfo/CaseInfoCard');
-
-    var totalEvidenceCount=0;
-
 
     return Component.extend({
 
         template: template,
         classes: ['caseinfos'],
-        styles: 'component/activity/casebackground/backgroundinfo/CaseInformation.css',
+        styles: 'component/activity/casebackground/card/caseinfo/CaseInfoCard.css',
         caseid: '0',
+        /**
+         * The help component manages the instructions.
+         */
+        help: {},
+        /**
+         * This provides the link to move forward to the Actions activity,
+         * after all cards have been matched.
+         */
+        hiddenLink: {},
+        /**
+         * This provides a hint to click / touch the activity link.
+         */
+        hiddenHint: {},
         collection: {
             caseinfos: new CaseInfoCollection(),
             caseinfocards : new CaseInfoCardsCollection()
         },
 
-        initialize: function (caseId) {
-            debugger;
+        textCounter: 0,
+        total:0,
+        hiddenCards : null,
 
+
+        initialize: function (caseID) {
             Component.prototype.initialize.apply(this, arguments);
-            this.caseid = caseId;
-            this.width = 300;
-            this.height = 200;
+            this.setupFixedComponents(caseID);
 
             var caseinfos  = this.collection.caseinfos;
+
+            this.width = 300;
+            this.height = 200;
+            this.hiddenCards = $('.hidden-info');
             // Listen to the sync events on caseinfo, which waits for the models to be loaded.
-            this.listenTo(caseinfos, 'sync', this.onCaseInfoSync);
+            this.listenToOnce(caseinfos, 'sync', this.onCaseInfoSync);
 
             caseinfos.fetch();
+        },
+
+        setupFixedComponents: function (caseID) {
+
+            // add help component to the page
+            this.help = this.add(new Help({
+                model: new HelpModel({body: HelpText})
+            }));
+
+            this.help.show();
+
+            // add a link to the Actions activity
+            this.hiddenLink = this.add(new ActionButton({
+                model: {
+                    color: 'light-green',
+                    classes: 'help-btn actions-btn',
+                    icon: 'content-send',
+                    href: 'cases/'.concat(caseID, '/information')
+                }
+            }));
+
+            this.hiddenLink.position.set(0, 100);
+
+            this.hiddenHint = this.add(new Hint({
+                model: {
+                    text: "Touch the Green Button to Continue"
+                }
+            }));
+
+            // hide these components until matching is completed
+            this.hiddenLink.hide();
+            this.hiddenHint.hide();
         },
 
         /**
@@ -55,8 +109,11 @@ define(function (require) {
         onCaseInfoSync: function (caseinfo) {
             // Card positioning vars
             var yloc = this.height + 10;
-            var xloc = -800;
+            var xloc = -400;
+            var casefirst = caseinfo.first();
+            this.total = casefirst.get('total');
 
+            /*
             // Add Timer component
             this.addTimer(new TimerModel({
                 body : caseinfo.first().get('timer'),
@@ -64,8 +121,10 @@ define(function (require) {
                 title : 'Activity Timer',
                 'update-period' : 1000
             })).position.set(500,-300);
-            var caseCards = caseinfo.first().get('cards');
 
+            */
+
+            var caseCards = casefirst.get('cards');
             // Add Card components
             caseCards.forEach(function (model, i) {
                 var card = this.addCaseCard(new CaseInfoCardModel({
@@ -81,10 +140,10 @@ define(function (require) {
                     source: model.get('source'),
                     type: model.get('type'),
                     items: model.get('items'),
+                    total: casefirst.get('total'),
                     color: 'info'
                 }));
                 card.position.set(xloc, yloc);
-                totalEvidenceCount += model.get('items').length;
                 yloc = -yloc;
                 xloc = (i % 2 == 0 ? xloc
                                    : xloc+this.width+10);
@@ -108,6 +167,7 @@ define(function (require) {
             this.bindDraggableEvents(card);
             return card;
         },
+
 
          /**
          * Binds the draggable events to the component.

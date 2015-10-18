@@ -2,7 +2,7 @@ define(function (require) {
     'use strict';
 
     let Page = require('core/Page');
-    let CaseInformation = require('component/activity/casebackground/backgroundinfo/CaseInformation');
+    let CaseInformation = require('component/activity/casebackground/backgroundinfo/CaseBackground');
 
     let InventoryModel = require('model/Inventory');
     let Inventory = require('component/inventory/Inventory');
@@ -13,7 +13,7 @@ define(function (require) {
 
         initialize: function () {
             Page.prototype.initialize.apply(this, arguments);
-            this.add(new CaseInformation(this.urlParams['case_id']));
+            this.add(new CaseInformation(this.urlParams['case_id'], this.urlParams['round_id']));
         }
     });
 });

@@ -214,7 +214,7 @@ define(function (require) {
 
             // Listen to the sync events on both collections, which waits for
             // the models to be loaded.
-            this.listenToOnce(issuesCollection, 'sync', this.onTypesSync);
+            this.listenToOnce(issuesCollection, 'sync', this.onIssuesSync);
             this.listenToOnce(goalsCollection, 'sync', this.onDefinitionsSync);
             this.listenTo(this.collection.matches, 'add', this.onAddMatch);
 
@@ -272,7 +272,7 @@ define(function (require) {
          *
          * @param issues The issues collection.
          */
-        onTypesSync: function (issues) {
+        onIssuesSync: function (issues) {
             let n = issues.size();
             let separatorDistance = 10; // 10 px
             let matches = this.collection.matches;
@@ -301,7 +301,7 @@ define(function (require) {
                     }
                 );
 
-                let card = this.addType(model);
+                let card = this.addIssue(model);
                 let scale = i - ((n - 1) / 2);
 
                 let x = () => {
@@ -369,7 +369,7 @@ define(function (require) {
          * @param model The issue model.
          * @returns IssueGoalMatcher
          */
-        addType: function (model) {
+        addIssue: function (model) {
             return this.createDraggableCard(model, IssueCard);
         },
 

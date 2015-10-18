@@ -10,7 +10,7 @@ define(function (require) {
 
     // help
     let Help = require('component/help/Help');
-    let HelpText = require('text!component/activity/casebackground/matching/help/MatchingHelp.hbs');
+    let HelpText = require('text!component/activity/casebackground/matching/help/Help.hbs');
     let HelpModel = require('model/Help');
 
     // hint
@@ -159,8 +159,8 @@ define(function (require) {
              *
              * @type {Rule}
              */
-            let TypeDefMatchRule2 = new Rule((typeCard, definitionCard) => {
-                return TypeDefMatchRule.execute(definitionCard, typeCard);
+            let TypeDefMatchRule2 = new Rule((typeCard, defCard) => {
+                return TypeDefMatchRule.execute(defCard, typeCard);
             });
 
             this.cardMatcher.addRule('Definition => Type', TypeDefMatchRule);
@@ -187,7 +187,7 @@ define(function (require) {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
                     icon: 'content-send',
-                    href: 'cases/'.concat(caseID, '/activity/case-information/info')
+                    href: 'cases/'.concat(caseID, '/activity/case-information/1/info')
                 }
             }));
 

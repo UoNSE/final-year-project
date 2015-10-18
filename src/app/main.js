@@ -38,7 +38,7 @@ define(function (require) {
                     'cases/:case_id/overview': 'case/Overview',
                     'cases/:case_id/information': 'case/information/Information',
                     'cases/:case_id/activity/case-information': 'activity/CaseBackground',
-                    'cases/:case_id/activity/case-information/info': 'activity/casebackground/CaseBackgroundInfo',
+                    'cases/:case_id/activity/case-information/:round_id/info': 'activity/casebackground/CaseBackgroundInfo',
                     'cases/:case_id/activity/virtual-patient': 'activity/VirtualPatient',
                     'cases/:case_id/activity/issues': 'activity/Issues',
                     'cases/:case_id/activity/issues/unlock': 'activity/issues/TopicUnlock',

@@ -265,6 +265,83 @@
       "content": "Definition4"
     }
   ],
+  "info": [
+    {
+      "id": 1,
+      "content": "won",
+      "groupId": 1
+    },
+    {
+      "id": 2,
+      "content": "too",
+      "groupId": 1
+    },
+    {
+      "id": 3,
+      "content": "free",
+      "groupId": 1
+    },
+    {
+      "id": 4,
+      "content": "fore",
+      "groupId": 1
+    },
+    {
+      "id": 5,
+      "content": "five",
+      "groupId": 2
+    },
+    {
+      "id": 6,
+      "content": "six",
+      "groupId": 2
+    },
+    {
+      "id": 7,
+      "content": "se7en",
+      "groupId": 2
+    },
+    {
+      "id": 8,
+      "content": "ate",
+      "groupId": 3
+    },
+    {
+      "id": 9,
+      "content": "nein",
+      "groupId": 3
+    },
+    {
+      "id": 10,
+      "content": "ten",
+      "groupId": 3
+    },
+    {
+      "id": 11,
+      "content": "Notify Mr Smith's doctor of his condition",
+      "groupId": 3
+    },
+    {
+      "id": 12,
+      "content": "Notify Mr Smith's doctor of his condition",
+      "groupId": 4
+    },
+    {
+      "id": 13,
+      "content": "Notify Mr Smith's doctor of his condition",
+      "groupId": 4
+    },
+    {
+      "id": 14,
+      "content": "Notify Mr Smith's doctor of his condition",
+      "groupId": 5
+    },
+    {
+      "id": 15,
+      "content": "Notify Mr Smith's doctor of his condition",
+      "groupId": 5
+    }
+  ],
   "actions": [
     {
       "id": 1,
@@ -310,6 +387,7 @@
   "caseinfo": {
     "id": 1,
     "timer": "00:05:23",
+    "total": 11,
     "cards": [
       {
         "id": 1,
@@ -320,7 +398,8 @@
             "issue": 1
           },
           {
-            "text": "found the increasing volume of traffic intimidating and quit driving"
+            "text": "found the increasing volume of traffic intimidating and quit driving",
+            "issue": null
           },
           {
             "text": "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
@@ -342,7 +421,7 @@
       },
       {
         "id": 2,
-        "show-threshold": 3,
+        "show-threshold": 5,
         "title": "Medications",
         "items": [
           {
@@ -350,10 +429,12 @@
             "issue": 2
           },
           {
-            "text": "calcium carbonate 1500 mg, one daily"
+            "text": "calcium carbonate 1500 mg, one daily",
+            "issue": null
           },
           {
-            "text": "cholecalciferol 25 ?g, one daily"
+            "text": "cholecalciferol 25 ?g, one daily",
+            "issue": null
           },
           {
             "text": "paracetamol 500 mg, two every day",
@@ -364,13 +445,13 @@
       {
         "id": 3,
         "image": true,
+        "show-threshold": 7,
         "title": "Image Two",
         "source": "http://lorempixel.com/360/300/animals",
-        "imgtext": "Another random animal pic",
         "items": [
           {
             "text": "what kind of animal is this?",
-            "issue": 2
+            "issue": null
           },
           {
             "text": "bad temperament",
@@ -385,24 +466,29 @@
       {
         "id": 4,
         "video": true,
-        "show-threshold": 5,
+        "show-threshold": 9,
         "title": "Video Example",
         "type": "mp4",
         "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
         "items": [
           {
             "text": "A placeholder video card",
-            "issue": null
+            "issue": 2
           }
         ]
       },
       {
         "id": 5,
         "image": true,
-        "show-threshold": 7,
+        "show-threshold": 10,
         "title": "Image One",
         "source": "http://lorempixel.com/360/300/animals",
-        "imgtext": "A random animal pic"
+        "items": [
+          {
+            "text": "A placeholder image card",
+            "issue": 1
+          }
+        ]
       }
     ]
   },

@@ -80,7 +80,7 @@ define(function (require) {
             var issueGroups = this.collection.issueGroup;
 
             // Listen to the sync events on both collections, which waits for the models to be loaded.
-            this.listenTo(issues, 'sync', this.onTypesSync);
+            this.listenTo(issues, 'sync', this.onIssuesSync);
             this.listenTo(evidence, 'sync', this.onEvidenceSync);
             this.listenTo(issueGroups, 'sync', this.onIssueGroupSync);
             //update listener to sync to inventory
@@ -227,11 +227,11 @@ define(function (require) {
          *
          * @param issues The issues collection.
          */
-        onTypesSync: function (issues) {
+        onIssuesSync: function (issues) {
             var n = issues.size();
             var distance = 10;
             issues.forEach((model, i) => {
-                var card = this.addType(new IssueModel({
+                var card = this.addIssue(new IssueModel({
 					width: this.width,
 					height: this.height,
 					title: 'Issue',
@@ -254,7 +254,7 @@ define(function (require) {
                 //conditional model loading
                 //model has data or body based on when it's defined
                 if (model.attributes.data != undefined) {
-                    var card = this.addType(new IssueModel({
+                    var card = this.addIssue(new IssueModel({
                         width: this.width,
                         height: this.height,
                         title: 'Issue',
@@ -265,7 +265,7 @@ define(function (require) {
                     }));
                 }
                 else{
-                    card = this.addType(new IssueModel({
+                    card = this.addIssue(new IssueModel({
                         width: this.width,
                         height: this.height,
                         title: 'Issue',
@@ -382,7 +382,7 @@ define(function (require) {
          * @param model The issue model.
          * @returns {*}
          */
-        addType: function (model) {
+        addIssue: function (model) {
 			var issue = this.add(new Issue({
                 model: model
             }));
@@ -502,7 +502,7 @@ define(function (require) {
 
             var issue = model.get('issue');
             if (issue) {
-                this.addType(issue);
+                this.addIssue(issue);
                 this.collection.issues.add(issue);
                 this.gameCredit -= issue.get('cost');
 
