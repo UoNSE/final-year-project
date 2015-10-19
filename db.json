@@ -70,98 +70,121 @@
           "content": "Monitor Mr Smith's level of consciousness."
         }
       ],
+      "casebackground": {
+        "terms": [
+          {
+            "id": 1,
+            "term": "Cognitive decline"
+          },
+          {
+            "id": 2,
+            "term": "Dementia"
+          },
+          {
+            "id": 3,
+            "term": "Delirium"
+          },
+          {
+            "id": 4,
+            "term": "Depression"
+          }
+        ],
+        "definitions": [
+          {
+            "id": 1,
+            "termid": 1,
+            "definition": "The speed at which individuals acquire information declines, but ability to recall information remains intact."
+          },
+          {
+            "id": 2,
+            "termid": 2,
+            "definition": "Gradual, progressive, irreversible deterioration of cerebral function. Impairment in cognitive function from dementia commonly accompanies deterioration in emotional control and social behaviours."
+          },
+          {
+            "id": 3,
+            "termid": 3,
+            "definition": "An acute reversible clinical syndrome of cognitive function, characterised by decline in attention and impairment to cognitive and physical function. Occurs as a result of change in health status of the older person, commonly confused with other conditions."
+          },
+          {
+            "id": 4,
+            "termid": 4,
+            "definition": "Depression in older people is often missed, as it can be attributed to ageing process, dementia or poor health. In older people, depression often manifests from poor physical symptoms, memory loss and behavioural changes."
+          }
+        ]
+      },
       "caseinfo": {
         "timer": "00:05:23",
         "cards": [
           {
             "id": 1,
-            "title": "Information",
+            "title": "Morning Handover Report",
             "items": [
               {
-                "text": "husband died 10 years ago",
+                "text": "Mr.Tien behaved inappriately during the night, using the sink as a toilet",
                 "issue": 1
               },
               {
-                "text": "found the increasing volume of traffic intimidating and quit driving"
+                "text": "We are an acute respiratory ward. Why do we get the confused oldies?"
               },
               {
-                "text": "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
+                "text": "He is incontinent of urine this morning",
                 "issue": 1
               },
               {
-                "text": "was assessed as competent to administer her own medicines",
+                "text": "He doesn't talk much, just yells gibberish. He doesn't speak English. He could have been speaking Vietnamese",
                 "issue": 2
               },
               {
-                "text": "has found it increasingly difficult to manage at home on her own",
-                "issue": 1
-              },
-              {
-                "text": "especially with the steep steps to her front door and a large garden to maintain",
-                "issue": 5
+                "text": "I think he is demented andwill need placement.",
+                "issue": 2
               }
             ]
           },
           {
             "id": 2,
-            "show-threshold": 3,
-            "title": "Medications",
+            "title": "Patient Situation",
             "items": [
               {
-                "text": "alendronate 70 mg, one weekly",
-                "issue": 2
+                "text": "Friday night in the respiratory unit"
               },
               {
-                "text": "calcium carbonate 1500 mg, one daily"
+                "text": "Mr. Tien is up and out of bed urinating in the sink"
               },
               {
-                "text": "cholecalciferol 25 ?g, one daily"
+                "text": "Nurse puts the bed rails up."
               },
               {
-                "text": "paracetamol 500 mg, two every day",
+                "text": "All night he is restless and incontinent, pulling off his nasal prongs",
                 "issue": 4
               }
             ]
           },
           {
             "id": 3,
-            "image": true,
-            "title": "Image Two",
-            "source": "http://lorempixel.com/360/300/animals",
-            "imgtext": "Another random animal pic",
+            "show-threshold": 3,
+            "title": "Morning Handover Report",
             "items": [
               {
-                "text": "what kind of animal is this?",
-                "issue": 2
+                "text": "His obs are stable; he is putting more urine in good amounts",
+                "issue": 1
               },
               {
-                "text": "bad temperament",
-                "issue": 2
+                "text": "I think they need to put in a IDC",
+                "issue": 3
               },
               {
-                "text": "lives alone",
-                "issue": 2
+                "text": "He was tossing and turning all night",
+                "issue": 4
+              },
+              {
+                "text": "He is still coughing",
+                "issue": 3
+              },
+              {
+                "text": "I spent the whole night putting his nasal prongs back on and keeping him from getting tangled up with his IV",
+                "issue": 4
               }
             ]
-          },
-          {
-            "id": 4,
-            "video": true,
-            "show-threshold": 4,
-            "title": "Video Example",
-            "type": "mp4",
-            "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
-            "items": [
-              "A placeholder video card"
-            ]
-          },
-          {
-            "id": 5,
-            "image": true,
-            "show-threshold": 3,
-            "title": "Image One",
-            "source": "http://lorempixel.com/360/300/animals",
-            "imgtext": "A random animal pic"
           }
         ]
       }
@@ -197,209 +220,6 @@
     {
       "id": 9,
       "name": "Bob"
-    }
-  ],
-  "types": [
-    {
-      "id": 1,
-      "content": "Decline"
-    },
-    {
-      "id": 2,
-      "content": "Dementia"
-    },
-    {
-      "id": 3,
-      "content": "Delirium"
-    },
-    {
-      "id": 4,
-      "content": "Depression"
-    }
-  ],
-  "definitions": [
-    {
-      "id": 1,
-      "typeId": 1,
-      "content": "Definition1"
-    },
-    {
-      "id": 2,
-      "typeId": 2,
-      "content": "Definition2"
-    },
-    {
-      "id": 3,
-      "typeId": 3,
-      "content": "Definition3"
-    },
-    {
-      "id": 4,
-      "typeId": 4,
-      "content": "Definition4"
-    }
-  ],
-  "info": [
-    {
-      "id": 1,
-      "content": "one one one one one",
-      "short": "one",
-      "relevant": true,
-      "groupId": 1
-    },
-    {
-      "id": 2,
-      "content": "two",
-      "relevant": false,
-      "groupId": 1
-    },
-    {
-      "id": 3,
-      "content": "three",
-      "short": "3",
-      "relevant": true,
-      "groupId": 1
-    },
-    {
-      "id": 4,
-      "content": "four",
-      "relevant": false,
-      "groupId": 1
-    },
-    {
-      "id": 5,
-      "content": "five",
-      "relevant": false,
-      "groupId": 2
-    },
-    {
-      "id": 6,
-      "content": "six",
-      "short": "6",
-      "relevant": true,
-      "groupId": 2
-    },
-    {
-      "id": 7,
-      "content": "se7en",
-      "relevant": false,
-      "groupId": 2
-    },
-    {
-      "id": 8,
-      "content": "eight",
-      "short": "8",
-      "relevant": true,
-      "groupId": 3
-    },
-    {
-      "id": 9,
-      "content": "nine",
-      "relevant": false,
-      "groupId": 3
-    },
-    {
-      "id": 10,
-      "content": "ten",
-      "relevant": false,
-      "groupId": 3
-    },
-    {
-      "id": 11,
-      "content": "eleven",
-      "short": "11",
-      "relevant": true,
-      "groupId": 3
-    },
-    {
-      "id": 12,
-      "content": "twelve",
-      "relevant": false,
-      "groupId": 4
-    },
-    {
-      "id": 13,
-      "content": "thirteen",
-      "short": "13",
-      "relevant": true,
-      "groupId": 4
-    },
-    {
-      "id": 14,
-      "content": "fourteen",
-      "short": "14",
-      "relevant": true,
-      "groupId": 5
-    },
-    {
-      "id": 15,
-      "content": "fifteen",
-      "relevant": false,
-      "groupId": 5
-    }
-  ],
-  "issues": [
-    {
-      "id": 1,
-      "data": "Dehydration",
-      "topicId": 1,
-      "cost": 20
-    },
-    {
-      "id": 2,
-      "data": "Hypovolaemia",
-      "topicId": 2,
-      "cost": 4
-    },
-    {
-      "id": 3,
-      "data": "Nausea",
-      "topicId": 1,
-      "cost": 0
-    }
-  ],
-  "topics": [
-    {
-      "id": 1,
-      "data": "Lungs"
-    },
-    {
-      "id": 2,
-      "data": "Heart"
-    },
-    {
-      "id": 3,
-      "data": "Kidneys"
-    }
-  ],
-  "evidence": [
-    {
-      "id": 1,
-      "data": "Condition of oral mucosa",
-      "score": 10,
-      "maxscore": 20,
-      "issueId": 1
-    },
-    {
-      "id": 2,
-      "data": "Level of thirst",
-      "score": 10,
-      "maxscore": 20,
-      "issueId": 1
-    },
-    {
-      "id": 3,
-      "data": "Pale colour",
-      "score": 2,
-      "maxscore": 4,
-      "issueId": 2
-    },
-    {
-      "id": 4,
-      "data": "Pulse rate very high (120 bpm)",
-      "score": 2,
-      "maxscore": 4,
-      "issueId": 2
     }
   ],
   "goals": [
@@ -468,6 +288,169 @@
       "id": 8,
       "content": "Monitor Mr Smith's level of consciousness.",
       "goalId": 2
+    }
+  ],
+  "caseinfo": {
+    "id": 1,
+    "timer": "00:05:23",
+    "cards": [
+      {
+        "id": 1,
+        "title": "Information",
+        "items": [
+          {
+            "text": "husband died 10 years ago",
+            "issue": 1
+          },
+          {
+            "text": "found the increasing volume of traffic intimidating and quit driving"
+          },
+          {
+            "text": "Her son is her only family, and he lives on the other side of the city. He and his wife, take her out to lunch every other Sunday",
+            "issue": 1
+          },
+          {
+            "text": "was assessed as competent to administer her own medicines",
+            "issue": 2
+          },
+          {
+            "text": "has found it increasingly difficult to manage at home on her own",
+            "issue": 1
+          },
+          {
+            "text": "especially with the steep steps to her front door and a large garden to maintain",
+            "issue": 5
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "show-threshold": 3,
+        "title": "Medications",
+        "items": [
+          {
+            "text": "alendronate 70 mg, one weekly",
+            "issue": 2
+          },
+          {
+            "text": "calcium carbonate 1500 mg, one daily"
+          },
+          {
+            "text": "cholecalciferol 25 ?g, one daily"
+          },
+          {
+            "text": "paracetamol 500 mg, two every day",
+            "issue": 4
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "image": true,
+        "title": "Image Two",
+        "source": "http://lorempixel.com/360/300/animals",
+        "imgtext": "Another random animal pic",
+        "items": [
+          {
+            "text": "what kind of animal is this?",
+            "issue": 2
+          },
+          {
+            "text": "bad temperament",
+            "issue": 2
+          },
+          {
+            "text": "lives alone",
+            "issue": 2
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "video": true,
+        "show-threshold": 5,
+        "title": "Video Example",
+        "type": "mp4",
+        "source": "http://www.html5tutorial.info/media/html5iscool.mp4",
+        "items": [
+          {
+            "text": "A placeholder video card",
+            "issue": null
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "image": true,
+        "show-threshold": 7,
+        "title": "Image One",
+        "source": "http://lorempixel.com/360/300/animals",
+        "imgtext": "A random animal pic"
+      }
+    ]
+  },
+  "issues": [
+    {
+      "id": 1,
+      "data": "Dehydration",
+      "topicId": 1,
+      "cost": 20
+    },
+    {
+      "id": 2,
+      "data": "Hypovolaemia",
+      "topicId": 2,
+      "cost": 4
+    },
+    {
+      "id": 3,
+      "data": "Nausea",
+      "topicId": 1,
+      "cost": 0
+    }
+  ],
+  "topics": [
+    {
+      "id": 1,
+      "data": "Lungs"
+    },
+    {
+      "id": 2,
+      "data": "Heart"
+    },
+    {
+      "id": 3,
+      "data": "Kidneys"
+    }
+  ],
+  "evidence": [
+    {
+      "id": 1,
+      "data": "Condition of oral mucosa",
+      "score": 10,
+      "maxscore": 20,
+      "issueId": 1
+    },
+    {
+      "id": 2,
+      "data": "Level of thirst",
+      "score": 10,
+      "maxscore": 20,
+      "issueId": 1
+    },
+    {
+      "id": 3,
+      "data": "Pale colour",
+      "score": 2,
+      "maxscore": 4,
+      "issueId": 2
+    },
+    {
+      "id": 4,
+      "data": "Pulse rate very high (120 bpm)",
+      "score": 2,
+      "maxscore": 4,
+      "issueId": 2
     }
   ],
   "patients": [
