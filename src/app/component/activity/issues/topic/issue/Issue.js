@@ -25,8 +25,8 @@ define(function (require) {
                 cost: params.cost,
                 color: 'blue',
                 styles: {
-                    width: 150,
-                    height: 150
+                    width: 200,
+                    height: 200
                 }
             });
         },

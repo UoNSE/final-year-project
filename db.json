@@ -338,68 +338,134 @@
       "groupId": 5
     }
   ],
-  "issues": [
+  "evidence": [
     {
       "id": 1,
-      "data": "Dehydration",
-      "topicId": 1,
-      "cost": 20
+      "data": "The fact that Mr Tien smiles when Kristy enters the room.",
+      "issueId": 1,
+      "score": 10,
+      "maxscore": 30
     },
     {
       "id": 2,
-      "data": "Hypovolaemia",
-      "topicId": 2,
-      "cost": 4
+      "data": "Mr Tien's statement: \"I'm okay but my daughter keeps telling me what to do.\"",
+      "issueId": 1,
+      "score": 10,
+      "maxscore": 30
     },
     {
       "id": 3,
-      "data": "Nausea",
+      "data": "Mrs Qui's statement: \"He tells me I'm not a good daughter.\"",
+      "issueId": 1,
+      "score": 10,
+      "maxscore": 30
+    },
+    {
+      "id": 4,
+      "data": "Mr Tien's son, grandson and son-in-law frequently assist with his personal hygiene",
+      "issueId": 2,
+      "score": 5,
+      "maxscore": 10
+    },
+    {
+      "id": 5,
+      "data": "Mrs Qui's statement: \"He is more forgetful. Some days he forgets to eat breakfast, doesn't shower or shave and keeps putting on the same old clothes.\"",
+      "issueId": 2,
+      "score": 5,
+      "maxscore": 10
+    },
+    {
+      "id": 6,
+      "data": "GDS score of 4",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 7,
+      "data": "Mood Irritable",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 8,
+      "data": "Blood pressure 170/85",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 9,
+      "data": "CAM negative result",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 10,
+      "data": "MMSE 19/30",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 11,
+      "data": "Level of thirst",
+      "issueId": 4,
+      "score": 4,
+      "maxscore": 8
+    },
+    {
+      "id": 12,
+      "data": "Only eats after prompting from daughter",
+      "issueId": 4,
+      "score": 4,
+      "maxscore": 8
+    }
+  ],
+  "issues": [
+    {
+      "id": 1,
+      "data": "Impaired communication with daughter",
+      "topicId": 3,
+      "cost": 30
+    },
+    {
+      "id": 2,
+      "data": "Altered personal hygiene deficit",
+      "topicId": 4,
+      "cost": 10
+    },
+    {
+      "id": 3,
+      "data": "Cognitive impairment due to vascular dementia",
+      "topicId": 2,
+      "cost": 35
+    },
+    {
+      "id": 4,
+      "data": "Altered nutrition and hydration",
       "topicId": 1,
-      "cost": 0
+      "cost": 8
     }
   ],
   "topics": [
     {
       "id": 1,
-      "data": "Lungs"
+      "data": "Nutritional-metabolic"
     },
     {
       "id": 2,
-      "data": "Heart"
+      "data": "Cognitive-perceptual"
     },
     {
       "id": 3,
-      "data": "Kidneys"
-    }
-  ],
-  "evidence": [
-    {
-      "id": 1,
-      "data": "Condition of oral mucosa",
-      "score": 10,
-      "maxscore": 20,
-      "issueId": 1
-    },
-    {
-      "id": 2,
-      "data": "Level of thirst",
-      "score": 10,
-      "maxscore": 20,
-      "issueId": 1
-    },
-    {
-      "id": 3,
-      "data": "Pale colour",
-      "score": 2,
-      "maxscore": 4,
-      "issueId": 2
+      "data": "Role relationship"
     },
     {
       "id": 4,
-      "data": "Pulse rate very high (120 bpm)",
-      "score": 2,
-      "maxscore": 4,
-      "issueId": 2
+      "data": "Self-care deﬁcit"
     }
   ],
   "goals": [

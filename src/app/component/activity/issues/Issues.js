@@ -72,8 +72,8 @@ define(function (require) {
             this.inventory = inventory;
             this.params = params;
 
-            this.width = 300;
-            this.height = 90;
+            this.width = 250;
+            //this.height = 90;
 
             var issues = this.collection.issues;
             var evidence = this.collection.evidence;
@@ -233,7 +233,7 @@ define(function (require) {
             issues.forEach((model, i) => {
                 var card = this.addIssue(new IssueModel({
 					width: this.width,
-					height: this.height,
+					height: this.$el.height(),
 					title: 'Issue',
                     issueid: model.get('id'),
 					body: model.get('data'),
@@ -242,14 +242,14 @@ define(function (require) {
 				}));
                 var scale = i - ((n - 1) / 2);
                 this.gameCredit -= card.model.get('cost');
-                card.position.set(-300, scale * (distance + card.model.get('height')));
+                card.position.set(0, scale * distance + 50);
             });
             this.updateScore();
         },
 
         onIssuesLoad: function (issues) {
             var n = issues.size();
-            var distance = 10;
+            var distance = 100;
             issues.forEach((model, i) => {
                 //conditional model loading
                 //model has data or body based on when it's defined
@@ -277,14 +277,14 @@ define(function (require) {
                 }
                 var scale = i - ((n - 1) / 2);
                 this.gameCredit -= card.model.get('cost');
-                card.position.set(-300, scale * (distance + card.model.get('height')));
+                card.position.set(0, scale * distance + 50);
             });
             this.updateScore();
         },
 
         onEvidenceLoad: function (evidence) {
             var n = evidence.size();
-            var distance = 10;
+            var distance = 65;
             debugger;
             evidence.forEach((model, i) => {
                 if (model.attributes.data != undefined) {
@@ -317,7 +317,12 @@ define(function (require) {
                 if(score < card.model.get('maxscore')) {
                     this.gameCredit -= 2;
                 }
-                card.position.set(300, scale * (distance + card.model.get('height')));
+                if(i%2==1){
+                    card.position.set(250, scale * distance -35);
+                }
+                else{
+                    card.position.set(-250, scale * distance +35);
+                }
             });
             this.updateScore();
         },
@@ -325,7 +330,7 @@ define(function (require) {
 
         onIssueGroupLoad: function (issuegroup) {
             var n = issuegroup.size();
-            var distance = 10;
+            var distance = 20;
             issuegroup.forEach((model, i) => {
                 var card = this.add(new IssueGroup({
                     model: new IssueGroupModel({
@@ -339,7 +344,7 @@ define(function (require) {
                 }));
                 var scale = i - ((n - 1) / 2);
                 this.gameCredit += this.getScore(card);
-                card.position.set(-300, scale * (distance + card.model.get('height')));
+                card.position.set(500 , scale * distance + 150 );
                 this.bindDraggableEvents(card);
 
         });
@@ -353,7 +358,7 @@ define(function (require) {
          */
         onEvidenceSync: function (evidence) {
             var n = evidence.size();
-            var distance = 10;
+            var distance = 65;
             evidence.forEach((model, i) => {
                 var card = this.addEvidence(new EvidenceModel({
 					width: this.width,
@@ -371,7 +376,13 @@ define(function (require) {
                 if(score < card.model.get('maxscore')) {
                     this.gameCredit -= 2;
                 }
-                card.position.set(300, scale * (distance + card.model.get('height')));
+                if(i%2==1){
+                    card.position.set(250, scale * distance -35);
+                }
+                else{
+                    card.position.set(-250, scale * distance +35);
+                }
+
             });
             this.updateScore();
         },
