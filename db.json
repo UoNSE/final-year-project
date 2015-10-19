@@ -202,7 +202,7 @@
   "types": [
     {
       "id": 1,
-      "content": "Decline"
+      "content": "Congnitive Decline"
     },
     {
       "id": 2,
@@ -221,22 +221,22 @@
     {
       "id": 1,
       "typeId": 1,
-      "content": "Definition1"
+      "content": "During normal ageing the speed at which individuals acquire information gradually declines, but their ability to recall information remains intact."
     },
     {
       "id": 2,
       "typeId": 2,
-      "content": "Definition2"
+      "content": "A gradual, progressive, irreversible deterioration of cerebral function. It is usually of a chronic or progressive nature and results in disturbance of many higher cortical functions, including memory, thinking and judgement."
     },
     {
       "id": 3,
       "typeId": 3,
-      "content": "Definition3"
+      "content": "An acute reversible clinical syndrome of cognitive function, characterised by an acute decline in attention and cognition that impairs cognitive and physical function."
     },
     {
       "id": 4,
       "typeId": 4,
-      "content": "Definition4"
+      "content": "It is often missed in older people, as its signs and symptoms can be attributed to the ageing process, dementia or poor health."
     }
   ],
   "info": [

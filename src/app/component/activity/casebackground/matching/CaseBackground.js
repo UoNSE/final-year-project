@@ -260,7 +260,7 @@ define(function (require) {
             match.setInteractive();
             this.matches.forEach((element, index, array) => {
                 let scale = index - ((array.length - 1) / 2);
-                element.position.set(MatchPositioning.x(), scale * 140);
+                element.position.set(MatchPositioning.x(), scale * 170);
             });
 
             // check if we have matched all definitions and types
