@@ -16,7 +16,11 @@ define(function (require) {
 			type: Backbone.HasMany,
 			key: 'buttons',
 			relatedModel: ActionButton
-		}]
+		}],
+
+		progress: function () {
+			this.set('complete', this.get('complete') + 1);
+		}
 
 	});
 

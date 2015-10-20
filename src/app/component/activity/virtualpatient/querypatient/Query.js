@@ -201,7 +201,7 @@ define(function(require) {
 					text: text,
 					color: color,
 					// classes: ['querybtn'],
-					id: 'query-btn-' + this.buttons.length + 1
+					//id: 'query-btn-' + this.buttons.length + 1
 				})
 			});
 		},

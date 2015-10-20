@@ -35,8 +35,7 @@ define(function(require) {
 			return new Button({
 				model: new ButtonModel({
 					text: text,
-					color: color,
-					id: 'test-btn'+this.testbuttoncount
+					color: color
 				})
 			});
 		},
@@ -51,7 +50,6 @@ define(function(require) {
 		},
 
 		createTestMenu: function(){
-			this.testbuttoncount = 1;
 			// for all menu items in collection, add menu item
 			this.yOffset = 50;
 			this.createMenuButton('Blood Test');
@@ -94,7 +92,6 @@ define(function(require) {
 
 			button.add(target);
 			button.on('click', this.onToggleTarget.bind(this, target));
-			this.testbuttoncount++;
 			return this.add(button);
 		}
 
