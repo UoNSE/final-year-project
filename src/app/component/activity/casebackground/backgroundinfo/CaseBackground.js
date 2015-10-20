@@ -194,10 +194,11 @@ define(function (require) {
          */
         onInfoSync: function (info) {
             this.relevantpieces = this.infogroup.model.get('info').length;
-            let rows = 4;
+            let rows = 3;
+            let cols = 3;
             let rowSpacing = 200;
-            let colSpacing = this.width / 2 + 20;
-
+            let colSpacing = this.width + 20;
+            let x = -2.5*colSpacing;
             let context = this;
             /*
              filter - all info cards NOT from this group
@@ -221,7 +222,10 @@ define(function (require) {
                         color: 'pink'
                     });
                     let card = this.addInfo(model);
-                    let x = (i < rows ? -colSpacing : colSpacing );
+
+                    if (i%cols === 0) {
+                        x += colSpacing;
+                    }
 
                     context.infoCards.push(card);
 
