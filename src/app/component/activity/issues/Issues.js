@@ -126,6 +126,12 @@ define(function (require) {
                     'Once all issues are linked with the correct evidence you will be able to continue'
                 })
             }));
+            this.scoreContainer.origin = 'bottom left';
+            this.scoreContainer.pageOrigin = 'bottom left';
+            this.scoreContainer.alwaysOnTop = true;
+            this.scoreContainer.detached = true;
+            this.scoreContainer.position.x = 32;
+            this.scoreContainer.position.y = 32;
 
             this.scoreHint = this.add(new PopupPanel({
                 model: {
@@ -133,8 +139,14 @@ define(function (require) {
                     width: 200
                 }
             }));
-            this.scoreHint.setOriginalPosition(this.scoreContainer.position);
 
+            this.scoreHint.origin = 'bottom left';
+            this.scoreHint.pageOrigin = 'bottom left';
+            this.scoreHint.alwaysOnTop = true;
+            this.scoreHint.detached = true;
+            this.scoreHint.position.x = 32;
+            this.scoreHint.position.y = 32;
+            this.scoreHint.setOriginalPosition(this.scoreContainer.position);
             //add the topic unlock button
             var unlock = this.add(new ActionButton({
                 model: new ActionButtonModel({
