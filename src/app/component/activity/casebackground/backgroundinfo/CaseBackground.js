@@ -238,6 +238,7 @@ define(function (require) {
                 this.hiddenHint.render();
                 //old jQuery link change
                 //$('#'+this.hiddenLink.id)[0].firstElementChild.setAttribute('href','cases/'+this.caseID+'/information');
+                app.session.get('case').information.progress();
             }
 
             this.checkComplete();

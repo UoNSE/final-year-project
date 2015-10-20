@@ -28,6 +28,7 @@ define(function (require) {
 			];
 			let panels = this.createPanels(text);
 			this.animate(panels);
+			app.session.get('case').overview.progress();
 		},
 
 		createPanels: function (text) {

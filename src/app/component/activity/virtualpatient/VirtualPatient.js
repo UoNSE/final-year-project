@@ -329,6 +329,9 @@ define(function(require) {
 					// debugger;
 					this.hiddenLink.show();
 					this.hiddenLink.bringToFront();
+					let currentCase = app.session.get('case');
+					currentCase.information.progress();
+					currentCase.overview.progress();
 				}
 				//THE HASHES CHANGE EACH TIME - NOT RELIABLE :(
 				// this.cluelist += evidence.id+'<br>'; //evidence.id (evidence is an event.draggable)
