@@ -147,7 +147,7 @@ define(function (require) {
 			unlock.origin = 'top left';
             unlock.pageOrigin = 'top left';
 			unlock.detached = true;
-			unlock.position.y = -140;
+			unlock.position.y = -70;
 
             // add a link to the Actions activity
             this.hiddenActionsActivityLink = this.add(new ActionButton({

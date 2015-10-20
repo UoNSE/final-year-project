@@ -3,13 +3,16 @@ define(function (require) {
 
 	var Object2D = require('core/Object2D');
 	var BackButton = require('component/backbutton/BackButton');
+	var HomeButton = require('component/homebutton/HomeButton');
 	var AssistanceButton = require('component/assistancebutton/AssistanceButton');
 	var Vector2 = require('math/Vector2');
 
 	return Object2D.extend({
+		showHomeButton: true,
 		showBackButton: true,
 		showAssistanceButton: true,
 		title: 'Page',
+		homeButton: null,
 		backButton: null,
 		assistanceButton: null,
 		initialize: function (router, camera, urlParams, session) {
@@ -18,6 +21,9 @@ define(function (require) {
 			this.camera = camera;
 			this.urlParams = urlParams;
 			this.session = session;
+			if (this.showHomeButton) {
+				this.homeButton = this.add(new HomeButton(router));
+			}
 			if (this.showBackButton) {
 				this.backButton = this.add(new BackButton(router));
 				this.backButton.on('back', this.onBack.bind(this));

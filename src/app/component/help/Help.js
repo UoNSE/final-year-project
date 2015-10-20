@@ -75,7 +75,7 @@ define(function (require) {
         initialize: function () {
             ActionButton.prototype.initialize.apply(this, arguments);
             this.model = new Backbone.Model(this.model);
-            this.position.set(10, -80);
+            this.position.set(10, -10);
         },
 
         toggle: function (active) {
