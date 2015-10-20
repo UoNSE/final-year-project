@@ -1,6 +1,6 @@
 /*
-* TODO: Update Help tooltip (component/activity/casebackground/backgroundinfo/help/Help.hbs)
-* */
+ * TODO: Update Help tooltip (component/activity/casebackground/backgroundinfo/help/Help.hbs)
+ * */
 define(function (require) {
     'use strict';
 
@@ -51,6 +51,14 @@ define(function (require) {
     };
 
     return Component.extend({
+
+        height: (function () {
+            return Positioning.heightLimit() * 0.05;
+        }()),
+
+        width: (function () {
+            return Positioning.widthLimit() * 0.40;
+        }()),
 
         template: template,
         collection:{
@@ -160,7 +168,7 @@ define(function (require) {
 
             //set up the info collection pane
             this.infogroup = this.addInfoGroup()
-                this.infogroup.position.set(MatchPositioning.x(),0);
+            this.infogroup.position.set(MatchPositioning.x(),0);
             //attach collection to the sub-collection within the collected info pane
             this.infogroup.model.set('info',infoGroupCollection);
 
@@ -181,12 +189,14 @@ define(function (require) {
          */
         onInfoSync: function (info) {
             this.relevantpieces = this.infogroup.model.get('info').length;
-
+            let rows = 3;
+            let rowSpacing = 200;
+            let colSpacing = this.width/2 + 20;
             /*
-            filter - all info cards NOT from this group
-            filter - all info cards already collected
-            then add the rest of the cards to the screen
-            * */
+             filter - all info cards NOT from this group
+             filter - all info cards already collected
+             then add the rest of the cards to the screen
+             * */
             info.filter((info) => this.round === info.get('groupId'))
                 .filter((info) => !(this.collection.infogroup.find((rInfo) => rInfo.get('infoid')=== info.get('id'))))
                 .forEach(function (model, i){
@@ -194,16 +204,18 @@ define(function (require) {
                     if (model.get('relevant')){this.relevantpieces++;}
                     //assign model attributes
                     Object.assign(model.attributes,{
-                        height : 100,
-                        width : 200,
+                        width : this.width,
                         id: model.get('id'),
+                        title: 'Case Information',
                         body : model.get('content'),
                         short : model.get('short'),
                         color : 'pink'
                     });
                     let card = this.addInfo(model);
-                    card.position.set(210*i - 400,100);
-            },this);
+                    let x = (i < rows ? -colSpacing : colSpacing );
+
+                    card.position.set(x,((+(i%rows)-1)*rowSpacing));
+                },this);
 
             let finalPage = info.filter((info) => (this.round+1) === info.get('groupId')).length;
             // if there is no info items in the next group, change the hidden link
@@ -213,8 +225,6 @@ define(function (require) {
                 this.hiddenLink.render();
                 this.hiddenHint.model.text = "Congratulations!<br> you've found all the pieces of case information.<br> Touch the GREEN button to continue";
                 this.hiddenHint.render();
-                //old jQuery link change
-                //$('#'+this.hiddenLink.id)[0].firstElementChild.setAttribute('href','cases/'+this.caseID+'/information');
             }
 
             this.checkComplete();
