@@ -8,6 +8,7 @@ define(function (require) {
 		detached: true,
 		origin: 'bottom center',
 		pageOrigin: 'bottom center',
+		alwaysOnTop: true,
 		events: {
 			'click': 'onClick'
 		},

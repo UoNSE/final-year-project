@@ -146,6 +146,7 @@ define(function (require) {
             }));
 			unlock.origin = 'top left';
             unlock.pageOrigin = 'top left';
+            unlock.alwaysOnTop = true;
 			unlock.detached = true;
 			unlock.position.y = -70;
 
