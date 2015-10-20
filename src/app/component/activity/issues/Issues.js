@@ -8,7 +8,7 @@ define(function (require) {
 
     var IssuesCollection = require('collection/Issues');
     var EvidenceCollection = require('collection/Evidence');
-    var IssueGroupCollection = require('collection/IssueGroups')
+    var IssueGroupCollection = require('collection/IssueGroups');
     var IssueModel = require('model/Issue');
     var EvidenceModel = require('model/Evidence');
     var IssueGroupModel = require('model/IssueGroup');
