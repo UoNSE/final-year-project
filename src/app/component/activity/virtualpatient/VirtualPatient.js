@@ -25,10 +25,12 @@ define(function(require) {
 	var EvidenceFeed = require('component/activity/virtualpatient/evidencefeed/EvidenceFeed');
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Help = require('component/help/Help');
+	var StatusCart = require('component/statuscart/StatusCart'); //ox
 	var Inventory = require('component/inventory/Inventory');
 	var AddToCollectionButton = require('component/activity/virtualpatient/addtocollectionbutton/AddToCollection');
 
 	var HelpModel = require('model/Help');
+	var StatusCartModel = require('model/Statuscart');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 	var EvidenceCollection = require('collection/Evidence');
 	var EvidenceModel = require('model/Evidence');
@@ -63,7 +65,10 @@ define(function(require) {
 			this.collaborative = false;
 			this.inventory = inventory;
 			this.caseID =  caseID;
-			console.log("inventory on entering activity: " + + this.inventory.get("evidence").length + " evidences in inventory.");
+			this.noclues = 0; //the number of clues the user has discovered
+			this.correctclues = 7; //the amount of correct clues for this module
+			this.cluelist = '';
+			console.log("inventory on entering activity: " + this.inventory.get("evidence").length + " evidences in inventory.");
 
 
 
@@ -107,6 +112,7 @@ define(function(require) {
 
 			this.help = this.add(new Help({
 				model: new HelpModel({
+					title: 'Help', //apperently this is getting overridden when we have a second simmilar model in our view
 					body: 'Players take turns at gathering evidence.'+ '<br>' + '<br>'+
 						'Collect evidence about the patients condition ' +
 					 	'by dragging them to the green <strong>inventory</strong> button.'+'<br><br>' +
@@ -119,21 +125,31 @@ define(function(require) {
 			}));
 			this.help.setInteractive();
 
+			//ox
+			//ok, so the addtoCollection button is going to show a module progress yes. It will highlight correct evidence as green
+			//and incorrect evidence as red (with possibly a small time delay
+			//the progress bar will be an n/7 indicator representing how many of the 7 correct evidences have been found on the virtual patient.
+			//var noclues=0; //number of correct clues found so far
+			this.statuscart = this.add(new StatusCart({
+				model: new StatusCartModel({
+					title: 'Clues found',
+					body: '<div class="inventorydisp"><i>No Clues discovered yet</i></div><br>'+
+					'Correct clues found: <span class="cf">'+this.noclues+'</span>/'+this.correctclues+
+					'<div class="btnspace"></div>'
+				})
+			}));
 
-			this.addtocollectionbutton = this.add(new AddToCollectionButton());
 
-			//add the addtocollection button
-			// this.addtocollectionbutton = this.add(new AddToCollectionButton());
+
+
+
+
+			this.addtocollectionbutton = this.add(new AddToCollectionButton()); //add the AddToCollectionButton
 			this.addtocollectionbutton.on({
 				addToCollection: this.addEvidenceCardToCollection.bind(this)
 			});
 
-			// this.addtocollectionbutton.setInteractive();
-			// this.addtocollectionbutton.setDraggable();
-
-
 			this.hiddenLink = this.addTimelineLink();
-
 			this.menu = this.add(new Menu());
 			this.menu.on({
 				delete: this.onDelete.bind(this),
@@ -211,6 +227,8 @@ define(function(require) {
 				// this.bindDraggableEvents(buttonhandle);
 				buttonhandle.setInteractive();
 				buttonhandle.setDraggable();
+
+
 				// debugger;
 				// this.event.trigger();
 
@@ -279,7 +297,7 @@ define(function(require) {
 		},
 
 		addEvidenceCardToCollection: function(event){
-			console.log("checkign evidence is a Evidence");
+			console.log("checking evidence is a Evidence");
 			console.log("type: "+ event.draggable + " - "+ event.draggableType);
 			console.log(event.draggable instanceof Evidence);
 			var evidence = event.draggable;
@@ -290,6 +308,25 @@ define(function(require) {
 				evidence.remove();
 				// debugger;
 				console.log("added "+evidence.id+" to inventory: " + this.inventory.get("evidence").length + " evidences in inventory.");
+				console.log("----\n"+this.evidencecollection);
+
+				//@TODO ONLY INCREMENT THE CLUES IF THE HASH IS PART OF THE id=6,7,8,9,10,11,12
+				if(this.noclues < this.correctclues)
+					this.noclues++; //update count, limit 6
+				if(this.noclues == this.correctclues)
+					$('.btnspace').html('<button>@todo: If 7(or 9, 2 free strikes) found and incorrect, show reset button, if correct show next module button</button>');
+				//THE HASHES CHANGE EACH TIME - NOT RELIABLE :(
+				this.cluelist += evidence.id+'<br>'; //evidence.id (evidence is an event.draggable)
+
+				/*
+				var cluelist = '';
+				for(var i=0;i<this.inventory.get("evidence").length;i++) //todo: find out how to convert this to a foreach
+					cluelist += this.inventory.get("evidence") +'<br>';//+this.inventory.get("evidence")+' '+i+'<br>';
+				//console.log("******\n"+this.ev);
+				*/
+
+				$('.inventorydisp').html(this.cluelist); //update list
+				$('.cf').html(this.noclues); //update count display
 			}
 		},
 
