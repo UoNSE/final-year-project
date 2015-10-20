@@ -80,100 +80,86 @@
   "info": [
     {
       "id": 1,
-      "content": "one one one one one",
-      "short": "one",
-      "relevant": true,
+      "content": "Mr Tien arrived in Sydney from Vietnam in 1975, with his wife Dang Doh and their three children.",
+      "relevant": false,
       "groupId": 1
     },
     {
       "id": 2,
-      "content": "two",
+      "content": "Mr Tien and his family were told by the nurse and medical officer at the hospital that it would take several weeks before he would start to feel strong and clear-headed again",
       "relevant": false,
       "groupId": 1
     },
     {
       "id": 3,
-      "content": "three",
-      "short": "3",
+      "content": "Mrs Qui says: 'Dad isn't any better really. He is more forgetful. Some days he forgets to eat breakfast, doesn't shower or shave and keeps putting on the same old clothes'",
+      "short": "Mrs Qui mentions that Mr Tien has become more forgetful",
       "relevant": true,
       "groupId": 1
     },
     {
       "id": 4,
-      "content": "four",
+      "content": "Mr Tien was discharged after five days and returned home with his daughter, Mrs Nguyen Qui.",
       "relevant": false,
       "groupId": 1
     },
     {
       "id": 5,
-      "content": "five",
+      "content": "Three weeks have passed and Mr Tien continues to receive visits from Kristy, the community nurse, Kristy",
       "relevant": false,
-      "groupId": 2
+      "groupId": 1
     },
     {
       "id": 6,
-      "content": "six",
-      "short": "6",
+      "content": "When Kristy visits Mr Tien, he smiles when she enters and nods his head in greeting.",
+      "short": "Mr Tien smiles when Kristy enters the room",
       "relevant": true,
-      "groupId": 2
+      "groupId": 1
     },
     {
       "id": 7,
-      "content": "se7en",
+      "content": "Kristy arrives at 1200 hours and is met by Mrs Nguyen Qui.",
+      "relevant": false,
+      "groupId": 1
+    },
+    {
+      "id": 8,
+      "content": "Mr Tien's son, grandson and son-in-law are frequently required to assist in his personal hygiene",
+      "short": "Mr Tien's relatives assist with his personal hygiene",
+      "relevant": true,
+      "groupId": 2
+    },
+    {
+      "id": 9,
+      "content": "Mrs Qui says: 'I am really worried about him'",
       "relevant": false,
       "groupId": 2
     },
     {
-      "id": 8,
-      "content": "eight",
-      "short": "8",
-      "relevant": true,
-      "groupId": 3
-    },
-    {
-      "id": 9,
-      "content": "nine",
-      "relevant": false,
-      "groupId": 3
-    },
-    {
       "id": 10,
-      "content": "ten",
+      "content": "Mr Tien had made a good recovery from his pneumonia and delirium, but he had not returned to his normal level of functioning",
       "relevant": false,
-      "groupId": 3
+      "groupId": 2
     },
     {
       "id": 11,
-      "content": "eleven",
-      "short": "11",
+      "content": "When speaking with Kristy, Mr Tien says: 'I'm okay but my daughter keeps telling me what to do'",
+      "short": "Mr Tien:'My daughter keeps telling me what to do'",
       "relevant": true,
-      "groupId": 3
+      "groupId": 2
     },
     {
       "id": 12,
-      "content": "twelve",
-      "relevant": false,
-      "groupId": 4
+      "content": "Mrs Qui says: 'When I get home I try to get him to change or bathe and he gets upset and tells me to leave him alone. He tells me I'm not a good daughter, that a good daughter would not question her father. I can't leave him alone all day like this.'",
+      "short": "Mrs Qui says: 'He tells me I'm not a good daughter'",
+      "relevant": true,
+      "groupId": 2
     },
     {
       "id": 13,
-      "content": "thirteen",
-      "short": "13",
-      "relevant": true,
-      "groupId": 4
-    },
-    {
-      "id": 14,
-      "content": "fourteen",
-      "short": "14",
-      "relevant": true,
-      "groupId": 5
-    },
-    {
-      "id": 15,
-      "content": "fifteen",
+      "content": "Kristy is a community nurse",
       "relevant": false,
-      "groupId": 5
+      "groupId": 2
     }
   ],
   "evidence": [
