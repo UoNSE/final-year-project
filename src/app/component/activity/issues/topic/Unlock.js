@@ -54,6 +54,12 @@ define(function (require) {
             this.issueHint.hide();
 
             this.scoreContainer = this.add(new Score({title:'Credit'}));
+            this.scoreContainer.origin = 'bottom left';
+            this.scoreContainer.pageOrigin = 'bottom left';
+            this.scoreContainer.alwaysOnTop = true;
+            this.scoreContainer.detached = true;
+            this.scoreContainer.position.x = 32;
+            this.scoreContainer.position.y = 32;
 
             this.updateCredit();
 
@@ -119,7 +125,6 @@ define(function (require) {
             inventoryIssues = this.inventory.get('issuegroups').models[0].attributes;
             inventoryIssues.forEach((inventModel, i) => {
                 var groupissue = inventModel.attributes.model.attributes.issue;
-                debugger;
                 if (groupissue != null) {
 
                 if (groupissue.get("body") == model.get('data')) {
