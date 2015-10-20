@@ -471,25 +471,39 @@
   "goals": [
     {
       "id": 1,
-      "content": "Immediately stabilise patient",
+      "content": "For Mr Tien not to state that his daughter is a bad daughter",
       "issueId": 1,
       "actions": [
-        1,
-        2,
-        3,
-        4
+        3
       ],
       "complete": false
     },
     {
       "id": 2,
-      "content": "For Mr Smith to be normotensive with urine output at least 30-40mls per hour within the next 2-4 hours.",
+      "content": "For Mr Tien to be showered, shaved and dressed in clean clothes daily",
       "issueId": 2,
       "actions": [
-        5,
-        6,
-        7,
-        8
+        4,
+        5
+      ],
+      "complete": false
+    },
+    {
+      "id": 3,
+      "content": "For Mr Tien to be assessed by his GP",
+      "issueId": 3,
+      "actions": [
+        1,
+        6
+      ],
+      "complete": false
+    },
+    {
+      "id": 4,
+      "content": "For Mr Tien to eat his meals and drink at least 1 ,600 mL per day",
+      "issueId": 4,
+      "actions": [
+        2
       ],
       "complete": false
     }
@@ -497,43 +511,48 @@
   "actions": [
     {
       "id": 1,
-      "content": "Notify Mr Smith's doctor of his condition",
-      "goalId": 1
+      "content": "Discuss the results of the assessments with Mrs Qui",
+      "goalId": 3
     },
     {
       "id": 2,
-      "content": "Reassure patient.",
-      "goalId": 1
+      "content": "Suggest some strategies that Mrs Qui can use to ensure Mr Tien is eating and drinking adequately",
+      "goalId": 4
     },
     {
       "id": 3,
-      "content": "Check that the IV cannula is not kinked or blocked.",
-      "goalId": 1
+      "content": "Suggest some communication strategies to help Mrs Qui with receive positive responses from Mr Tien",
+      "goalId": 3
     },
     {
       "id": 4,
-      "content": "Administer a fluid challenge and increase Mr Smith's IV fluid rate as ordered.",
-      "goalId": 1
+      "content": "Suggest some strategies for Mrs Qui to help with Mr Tien's personal hygiene",
+      "goalId": 2
     },
     {
       "id": 5,
-      "content": "Check that the urinary catheter is not kinked or blocked.",
-      "goalId": 2
+      "content": "Ring Mr Tien's eldest son",
+      "goalId": 4
     },
     {
       "id": 6,
-      "content": "Raise the foot of Mr Smith's bed.",
-      "goalId": 2
+      "content": "Make a refenal to an Aged Care Assessment Team",
+      "goalId": 3
     },
     {
       "id": 7,
-      "content": "Strictly monitor Mr Smith's input and maintain hourly urine measures",
-      "goalId": 2
+      "content": "Explain to Mr Tien that he is not to speak to his daughter in a negative way",
+      "goalId": 0
     },
     {
       "id": 8,
-      "content": "Monitor Mr Smith's level of consciousness.",
-      "goalId": 2
+      "content": "Plan for readmission to hospital",
+      "goalId": 0
+    },
+    {
+      "id": 9,
+      "content": "Discuss the need to organise Mr Tien's admission to a residential aged care facility in the nea£ future",
+      "goalId": 0
     }
   ],
   "patients": [
