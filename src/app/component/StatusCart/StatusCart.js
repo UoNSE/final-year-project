@@ -56,7 +56,7 @@ define(function (require) {
             this.model = {
                 color: 'primary',
                 icon: 'action-help',
-                classes: 'help-btn'
+                classes: 'status-btn'
             };
             ActionButton.prototype.initialize.apply(this, arguments);
             this.panel = this.add(new Panel({model: model}));
@@ -93,5 +93,3 @@ define(function (require) {
     //*/
 // --------------------------------------------------------- end todo
 });
-
-

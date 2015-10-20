@@ -66,7 +66,7 @@ define(function(require) {
 			this.inventory = inventory;
 			this.caseID =  caseID;
 			this.noclues = 0; //the number of clues the user has discovered
-			this.correctclues = 7; //the amount of correct clues for this module
+			this.correctclues = 4; //the amount of correct clues for this module
 			this.cluelist = '';
 			// this.cluelist = new EvidenceCollection();
 			console.log("inventory on entering activity: " + this.inventory.get("evidence").length + " evidences in inventory.");
@@ -126,11 +126,15 @@ define(function(require) {
 			}));
 			this.help.setInteractive();
 
+			this.hiddenLink = this.addTimelineLink();
+
 			//ox
 			//ok, so the addtoCollection button is going to show a module progress yes. It will highlight correct evidence as green
 			//and incorrect evidence as red (with possibly a small time delay
 			//the progress bar will be an n/7 indicator representing how many of the 7 correct evidences have been found on the virtual patient.
 			//var noclues=0; //number of correct clues found so far
+
+
 			this.statuscart = this.add(new StatusCart({
 				model: new StatusCartModel({
 					title: 'Evidence Cart',
@@ -151,7 +155,6 @@ define(function(require) {
 				addToCollection: this.addEvidenceCardToCollection.bind(this)
 			});
 
-			this.hiddenLink = this.addTimelineLink();
 			this.menu = this.add(new Menu());
 			this.menu.on({
 				delete: this.onDelete.bind(this),
@@ -247,7 +250,7 @@ define(function(require) {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
                     icon: 'content-send',
-                    href: 'cases/'.concat(this.caseID, '/case/Overview')
+                    href: 'cases/'.concat(this.caseID, '/overview')
                 }
             }));
 			return hiddenLink;
@@ -321,8 +324,12 @@ define(function(require) {
 				//@TODO ONLY INCREMENT THE CLUES IF THE HASH IS PART OF THE id=6,7,8,9,10,11,12
 				if(this.noclues < this.correctclues)
 					this.noclues++; //update count, limit 6
-				if(this.noclues == this.correctclues)
-					$('.btnspace').html('<button>@todo: If 7(or 9, 2 free strikes) found and incorrect, show reset button, if correct show next module button</button>');
+				if(this.noclues == this.correctclues){
+					// $('.btnspace').html('<button>@todo: If 7(or 9, 2 free strikes) found and incorrect, show reset button, if correct show next module button</button>');
+					// debugger;
+					this.hiddenLink.show();
+					this.hiddenLink.bringToFront();
+				}
 				//THE HASHES CHANGE EACH TIME - NOT RELIABLE :(
 				// this.cluelist += evidence.id+'<br>'; //evidence.id (evidence is an event.draggable)
 				this.cluelist+='<div class = "panel panel-evidence">'
@@ -358,7 +365,7 @@ define(function(require) {
 			}
 
 			toggableTarget.toggle();
-
+			toggableTarget.bringToFront();
 		},
 
 		addEvidenceFeed: function(){
