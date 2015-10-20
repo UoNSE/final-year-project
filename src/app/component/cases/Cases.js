@@ -83,6 +83,17 @@ define(function (require) {
 		onClick: function (button) {
 			let model = button.model;
 			let id = model.get('caseId');
+			let overview = this.createOverview(id);
+			let information = this.createInformation(id);
+
+			// todo remove hack
+			app.session.set('case', {
+				overview: overview,
+				information: information
+			});
+		},
+
+		createOverview: function (id) {
 			let overview = new Timeline();
 			let buttons = overview.get('buttons');
 			let link = (name) => {
@@ -94,10 +105,19 @@ define(function (require) {
 			buttons.add(new ActionButton({text: 'Goals and Actions', href: link('goals'), disabled: true}));
 			buttons.add(new ActionButton({text: 'Reflection', href: link('reflection'), disabled: true}));
 
-			// todo remove hack
-			app.session.set('case', {
-				overview: overview
-			});
+			return overview;
+
+		},
+
+		createInformation: function (id) {
+			let information = new Timeline();
+			let buttons = overview.get('buttons');
+			let link = (name) => {
+				return 'cases/' + id + '/activity/' + name;
+			};
+
+			buttons.add(new ActionButton({text: 'Case Background', href: link('case-information')}));
+			buttons.add(new ActionButton({text: 'Virtual Patient', href: link('virtual-patient'), disabled:true}));
 		}
 
 	});

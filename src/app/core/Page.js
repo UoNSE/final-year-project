@@ -32,18 +32,24 @@ define(function (require) {
 			this.session.get('case', () => {
 
 				let overview = new Timeline();
-				let buttons = overview.get('buttons');
+				let information = new Timeline();
 				let link = (name) => {
 					return 'cases/' + id + '/activity/' + name;
 				};
 
-				buttons.add(new ActionButton({text: 'Case Information', href: 'cases/' + id + '/information'}));
-				buttons.add(new ActionButton({text: 'Identify Issues', href: link('issues'), disabled: true}));
-				buttons.add(new ActionButton({text: 'Goals and Actions', href: link('goals'), disabled: true}));
-				buttons.add(new ActionButton({text: 'Reflection', href: link('reflection'), disabled: true}));
+				let overviewButtons = overview.get('buttons');
+				overviewButtons.add(new ActionButton({text: 'Case Information', href: 'cases/' + id + '/information'}));
+				overviewButtons.add(new ActionButton({text: 'Identify Issues', href: link('issues'), disabled: true}));
+				overviewButtons.add(new ActionButton({text: 'Goals and Actions', href: link('goals'), disabled: true}));
+				overviewButtons.add(new ActionButton({text: 'Reflection', href: link('reflection'), disabled: true}));
+
+				let informationButtons = information.get('buttons');
+				informationButtons.add(new ActionButton({text: 'Case Background', href: link('case-information')}));
+				informationButtons.add(new ActionButton({text: 'Virtual Patient', href: link('virtual-patient'), disabled: true}));
 
 				return {
-					overview: overview
+					overview: overview,
+					information: information
 				};
 
 			});

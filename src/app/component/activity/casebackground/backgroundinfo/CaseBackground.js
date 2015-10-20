@@ -213,6 +213,8 @@ define(function (require) {
                 this.hiddenLink.render();
                 this.hiddenHint.model.text = "Congratulations!<br> you've found all the pieces of case information.<br> Touch the GREEN button to continue";
                 this.hiddenHint.render();
+                let currentCase = app.session.get('case');
+                currentCase.information.progress();
                 //old jQuery link change
                 //$('#'+this.hiddenLink.id)[0].firstElementChild.setAttribute('href','cases/'+this.caseID+'/information');
             }
