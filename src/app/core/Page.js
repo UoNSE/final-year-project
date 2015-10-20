@@ -3,11 +3,15 @@ define(function (require) {
 
 	var Object2D = require('core/Object2D');
 	var BackButton = require('component/backbutton/BackButton');
+	var AssistanceButton = require('component/assistancebutton/AssistanceButton');
 	var Vector2 = require('math/Vector2');
 
 	return Object2D.extend({
 		showBackButton: true,
+		showAssistanceButton: true,
 		title: 'Page',
+		backButton: null,
+		assistanceButton: null,
 		initialize: function (router, camera, urlParams, session) {
 			Object2D.prototype.initialize.apply(this, arguments);
             this.router = router;
@@ -17,6 +21,9 @@ define(function (require) {
 			if (this.showBackButton) {
 				this.backButton = this.add(new BackButton(router));
 				this.backButton.on('back', this.onBack.bind(this));
+			}
+			if (this.showAssistanceButton) {
+				this.assistanceButton = this.add(new AssistanceButton());
 			}
 		},
 

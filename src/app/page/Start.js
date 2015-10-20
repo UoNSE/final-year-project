@@ -10,6 +10,7 @@ define(function (require) {
 		name: 'startpage',
 		title: 'Start',
 		showBackButton: false,
+		showAssistanceButton: false,
 
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
