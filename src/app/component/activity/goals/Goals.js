@@ -31,25 +31,6 @@ define(function (require) {
     let CardMatcher = require('component/activity/goals/match/CardMatcher');
     let Rule = require('component/activity/goals/match/Rule');
 
-    /**
-     * Defines the positioning for Matches, so that
-     * they align with the inventory.
-     */
-    let MatchPositioning = {
-        /**
-         * The x position.
-         */
-        x: () => {
-            return Positioning.widthLimit() * 0.70
-        },
-        /**
-         * The y position.
-         */
-        y: () => {
-            return Positioning.heightLimit() * 0.15;
-        }
-    };
-
 
     let matchPositions = {
         /**
@@ -59,7 +40,7 @@ define(function (require) {
          */
         firstColumn: () => {
             // note negative
-            return -(Positioning.widthLimit() * 0.60)
+            return -(Positioning.widthLimit() * 0.75)
         },
         /**
          * The x position of the second column.
@@ -67,13 +48,13 @@ define(function (require) {
          * @returns {number}
          */
         secondColumn: () => {
-            return Positioning.widthLimit() * 0.80
+            return Positioning.widthLimit() * 0.70
         },
         /**
          * The y position.
          */
         row: () => {
-            return Positioning.heightLimit() * 0.15;
+            return Positioning.heightLimit() * 0.30;
         }
     };
 
@@ -357,7 +338,7 @@ define(function (require) {
                 let scale = i - ((n - 1) / 2);
 
                 let x = () => {
-                    return -(this.width);
+                    return -(this.width) + 70;
                 };
 
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
@@ -407,7 +388,7 @@ define(function (require) {
 
                 let scale = i - ((n - 1) / 2);
                 let x = () => {
-                    return this.width - 200;
+                    return this.width - 120;
                 };
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
 

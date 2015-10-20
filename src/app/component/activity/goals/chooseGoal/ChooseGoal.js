@@ -30,39 +30,6 @@ define(function (require) {
     let CardMatcher = require('component/activity/goals/match/CardMatcher');
     let Rule = require('component/activity/goals/match/Rule');
 
-    /**
-     * Matches are positioned into two columns. The following functions
-     * help determine the positions of these columns and rows as a percentage
-     * of the screen.
-     *
-     * @type {{firstColumn: number, secondColumn: number, row: number}}
-     */
-    let MatchPositioning = {
-        /**
-         * The x position of the first column.
-         *
-         * @returns {number}
-         */
-        firstColumn: () => {
-            return Positioning.widthLimit() * 0.05
-        },
-        /**
-         * The x position of the second column.
-         *
-         * @returns {number}
-         */
-        secondColumn: () => {
-            return Positioning.widthLimit() * 0.50
-        },
-        /**
-         * The y position.
-         */
-        row: () => {
-            return Positioning.heightLimit() * 0.15;
-        }
-
-    };
-
 
     /**
      * @class ChooseGoal
@@ -176,7 +143,7 @@ define(function (require) {
 
             // Listen to the sync events on both collections, which waits for
             // the models to be loaded.
-            this.listenToOnce(this.collection.goals, 'sync', this.onDefinitionsSync);
+            this.listenToOnce(this.collection.goals, 'sync', this.onGoalsSync);
 
             // load data
             this.collection.goals.fetch();
@@ -188,10 +155,10 @@ define(function (require) {
          *
          * @param goals The issues collection.
          */
-        onDefinitionsSync: function (goals) {
+        onGoalsSync: function (goals) {
 
             let n = goals.size();
-            let separatorDistance = 10; // 10 px
+            let separatorDistance = 30; // 10 px
 
             let incompleteGoals = goals.filter((goal)=> {
 
