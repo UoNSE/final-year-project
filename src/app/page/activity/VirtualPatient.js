@@ -10,7 +10,7 @@ define(function (require) {
 		initialize: function () {
 			InventoryPage.prototype.initialize.apply(this, arguments);
 			this.caseID = this.urlParams['case_id'];
-			this.add(new VirtualPatient(this.inventory, this.caseID));
+			this.add(new VirtualPatient(this.inventory2, this.caseID));
 		}
 	});
 });
