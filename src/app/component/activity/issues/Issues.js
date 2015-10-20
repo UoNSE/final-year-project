@@ -285,7 +285,6 @@ define(function (require) {
         onEvidenceLoad: function (evidence) {
             var n = evidence.size();
             var distance = 65;
-            debugger;
             evidence.forEach((model, i) => {
                 if (model.attributes.data != undefined) {
                     var card = this.addEvidence(new EvidenceModel({
