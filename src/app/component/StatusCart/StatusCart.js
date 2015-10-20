@@ -4,7 +4,7 @@ define(function (require) {
     var template = require('text!component/statuscart/StatusCart.hbs');
     var ActionButton = require('component/actionbutton/ActionButton');
     var Button = require('component/button/Button');
-
+    var Evidence = require('component/activity/issues/card/Card'); //shold be /evidence to stop syntax error? js line 1
     /**
      * @class StatusCart
      *
@@ -17,7 +17,8 @@ define(function (require) {
      *
      */
 
-    var Panel = Component.extend({ //this is the same as help - should we resue? no, they have different classs //panel extends component
+    return Component.extend({ //this is the same as help - should we resue? no, they have different classs //panel extends component
+
         // important for having fixed position near back button
         template: template,
 		classes: 'cpn-sb', //unsure what classes refers to - its css classes - you need to link the js-generated component to the css somehow
@@ -25,12 +26,26 @@ define(function (require) {
         origin: 'top right',
         //events: { //we will apply a click behavior once its enabled to students may progress to the next module
         //    'click .confirm': 'close'
-        //},
+        //}
+
+        bindEvents: function () {
+            this.listenTo(this, 'dragendsink', this.onDelete.bind(this));
+        },
+
+        // triggers event
+        onDelete: function (event) {
+            this.trigger('addToInventory', event); //addToCollection
+            //debugger; //remove me
+            console.log("Drag event fired");
+        },
 
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);
+            this.setInteractive();
+            this.setDroppable({types: Evidence});
             this.position.x = -0;
             this.position.y = -80;
+            this.bindEvents();
         },
 
         close: function () {
@@ -46,6 +61,7 @@ define(function (require) {
      * @classdesc This is a custom ActionButton for handling
      * hiding and showing the StatusCart Information.
      */
+    /*
     return Button.extend({ //-------------------the actionbutton might refer to the parent one that hides the
         detached: true,
         origin: 'top right',
@@ -63,7 +79,7 @@ define(function (require) {
             //this.position.set(10, -80);
             //this.panel.alwaysOnTop = true;
         }
-    });
+    });*///---------------------
 
     /*
     return ActionButton.extend({

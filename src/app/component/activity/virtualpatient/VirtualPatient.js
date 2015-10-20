@@ -70,10 +70,11 @@ define(function(require) {
 			this.cluelist = '';
 			// this.cluelist = new EvidenceCollection();
 			console.log("inventory on entering activity: " + this.inventory.get("evidence").length + " evidences in inventory.");
-
+			//this.bindEvents();
 
 
 		},
+
 
 		onSync: function (collection) {
 			// get the patient with the case Id.
@@ -138,22 +139,23 @@ define(function(require) {
 			this.statuscart = this.add(new StatusCart({
 				model: new StatusCartModel({
 					title: 'Evidence Cart',
-					body: '<div class="inventorydisp"><i>No Clues discovered yet</i></div><br>'+
+					body: '<div class="inventorydisp">No Clues discovered yet</div><br>'+
 					'Correct evidences found: <span class="cf">'+this.noclues+'</span>/'+this.correctclues+
-					'<div class="btnspace"></div>',
+					'<div class="btnspace"></div>'
 					// collection: this.cluelist
 				})
 			}));
-
-
-
-
 
 
 			this.addtocollectionbutton = this.add(new AddToCollectionButton()); //add the AddToCollectionButton
 			this.addtocollectionbutton.on({
 				addToCollection: this.addEvidenceCardToCollection.bind(this)
 			});
+
+			this.listenTo(this.statuscart, 'addToInventory', this.addEvidenceCardToCollection); //alternate way to bind
+			//this.statuscart.on({
+			//	addToCollection: this.addEvidenceCardToCollection.bind(this)
+			//});
 
 			this.menu = this.add(new Menu());
 			this.menu.on({
@@ -183,11 +185,7 @@ define(function(require) {
 			var offset = 100;
 
 			texts.forEach(function (text, i) {
-
-				// var actionbuttonhandlemodel = new ActionButtonHandleModel();
-				// var buttonhandle = new ActionButtonHandle({model: actionbuttonhandlemodel});
 				var buttonhandle = new ActionButtonHandle();
-				// var button = buttonhandle.add(new ActionButton({
 				var button = new ActionButton({
 					model: new ActionButtonModel({
 						text: text,
@@ -199,10 +197,7 @@ define(function(require) {
 						}
 					})
 				});
-				// buttons x position
-				var buttonXPos = button.position.x;
-				//
-				// button.position.set(buttonXPos, 100);
+
 				var scale = i - (n - 1) / 2;
 				buttonhandle.position.set(0, -250);
 				var buttonhandleXPos = buttonhandle.position.x;
