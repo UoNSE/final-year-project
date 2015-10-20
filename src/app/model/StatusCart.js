@@ -5,15 +5,16 @@ define(function (require) {
 
     var _ = require('underscore');
     var Panel = require('model/Panel');
+    var EvidenceCollection = require('collection/Evidence')
 
     var StatusCart = Panel.extend({});
 
     _.extend(StatusCart.prototype.defaults, Panel.prototype.defaults, {
         title: 'StatusCart',
         width: 300
+        // collection: EvidenceCollection
     });
 
     return StatusCart;
 
 });
-

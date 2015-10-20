@@ -68,6 +68,7 @@ define(function(require) {
 			this.noclues = 0; //the number of clues the user has discovered
 			this.correctclues = 7; //the amount of correct clues for this module
 			this.cluelist = '';
+			// this.cluelist = new EvidenceCollection();
 			console.log("inventory on entering activity: " + this.inventory.get("evidence").length + " evidences in inventory.");
 
 
@@ -132,10 +133,11 @@ define(function(require) {
 			//var noclues=0; //number of correct clues found so far
 			this.statuscart = this.add(new StatusCart({
 				model: new StatusCartModel({
-					title: 'Clues found',
+					title: 'Evidence Cart',
 					body: '<div class="inventorydisp"><i>No Clues discovered yet</i></div><br>'+
-					'Correct clues found: <span class="cf">'+this.noclues+'</span>/'+this.correctclues+
-					'<div class="btnspace"></div>'
+					'Correct evidences found: <span class="cf">'+this.noclues+'</span>/'+this.correctclues+
+					'<div class="btnspace"></div>',
+					// collection: this.cluelist
 				})
 			}));
 
@@ -301,14 +303,20 @@ define(function(require) {
 			console.log("type: "+ event.draggable + " - "+ event.draggableType);
 			console.log(event.draggable instanceof Evidence);
 			var evidence = event.draggable;
+			// debugger;
 			if(event.draggable instanceof Evidence){
 				this.evidencecollection.add(evidence);
 				this.inventory.attributes.evidence.add(this.evidencecollection);
 				// remove the evidence from the view after adding to inventory.
+				var evidenceBody = evidence.model.attributes.body;
 				evidence.remove();
 				// debugger;
 				console.log("added "+evidence.id+" to inventory: " + this.inventory.get("evidence").length + " evidences in inventory.");
 				console.log("----\n"+this.evidencecollection);
+				// debugger
+				// this.cluelist.collection.add(evidence.model.attributes.body);
+				evidence.remove();
+
 
 				//@TODO ONLY INCREMENT THE CLUES IF THE HASH IS PART OF THE id=6,7,8,9,10,11,12
 				if(this.noclues < this.correctclues)
@@ -316,8 +324,10 @@ define(function(require) {
 				if(this.noclues == this.correctclues)
 					$('.btnspace').html('<button>@todo: If 7(or 9, 2 free strikes) found and incorrect, show reset button, if correct show next module button</button>');
 				//THE HASHES CHANGE EACH TIME - NOT RELIABLE :(
-				this.cluelist += evidence.id+'<br>'; //evidence.id (evidence is an event.draggable)
-
+				// this.cluelist += evidence.id+'<br>'; //evidence.id (evidence is an event.draggable)
+				this.cluelist+='<div class = "panel panel-evidence">'
+				this.cluelist += evidenceBody+'<br><br>'; //evidence.id (evidence is an event.draggable)
+				this.cluelist+='</div>'
 				/*
 				var cluelist = '';
 				for(var i=0;i<this.inventory.get("evidence").length;i++) //todo: find out how to convert this to a foreach
