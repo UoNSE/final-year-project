@@ -7,6 +7,9 @@ define(function (require) {
 	var AssistanceButton = require('component/assistancebutton/AssistanceButton');
 	var Vector2 = require('math/Vector2');
 
+	var ActionButton = require('model/ActionButton');
+	var Timeline = require('model/Timeline');
+
 	return Object2D.extend({
 		showHomeButton: true,
 		showBackButton: true,
@@ -31,6 +34,38 @@ define(function (require) {
 			if (this.showAssistanceButton) {
 				this.assistanceButton = this.add(new AssistanceButton());
 			}
+			// TODO remove hack
+			let id = this.urlParams['case_id'];
+			if (!this.session.has('case') && id) {
+				this.createCase(id);
+			}
+		},
+
+		createCase: function (id) {
+			this.session.get('case', () => {
+
+				let overview = new Timeline();
+				let information = new Timeline();
+				let link = (name) => {
+					return 'cases/' + id + '/activity/' + name;
+				};
+
+				let overviewButtons = overview.get('buttons');
+				overviewButtons.add(new ActionButton({text: 'Case Information', href: 'cases/' + id + '/information'}));
+				overviewButtons.add(new ActionButton({text: 'Identify Issues', href: link('issues'), disabled: true}));
+				overviewButtons.add(new ActionButton({text: 'Goals and Actions', href: link('goals'), disabled: true}));
+				overviewButtons.add(new ActionButton({text: 'Reflection', href: link('reflection'), disabled: true}));
+
+				let informationButtons = information.get('buttons');
+				informationButtons.add(new ActionButton({text: 'Case Background', href: link('case-information')}));
+				informationButtons.add(new ActionButton({text: 'Virtual Patient', href: link('virtual-patient'), disabled: true}));
+
+				return {
+					overview: overview,
+					information: information
+				};
+
+			});
 		},
 
 		// Override in submodule to modify.

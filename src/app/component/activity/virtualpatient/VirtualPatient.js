@@ -191,7 +191,7 @@ define(function(require) {
 				var button = new ActionButton({
 					model: new ActionButtonModel({
 						text: text,
-						id: text + 'Btn',
+						//id: text + 'Btn',
 						styles: {
 							width: 100,
 							height: 100

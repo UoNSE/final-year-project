@@ -19,7 +19,8 @@ define(function (require) {
 			this.addButtons(buttons, distanceBetween);
 
 			this.listenTo(this.model, 'change', this.onChange.bind(this));
-			this.model.set('complete', 0);
+			this.syncButtons(this.model);
+
 		},
 
 		addLines: function (size, width) {
@@ -49,23 +50,25 @@ define(function (require) {
 			}, this);
 		},
 
-		onChange: function (model) {
+		syncButtons: function (model) {
+
 			let complete = model.get('complete');
 			let buttons = model.get('buttons');
+
 			for (let i = 0, len = complete; i < len; i++) {
 				let button = buttons.at(i);
-				if (button.get('disabled')) {
-					button.set('disabled', false);
-				}
-				if (button.get('color') === 'primary') {
-					button.set('color', 'success');
-				}
+				button.set('disabled', false);
+				button.set('color', 'success');
 			}
 
 			if (complete < buttons.size()) {
 				buttons.at(complete).set('disabled', false);
 			}
 
+		},
+
+		onChange: function (model) {
+			this.syncButtons(model);
 		}
 
 	});
