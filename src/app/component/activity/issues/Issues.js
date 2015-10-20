@@ -144,10 +144,10 @@ define(function (require) {
                     classes: 'topic-unlock'
                 })
             }));
-			unlock.origin = 'top left';
-            unlock.pageOrigin = 'top left';
+			unlock.origin = 'bottom center';
+            unlock.pageOrigin = 'bottom center';
 			unlock.detached = true;
-			unlock.position.y = -70;
+			unlock.position.x = -105;
 
             // add a link to the Actions activity
             this.hiddenActionsActivityLink = this.add(new ActionButton({
