@@ -53,6 +53,13 @@ define(function (require) {
             this.issueHint = this.add(new Hint({model: {text: 'Select an issue to<br/>purchase it'}}));
             this.issueHint.hide();
 
+            this.backHint = this.add(new Hint({model: {text: 'Return to activity'}}));
+            this.backHint.origin = 'bottom center';
+            this.backHint.pageOrigin = 'bottom center';
+            this.backHint.detached = true;
+            this.backHint.position.x = -168;
+            this.backHint.position.y = 24;
+
             this.scoreContainer = this.add(new Score({title:'Credit'}));
             this.scoreContainer.origin = 'bottom left';
             this.scoreContainer.pageOrigin = 'bottom left';
