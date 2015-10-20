@@ -10,6 +10,7 @@ define(function (require) {
 	return Page.extend({
 		name: 'overview',
 		title: 'Case Overview',
+		showHomeButton: false,
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
 			// TODO remove hack
@@ -19,6 +20,7 @@ define(function (require) {
 			let currentCase = this.session.get('case') || {};
 			let overview = currentCase.overview || new Timeline();
 			this.add(new Overview(overview, this.urlParams));
+			this.backButton.position.x = 0;
 		},
 
 		createCase: function (id) {

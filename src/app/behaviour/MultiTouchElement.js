@@ -8,6 +8,7 @@ define(function (require) {
 		this.element = component.$el;
 		this.behaviours = [];
 		this.bindEvents();
+		this.down = false;
 	}
 
 	Object.assign(MultiTouchElement.prototype, {
@@ -17,7 +18,11 @@ define(function (require) {
 				mouseenter: this.onMouseEnter.bind(this),
 				mouseleave: this.onMouseLeave.bind(this),
 				mousedown: this.onMouseDown.bind(this),
-				touchstart: this.onTouchStart.bind(this)
+				mousemove: this.onMouseMove.bind(this),
+				mouseup: this.onMouseUp.bind(this),
+				touchstart: this.onTouchStart.bind(this),
+				touchmove: this.onTouchMove.bind(this),
+				touchend: this.onTouchEnd.bind(this)
 			});
 		},
 
@@ -43,48 +48,56 @@ define(function (require) {
 		},
 
 		onMouseDown: function (event) {
+			this.down = true;
 			this.dispatchEvent('onMouseDown', event);
 
 			// Attach events to the window.
 			// This improves robustness when the cursor leaves the window or element during drag.
 			// Also only listen for the touchmove event when dragging (after touchstart).
 			// Unbind after drag (touchend).
-			var $window = $(window);
-			var onMouseMove = this.onMouseMove.bind(this);
-			$window.on('mousemove', onMouseMove);
-			$window.one('mouseup', function () {
-				$window.off('mousemove', onMouseMove);
-				this.onMouseUp.apply(this, arguments);
-			}.bind(this));
+			//var $window = $(window);
+			//var onMouseMove = this.onMouseMove.bind(this);
+			//$window.on('mousemove', onMouseMove);
+			//$window.one('mouseup', function () {
+			//	$window.off('mousemove', onMouseMove);
+			//	this.onMouseUp.apply(this, arguments);
+			//}.bind(this));
 		},
 
 		onMouseMove: function (event) {
-			this.dispatchEvent('onMouseMove', event);
+			if (this.down) {
+				this.dispatchEvent('onMouseMove', event);
+			}
 		},
 
 		onMouseUp: function (event) {
 			this.dispatchEvent('onMouseUp', event);
+			this.down = false;
 		},
 
 		onTouchStart: function (event) {
+			this.down = true;
 			event.preventDefault();
 			this.dispatchEvent('onTouchStart', event);
 
-			var $window = $(window);
-			var onTouchMove = this.onTouchMove.bind(this);
-			$window.on('touchmove', onTouchMove);
-			$window.one('touchend', function () {
-				$window.off('touchmove', onTouchMove);
-				this.onTouchEnd.apply(this, arguments);
-			}.bind(this));
+			//var $window = $(window);
+			//var onTouchMove = this.onTouchMove.bind(this);
+			//$window.on('touchmove', onTouchMove);
+			//$window.one('touchend', function () {
+			//	$window.off('touchmove', onTouchMove);
+			//	this.onTouchEnd.apply(this, arguments);
+			//}.bind(this));
 		},
 
 		onTouchMove: function (event) {
 			event.preventDefault();
-			this.dispatchEvent('onTouchMove', event);
+			if (this.down) {
+				this.dispatchEvent('onTouchMove', event);
+			}
 		},
 
 		onTouchEnd: function (event) {
+			this.down = false;
 			event.preventDefault();
 			this.dispatchEvent('onTouchEnd', event);
 		},
