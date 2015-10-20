@@ -61,7 +61,7 @@ define(function (require) {
         }()),
 
         width: (function () {
-            return Positioning.widthLimit() * 0.40;
+            return Positioning.widthLimit() * 0.50;
         }()),
 
         /**
@@ -305,7 +305,7 @@ define(function (require) {
                 let scale = i - ((n - 1) / 2);
 
                 let x = () => {
-                    return -(this.width) - 100;
+                    return -(this.width);// - 300;
                 };
 
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
@@ -340,7 +340,7 @@ define(function (require) {
 
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
-                    model.get('content').length
+                    model.get('content').length + 10
                 );
 
                 Object.assign(model.attributes, {
@@ -355,7 +355,7 @@ define(function (require) {
 
                 let scale = i - ((n - 1) / 2);
                 let x = () => {
-                    return this.width - 200;
+                    return this.width;
                 };
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
 

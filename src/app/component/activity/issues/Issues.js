@@ -8,7 +8,7 @@ define(function (require) {
 
     var IssuesCollection = require('collection/Issues');
     var EvidenceCollection = require('collection/Evidence');
-    var IssueGroupCollection = require('collection/IssueGroups')
+    var IssueGroupCollection = require('collection/IssueGroups');
     var IssueModel = require('model/Issue');
     var EvidenceModel = require('model/Evidence');
     var IssueGroupModel = require('model/IssueGroup');
@@ -126,6 +126,12 @@ define(function (require) {
                     'Once all issues are linked with the correct evidence you will be able to continue'
                 })
             }));
+            this.scoreContainer.origin = 'bottom left';
+            this.scoreContainer.pageOrigin = 'bottom left';
+            this.scoreContainer.alwaysOnTop = true;
+            this.scoreContainer.detached = true;
+            this.scoreContainer.position.x = 32;
+            this.scoreContainer.position.y = 32;
 
             this.scoreHint = this.add(new PopupPanel({
                 model: {
@@ -133,8 +139,12 @@ define(function (require) {
                     width: 200
                 }
             }));
-            this.scoreHint.setOriginalPosition(this.scoreContainer.position);
 
+            this.scoreHint.origin = 'bottom left';
+            this.scoreHint.pageOrigin = 'bottom left';
+            this.scoreHint.alwaysOnTop = true;
+            this.scoreHint.detached = true;
+            this.scoreHint.setOriginalPosition(this.scoreContainer.position);
             //add the topic unlock button
             var unlock = this.add(new ActionButton({
                 model: new ActionButtonModel({
@@ -144,10 +154,12 @@ define(function (require) {
                     classes: 'topic-unlock'
                 })
             }));
-			unlock.origin = 'top left';
-            unlock.pageOrigin = 'top left';
+			unlock.origin = 'bottom left';
+            unlock.pageOrigin = 'bottom left';
+            unlock.alwaysOnTop = true;
 			unlock.detached = true;
-			unlock.position.y = -140;
+			unlock.position.x = 164;
+            unlock.position.y = 24;
 
             // add a link to the Actions activity
             this.hiddenActionsActivityLink = this.add(new ActionButton({

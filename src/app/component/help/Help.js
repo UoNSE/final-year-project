@@ -40,6 +40,7 @@ define(function (require) {
         template: template,
 		classes: 'cpn-help',
         origin: 'top left',
+        alwaysOnTop: true,
         events: {
             'click .confirm': 'close'
         },
@@ -64,6 +65,7 @@ define(function (require) {
     let Button = ActionButton.extend({
 
         origin: 'top left',
+        alwaysOnTop: true,
 
         model: {
 			color: 'primary',
@@ -75,7 +77,7 @@ define(function (require) {
         initialize: function () {
             ActionButton.prototype.initialize.apply(this, arguments);
             this.model = new Backbone.Model(this.model);
-            this.position.set(10, -80);
+            this.position.set(10, -10);
         },
 
         toggle: function (active) {
@@ -90,6 +92,7 @@ define(function (require) {
         detached: true,
         origin: 'top left',
         pageOrigin: 'top left',
+        alwaysOnTop: true,
 
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);
@@ -97,7 +100,6 @@ define(function (require) {
             this.button.toggle(true);
 
             this.panel = this.button.add(new Panel({model: this.model}));
-            this.panel.alwaysOnTop = true;
 
             this.listenTo(this.button, 'click', this.onClick.bind(this));
             this.listenTo(this.panel, 'close', this.onClose.bind(this));

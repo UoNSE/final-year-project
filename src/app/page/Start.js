@@ -9,7 +9,9 @@ define(function (require) {
 	return Page.extend({
 		name: 'startpage',
 		title: 'Start',
+		showHomeButton: false,
 		showBackButton: false,
+		showAssistanceButton: false,
 
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);

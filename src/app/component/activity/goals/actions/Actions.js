@@ -351,29 +351,36 @@ define(function (require) {
          * @param model
          */
         onAddActionGroup: function (model) {
-            Object.assign(model.attributes, {
-                width: 300
-            });
-            
-            let match = new GoalActionsMatch({
-                model: model
-            });
-            
-            this.bindDraggableEvents(match);
 
-            match.show();
+            if (model.isComplete()) {
+                // if we're done, we can remove the component
+                //match.remove();
+                // check if this was the last actions group to complete
+                this.checkMatches();
+            }
+            else {
 
-            // storage
-            this.add(match);
-            this.matches.push(match);
+                Object.assign(model.attributes, {
+                    width: 300
+                });
 
-            // positioning
-            match.setInteractive();
+                let match = new GoalActionsMatch({
+                    model: model
+                });
 
-            this.matches.forEach((element, index, array) => {
-                let scale = index - ((array.length - 1) / 2);
-                element.position.set(MatchPositioning.x(), scale * 270);
-            });
+                this.bindDraggableEvents(match);
+
+                match.show();
+
+                // storage
+                this.add(match);
+                this.matches.push(match);
+
+                // positioning
+                match.setInteractive();
+            }
+
+
         },
 
         /**

@@ -44,7 +44,8 @@ define(function (require) {
                     'cases/:case_id/activity/issues/unlock': 'activity/issues/TopicUnlock',
                     'cases/:case_id/activity/goals': 'activity/Goals',
                     'cases/:case_id/activity/goals/choose' : 'activity/goals/ChooseGoal',
-                    'cases/:case_id/activity/goals/choose/:goal_id/actions': 'activity/goals/Actions'
+                    'cases/:case_id/activity/goals/choose/:goal_id/actions': 'activity/goals/Actions',
+                    'cases/:case_id/activity/reflection': 'activity/Reflection'
                 },
                 sitemap: {
                     'Start': {
@@ -63,7 +64,8 @@ define(function (require) {
                                     'activity/goals/ChooseGoal': {
                                         'activity/goals/Actions': null
                                     }
-                                }
+                                },
+                                'activity/Reflection': null
 							}
 						}
 					}

@@ -31,22 +31,30 @@ define(function (require) {
     let CardMatcher = require('component/activity/goals/match/CardMatcher');
     let Rule = require('component/activity/goals/match/Rule');
 
-    /**
-     * Defines the positioning for Matches, so that
-     * they align with the inventory.
-     */
-    let MatchPositioning = {
+
+    let matchPositions = {
         /**
-         * The x position.
+         * The x position of the first column.
+         *
+         * @returns {number}
          */
-        x: () => {
+        firstColumn: () => {
+            // note negative
+            return -(Positioning.widthLimit() * 0.75)
+        },
+        /**
+         * The x position of the second column.
+         *
+         * @returns {number}
+         */
+        secondColumn: () => {
             return Positioning.widthLimit() * 0.70
         },
         /**
          * The y position.
          */
-        y: () => {
-            return Positioning.heightLimit() * 0.15;
+        row: () => {
+            return Positioning.heightLimit() * 0.30;
         }
     };
 
@@ -215,7 +223,7 @@ define(function (require) {
             // Listen to the sync events on both collections, which waits for
             // the models to be loaded.
             this.listenToOnce(issuesCollection, 'sync', this.onIssuesSync);
-            this.listenToOnce(goalsCollection, 'sync', this.onDefinitionsSync);
+            this.listenToOnce(goalsCollection, 'sync', this.onGoalsSync);
             this.listenTo(this.collection.matches, 'add', this.onAddMatch);
 
             // fetch issues and goals ready for matching to begin
@@ -258,13 +266,38 @@ define(function (require) {
 
             // positioning
             match.setInteractive();
+
+            let context = this;
+
             this.matches.forEach((element, index, array) => {
-                let scale = index - ((array.length - 1) / 2);
-                element.position.set(MatchPositioning.x(), scale * 270);
+                //let scale = index - ((array.length - 1) / 2);
+
+                context.positionMatch(index, array.length, element)
+                //element.position.set(MatchPositioning.x(), scale * 270);
             });
 
             // check if we have matched all goals and issues
             this.checkMatches();
+        },
+
+
+        positionMatch: function (i, n, match) {
+            let scale = i - ((n - 1) / 2);
+            let isOdd = (number) => {
+                return number % 2;
+            };
+
+            let x = () => {
+                return isOdd(i) ?
+                    matchPositions.firstColumn() :
+                    matchPositions.secondColumn();
+            };
+
+            let y = () => {
+                return scale * (matchPositions.row())
+            };
+
+            match.position.set(x(), y());
         },
 
         /**
@@ -305,7 +338,7 @@ define(function (require) {
                 let scale = i - ((n - 1) / 2);
 
                 let x = () => {
-                    return -(this.width) - 100;
+                    return -(this.width) + 70;
                 };
 
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
@@ -318,7 +351,7 @@ define(function (require) {
          *
          * @param goals The issues collection.
          */
-        onDefinitionsSync: function (goals) {
+        onGoalsSync: function (goals) {
             var n = goals.size();
             let separatorDistance = 10; // 10 px
             let matches = this.collection.matches;
@@ -340,7 +373,7 @@ define(function (require) {
 
                 // use the String to determine size
                 let cardHeight = this.determineCardHeight(
-                    model.get('content').length
+                    model.get('content').length + 40
                 );
 
                 Object.assign(model.attributes, {
@@ -355,7 +388,7 @@ define(function (require) {
 
                 let scale = i - ((n - 1) / 2);
                 let x = () => {
-                    return this.width - 200;
+                    return this.width - 120;
                 };
                 card.position.set(x(), scale * (separatorDistance + cardHeight));
 

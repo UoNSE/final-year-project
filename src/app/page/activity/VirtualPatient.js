@@ -9,8 +9,8 @@ define(function (require) {
 		title: 'Virtual Patient',
 		initialize: function () {
 			InventoryPage.prototype.initialize.apply(this, arguments);
-			var caseID = this.urlParams['case_id'];
-			this.add(new VirtualPatient(this.inventory, caseID));
+			this.caseID = this.urlParams['case_id'];
+			this.add(new VirtualPatient(this.inventory2, this.caseID));
 		}
 	});
 });

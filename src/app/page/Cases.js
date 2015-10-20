@@ -8,10 +8,12 @@ define(function (require) {
 	return Page.extend({
 		name: 'cases',
 		title: 'Cases',
+		showHomeButton: false,
 
 		initialize: function () {
 			Page.prototype.initialize.apply(this, arguments);
 			this.cases = this.add(new Cases());
+			this.backButton.position.x = 0;
 		},
 
 		onPageEnter: function () {
