@@ -107,7 +107,9 @@ define(function(require) {
 
 			this.help = this.add(new Help({
 				model: new HelpModel({
-					body: 'Players take turns at gathering evidence. Collect evidence about the patients condition.<br><br>' +
+					body: 'Players take turns at gathering evidence.'+ '<br>' + '<br>'+
+						'Collect evidence about the patients condition ' +
+					 	'by dragging them to the green <strong>inventory</strong> button.'+'<br><br>' +
 						'Use the <strong>Query</strong> button to ask the patient questions.<br><br>' +
                         'Use the <strong>Test</strong> button to run blood, urine and saliva tests on the patient.<br><br>' +
                         'Use the <strong>Chart</strong> button to view the patients details and vital signs.<br><br>' +
