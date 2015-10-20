@@ -142,6 +142,7 @@ define(function(require) {
 					body: '<div class="inventorydisp">No Clues discovered yet</div><br>'+
 					'Correct evidences found: <span class="cf">'+this.noclues+'</span>/'+this.correctclues+
 					'<div class="btnspace"></div>'
+					//classes: ' statuscart' //prepended space is important - position in StatusCart.js + .less
 					// collection: this.cluelist
 				})
 			}));

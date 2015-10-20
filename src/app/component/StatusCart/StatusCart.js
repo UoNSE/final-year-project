@@ -20,6 +20,7 @@ define(function (require) {
     return Component.extend({ //this is the same as help - should we resue? no, they have different classs //panel extends component
 
         // important for having fixed position near back button
+        detached: true,
         template: template,
 		classes: 'cpn-sb', //unsure what classes refers to - its css classes - you need to link the js-generated component to the css somehow
 		styles: 'component/statuscart/StatusCart.css',
@@ -41,10 +42,10 @@ define(function (require) {
 
         initialize: function () {
             Component.prototype.initialize.apply(this, arguments);
-            this.setInteractive();
             this.setDroppable({types: Evidence});
-            this.position.x = -0;
-            this.position.y = -80;
+            //this.setInteractive();
+            this.position.x = 600;
+            this.position.y = 380;
             this.bindEvents();
         },
 
