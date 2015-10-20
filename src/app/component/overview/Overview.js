@@ -15,14 +15,8 @@ define(function (require) {
 
 		initialize: function (overview, params) {
 			Component.prototype.initialize.apply(this, arguments);
-
-			this.add(new Timeline({
-				model: overview
-			}));
-
-			var hint = this.add(new Hint({
-				model: {text: 'Tap an activity below'}
-			}));
+			this.add(new Timeline({model: overview}));
+			var hint = this.add(new Hint({model: {text: 'Tap an activity below'}}));
 			hint.position.y = 120;
 		}
 

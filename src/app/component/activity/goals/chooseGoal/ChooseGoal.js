@@ -196,6 +196,9 @@ define(function (require) {
                 this.hint.hide();
                 this.hiddenHint.show();
                 this.hiddenLink.show();
+
+                app.session.get('case').overview.progress();
+
             }
 
         },

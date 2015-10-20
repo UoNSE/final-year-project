@@ -475,16 +475,17 @@ define(function (require) {
                 this.scoreHint.popup(popupPos);
             }
 
-            if (this.collection.issues.length == 0 && this.gameCredit==0){
+            if (this.collection.issues.length == 0 && this.gameCredit==0) {
                 this.hiddenActionsActivityLink.show();
                 this.hiddenActionsHint.show();
+                app.session.get('case').overview.progress();
             }
             else{
                 this.hiddenActionsActivityLink.hide();
                 this.hiddenActionsHint.hide();
             }
 
-            this.inventory.attributes.saveScore = this.gameCredit;
+            this.inventory.set('saveScore', this.gameCredit);
         },
 
         onDelete: function (event) {
@@ -494,8 +495,8 @@ define(function (require) {
             var type = this.resolveType(card);
             if (type.issue) {
                 this.gameCredit+= model.get('cost');
-                this.collection.issues.remove(this.collection.issues.where({data : model.attributes.body}));
-                this.collection.issues.remove(this.collection.issues.where({body : model.attributes.body}));
+                this.collection.issues.remove(this.collection.issues.where({data : model.get('body')}));
+                this.collection.issues.remove(this.collection.issues.where({body : model.get('body')}));
             }
             else if (type.evidence) {
                 var score = model.get('score');
@@ -503,8 +504,8 @@ define(function (require) {
                 if (score < model.get('maxscore')) {
                     this.gameCredit += 2;
                 }
-                this.collection.evidence.remove(this.collection.evidence.where({data : model.attributes.body}));
-                this.collection.evidence.remove(this.collection.evidence.where({body : model.attributes.body}));
+                this.collection.evidence.remove(this.collection.evidence.where({data : model.get('body')}));
+                this.collection.evidence.remove(this.collection.evidence.where({body : model.get('body')}));
             }
             else {
                 this.gameCredit -= this.getScore(card);
@@ -553,7 +554,7 @@ define(function (require) {
                 if(model.attributes.model.get("evidence").where({body: group.model.get("evidence").models[0].attributes.body}).length >0){
                     mark = model;
                 }
-            })
+            });
             this.collection.issueGroup.remove(mark);
 
         },
