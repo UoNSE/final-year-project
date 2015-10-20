@@ -3,17 +3,35 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "start": "node app.js",
-    "postinstall": "node node_modules/bower/bin/bower install"
+    "start": "node --harmony app.js",
+    "postinstall": "node node_modules/bower/bin/bower install",
+    "test": "node --harmony node_modules/intern/bin/intern-client config=tests/intern"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/uonse/final-year-project/"
   },
   "dependencies": {
-    "bower": "1.3.x",
-    "express": "4.4.3",
-    "compression": "1.0.7",
-    "serve-favicon": "2.0.1"
+    "bower": "^1.4.1",
+    "browser-sync": "^2.8.2",
+    "compression": "^1.4.3",
+    "express": "^4.12.3",
+    "gulp": "^3.9.0",
+    "gulp-exec": "^2.1.1",
+    "gulp-jshint": "^1.11.2",
+    "gulp-less": "^3.0.3",
+    "gulp-nodemon": "^2.0.4",
+    "jshint-stylish": "^2.0.1",
+    "less-middleware": "^2.0.1",
+    "serve-favicon": "^2.2.0"
   },
   "engines": {
-    "node": "0.12.x"
+    "node": "^0.12.x"
+  },
+  "devDependencies": {
+    "intern": "^2.2.2",
+    "json-server": "^0.7.25",
+    "less": "^2.5.1",
+    "object-assign": "^4.0.1"
   }
 }
-

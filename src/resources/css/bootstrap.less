@@ -1,0 +1,17 @@
+@import "../../lib/bootstrap-material-design/less/material.less";
+@import "theme.less";
+
+@primary: @cyan-500;
+@success: @green-500;
+
+.btn-disabled {
+
+	background: #555 !important;
+	color: #fff;
+
+	&:hover, &:focus, &:active, &.active, .open > .dropdown-toggle.btn-disabled {
+		background: #454545 !important;
+		cursor: auto !important;
+	}
+
+}

@@ -1,5 +1,6 @@
-node_modules/
-logs/
-.idea/
-public/lib/
-*.sublime-workspace
+/node_modules/
+/.idea/
+/src/lib/
+*.orig
+*.css
+node_modules2/

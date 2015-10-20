@@ -1,0 +1,16 @@
+<div class="panel panel-{{mtl-color color}}{{#if classes}}{{ classes}}{{/if}}"
+     style="width: {{units width}}; height: {{units height}}">
+        <div class="panel-heading">
+            <h3 class="panel-title">Relevant Info</h3>
+        </div>
+    <div class="panel-body">
+        {{body}}
+        {{#each info}}
+            <div class="panel panel-success">
+                <div class="panel-body">
+                    {{short}}
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>

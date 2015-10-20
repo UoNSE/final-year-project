@@ -1,0 +1,632 @@
+{
+  "cases": [
+    {
+      "id": 1,
+      "name": "Dang Tien"
+    },
+    {
+      "id": 2,
+      "name": "Joe & Beth"
+    },
+    {
+      "id": 3,
+      "name": "Terry"
+    },
+    {
+      "id": 4,
+      "name": "Ben"
+    },
+    {
+      "id": 5,
+      "name": "Mark"
+    },
+    {
+      "id": 6,
+      "name": "Emily"
+    },
+    {
+      "id": 7,
+      "name": "Jane"
+    },
+    {
+      "id": 8,
+      "name": "Lauren"
+    },
+    {
+      "id": 9,
+      "name": "Bob"
+    }
+  ],
+  "types": [
+    {
+      "id": 1,
+      "content": "Congnitive Decline"
+    },
+    {
+      "id": 2,
+      "content": "Dementia"
+    },
+    {
+      "id": 3,
+      "content": "Delirium"
+    },
+    {
+      "id": 4,
+      "content": "Depression"
+    }
+  ],
+  "definitions": [
+    {
+      "id": 1,
+      "typeId": 1,
+      "content": "During normal ageing the speed at which individuals acquire information gradually declines, but their ability to recall information remains intact."
+    },
+    {
+      "id": 2,
+      "typeId": 2,
+      "content": "A gradual, progressive, irreversible deterioration of cerebral function. It is usually of a chronic or progressive nature and results in disturbance of many higher cortical functions, including memory, thinking and judgement."
+    },
+    {
+      "id": 3,
+      "typeId": 3,
+      "content": "An acute reversible clinical syndrome of cognitive function, characterised by an acute decline in attention and cognition that impairs cognitive and physical function."
+    },
+    {
+      "id": 4,
+      "typeId": 4,
+      "content": "It is often missed in older people, as its signs and symptoms can be attributed to the ageing process, dementia or poor health."
+    }
+  ],
+  "info": [
+    {
+      "id": 1,
+      "content": "Mr Tien arrived in Sydney from Vietnam in 1975, with his wife Dang Doh and their three children.",
+      "relevant": false,
+      "groupId": 1
+    },
+    {
+      "id": 2,
+      "content": "Mr Tien and his family were told by the nurse and medical officer at the hospital that it would take several weeks before he would start to feel strong and clear-headed again",
+      "relevant": false,
+      "groupId": 1
+    },
+    {
+      "id": 3,
+      "content": "Mrs Qui says: 'Dad isn't any better really. He is more forgetful. Some days he forgets to eat breakfast, doesn't shower or shave and keeps putting on the same old clothes'",
+      "short": "Mrs Qui mentions that Mr Tien has become more forgetful",
+      "relevant": true,
+      "groupId": 1
+    },
+    {
+      "id": 4,
+      "content": "Mr Tien was discharged after five days and returned home with his daughter, Mrs Nguyen Qui.",
+      "relevant": false,
+      "groupId": 1
+    },
+    {
+      "id": 5,
+      "content": "Three weeks have passed and Mr Tien continues to receive visits from Kristy, the community nurse, Kristy",
+      "relevant": false,
+      "groupId": 1
+    },
+    {
+      "id": 6,
+      "content": "When Kristy visits Mr Tien, he smiles when she enters and nods his head in greeting.",
+      "short": "Mr Tien smiles when Kristy enters the room",
+      "relevant": true,
+      "groupId": 1
+    },
+    {
+      "id": 7,
+      "content": "Kristy arrives at 1200 hours and is met by Mrs Nguyen Qui.",
+      "relevant": false,
+      "groupId": 1
+    },
+    {
+      "id": 8,
+      "content": "Mr Tien's son, grandson and son-in-law are frequently required to assist in his personal hygiene",
+      "short": "Mr Tien's relatives assist with his personal hygiene",
+      "relevant": true,
+      "groupId": 2
+    },
+    {
+      "id": 9,
+      "content": "Mrs Qui says: 'I am really worried about him'",
+      "relevant": false,
+      "groupId": 2
+    },
+    {
+      "id": 10,
+      "content": "Mr Tien had made a good recovery from his pneumonia and delirium, but he had not returned to his normal level of functioning",
+      "relevant": false,
+      "groupId": 2
+    },
+    {
+      "id": 11,
+      "content": "When speaking with Kristy, Mr Tien says: 'I'm okay but my daughter keeps telling me what to do'",
+      "short": "Mr Tien:'My daughter keeps telling me what to do'",
+      "relevant": true,
+      "groupId": 2
+    },
+    {
+      "id": 12,
+      "content": "Mrs Qui says: 'When I get home I try to get him to change or bathe and he gets upset and tells me to leave him alone. He tells me I'm not a good daughter, that a good daughter would not question her father. I can't leave him alone all day like this.'",
+      "short": "Mrs Qui says: 'He tells me I'm not a good daughter'",
+      "relevant": true,
+      "groupId": 2
+    },
+    {
+      "id": 13,
+      "content": "Kristy is a community nurse",
+      "relevant": false,
+      "groupId": 2
+    }
+  ],
+  "evidence": [
+    {
+      "id": 1,
+      "data": "The fact that Mr Tien smiles when Kristy enters the room.",
+      "issueId": 1,
+      "score": 10,
+      "maxscore": 30
+    },
+    {
+      "id": 2,
+      "data": "Mr Tien's statement: \"I'm okay but my daughter keeps telling me what to do.\"",
+      "issueId": 1,
+      "score": 10,
+      "maxscore": 30
+    },
+    {
+      "id": 3,
+      "data": "Mrs Qui's statement: \"He tells me I'm not a good daughter.\"",
+      "issueId": 1,
+      "score": 10,
+      "maxscore": 30
+    },
+    {
+      "id": 4,
+      "data": "Mr Tien's son, grandson and son-in-law frequently assist with his personal hygiene",
+      "issueId": 2,
+      "score": 5,
+      "maxscore": 10
+    },
+    {
+      "id": 5,
+      "data": "Mrs Qui's statement: \"He is more forgetful. Some days he forgets to eat breakfast, doesn't shower or shave and keeps putting on the same old clothes.\"",
+      "issueId": 2,
+      "score": 5,
+      "maxscore": 10
+    },
+    {
+      "id": 6,
+      "data": "GDS score of 4",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 7,
+      "data": "Mood Irritable",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 8,
+      "data": "Blood pressure 170/85",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 9,
+      "data": "CAM negative result",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 10,
+      "data": "MMSE 19/30",
+      "issueId": 3,
+      "score": 7,
+      "maxscore": 35
+    },
+    {
+      "id": 11,
+      "data": "Level of thirst",
+      "issueId": 4,
+      "score": 4,
+      "maxscore": 8
+    },
+    {
+      "id": 12,
+      "data": "Only eats after prompting from daughter",
+      "issueId": 4,
+      "score": 4,
+      "maxscore": 8
+    }
+  ],
+  "issues": [
+    {
+      "id": 1,
+      "data": "Impaired communication with daughter",
+      "topicId": 3,
+      "cost": 30
+    },
+    {
+      "id": 2,
+      "data": "Altered personal hygiene deficit",
+      "topicId": 4,
+      "cost": 10
+    },
+    {
+      "id": 3,
+      "data": "Cognitive impairment due to vascular dementia",
+      "topicId": 2,
+      "cost": 35
+    },
+    {
+      "id": 4,
+      "data": "Altered nutrition and hydration",
+      "topicId": 1,
+      "cost": 8
+    }
+  ],
+  "topics": [
+    {
+      "id": 1,
+      "data": "Nutritional-metabolic"
+    },
+    {
+      "id": 2,
+      "data": "Cognitive-perceptual"
+    },
+    {
+      "id": 3,
+      "data": "Role relationship"
+    },
+    {
+      "id": 4,
+      "data": "Self-care deﬁcit"
+    }
+  ],
+  "goals": [
+    {
+      "id": 1,
+      "content": "For Mr Tien not to state that his daughter is a bad daughter",
+      "issueId": 1,
+      "actions": [
+        3
+      ],
+      "complete": false
+    },
+    {
+      "id": 2,
+      "content": "For Mr Tien to be showered, shaved and dressed in clean clothes daily",
+      "issueId": 2,
+      "actions": [
+        4,
+        5
+      ],
+      "complete": false
+    },
+    {
+      "id": 3,
+      "content": "For Mr Tien to be assessed by his GP",
+      "issueId": 3,
+      "actions": [
+        1,
+        6
+      ],
+      "complete": false
+    },
+    {
+      "id": 4,
+      "content": "For Mr Tien to eat his meals and drink at least 1 ,600 mL per day",
+      "issueId": 4,
+      "actions": [
+        2
+      ],
+      "complete": false
+    }
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "content": "Discuss the results of the assessments with Mrs Qui",
+      "goalId": 3
+    },
+    {
+      "id": 2,
+      "content": "Suggest some strategies that Mrs Qui can use to ensure Mr Tien is eating and drinking adequately",
+      "goalId": 4
+    },
+    {
+      "id": 3,
+      "content": "Suggest some communication strategies to help Mrs Qui with receive positive responses from Mr Tien",
+      "goalId": 3
+    },
+    {
+      "id": 4,
+      "content": "Suggest some strategies for Mrs Qui to help with Mr Tien's personal hygiene",
+      "goalId": 2
+    },
+    {
+      "id": 5,
+      "content": "Ring Mr Tien's eldest son",
+      "goalId": 4
+    },
+    {
+      "id": 6,
+      "content": "Make a refenal to an Aged Care Assessment Team",
+      "goalId": 3
+    },
+    {
+      "id": 7,
+      "content": "Explain to Mr Tien that he is not to speak to his daughter in a negative way",
+      "goalId": 0
+    },
+    {
+      "id": 8,
+      "content": "Plan for readmission to hospital",
+      "goalId": 0
+    },
+    {
+      "id": 9,
+      "content": "Discuss the need to organise Mr Tien's admission to a residential aged care facility in the nea£ future",
+      "goalId": 0
+    }
+  ],
+  "patients": [
+    {
+      "id": 1,
+      "firstname": "Dang",
+      "lastname": "Tien",
+      "age": "62",
+      "dob": "1952-05-12",
+      "sex": "Male",
+      "profession": "Physiotherapist",
+      "heartRate": "120",
+      "respirationRate": "12",
+      "systolic": "90",
+      "diastolic": "60",
+      "temperature": "38",
+      "hotspots": [
+        {
+          "id": 1,
+          "x": -2,
+          "y": 347,
+          "data": "Hotspot1"
+        },
+        {
+          "id": 2,
+          "x": 86,
+          "y": 222,
+          "data": "Hotspot2"
+        },
+        {
+          "id": 3,
+          "x": 53,
+          "y": -142,
+          "data": "<img src=\"/resources/images/nof.jpg\">"
+        },
+        {
+          "id": 4,
+          "x": -97,
+          "y": -352,
+          "data": "Hotspot4"
+        },
+        {
+          "id": 5,
+          "x": -161,
+          "y": -15,
+          "data": "Hotspot5"
+        }
+      ],
+      "observations": [
+        {
+          "id": 1,
+          "text": "mucusmouth: Conditionoforalmucosa;mouthdrytonguefurrowed"
+        },
+        {
+          "id": 2,
+          "text": "Patient looks dehydrated"
+        },
+        {
+          "id": 3,
+          "text": "patient is very pale"
+        },
+        {
+          "id": 4,
+          "text": "patients skin is dry"
+        }
+      ],
+      "queries": [
+        {
+          "id": 1,
+          "text": "What is the problem?"
+        },
+        {
+          "id": 2,
+          "text": "Where does it hurt?"
+        },
+        {
+          "id": 3,
+          "text": "When did the pain begin?"
+        },
+        {
+          "id": 4,
+          "text": "Have you noticed any swelling?"
+        },
+        {
+          "id": 5,
+          "text": "Has your skin been dry?"
+        },
+        {
+          "id": 6,
+          "text": "How old are you?"
+        },
+        {
+          "id": 7,
+          "text": "How have you been sleeping?"
+        },
+        {
+          "id": 8,
+          "text": "Do you have family here?"
+        }
+      ],
+      "responses": [
+        {
+          "id": 1,
+          "text": "I hurt my knee"
+        },
+        {
+          "id": 2,
+          "text": "On my knee"
+        },
+        {
+          "id": 3,
+          "text": "Yesterday"
+        },
+        {
+          "id": 4,
+          "text": "Yes. On my knee"
+        },
+        {
+          "id": 5,
+          "text": "No. Not really"
+        },
+        {
+          "id": 6,
+          "text": "Im 75"
+        },
+        {
+          "id": 7,
+          "text": "Not well. Iâ€™ve been waking up frequently."
+        },
+        {
+          "id": 8,
+          "text": "Yes, Toi song voi con gai cua toi"
+        }
+      ],
+      "testresults": [
+        {
+          "id": 1,
+          "name": "UrineAnalysis",
+          "metrics": [
+            {
+              "id": 1,
+              "name": "glucose",
+              "value": "100"
+            },
+            {
+              "id": 2,
+              "name": "bilirubin",
+              "value": "30"
+            },
+            {
+              "id": 3,
+              "name": "ketones",
+              "value": "120"
+            },
+            {
+              "id": 4,
+              "name": "sg",
+              "value": "20"
+            },
+            {
+              "id": 5,
+              "name": "eryth",
+              "value": "30"
+            },
+            {
+              "id": 6,
+              "name": "ph",
+              "value": "40"
+            },
+            {
+              "id": 7,
+              "name": "ts",
+              "value": "50"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "hormonePanel",
+          "metrics": [
+            {
+              "id": 1,
+              "name": "estrone",
+              "value": "100"
+            },
+            {
+              "id": 2,
+              "name": "estradiol",
+              "value": "30"
+            },
+            {
+              "id": 3,
+              "name": "estriol",
+              "value": "120"
+            },
+            {
+              "id": 4,
+              "name": "testosterone",
+              "value": "20"
+            },
+            {
+              "id": 5,
+              "name": "progesterone",
+              "value": "30"
+            },
+            {
+              "id": 6,
+              "name": "DHEA",
+              "value": "40"
+            },
+            {
+              "id": 7,
+              "name": "cortisol",
+              "value": "50"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": 1,
+      "x": -1,
+      "y": 260,
+      "data": "Mr Tien had a restless night and was continually pulling off his nasal prongs."
+    },
+    {
+      "id": 2,
+      "x": 26,
+      "y": 156,
+      "data": "Mr Tien has a moist cough and he looks exhausted."
+    },
+    {
+      "id": 4,
+      "x": -140,
+      "y": 88,
+      "data": "Skin appears dehydrated. His water jug remains unused."
+    },
+    {
+      "id": 3,
+      "x": 50,
+      "y": 10,
+      "data": "During the night, Mr Tien inappropriately used the sink as a toilet."
+    },
+    {
+      "id": 5,
+      "x": -81,
+      "y": -330,
+      "data": "Mr Tien appears Lethargic and withdrawn with very little energy."
+    }
+  ]
+}
