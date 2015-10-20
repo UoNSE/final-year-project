@@ -161,7 +161,7 @@ define(function (require) {
                 }
             }));
 
-            // hide these components until matching is completed
+            // hide these components until matching is completed.
             this.hiddenLink.hide();
             this.hiddenHint.hide();
         },
