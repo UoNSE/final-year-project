@@ -125,7 +125,6 @@ define(function (require) {
             inventoryIssues = this.inventory.get('issuegroups').models[0].attributes;
             inventoryIssues.forEach((inventModel, i) => {
                 var groupissue = inventModel.attributes.model.attributes.issue;
-                debugger;
                 if (groupissue != null) {
 
                 if (groupissue.get("body") == model.get('data')) {

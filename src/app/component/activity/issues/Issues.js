@@ -144,8 +144,6 @@ define(function (require) {
             this.scoreHint.pageOrigin = 'bottom left';
             this.scoreHint.alwaysOnTop = true;
             this.scoreHint.detached = true;
-            this.scoreHint.position.x = 32;
-            this.scoreHint.position.y = 32;
             this.scoreHint.setOriginalPosition(this.scoreContainer.position);
             //add the topic unlock button
             var unlock = this.add(new ActionButton({
@@ -156,11 +154,12 @@ define(function (require) {
                     classes: 'topic-unlock'
                 })
             }));
-			unlock.origin = 'bottom center';
-            unlock.pageOrigin = 'bottom center';
+			unlock.origin = 'bottom left';
+            unlock.pageOrigin = 'bottom left';
             unlock.alwaysOnTop = true;
 			unlock.detached = true;
-			unlock.position.x = -105;
+			unlock.position.x = 164;
+            unlock.position.y = 24;
 
             // add a link to the Actions activity
             this.hiddenActionsActivityLink = this.add(new ActionButton({
