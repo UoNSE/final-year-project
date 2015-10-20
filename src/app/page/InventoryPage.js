@@ -14,6 +14,7 @@ define(function (require) {
 			//this.camera.position.x = inventory.width / 2;
 
 			this.inventory = this.session.get('inventory', () => new Inventory());
+			this.inventory2 = this.session.get('inventory2', () => new Inventory());
 		},
 
 		/**
