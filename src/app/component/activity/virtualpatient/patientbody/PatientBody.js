@@ -36,7 +36,6 @@ define(function (require) {
         },
 
         createHotspots: function (collection) { //this is the callback function
-
                 collection.each(function (model) { // .each(function, this) <- Need this to be this context!
                 var button = new ActionButton({
                     model: {

@@ -18,15 +18,19 @@ define(function(require) {
 	var ActionButtonHandle = require('component/actionbuttonhandle/ActionButtonHandle');
 	// var ActionButtonHandleModel = require('model/ActionButtonHandle');
 
+	var Card = require('component/activity/issues/card/Card');
 	var Tests = require('component/activity/virtualpatient/tests/Tests');
 	var Query = require('component/activity/virtualpatient/querypatient/Query');
 	var PatientBody = require('component/activity/virtualpatient/patientbody/PatientBody');
 	var EvidenceFeed = require('component/activity/virtualpatient/evidencefeed/EvidenceFeed');
 	var Chart = require('component/activity/virtualpatient/chart/Chart');
 	var Help = require('component/help/Help');
+	var StatusCart = require('component/statuscart/StatusCart'); //ox
 	var Inventory = require('component/inventory/Inventory');
+	var AddToCollectionButton = require('component/activity/virtualpatient/addtocollectionbutton/AddToCollection');
 
 	var HelpModel = require('model/Help');
+	var StatusCartModel = require('model/Statuscart');
 	var Evidence = require('component/activity/issues/card/evidence/Evidence');
 	var EvidenceCollection = require('collection/Evidence');
 	var EvidenceModel = require('model/Evidence');
@@ -51,7 +55,7 @@ define(function(require) {
 
 		},
 
-		initialize: function (caseID) {
+		initialize: function (inventory, caseID) {
 			// debugger;
 			Component.prototype.initialize.apply(this, arguments);
 			this.vproot = this;
@@ -59,25 +63,26 @@ define(function(require) {
 			this.collection.fetch();
 			this.visiblemenus = [];
 			this.collaborative = false;
+			this.inventory = inventory;
 			this.caseID =  caseID;
+			this.noclues = 0; //the number of clues the user has discovered
+			this.correctclues = 4; //the amount of correct clues for this module
+			this.cluelist = '';
+			// this.cluelist = new EvidenceCollection();
+			console.log("inventory on entering activity: " + this.inventory.get("evidence").length + " evidences in inventory.");
+
+
 
 		},
 
 		onSync: function (collection) {
 			// get the patient with the case Id.
 			this.patients = this.collection;
-			// this.evidencecollection = new EvidenceCollection();
-			// console.log("this case id: " + this.caseID);
-			// debugger;
-			this.patient = this.patients.get(1); // get id.
-			// this.patient = this.patients.get(this.caseID); // get id.
+			// this wont load properly if there is no patient for the case.
+			this.patient = this.patients.get(this.caseID); // get id.
 			this.addComponents();
 			// debugger;
 			this._hideElements();
-		},
-
-		addEvidenceCardToCollection: function(evidence){
-			this.evidencecollection.add(evidence);
 		},
 
 		addComponents: function() {
@@ -85,6 +90,7 @@ define(function(require) {
 			this.hotspots = this.patient.get('hotspots');
 
 			var params = {vproot: this.vproot}; // = this; //this.vproot;
+			this.evidencecollection = new EvidenceCollection();
 			this.patientbody = this.add(new PatientBody(params)); //add params so it has access to vproot
 
 			if(this.collaborative){
@@ -98,7 +104,7 @@ define(function(require) {
 			this.responses = this.patient.get('responses');
 			this.querymenu = new Query(this);
 
-			this.inventory = new Inventory();
+			// this.inventory = new Inventory();
 
 			// this.EvidenceFeed = this.addEvidenceFeed();
 			this.chart = new Chart({vproot:this.vproot, model: this.patient});
@@ -107,7 +113,10 @@ define(function(require) {
 
 			this.help = this.add(new Help({
 				model: new HelpModel({
-					body: 'Players take turns at gathering evidence. Collect evidence about the patients condition.<br><br>' +
+					title: 'Help', //apperently this is getting overridden when we have a second simmilar model in our view
+					body: 'Players take turns at gathering evidence.'+ '<br>' + '<br>'+
+						'Collect evidence about the patients condition ' +
+					 	'by dragging them to the green <strong>inventory</strong> button.'+'<br><br>' +
 						'Use the <strong>Query</strong> button to ask the patient questions.<br><br>' +
                         'Use the <strong>Test</strong> button to run blood, urine and saliva tests on the patient.<br><br>' +
                         'Use the <strong>Chart</strong> button to view the patients details and vital signs.<br><br>' +
@@ -115,14 +124,40 @@ define(function(require) {
                         'If you no longer need an evidence card, you can drag it to the trash can.'
 				})
 			}));
-			//this.help.interactive = true;
 			this.help.setInteractive();
 
-			// this.hiddenLink = this.addTimelineLink();
+			this.hiddenLink = this.addTimelineLink();
+
+			//ox
+			//ok, so the addtoCollection button is going to show a module progress yes. It will highlight correct evidence as green
+			//and incorrect evidence as red (with possibly a small time delay
+			//the progress bar will be an n/7 indicator representing how many of the 7 correct evidences have been found on the virtual patient.
+			//var noclues=0; //number of correct clues found so far
+
+
+			this.statuscart = this.add(new StatusCart({
+				model: new StatusCartModel({
+					title: 'Evidence Cart',
+					body: '<div class="inventorydisp"><i>No Clues discovered yet</i></div><br>'+
+					'Correct evidences found: <span class="cf">'+this.noclues+'</span>/'+this.correctclues+
+					'<div class="btnspace"></div>',
+					// collection: this.cluelist
+				})
+			}));
+
+
+
+
+
+
+			this.addtocollectionbutton = this.add(new AddToCollectionButton()); //add the AddToCollectionButton
+			this.addtocollectionbutton.on({
+				addToCollection: this.addEvidenceCardToCollection.bind(this)
+			});
 
 			this.menu = this.add(new Menu());
 			this.menu.on({
-				delete: this.onDelete.bind(this)
+				delete: this.onDelete.bind(this),
 			});
 			this.menu.split.hide(); // hack. not sure know how to destroy.
 			// this.menu.delete.detached = true;
@@ -137,7 +172,7 @@ define(function(require) {
 			this.tests.hide();
 			this.querymenu.hide();
 			this.chart.hide();
-			// this.hiddenLink.hide();
+			this.hiddenLink.hide();
 
 		},
 
@@ -194,7 +229,11 @@ define(function(require) {
 				// this.bindDraggableEvents(buttonhandle);
 				this.add(buttonhandle);
 				// debugger;
-				this.bindDraggableEvents(buttonhandle);
+				// this.bindDraggableEvents(buttonhandle);
+				buttonhandle.setInteractive();
+				buttonhandle.setDraggable();
+
+
 				// debugger;
 				// this.event.trigger();
 
@@ -211,7 +250,7 @@ define(function(require) {
                     color: 'light-green',
                     classes: 'help-btn actions-btn',
                     icon: 'content-send',
-                    href: 'cases/'.concat(caseID, '/case/Overview')
+                    href: 'cases/'.concat(this.caseID, '/overview')
                 }
             }));
 			return hiddenLink;
@@ -234,6 +273,8 @@ define(function(require) {
 			});
 		},
 
+
+
 		/**
 		 * An event triggered when a card is being dragged.
 		 */
@@ -255,7 +296,55 @@ define(function(require) {
 
 
 		onDelete: function (event) {
-			event.draggable.remove();
+			if(event.draggable instanceof Evidence){
+				event.draggable.remove();
+			}
+		},
+
+		addEvidenceCardToCollection: function(event){
+			console.log("checking evidence is a Evidence");
+			console.log("type: "+ event.draggable + " - "+ event.draggableType);
+			console.log(event.draggable instanceof Evidence);
+			var evidence = event.draggable;
+			// debugger;
+			if(event.draggable instanceof Evidence){
+				this.evidencecollection.add(evidence);
+				this.inventory.attributes.evidence.add(this.evidencecollection);
+				// remove the evidence from the view after adding to inventory.
+				var evidenceBody = evidence.model.attributes.body;
+				evidence.remove();
+				// debugger;
+				console.log("added "+evidence.id+" to inventory: " + this.inventory.get("evidence").length + " evidences in inventory.");
+				console.log("----\n"+this.evidencecollection);
+				// debugger
+				// this.cluelist.collection.add(evidence.model.attributes.body);
+				evidence.remove();
+
+
+				//@TODO ONLY INCREMENT THE CLUES IF THE HASH IS PART OF THE id=6,7,8,9,10,11,12
+				if(this.noclues < this.correctclues)
+					this.noclues++; //update count, limit 6
+				if(this.noclues == this.correctclues){
+					// $('.btnspace').html('<button>@todo: If 7(or 9, 2 free strikes) found and incorrect, show reset button, if correct show next module button</button>');
+					// debugger;
+					this.hiddenLink.show();
+					this.hiddenLink.bringToFront();
+				}
+				//THE HASHES CHANGE EACH TIME - NOT RELIABLE :(
+				// this.cluelist += evidence.id+'<br>'; //evidence.id (evidence is an event.draggable)
+				this.cluelist+='<div class = "panel panel-evidence">'
+				this.cluelist += evidenceBody+'<br><br>'; //evidence.id (evidence is an event.draggable)
+				this.cluelist+='</div>'
+				/*
+				var cluelist = '';
+				for(var i=0;i<this.inventory.get("evidence").length;i++) //todo: find out how to convert this to a foreach
+					cluelist += this.inventory.get("evidence") +'<br>';//+this.inventory.get("evidence")+' '+i+'<br>';
+				//console.log("******\n"+this.ev);
+				*/
+
+				$('.inventorydisp').html(this.cluelist); //update list
+				$('.cf').html(this.noclues); //update count display
+			}
 		},
 
 		onToggle: function (toggableTarget) {
@@ -277,7 +366,6 @@ define(function(require) {
 
 			toggableTarget.toggle();
 			toggableTarget.bringToFront();
-
 		},
 
 		addEvidenceFeed: function(){
