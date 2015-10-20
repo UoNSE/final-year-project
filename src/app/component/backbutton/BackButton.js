@@ -3,6 +3,7 @@ define(function (require) {
 
 	var ActionButton = require('component/actionbutton/ActionButton');
 	var Model = require('model/ActionButton');
+	var Hint = require('component/hint/Hint');
 
 	return ActionButton.extend({
 		detached: true,
@@ -23,6 +24,13 @@ define(function (require) {
 				}
 			});
 			this.position.x = -35;
+
+			this.captionHint = this.add(new Hint({model: {text: 'Back'}}));
+			this.captionHint.origin = 'bottom center';
+			this.captionHint.pageOrigin = 'bottom center';
+			this.captionHint.detached = true;
+			this.captionHint.position.x = this.position.x - 32;
+			this.captionHint.position.y = this.position.y + 24;
 		},
 
 		onClick: function () {
