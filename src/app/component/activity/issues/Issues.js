@@ -116,7 +116,7 @@ define(function (require) {
         },
 
         setupFixedComponents: function( caseID ){
-            this.scoreContainer = this.add(new Score());
+            this.scoreContainer = this.add(new Score({title:'Credit'}));
 
             this.add(new Help({
                 model:new HelpModel({
