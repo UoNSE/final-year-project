@@ -9,7 +9,8 @@ define(function (require) {
 			body: 'Evidence',
 			score: 0,
 			maxscore: 0,
-			issueid: 0
+			issueid: 0,
+			correct: false
 		}
 
 	});
@@ -19,4 +20,3 @@ define(function (require) {
 	return Evidence;
 
 });
-
