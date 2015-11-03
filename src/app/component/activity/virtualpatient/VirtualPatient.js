@@ -66,7 +66,8 @@ define(function(require) {
 			this.inventory = inventory;
 			this.caseID =  caseID;
 			this.noclues = 0; //the number of clues the user has discovered
-			this.correctclues = 4; //the amount of correct clues for this module
+			this.nocorrectclues = 0; // number of correct clues discovered
+			this.correctclueslimit = 4; //the amount of correct clues for this module
 			this.cluelist = '';
 			// this.cluelist = new EvidenceCollection();
 			console.log("inventory on entering activity: " + this.inventory.get("evidence").length + " evidences in inventory.");
@@ -140,7 +141,8 @@ define(function(require) {
 				model: new StatusCartModel({
 					title: 'Evidence Cart',
 					body: '<div class="inventorydisp">No Clues discovered yet</div><br>'+
-					'Correct evidences found: <span class="cf">'+this.noclues+'</span>/'+this.correctclues+
+					'Evidences found: <span class="cf">'+this.noclues+'</span><br>'+
+					'Correct evidences found: <span class="ccf">'+this.nocorrectclues+'</span>/'+this.correctclueslimit+
 					'<div class="btnspace"></div>'
 					//classes: ' statuscart' //prepended space is important - position in StatusCart.js + .less
 					// collection: this.cluelist
@@ -318,9 +320,17 @@ define(function(require) {
 
 
 				//@TODO ONLY INCREMENT THE CLUES IF THE HASH IS PART OF THE id=6,7,8,9,10,11,12
-				if(this.noclues < this.correctclues)
+				if(this.noclues < this.correctclueslimit){
 					this.noclues++; //update count, limit 6
-				if(this.noclues == this.correctclues){
+
+					// debugger;
+					if(evidence.model.attributes.correct == true){
+						console.log(evidence.model.attributes + "clue is correct");
+						this.nocorrectclues++;
+					}
+				}
+
+				if(this.nocorrectclues == this.correctclueslimit){
 					// $('.btnspace').html('<button>@todo: If 7(or 9, 2 free strikes) found and incorrect, show reset button, if correct show next module button</button>');
 					// debugger;
 					this.hiddenLink.show();
@@ -340,6 +350,7 @@ define(function(require) {
 
 				$('.inventorydisp').html(this.cluelist); //update list
 				$('.cf').html(this.noclues); //update count display
+				$('.ccf').html(this.nocorrectclues); //update count display
 			}
 		},
 

@@ -255,31 +255,36 @@
           "id": 1,
           "x": -2,
           "y": 347,
-          "data": "Hotspot1"
+          "data": "Hotspot1",
+          "correct": false
         },
         {
           "id": 2,
           "x": 86,
           "y": 222,
-          "data": "Hotspot2"
+          "data": "Hotspot2",
+          "correct": false
         },
         {
           "id": 3,
           "x": 53,
           "y": -142,
-          "data": "<img src=\"/resources/images/nof.jpg\">"
+          "data": "<img src=\"/resources/images/nof.jpg\">",
+          "correct": true
         },
         {
           "id": 4,
           "x": -97,
           "y": -352,
-          "data": "Hotspot4"
+          "data": "Hotspot4",
+          "correct": false
         },
         {
           "id": 5,
           "x": -161,
           "y": -15,
-          "data": "Hotspot5"
+          "data": "Hotspot5",
+          "correct": false
         }
       ],
       "observations": [
@@ -337,35 +342,43 @@
       "responses": [
         {
           "id": 1,
-          "text": "I hurt my knee"
+          "text": "I hurt my knee",
+          "correct": true
         },
         {
           "id": 2,
-          "text": "On my knee"
+          "text": "On my knee",
+          "correct": false
         },
         {
           "id": 3,
-          "text": "Yesterday"
+          "text": "Yesterday",
+          "correct": false
         },
         {
           "id": 4,
-          "text": "Yes. On my knee"
+          "text": "Yes. On my knee",
+          "correct": false
         },
         {
           "id": 5,
-          "text": "No. Not really"
+          "text": "No. Not really",
+          "correct": false
         },
         {
           "id": 6,
-          "text": "Im 75"
+          "text": "Im 75",
+          "correct": true
         },
         {
           "id": 7,
-          "text": "Not well. Iâ€™ve been waking up frequently."
+          "text": "Not well. I've been waking up frequently.",
+          "correct": false
         },
         {
           "id": 8,
-          "text": "Yes, Toi song voi con gai cua toi"
+          "text": "Yes, Toi song voi con gai cua toi",
+          "correct": false
         }
       ],
       "testresults": [
@@ -376,37 +389,44 @@
             {
               "id": 1,
               "name": "glucose",
-              "value": "100"
+              "value": "100",
+              "correct": false
             },
             {
               "id": 2,
               "name": "bilirubin",
-              "value": "30"
+              "value": "30",
+              "correct": false
             },
             {
               "id": 3,
               "name": "ketones",
-              "value": "120"
+              "value": "120",
+              "correct": true
             },
             {
               "id": 4,
               "name": "sg",
-              "value": "20"
+              "value": "20",
+              "correct": false
             },
             {
               "id": 5,
               "name": "eryth",
-              "value": "30"
+              "value": "30",
+              "correct": false
             },
             {
               "id": 6,
               "name": "ph",
-              "value": "40"
+              "value": "40",
+              "correct": false
             },
             {
               "id": 7,
               "name": "ts",
-              "value": "50"
+              "value": "50",
+              "correct": false
             }
           ]
         },
@@ -417,37 +437,44 @@
             {
               "id": 1,
               "name": "estrone",
-              "value": "100"
+              "value": "100",
+              "correct": false
             },
             {
               "id": 2,
               "name": "estradiol",
-              "value": "30"
+              "value": "30",
+              "correct": false
             },
             {
               "id": 3,
               "name": "estriol",
-              "value": "120"
+              "value": "120",
+              "correct": false
             },
             {
               "id": 4,
               "name": "testosterone",
-              "value": "20"
+              "value": "5",
+              "correct": true
             },
             {
               "id": 5,
               "name": "progesterone",
-              "value": "30"
+              "value": "30",
+              "correct": false
             },
             {
               "id": 6,
               "name": "DHEA",
-              "value": "40"
+              "value": "40",
+              "correct": false
             },
             {
               "id": 7,
               "name": "cortisol",
-              "value": "50"
+              "value": "50",
+              "correct": false
             }
           ]
         }

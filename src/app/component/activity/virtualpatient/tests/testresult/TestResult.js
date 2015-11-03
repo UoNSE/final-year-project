@@ -47,12 +47,18 @@ define(function(require) {
 		},
 
 		_addEvidenceCard: function(flag, attribute, value){
+
+			// find right result for the element clicked with attribute
+			var result = this.getResultMatching(attribute.id);
+			// debugger;
+
 			var evidenceCard = this.addEvidence(new EvidenceModel({
 				width: 200,
 				height: 100,
 				title: 'Evidence',
 				color: 'info',
-				body: attribute.id + " is "+flag + " ("+value + ")"
+				body: result.name + " is "+flag + " ("+value + ")",
+				correct: result.correct
 			}));
 
 			evidenceCard.position.x = 200;
@@ -64,6 +70,20 @@ define(function(require) {
 				model: model
 			});
 			return evidence;
+		},
+
+
+		getResultMatching: function(id){
+			// for(var result in this.results){
+			for(var i=0;i<this.results.length;i++){
+				// console.log(result.name);
+				// console.log(id);
+				var result = this.results[i];
+				// debugger;
+				if(result.name === id){
+					return result;
+				}
+			}
 		}
 
 
