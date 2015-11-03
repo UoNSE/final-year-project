@@ -48,7 +48,7 @@ define(function (require) {
         /**
          * Minimum number of points required to unlock an issue
          */
-        scoreTrigger: -6,
+        scoreTrigger: 10,
         /**
          * Provides a popup notification when the user has earnt points greater than or equal to scoreTrigger
          */
