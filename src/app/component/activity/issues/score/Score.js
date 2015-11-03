@@ -31,6 +31,15 @@ define(function (require) {
             this.model.set({score:score});
         },
 
+        /**
+         * Updates the 'origin' of this object, useful for resetting the object when animations are performed on it
+         */
+        syncOrigin: function()
+        {
+            this.originX = this.position.x;
+            this.originY = this.position.y;
+        },
+
         invalidAction: function(){
             this.position.x = this.originX;
             this.shake();

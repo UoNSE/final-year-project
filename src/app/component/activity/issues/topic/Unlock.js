@@ -62,6 +62,7 @@ define(function (require) {
             this.scoreContainer.detached = true;
             this.scoreContainer.position.x = 32;
             this.scoreContainer.position.y = 32;
+            this.scoreContainer.syncOrigin();
 
             this.updateCredit();
 
