@@ -12,13 +12,11 @@ The Project
 
 	npm install
 	
-	bower install
-	
 ### Running
 
 Running the application is initiated with the following command:
 	
-	gulp
+	npm start
 	
 * Take notice of the terminal output for relevant JSHint errors, etc.
 * Goto the following URL in your browser to view the App: 
